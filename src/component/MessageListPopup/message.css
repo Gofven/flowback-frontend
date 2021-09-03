@@ -1,0 +1,179 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+/*---------------------------------
+            Fixed Chat
+---------------------------------*/
+.fixed-chat {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    width: 250px;
+}
+
+.chat-list-card {
+    background-color: #FFF;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.chat-list-card .card-header,
+.chat-list-card .card-footer {
+    background-color: transparent;
+}
+
+.chat-list-card .card-header .row {
+    align-items: center;
+}
+
+.notification-view {
+    position: relative;
+}
+
+.notification-view i {
+    font-size: 22px;
+}
+
+.notification-view .notification-badge {
+    background-color: red;
+    height: 18px;
+    min-width: 18px;
+    line-height: 18px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 12px;
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.chat-list-card .card-header {
+    padding-top: .9rem;
+    cursor: pointer;
+}
+
+.chat-list-card .card-header p {
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #5e5e5e;
+    font-weight: 600;
+}
+
+.chat-list-card .card-body {
+    overflow: hidden;
+}
+
+.chat-list-card .active-col {
+    text-align: right;
+}
+
+.active-col .active-count {
+    font-size: 15px;
+    color: #5e5e5e;
+}
+
+.msg-list-row {
+    margin-bottom: 5px;
+    /*    border-bottom: 1px solid #eaeaea;*/
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.msg-list-row img {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    object-fit: cover;
+    display: block;
+}
+
+.msg-list-row p {
+    font-size: 15px;
+    color: #575757;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.msg-list-row .lst-msg {
+    font-size: 14px;
+    color: #575757;
+}
+
+.msg-form .btn {
+    border: 0;
+    background-color: #FFF;
+    font-size: 18px;
+    color: #575757;
+    height: 40px;
+}
+
+.msg-form .form-control {
+    background-color: #FFF;
+    border: 0;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+
+/*------------------Chat 2----------------------*/
+.fixed-chat2 {
+    right: 270px;
+}
+
+.chat-card,
+.chat-card .card-header,
+.chat-card .card-footer {
+    border-width: 2px;
+}
+
+.chat-card .msg-list-row {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    cursor: text;
+}
+
+.chat-card .msg-list-row p {
+    font-size: 12px;
+    color: #575757;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.chat-card .msg-list-row p span {
+    color: #a8a8a8;
+    font-size: 12px;
+}
+
+.chat-card .msg-list-row .lst-msg {
+    font-size: 13px;
+    color: #575757;
+    line-height: normal;
+    margin-top: 3px;
+    white-space: pre;
+}

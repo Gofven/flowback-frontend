@@ -1,0 +1,226 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+.group-details-card {
+    background-color: #FFF;
+    border: 1px solid #D4D4D4;
+    border-radius: 15px;
+    margin-bottom: 1.4rem;
+    overflow: hidden;
+}
+
+.group-details-img-view {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    padding: 20px;
+    z-index: 200;
+}
+
+.group-details-img-view:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: -webkit-linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    -webkit-background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    z-index: -10;
+}
+
+.group-details-img-view .group-details-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -11;
+}
+
+.group-details-img-content {
+    align-items: flex-end;
+    z-index: 564;
+}
+
+.group-details-img-content .group-details-dp {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.group-details-img-content .location-txt {
+    font-size: 16px;
+    color: #FFF;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.group-details-img-content .group-details-title {
+    font-size: 30px;
+    color: #FFF;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.group-details-content-view {
+    position: relative;
+    padding: 20px;
+}
+
+.group-details-member-count {
+    font-size: 18px;
+    color: #FFFFFF;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.public-group-text {
+    color: #8C8C8C;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    line-height: 15px;
+}
+
+.public-group-text i {
+    font-size: 35px;
+    margin-right: 5px;
+    /*margin-left: -8px;*/
+}
+
+.group-details-description {
+    font-size: 14px;
+    color: #7e7e7e;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.group-details-btn-view {
+    width: 110px;
+    text-align: right;
+}
+
+.group-details-btn-view .btn {
+    border-radius: 8px;
+    width: 90%;
+}
+
+
+.activeIndex{
+    font-weight: bold;
+}
+
+@media (max-width: 991px) {
+    .group-details-img-content .group-details-dp {
+        width: 85px;
+        height: 85px;
+    }
+
+    .group-details-img-view {
+        height: 118px;
+        padding: 15px;
+    }
+
+    .group-details-img-content .location-txt {
+        font-size: 14px;
+    }
+
+    .group-details-img-content .group-details-title {
+        font-size: 24px;
+    }
+
+    .group-details-content-view {
+        padding: 15px;
+    }
+
+    .group-details-member-count {
+        font-size: 15px;
+    }
+
+    .public-group-text i {
+        font-size: 30px;
+    }
+
+    .public-group-text {
+        line-height: 12px;
+        font-size: 13px;
+    }
+
+    .group-details-btn-view {
+        width: 90px;
+    }
+
+    .group-details-btn-view .btn {
+        font-size: 11px;
+    }
+}
+
+/*-480px-*/
+@media (max-width: 480px) {
+    .group-details-content-view .media {
+        display: block;
+        position: relative;
+    }
+
+    .group-details-btn-view {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .group-details-content-view .media-body {
+        padding-left: 0;
+        margin-top: 15px;
+    }
+
+}
+
+/*-375px-*/
+@media (max-width: 375px) {
+    .group-details-img-content {
+        margin-top: 28px;
+    }
+
+    .group-details-img-content .group-details-dp {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+    }
+
+    .group-details-img-content .group-details-title {
+        font-size: 18px;
+    }
+
+    .group-details-img-content .location-txt {
+        font-size: 11px;
+    }
+
+}

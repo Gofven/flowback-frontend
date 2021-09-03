@@ -1,0 +1,172 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+.field {
+    font-size: 16px;
+    font-weight: 600;
+    color: #887373;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    padding: .375rem .75rem;
+    transition: border-color .15s ease-in-out,
+        box-shadow .15s ease-in-out;
+    margin: 10px;
+}
+
+.tags-input {
+    font-size: 16px;
+    font-weight: 600;
+    color: #887373;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    padding: .375rem .75rem;
+    transition: border-color .15s ease-in-out,
+        box-shadow .15s ease-in-out;
+    margin: 10px;
+}
+
+.tags-input input {
+    border: 0;
+}
+
+.tags-input input::placeholder {
+    color: #a8a8a8;
+}
+
+.tags-input input:focus {
+    outline-width: 0px;
+    background-color: rgba(2, 100, 195, 0.05);
+    border-color: #0264c3;
+}
+
+.react-tagsinput-remove::before {
+    content: x;
+    color: #ffffff;
+    margin-left: 8px;
+}
+
+.react-tagsinput-tag {
+    background-color: #0264c3;
+    border-radius: 4px;
+    border: 1px solid #0264c3;
+    color: #ffffff;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.radio-item {
+    display: inline-block;
+    position: relative;
+    padding: 0 6px;
+    margin: 10px 0 0;
+}
+
+.radio-item input[type='radio'] {
+    display: none;
+}
+
+.radio-item label {
+    color: #666;
+    font-weight: normal;
+}
+
+.radio-item label:before {
+    content: " ";
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    margin: 0 5px 0 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 11px;
+    border: 2px solid #004c97;
+    background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked+label:after {
+    border-radius: 11px;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    content: " ";
+    display: block;
+    background: #004c97;
+}
+
+input[type=file] {
+    visibility: hidden;
+    position: absolute
+}
+
+.profile-upload-size {
+    height: 150px;
+    width: 150px;
+    background-color: rgba(2, 100, 195, 0.05);
+    border-color: #0264c3;
+}
+
+.profile-image-size {
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+}
+
+.cover-upload-size {
+    height: 150px;
+    background-color: rgba(2, 100, 195, 0.05);
+    border-color: #0264c3;
+}
+
+.cover-image-size {
+    height: 150px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px;
+    color: white;
+}
+
+.img-block {
+    display: inline-block;
+    position: relative;
+}
+
+.create_group_form .form-group {
+    margin: .75rem .75rem !important;
+    /* margin-right: .5rem !important; */
+}
+
+.create_group_form .form-group .tags-input {
+    margin: 0 !important;
+}

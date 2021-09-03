@@ -1,0 +1,390 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+/*-------------------------------------------
+            Top Story Section
+-------------------------------------------*/
+.story-section{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    z-index: -1;
+    position: relative;
+}
+.story-card {
+    position: relative;
+    border-radius: 10px;
+    height: 214px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+.story-card .story-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.story-content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 15px;
+    background: linear-gradient(to top, #000, transparent);
+    background: -webkit-linear-gradient(to top, #000, transparent);
+    -webkit-background: linear-gradient(to top, #000, transparent);
+}
+.story-content .story-title{
+    font-size: 22px;
+    line-height: 24px;
+    color: #ececec;
+    font-weight: 600;
+}
+.story-content .media img{
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
+    object-fit: cover;
+} 
+.story-content .media p{
+    font-size: 14px;
+    color: #f1f1f1;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0;
+    padding-left: .4rem;
+}
+
+/*-------------------------------------------
+            Home Dashboard
+-------------------------------------------*/
+/*--Group Chat Chat--*/
+.msg-form {
+    border-radius: 7px;
+    border: 1px solid #b9b9b9;
+    overflow: hidden;
+}
+.group-chat-card .card-footer{
+    border: 0;
+    padding-bottom: 1rem;
+}
+.group-chat-card .media{
+    align-items: center;
+    border-bottom: 2px solid #d4d4d4;
+    padding: .5rem 1rem;
+}
+.group-chat-card .media .media-img{
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.group-chat-card .media p{
+    margin-bottom: 0;
+    font-family: #575757;
+    font-weight: 700;
+}
+.group-chat-card .media p.small{
+    font-weight: 600;
+}
+
+/*--Feed Card--*/
+.post-view {
+    border-bottom: 2px solid #d1d1d1;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+.post-view:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.post-header{
+    margin-bottom: 15px;
+}
+.post-header .post-user-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.post-header .user-name {
+    font-size: 18px;
+    color: #575757;
+    font-weight: 700;
+    margin-bottom: 0;
+    margin-top: 3px;
+}
+.post-header .user-name span{ 
+    font-size: 16px;
+    color: #828282;
+    font-weight: 400;
+}
+.post-header .post-time{
+    font-size: 15px;
+    color: #575757;
+}
+.post-action i {
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+}
+.post-action .dropdown-menu {
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    border-color: #d4d4d4;
+}
+.post-view .post-text {
+    font-size: 15px;
+    line-height: normal;
+    color: #575757;
+    line-height: 22px;
+}
+.post-share{
+    display: -webkit-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+.post-share a{
+    font-size: 14px;
+    line-height: normal;
+    color: #575757;
+    font-weight: 600;
+}
+.post-share a i{
+    font-size: 16px;
+}
+.write-cmt img{
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.comment-reply{
+    margin-top: 20px;
+}
+.comment-reply .media{
+    margin-top: 15px;
+}
+.comment-reply img {
+    width: 38px;
+    height: 38px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.comment-reply .reply-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #575757;
+}
+.comment-reply .reply-text {
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #575757;
+}
+.reply-time {
+    font-size: 12px;
+    color: #7e7e7e;
+}
+.reply-time a{
+    font-size: 11px;
+    color: #7e7e7e;
+    font-weight: 600; 
+    position: relative;
+    padding-left: 10px;
+    
+}
+.reply-time a:before{
+    content: '.';
+    position: absolute;
+    left: 2px;
+    top: -7px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.show-more-cmt{
+    display: -webkit-box;
+    display: inline-block;
+    font-size: 16px;
+    color: #7e7e7e;
+    font-weight: 600;
+    text-decoration: underline !important;
+    margin-top: 10px;
+}
+.show-more-cmt:hover{
+    color: #0566c4;
+    text-decoration: underline !important;
+}
+
+/*--Trending Card--*/
+.hashtag-row .hashtag-title {
+    font-size: 17px;
+    color: #565656;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 7px;
+    transition: 0.2s;
+    margin-bottom: 0;
+}
+.hashtag-row .hashtag-title:hover {
+    background-color: #e7e6ed;
+}
+
+/*--Groups Card--*/
+.groups-card{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.groups-row{
+    font-size: 17px;
+    color: #565656;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 7px;
+    transition: 0.2s;
+    margin-bottom: 0;
+}
+.groups-row:hover {
+    background-color: #e7e6ed;
+}
+.groups-row img{
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.groups-row .groups-title{
+    font-size: 15px;
+    color: #575757;
+    font-weight: 600;
+    margin-bottom: 0;
+    line-height: normal
+}
+.groups-row .groups-status{
+    font-size: 13px;
+    color: #7e7e7e;
+    margin-bottom: 0;
+}
+
+/*--Post Misstion Card--*/
+.mission-post-card {
+    /*height: 191px;*/
+    border-radius: 15px;
+    /* filter: drop-shadow(0 0 6.5px rgba(0,0,0,0.22)); */
+    -webkit-box-shadow: 0 0 6.5px rgba(0,0,0,0.22);
+    box-shadow: 0 0 6.5px rgba(0,0,0,0.22);
+    background-color: #ffffff;
+    border: 1px solid #d4d4d4;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    align-items: center;
+}
+.mission-post-img-view {
+    width: 100%;
+    height: 191px;
+    position: relative;
+}
+.mission-post-img-view>img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.mission-post-img-view .img-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    display: -webkit-box;
+    display: flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: space-between;
+    background: -webkit-linear-gradient(to top, #000, transparent, transparent);
+    -webkit-background: linear-gradient(to top, #000, transparent, transparent);
+    background: linear-gradient(to top, #000, transparent, transparent);
+}
+.mission-post-img-view .img-content img{
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    object-fit: cover;
+}
+.mission-post-img-view h5{
+    color: #FFF;
+    font-size: 16px;
+}
+.mission-post-img-view .progress {
+    height: .6rem;
+    -webkit-background-color: transparent;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #FFF;
+}
+.mission-post-img-view .progress .progress-bar{
+    background-color: #FFF;
+}
+.mission-post-content{
+    padding: 15px;
+}
+.mission-post-title{
+    font-size: 22px;
+    font-weight: 600;
+    color: #575757;
+    margin-bottom: 1px;
+}
+.mission-post-para{
+    font-size: 14px;
+    color: #7e7e7e;
+    line-height: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================================================
+                            Responsive Views
+=============================================================================*/
+
+
+
+
+
+

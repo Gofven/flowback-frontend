@@ -1,0 +1,441 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+/* Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+*, html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e7e5ed;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/*-------- Remove Focus --------*/
+
+a, a:hover, a:focus, a:active, .form-control, .form-control:hover, .form-control:focus, .form-control:active, .btn, .btn:hover, .btn:focus, .btn:active {
+    outline: none !important;
+    -webkit-outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none !important;
+}
+
+.form-check-input:checked {
+    background-color: #0264c3;
+    border-color: #0264c3;
+}
+
+.form-check-input:focus {
+    border-color: #0264c3;
+    -webkit-border-color: #0264c3;
+    outline: 0;
+    -webkit-outline: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+/*-------- End Remove Focus --------*/
+
+/*-------- Start Custom Class --------*/
+
+.theme-color1 {
+    color: #0264c3;
+}
+
+.theme-bg1 {
+    background-color: #0264c3;
+}
+
+/*-------- End Custom Class --------*/
+
+/*-------- Start Buttons --------*/
+
+.btn-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-hover:hover:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    transition: 0.4s;
+    -webkit-animation: bounceRight 1.5s infinite;
+    animation: bounceRight 1.5s infinite;
+}
+
+.btn-hover.hover-blue:before {
+    background-color: rgba(2, 100, 195, 0.1);
+}
+
+/* right bounce animation */
+
+@-webkit-keyframes bounceRight {
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    40% {
+        -webkit-transform: translateX(-50px);
+        transform: translateX(-50px);
+    }
+    60% {
+        -webkit-transform: translateX(-20px);
+        transform: translateX(-20px);
+    }
+}
+
+@-moz-keyframes bounceRight {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(0);
+    }
+    40% {
+        transform: translateX(-50px);
+    }
+    60% {
+        transform: translateX(-20px);
+    }
+}
+
+@keyframes bounceRight {
+    0%, 20%, 50%, 80%, 100% {
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+    40% {
+        -ms-transform: translateX(-50px);
+        transform: translateX(-50px);
+    }
+    60% {
+        -ms-transform: translateX(-20px);
+        transform: translateX(-20px);
+    }
+}
+
+/* end right bounce animation */
+
+/*-------- End Buttons --------*/
+
+/* Tooltip */
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: .25rem .5rem;
+    color: #fff;
+    text-align: center;
+    background-color: #0264c3;
+    border-radius: .25rem;
+    font-size: 13px;
+    line-height: normal;
+    text-align: left;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.tooltip .tooltip-arrow::before {
+    position: absolute;
+    content: "";
+    border-color: transparent;
+    border-style: solid;
+}
+
+.bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before, .bs-tooltip-start .tooltip-arrow::before {
+    left: -1px;
+    border-width: .4rem 0 .4rem .4rem;
+    border-left-color: #0264c3;
+}
+
+/*----------------------------------------------
+            Login & Registar
+----------------------------------------------*/
+
+.logo-section {
+    width: 100%;
+    min-height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-section img {
+    height: 100%;
+}
+
+.login_form_container {
+    width: 100%;
+    min-height: 85vh;
+    /*
+    display: flex;
+    justify-content: center;
+    align-items: center;
+*/
+}
+
+.login_card {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login_card .card {
+    border-radius: 10px;
+    background-color: #FFF;
+    border-color: #D4D4D4;
+}
+
+.login_card .card-header {
+    padding: 0;
+    background-color: transparent;
+    -webkit-background-color: transparent;
+    border: 0;
+}
+
+.login_card .card-body {
+    padding: 30px;
+}
+
+.login_card .nav-pills .nav-link {
+    position: relative;
+    font-size: 20px;
+    color: #a8a8a8;
+    padding: 15px;
+    border-radius: 0;
+    border-bottom: 1px solid #D4D4D4;
+}
+
+.login_card .nav-pills .nav-link.active {
+    color: #575757;
+    background-color: transparent;
+    -webkit-background-color: transparent;
+}
+
+.login_card .nav-pills .nav-link:after {
+    content: '';
+    width: 170px;
+    height: 2px;
+    background: #0264c3;
+    position: absolute;
+    bottom: -1.5px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    -webkit-transform: translateX(-50%) scale(0);
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+}
+
+.login_card .nav-pills .nav-link.active:after {
+    transform: translateX(-50%) scale(1);
+    -webkit-transform: translateX(-50%) scale(1);
+}
+
+.login_card .form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.login_card .form-control {
+    font-size: 16px;
+    font-weight: 600;
+    color: #575757;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+}
+
+.login_card .form-control::placeholder {
+    color: #A8A8A8;
+}
+
+.login_card .form-control:focus, .login_card .form-control:valid {
+    color: #575757;
+    background-color: rgba(2, 100, 195, 0.05);
+    border-color: #0264c3;
+}
+
+.login_card .forgot-link {
+    font-size: 18px;
+    color: #575757;
+    font-weight: 600;
+}
+
+.login_card .forgot-link:hover {
+    color: #0264c3;
+}
+
+.login_card .form-group p {
+    font-size: 24px;
+    line-height: 30px;
+    color: #575757;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-group .form-check label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #A8A8A8;
+}
+
+.form-group .form-check label a, .form-group .form-check label a:hover {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0264c3;
+}
+
+.login_card .login-btn {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #0264c3;
+    font-size: 18px;
+    color: #FFF;
+    font-weight: 600;
+}
+
+.login_card .register-btn {
+    display: block;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #0264c3;
+    font-size: 18px;
+    color: #FFF;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    padding: 0;
+    width: 100%;
+}
+
+.login_card .register-btn1 {
+    background-color: #e5eff9;
+    color: #0264c3;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group .icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.form-group .icon .info-icon1 {
+    width: 20px;
+    display: block;
+}
+
+.form-group .icon .info-icon2 {
+    display: none;
+    width: 20px;
+}
+
+.form-group .icon .info-icon1 {
+    width: 20px;
+}
+
+.form-group .icon:hover .info-icon2 {
+    display: block;
+    width: 20px;
+}
+
+.form-group .icon:hover .info-icon1 {
+    display: none;
+}
+
+/*.form-group .icon i,
+.form-group .icon svg,
+.form-group .icon img{
+    font-size: 20px;
+    width: 20px;
+    color: #d4d4d4;
+}
+.form-group .icon i:hover,
+.form-group .icon svg:hover,
+.form-group .icon img:hover{
+    color: #0264c3;
+}*/
+
+/*=============================================================================
+                            Responsive Views
+=============================================================================*/
+
+/*** 480px ***/
+
+@media (max-width: 480px) {
+    .main-logo {
+        width: 160px;
+        height: auto;
+    }
+    .login_card .nav-pills .nav-link {
+        font-size: 18px;
+        padding: 12px;
+    }
+    .login_card .nav-pills .nav-link:after {
+        width: 65%;
+    }
+    .login_card .card-body {
+        padding: 15px;
+    }
+    .login_card .form-control {
+        font-size: 14px;
+    }
+    .login_card .form-group h5 {
+        font-size: 16px;
+    }
+    .login_card .form-group p {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .form-group .form-check label, .form-group .form-check label a {
+        font-size: 14px;
+    }
+    .login_card .forgot-link {
+        font-size: 16px;
+    }
+    .login_card .login-btn {
+        width: 170px;
+        font-size: 16px;
+    }
+    .login_card .register-btn {
+        font-size: 16px;
+    }
+}

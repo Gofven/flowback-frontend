@@ -1,0 +1,221 @@
+/**
+ * FlowBack was created and project lead by Loke Hagberg. The design was
+ * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * Astroneatech created the code. It was primarily financed by David
+ * Madsen. It is a decision making platform.
+ * Copyright (C) 2021  Astroneatech AB
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+.profile-modal {}
+
+.profile-modal .modal-content {
+    background-color: transparent;
+    border: 0;
+}
+
+/*--Grupper Card--*/
+.profile-card {
+    background-color: #FFF;
+    border-radius: 15px;
+    margin-bottom: 1.4rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-actions {
+    position: absolute;
+    right: 0;
+    z-index: 300;
+    margin: 8px;
+}
+
+.profile-edit-icon {
+    border: 2px solid white;
+    margin: 4px;
+    padding: 8px;
+    height: 36px;
+    width: 36px;
+    font-size: 18px;
+    line-height: 18px;
+    border-radius: 100%;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-img-view {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    padding: 20px;
+    z-index: 200;
+}
+
+.profile-img-view:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: -webkit-linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    -webkit-background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent, transparent);
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    z-index: -10;
+}
+
+.edit-mode .profile-img-view .profile-cover-label:after {
+    content: 'Change Cover Image';
+    position: absolute;
+    color: white;
+    /* z-index: 400; */
+    font-size: 24px;
+    /* height: 100%; */
+    width: 100%;
+    /* background: blue; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 0px 0px 4px #000000;
+    /* background: #000; */
+    font-weight: bold;
+    /* outline: 1px solid; */
+    /* -webkit-text-stroke: 2px black; */
+    -webkit-text-fill-color: white;
+}
+
+.profile-img-view .profile-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -11;
+}
+
+.profile-img-content {
+    align-items: flex-end;
+    z-index: 564;
+}
+
+.edit-mode .media.profile-img-content .profile-dp-label:after {
+    content: 'Change Profile Picture';
+    position: absolute;
+    color: white;
+    /* z-index: 400; */
+    font-size: 18px;
+    /* height: 100%; */
+    width: 80px;
+    /* background: blue; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 0px 0px 4px #000000;
+    /* background: #000; */
+    font-weight: bold;
+    /* outline: 1px solid; */
+    /* -webkit-text-stroke: 2px black; */
+    -webkit-text-fill-color: white;
+}
+
+.edit-mode .profile-dp-input {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 110px;
+    height: 110px;
+    transform: translate(20px, -50%);
+    background: blue;
+}
+
+.profile-img-content .profile-dp {
+    width: 110px;
+    height: 110px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.profile-img-content .location-txt {
+    font-size: 16px;
+    color: #FFF;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.profile-img-content .profile-title {
+    font-size: 30px;
+    color: #FFF;
+    font-weight: 600;
+    margin-bottom: 0;
+    text-shadow: 1px 1px 4px black;
+}
+
+.profile-content-view {
+    position: relative;
+    padding: 20px;
+}
+
+.profile-content-view p,
+.profile-content-view span {
+    color: grey;
+}
+
+.member-count {
+    font-size: 18px;
+    color: #8C8C8C;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.public-group-text {
+    color: #8C8C8C;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    line-height: 15px;
+}
+
+.public-group-text i {
+    font-size: 35px;
+    margin-right: 5px;
+    /*margin-left: -8px;*/
+}
+
+.profile-description {
+    font-size: 14px;
+    color: #7e7e7e;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.profile-btn-view {
+    margin-top: 4px;
+}
+
+.profile-btn-view .btn {
+    border-radius: 8px;
+    color: #f7f7f7;
+    border-color: #f7f7f7;
+    margin-right: 8px;
+}
