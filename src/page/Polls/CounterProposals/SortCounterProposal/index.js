@@ -293,7 +293,7 @@ function SortCounterProposal(props) {
             <Modal show={show} onHide={handleClose} centered size='lg'>
                 <div className='p-4'>
                     <Loader loading={loading}>
-                        <h4>Sort Counter Proposals</h4>
+                        <h4>Sort Proposals</h4>
                         <div>
                             {
                                 show &&
