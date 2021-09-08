@@ -71,7 +71,12 @@ const data = [
     }
   },
 ];
-export default function UserAction() {
+
+export default function UserAction(user) {
+  // TODO if user is anonymous, replace logout with login.
+  // if (typeof user.user === "undefined") {
+  //   data.at(-1).title = "Log In"
+  // }
   return (
     <ul
       className="dropdown-menu"

@@ -116,7 +116,7 @@ export default function Header() {
                   </div>
                 </div>
               </a>
-              <UserAction />
+              <UserAction user={user.id}/>
             </li>
           </ul>
         </div>

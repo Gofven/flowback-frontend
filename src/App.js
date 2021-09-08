@@ -22,6 +22,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./component/PrivateRoute";
+import PublicRoute from "./component/PublicRoute";
 import Home from "./page/HomePage";
 import Events from "./page/Events";
 import Login from "./page/Login";
@@ -47,7 +48,7 @@ function App() {
     <>
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/home" component={Home} />
+          <PublicRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/events" component={Events} />
           <PrivateRoute exact path="/missions" component={Missions} />
           <PrivateRoute exact path="/votings" component={Votings} />
