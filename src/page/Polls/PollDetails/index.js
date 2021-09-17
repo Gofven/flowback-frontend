@@ -442,7 +442,7 @@ export default function PollDetails() {
                                         <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY H:mm:ss') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">Disucssion Time</div>
+                                        <div className="col-5">Discussion Time</div>
                                         <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY H:mm:ss')}</div>
                                     </div>
 

@@ -648,49 +648,8 @@ export default function GroupForm(props) {
                                 </div>
                             </div>
                             {/*/Filter-by Card*/}
-
-                            {/*Supported Card*/}
-                            <div className="card groups-card chat-list-card chat-card card-rounded overflow-hidden">
-                                <div className="card-header pb-0 border-bottom-0">
-                                    <h4 className="card-title">Supported</h4>
-                                </div>
-                                <div className="card-body overflow-hidden">
-                                    <div className="pre-scrollable">
-                                        <div className="tab-pane fade show active" id="myGroupsTab">
-                                            <a href="#" className="media groups-row">
-                                                <img src="/img/flower.jpg" className="groups-img" />
-                                                <div className="media-body">
-                                                    <h6 className="groups-title text-truncate">
-                                                        Kunlabori
-                          </h6>
-                                                    <p className="groups-status text-truncate">Owner</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="media groups-row">
-                                                <img src="/img/flower.jpg" className="groups-img" />
-                                                <div className="media-body">
-                                                    <h6 className="groups-title text-truncate">
-                                                        Kunlabori
-                          </h6>
-                                                    <p className="groups-status text-truncate">Owner</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="media groups-row">
-                                                <img src="/img/flower.jpg" className="groups-img" />
-                                                <div className="media-body">
-                                                    <h6 className="groups-title text-truncate">
-                                                        Kunlabori
-                          </h6>
-                                                    <p className="groups-status text-truncate">Owner</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*/Supported Card*/}
                         </div>
-                        {/*/Short-by, Filter-by & Supported Col*/}
+                        {/*/Short-by & Filter-by Col*/}
                     </div>
                 </div>
             </section>

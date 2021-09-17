@@ -42,10 +42,6 @@ const data = [
     component: (<Bookmarks><span>Bookmarks</span></Bookmarks>)
   },
   {
-    title: "Pinned Events",
-    url: "#",
-  },
-  {
     title: "Requests",
     url: "#",
     component: (<Requests><span>Requests</span></Requests>)

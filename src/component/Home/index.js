@@ -41,7 +41,6 @@ export default function Home() {
               <div className="story-content">
                 <h4 className="story-title">The Mission</h4>
                 <div className="media">
-                  <img src="/img/flower.jpg" className="media-img" />
                   <div className="media-body">
                     <p className="line-3">
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
