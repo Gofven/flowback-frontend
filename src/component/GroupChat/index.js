@@ -37,23 +37,25 @@ export default function GroupChat() {
     <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
       <div className="card-header flex-header">
         <h4 className="card-title">Group Chat</h4>
-        <a
-          href="#"
-          className="btn btn-sm btn-outline-secondary radius5 py-0 fw-bolder"
-        >
-          change size
-        </a>
+        {/*Placeholder for change size button*/}
+        {/*<a*/}
+        {/*  href="#"*/}
+        {/*  className="btn btn-sm btn-outline-secondary radius5 py-0 fw-bolder"*/}
+        {/*>*/}
+        {/*  change size*/}
+        {/*</a>*/}
       </div>
-      <div className="media">
-        <img src="" className="media-img" />
-        <div className="media-body">
-          <p className="text-turncate mb-0">A</p>
-          <p className="text-turncate small">Main chat</p>
-        </div>
-        <div className="down-arro">
-          <img src="/img/avtar-arrow-blue.png" />
-        </div>
-      </div>
+      {/*Placeholder for Group Chat, Groups selection*/}
+      {/*<div className="media">*/}
+      {/*  <img src="" className="media-img" />*/}
+      {/*  <div className="media-body">*/}
+      {/*    <p className="text-turncate mb-0">A</p>*/}
+      {/*    <p className="text-turncate small">Main chat</p>*/}
+      {/*  </div>*/}
+      {/*  <div className="down-arro">*/}
+      {/*    <img src="/img/avtar-arrow-blue.png" />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div className="card-body overflow-hidden">
         <div className="pre-scrollable">
           <div className="chat-view">
@@ -63,9 +65,10 @@ export default function GroupChat() {
           </div>
         </div>
       </div>
-      <div className="card-footer">
-        <CommentBox />
-      </div>
+      {/*Placeholder for comment box? Should be a message box, after all it's a group chat*/}
+      {/*<div className="card-footer">*/}
+      {/*  <CommentBox />*/}
+      {/*</div>*/}
     </div>
   );
 }

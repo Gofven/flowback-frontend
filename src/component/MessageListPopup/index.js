@@ -66,69 +66,70 @@ export default function MessageListPopup(props) {
     setTotalUnreadMessage(totalCount);
   }, [props.unreadMessages]);
 
-  return (
-    <div className="fixed-chat">
-      <div className="card chat-list-card">
-        <div
-          className="card-header"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-        >
-          <div className="row mx-auto">
-            <div className="col-1 px-0">
-              <div className="notification-view">
-                <i className="las la-sms"></i>
-                {
-                  totalUnreadMessage ?
-                    <span className="notification-badge">{totalUnreadMessage}</span>
-                    : null
-                }
-              </div>
-            </div>
-            <div className="col-9">
-              <p>Messages</p>
-            </div>
-            <div className="col-2 px-0">
-              <div className="active-col">
-                {/* <span className="active-mark"></span> */}
-                {/* <span className="active-count">{totalFriend}</span> */}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="collapse" id="collapseExample">
-          <div className="card-body">
-            <div className="pre-scrollable">
-              <div className="chat-view">
-                {rooms?.map((room) => (
-                  <MessageListRow key={room.id} room={room} lastMessage={props.lastMessages ? props.lastMessages[room.id] : ''} />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="card-footer p-0">
-            <form action="#" className="form msg-form" id="msgForm">
-              <div className="input-group">
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  id="button-addon2"
-                >
-                  <i className="las la-search"></i>
-                </button>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Recipient's username"
-                  aria-describedby="button-addon2"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return(<p></p>) // Placeholder for messages functionality below
+  // return (x
+  //   <div className="fixed-chat">
+  //     <div className="card chat-list-card">
+  //       <div
+  //         className="card-header"
+  //         data-bs-toggle="collapse"
+  //         data-bs-target="#collapseExample"
+  //         aria-expanded="false"
+  //       >
+  //         <div className="row mx-auto">
+  //           <div className="col-1 px-0">
+  //             <div className="notification-view">
+  //               <i className="las la-sms"></i>
+  //               {
+  //                 totalUnreadMessage ?
+  //                   <span className="notification-badge">{totalUnreadMessage}</span>
+  //                   : null
+  //               }
+  //             </div>
+  //           </div>
+  //           <div className="col-9">
+  //             <p>Messages</p>
+  //           </div>
+  //           <div className="col-2 px-0">
+  //             <div className="active-col">
+  //               {/* <span className="active-mark"></span> */}
+  //               {/* <span className="active-count">{totalFriend}</span> */}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="collapse" id="collapseExample">
+  //         <div className="card-body">
+  //           <div className="pre-scrollable">
+  //             <div className="chat-view">
+  //               {rooms?.map((room) => (
+  //                 <MessageListRow key={room.id} room={room} lastMessage={props.lastMessages ? props.lastMessages[room.id] : ''} />
+  //               ))}
+  //             </div>
+  //           </div>
+  //         </div>
+  //         <div className="card-footer p-0">
+  //           <form action="#" className="form msg-form" id="msgForm">
+  //             <div className="input-group">
+  //               <button
+  //                 className="btn btn-outline-secondary"
+  //                 type="button"
+  //                 id="button-addon2"
+  //               >
+  //                 <i className="las la-search"></i>
+  //               </button>
+  //               <input
+  //                 type="text"
+  //                 className="form-control"
+  //                 placeholder="Search"
+  //                 aria-label="Recipient's username"
+  //                 aria-describedby="button-addon2"
+  //               />
+  //             </div>
+  //           </form>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }
