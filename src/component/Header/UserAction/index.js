@@ -32,32 +32,32 @@ const data = [
     url: "#",
     component: (<Profile><span>User Profile</span></Profile>)
   },
-  {
-    title: "Contacts",
-    url: "#",
-  },
-  {
-    title: "Bookmarks",
-    url: "#",
-    component: (<Bookmarks><span>Bookmarks</span></Bookmarks>)
-  },
-  {
-    title: "Requests",
-    url: "#",
-    component: (<Requests><span>Requests</span></Requests>)
-  },
-  {
-    title: "Flowback Premium",
-    url: "#",
-  },
-  {
-    title: "Activity Log",
-    url: "#",
-  },
-  {
-    title: "Settings",
-    url: "#",
-  },
+  // {
+  //   title: "Contacts",
+  //   url: "#",
+  // },
+  // {
+  //   title: "Bookmarks",
+  //   url: "#",
+  //   component: (<Bookmarks><span>Bookmarks</span></Bookmarks>)
+  // },
+  // {
+  //   title: "Requests",
+  //   url: "#",
+  //   component: (<Requests><span>Requests</span></Requests>)
+  // },
+  // {
+  //   title: "Flowback Premium",
+  //   url: "#",
+  // },
+  // {
+  //   title: "Activity Log",
+  //   url: "#",
+  // },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  // },
   {
     title: "Log Out",
     url: "#",

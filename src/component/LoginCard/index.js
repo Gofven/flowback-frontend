@@ -146,6 +146,9 @@ export default function LoginCard() {
           {/* <Button>Login</Button> */}
         </div>
       </form>
+      <div className="text-center pt-2">
+        <a href="home">Or enter as Guest</a>
+      </div>
     </Loader>
   );
 }

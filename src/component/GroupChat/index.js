@@ -36,7 +36,7 @@ export default function GroupChat() {
   return (
     <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
       <div className="card-header flex-header">
-        <h4 className="card-title">Group Chat</h4>
+        <h4 className="card-title">Welcome</h4>
         {/*Placeholder for change size button*/}
         {/*<a*/}
         {/*  href="#"*/}
