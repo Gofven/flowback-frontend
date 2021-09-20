@@ -97,7 +97,8 @@ export default function Search() {
       <div className="search-view">
         <SearchBox searchBy={searchBy}
           onSearch={(searchValue) => {
-            setSearchValue(searchValue)
+            setSearchValue(searchValue);
+            setPageNumber(1);
           }} />
       </div>
       <div className="search-card card-rounded mb-4">
