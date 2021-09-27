@@ -30,7 +30,17 @@ import GroupChat from "../../../component/GroupChat";
 import Layout1 from "../../../layout/Layout1";
 import { postRequest } from '../../../utils/API';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle, faCircle, faRss, faCalendarWeek, faEllipsisH, faFileAlt, faUser, faPoll } from '@fortawesome/free-solid-svg-icons'
+import {
+    faInfoCircle,
+    faCircle,
+    faRss,
+    faCalendarWeek,
+    faEllipsisH,
+    faFileAlt,
+    faUser,
+    faPoll,
+    faLayerGroup, faUsers
+} from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import FeedCard from "../../../component/FeedCard";
 import DocumentCard from "../../../component/DocumentCard";
@@ -38,6 +48,7 @@ import MemberCard from "../../../component/MemberCard";
 import Image from "../../../component/common/Image";
 import UserGroup, { getGroupDetails } from "../../../apis/UserGroup";
 import AboutCard from "../../../component/AboutCard";
+const { REACT_APP_JITSI } = process.env;
 
 export default function GroupDetails() {
 
@@ -237,10 +248,18 @@ export default function GroupDetails() {
                                             <Link to={`/groupdetails/${groupId}/pollcreate`}>
                                                 <FontAwesomeIcon icon={faPoll} color='#737373' />
                                                 <span className="ml-2"
-                                                > Create Poll</span>
+                                                >Create Poll</span>
                                             </Link>
-
                                         </div>
+                                        {REACT_APP_JITSI &&
+                                        <div className="mb-1">
+                                            <a target="_blank" href={`${REACT_APP_JITSI}/${group.room_name}`}>
+                                                <FontAwesomeIcon icon={faUsers} color='#737373' />
+                                                <span className="ml-2"
+                                                >Video Conference</span>
+                                            </a>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             }
