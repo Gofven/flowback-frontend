@@ -20,11 +20,22 @@
 */
 
 import React from "react";
-import ComingSoon from "../../component/common/ComingSoon/ComingSoon";
+import FeedCard from "../../component/FeedCard";
 import Layout1 from "../../layout/Layout1";
+import GroupChat from "../../component/GroupChat";
+import Trendig1 from "../../component/Home/Trendig/Trendig1";
+import Trendig2 from "../../component/Home/Trendig/Trendig2";
 
 export default function Missions() {
   return <Layout1>
-    <ComingSoon />
+    <section className="home-dashboard">
+        <div className="container-xl mt-4">
+          <div className="row">
+            <div className="col-md-6 offset-md-3">
+              <FeedCard pollType={'mission'}/>
+            </div>
+          </div>
+        </div>
+      </section>
   </Layout1>;
 }

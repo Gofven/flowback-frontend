@@ -34,19 +34,21 @@ import { UserTypes } from "../../../constants/constants";
 
 
 export default function PollsTab(props) {
-    var groupId = props.groupId;
+    let groupId = props.groupId;
+    let pollType = props.pollType;
     const [polls, setPolls] = useState([]);
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(4);
 
     const getHomePolls = (first_page) => {
         let data = {
             first_page: first_page,
             last_poll_created_at: lastPollCreatedDate,
             page: page,
-            page_size: pageSize
+            page_size: pageSize,
+            poll_type: pollType
         }
         postRequest("api/v1/group_poll/home_all_poll_list", data).then(
             (response) => {
@@ -273,7 +275,7 @@ export default function PollsTab(props) {
             ))
             }
             {
-                (page < totalPage) &&
+                (page < totalPage + 1) &&
                 <div className="d-flex justify-content-end cursor-pointer" onClick={() => { getPolls(false) }}>Load more... </div>
             }
         </div>
