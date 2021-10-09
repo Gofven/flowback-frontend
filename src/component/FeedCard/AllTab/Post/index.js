@@ -85,7 +85,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               <h5 className="user-name">
                 <Profile id={poll.created_by.id} className='cursor-pointer'>{poll.created_by.first_name || "Test"} {poll.created_by.last_name}</Profile><span>created a post</span>
               </h5>
-              <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY h:mm:ss')}</div>
+              <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
             </div>
           </div>
         }

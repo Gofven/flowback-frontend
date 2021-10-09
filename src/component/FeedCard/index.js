@@ -31,16 +31,16 @@ export default function FeedCard(props) {
   const { tab, activeTab, bind: handleOnClick } = useTab([
     "All",
     // "Missions",
-    "Polls",
+    // "Polls",
     // "Events",
   ]);
 
   const renderTab = () => {
     switch (activeTab) {
       case tab[0]:
-        return <PollsTab groupId={props.groupId} />;
+        return <PollsTab groupId={props.groupId} pollType={props.pollType}/>;
       case tab[1]:
-        return <PollsTab groupId={props.groupId} />
+        return <PollsTab groupId={props.groupId} pollType={props.pollType}/>;
       // case tab[1]:
       //   return <MissionsTab />;
       // case tab[1]:
@@ -49,10 +49,20 @@ export default function FeedCard(props) {
       //   return <EventsTab />;
     }
   };
+
+  let feedCardTitle;
+  switch (props.pollType) {
+    case 'mission':
+      feedCardTitle = 'Missions';
+      break;
+    default:
+      feedCardTitle = 'Feed'
+  }
+
   return (
     <div className="feed-card card-rounded mb-4">
       <div className="card-header flex-header tab-header">
-        <h4 className="card-title">Feed</h4>
+        <h4 className="card-title">{feedCardTitle}</h4>
         <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
           {tab?.map((item, index) => (
             <li className="nav-item" key={index}>

@@ -42,6 +42,7 @@ export default function PollForm() {
         title: "",
         description: "",
         tags: "",
+        type: "",
         end_time: new Date()
     });
 
@@ -75,6 +76,12 @@ export default function PollForm() {
         console.log("E:", e);
         setTag(e);
     }
+
+    const handleOnTypeChange = (e) => {
+        const selected_index = e.currentTarget.selectedIndex;
+        const value = e.currentTarget[selected_index].value
+        setPollDetail({ ...pollDetail, type: value });
+    };
 
     //Select time
     const onDateTimeSelect = (e) => {
@@ -250,6 +257,13 @@ export default function PollForm() {
                                                 defaultValue={pollDetail.description}
 
                                             />
+                                        </div>
+
+                                        <div className="form-group mx-2">
+                                            <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
+                                                <option selected value="poll">Default</option>
+                                                <option value="mission">Mission</option>
+                                            </select>
                                         </div>
 
                                         <div className="form-group field">

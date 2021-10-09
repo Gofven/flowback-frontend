@@ -82,7 +82,7 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
                             <h5 className="user-name">
                                 <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
                             </h5>
-                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY h:mm:ss')}</div>
+                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
                 }
