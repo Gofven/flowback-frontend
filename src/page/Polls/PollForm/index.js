@@ -263,6 +263,7 @@ export default function PollForm() {
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
                                                 <option selected value="poll">Default</option>
                                                 <option value="mission">Mission</option>
+                                                <option value="event">Event</option>
                                             </select>
                                         </div>
 
