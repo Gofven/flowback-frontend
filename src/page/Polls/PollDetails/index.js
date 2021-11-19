@@ -351,7 +351,7 @@ export default function PollDetails() {
                                     <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                         <div className="card-header flex-header">
                                             <h4 className="card-title fw-bolder">
-                                                Counter Proposal
+                                                Proposal
                                     </h4>
                                         </div>
                                         <div className="card-body overflow-hidden">
@@ -389,7 +389,7 @@ export default function PollDetails() {
                                                             <Textbox
                                                                 type="text"
                                                                 name="proposal"
-                                                                placeholder="Counter Proposal Details"
+                                                                placeholder="Proposal Details"
                                                                 required
                                                                 onChange={handleOnChange}
                                                                 defaultValue={counterProposal.proposal}

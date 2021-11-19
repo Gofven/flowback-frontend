@@ -270,7 +270,7 @@ export default function PollForm() {
                                         <div className="form-group field">
                                             <div>
                                                 <Label>
-                                                    Admission Time
+                                                    End Time
                                             </Label>
                                             </div>
                                             {/* <DateTimePicker
