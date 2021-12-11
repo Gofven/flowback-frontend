@@ -55,6 +55,7 @@ export default function PollsTab(props) {
                 console.log('response', response);
                 if (response) {
                     const { status, data: res } = response;
+                    if(res != undefined){
                     const data = res.data;
                     if (status == "success") {
                         if (first_page) {
@@ -70,7 +71,7 @@ export default function PollsTab(props) {
                         setPage(page + 1);
                         setTotalPage(res.total_page);
                     }
-                }
+                }} //Loke Hagberg fixed this code here with the res-problem (added if not undef) and the last bracket part here
 
             }
         );
@@ -253,6 +254,16 @@ export default function PollsTab(props) {
     useEffect(() => {
         console.log("polls", polls);
     }, [polls])
+
+    
+    let loadMoree = (ev) => {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+            getPolls(false)
+        }
+    };
+    window.onscroll = loadMoree;
+    //Loke Hagberg added the above code
+
     return (
         <div className="tab-pane fade show active" id="PollsTab">
             {  polls?.map((poll, index) => (
@@ -277,7 +288,8 @@ export default function PollsTab(props) {
             {
                 (page < totalPage + 1) &&
                 <div className="d-flex justify-content-end cursor-pointer" onClick={() => { getPolls(false) }}>Load more... </div>
-            }
+            } 
         </div>
     );
 }
+//There was a change from onClick to onScroll here, by Loke Hagberg

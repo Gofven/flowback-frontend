@@ -104,6 +104,9 @@ export default function LoginCard() {
     });
   };
 
+  const handleKeypress = e => {if (e.keyCode === 13) {      handleSubmit();    }  };
+  //Added by Loke Hagberg
+
   return (
     <Loader loading={loading}>
       <form className="form login_form" id="loginForm">
@@ -136,7 +139,7 @@ export default function LoginCard() {
         </div>
         <div className="text-center">
           <button
-            type="button"
+            type="submit"
             className="btn login-btn btn-hover"
             disabled={!formValid}
             onClick={handleSubmit}
