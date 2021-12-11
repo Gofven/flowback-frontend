@@ -1,20 +1,20 @@
 /**
  * FlowBack was created and project lead by Loke Hagberg. The design was
- * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * made by Lina Forsberg. Emilio MÃ¼ller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
  * Copyright (C) 2021  Astroneatech AB
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
@@ -64,9 +64,9 @@ function Counterproposals({ poll, group }) {
 
     /**
      * To add comment in counter proposal
-     * @param {*} message 
-     * @param {*} counterProposalId 
-     * @param {*} replyTo 
+     * @param {*} message
+     * @param {*} counterProposalId
+     * @param {*} replyTo
      */
     const addComment = (message, counterProposalId, replyTo) => {
         var data = {
@@ -132,7 +132,7 @@ function Counterproposals({ poll, group }) {
 
     /**
      * To like a comment
-     * @param {*} comment 
+     * @param {*} comment
      */
     const likeComment = (comment) => {
         var data = {
@@ -161,7 +161,7 @@ function Counterproposals({ poll, group }) {
 
     /**
      * To delete a comment
-     * @param {*} commentId 
+     * @param {*} commentId
      */
     const deleteComment = (commentId) => {
         var data = {
@@ -197,7 +197,7 @@ function Counterproposals({ poll, group }) {
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
                 <div className="card-header flex-header d-flex justify-content-between">
-                    <h4 className="card-title fw-bolder">Proposals</h4>
+                    <h4 className="card-title fw-bolder">Counter Proposals</h4>
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
                             <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>
@@ -221,16 +221,16 @@ function Counterproposals({ poll, group }) {
                             likeComment={(comment) => likeComment(comment)}
                             readOnlyComments={poll.discussion === "Finished" || !(group && group.user_type && group.user_type !== UserTypes.Delegator)}
                         >
-                            <>
+                            <a href={counterProposal.file}>
                                 <div className='d-flex'>
-                                    <FontAwesomeIcon className='counter-proposal-file' icon={faFileAlt} />
+                                    <FontAwesomeIcon className='counter-proposal-file' icon={counterProposal.file === null ? null : faFileAlt} />
                                     <p className="post-text">
                                         {counterProposal.proposal}
                                     </p>
                                 </div>
                                 <div className="post-img-wrapper">
                                 </div>
-                            </>
+                            </a>
                         </CounterProposal>
                     ))
                     }
