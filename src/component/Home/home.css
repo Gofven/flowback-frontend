@@ -124,7 +124,7 @@
 .post-header .post-user-img {
     width: 50px;
     height: 50px;
-    border-radius: 7px;
+    /* border-radius: 7px; */
     object-fit: cover;
 }
 .post-header .user-name {

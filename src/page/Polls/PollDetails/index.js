@@ -144,7 +144,6 @@ export default function PollDetails() {
                         // setPoll(data);
                     }
                 }
-
             }
         );
     }

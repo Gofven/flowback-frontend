@@ -81,7 +81,7 @@ export default function LoginCard() {
           if (status === "success") {
             const { token, user } = data;
             dispatch(loginUser(token, user));
-            history.push("/home");
+            history.push("/");
             // dispatch(addToast("Login Success."));
           } else {
             setError({ ...error, email: data });

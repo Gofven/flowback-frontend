@@ -20,8 +20,6 @@
 */
 
 import React from "react";
-import CommentBox from "./CommentBox";
-import CommentReply from "./CommentReply";
 import Post from "./Post";
 
 export default function AllTab() {
