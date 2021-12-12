@@ -27,6 +27,12 @@ import "./styles.css";
 
 export default function Login() {
   const { tab, activeTab, bind: handleOnClick } = useTab(["Login", "Register"]);
+  
+  //If user is already logged in, then make it impossible to access the login page
+  if (localStorage.getItem('user')) {
+    window.location.href = "/"
+    return <h1>Already Loggin in, redirecting...</h1>
+  }
 
   // Rendor tabs of login and sign up
   const renderTab = () => {

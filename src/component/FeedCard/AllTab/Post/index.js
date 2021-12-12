@@ -47,33 +47,21 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     setEditComment(comment);
   }
 
-  const reanderReply = (reply) => {
+  const renderComments = (reply) => {
     return reply?.map((item, index) => {
-      if (item.reply) {
+        //console.log(`${JSON.stringify(poll.comments_details.comments)} is a comment with index ${index}`);
+        console.log(poll.comments_details.comments)
+        //poll.comments_details[item.reply_to].reply.push(reply)
         return ((!maxComments || index < maxComments) ?
           <PostComment {...item} key={index} readOnly={readOnlyComments}
             onReplyClick={(replyId) => onReplyClick(replyId)}
             onUpdateComment={() => onUpdateComment(item)}
             onDeleteComment={() => deleteComment(item.id)}
-            onLikeComment={() => likeComment(item)}
-          >
-            {reanderReply(item.reply)}
+            onLikeComment={() => likeComment(item)}>
           </PostComment> : null
         );
-      } else {
-        return (
-          (!maxComments || index < maxComments) ?
-            <PostComment {...item} key={index} readOnly={readOnlyComments}
-              onReplyClick={(replyId) => onReplyClick(replyId)}
-              onUpdateComment={() => onUpdateComment(item)}
-              onDeleteComment={() => deleteComment(item.id)}
-              onLikeComment={() => likeComment(item)}
-            /> : null);
-      }
     });
   };
-
-
 
   return (
     <div className="post-view">
@@ -92,8 +80,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
           <FontAwesomeIcon icon={faExternalLinkAlt} color='#737373' />
         </Link>
-
-        {/* <div className="post-action dropdown">
+        
+      <>{/* <div className="post-action dropdown">
           <a
             href="#"
             id="postAction"
@@ -128,7 +116,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               </a>
             </li>
           </ul>
-        </div> */}
+        </div> */}</>
+
       </div>
       <div className="post-body">
         {children}
@@ -177,7 +166,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               </div>
             </div>
           }
-          <div className="comment-reply">{reanderReply(poll && poll.comments_details && poll.comments_details.comments)}</div>
+          <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
         </div>
       </div>
     </div>
