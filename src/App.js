@@ -43,7 +43,6 @@ import Chat from "./component/Chat";
 const { REACT_APP_PROXY } = process.env;
 
 function App() {
-//Fun times
   return (
     <>
       <BrowserRouter>
