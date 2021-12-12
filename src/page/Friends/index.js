@@ -190,10 +190,7 @@ export default function Friends() {
     <Layout1>
       <section className="grupper-dashboard mt-4">
         <div className="container-xl">
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <GroupChat />
-            </div>
+          <div className="row justify-content-center">
             {/*/Group chat col*/}
 
             {/*/Missions Featured Cards Col*/}
@@ -301,155 +298,155 @@ export default function Friends() {
             {/*/Missions Featured Cards Col*/}
 
             {/*Short-by, Filter-by & Supported Col*/}
-            <div className="col-md-3">
-              {/*Short-by Card*/}
-              <div className="card short-by-card chat-list-card chat-card card-rounded overflow-hidden">
-                <div className="card-header pb-0 border-bottom-0">
-                  <h4 className="card-title">Short by</h4>
-                </div>
-                <div className="card-body overflow-hidden">
-                  <div className="pre-scrollable">
-                    <ul
-                      className="active-vertical-nav nav nav-pills"
-                      id="pills-tab"
-                    >
-                      <li className="nav-item">
-                        <a
-                          className="nav-link short-by-link active"
-                          href="#"
-                          data-bs-toggle="pill"
-                          onClick={handleOnClick}
-                        >New
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link short-by-link"
-                          href="#"
-                          data-bs-toggle="pill"
-                          onClick={handleOnClick}
-                        >
-                          Popular
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link short-by-link"
-                          href="#"
-                          data-bs-toggle="pill"
-                          onClick={handleOnClick}
-                        >
-                          Rising
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              {/*/Short-by Card*/}
+            {/*<div className="col-md-3">*/}
+            {/*  /!*Short-by Card*!/*/}
+            {/*  <div className="card short-by-card chat-list-card chat-card card-rounded overflow-hidden">*/}
+            {/*    <div className="card-header pb-0 border-bottom-0">*/}
+            {/*      <h4 className="card-title">Short by</h4>*/}
+            {/*    </div>*/}
+            {/*    <div className="card-body overflow-hidden">*/}
+            {/*      <div className="pre-scrollable">*/}
+            {/*        <ul*/}
+            {/*          className="active-vertical-nav nav nav-pills"*/}
+            {/*          id="pills-tab"*/}
+            {/*        >*/}
+            {/*          <li className="nav-item">*/}
+            {/*            <a*/}
+            {/*              className="nav-link short-by-link active"*/}
+            {/*              href="#"*/}
+            {/*              data-bs-toggle="pill"*/}
+            {/*              onClick={handleOnClick}*/}
+            {/*            >New*/}
+            {/*            </a>*/}
+            {/*          </li>*/}
+            {/*          <li className="nav-item">*/}
+            {/*            <a*/}
+            {/*              className="nav-link short-by-link"*/}
+            {/*              href="#"*/}
+            {/*              data-bs-toggle="pill"*/}
+            {/*              onClick={handleOnClick}*/}
+            {/*            >*/}
+            {/*              Popular*/}
+            {/*            </a>*/}
+            {/*          </li>*/}
+            {/*          <li className="nav-item">*/}
+            {/*            <a*/}
+            {/*              className="nav-link short-by-link"*/}
+            {/*              href="#"*/}
+            {/*              data-bs-toggle="pill"*/}
+            {/*              onClick={handleOnClick}*/}
+            {/*            >*/}
+            {/*              Rising*/}
+            {/*            </a>*/}
+            {/*          </li>*/}
+            {/*        </ul>*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*  /!Short-by Card*!/*/}
 
-              {/*Filter-by Card*/}
-              <div className="card filter-by-card mt-4 chat-list-card chat-card card-rounded overflow-hidden">
-                <div className="card-header pb-0 border-bottom-0">
-                  <h4 className="card-title">Filter by</h4>
-                </div>
-                <div className="card-body overflow-hidden">
-                  <form className="form filter-form" action="#">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input cursor-pointer"
-                        type="checkbox"
-                        value={filters.filter_my_groups}
-                        id="MyGroupsOnly"
-                        onChange={toggleMyGroups}
-                      />
-                      <label className="form-check-label cursor-pointer" for="MyGroupsOnly">
-                        My Groups only
-                      </label>
-                    </div>
-                    <div className="location-group">
-                      <h5 className="shrtby-intitle">Location</h5>
-                      <label for="dateSelect" className="short-by-link active cursor-pointer"
-                        onClick={onClickAnywhere}>
-                        Anywhere
-                      </label>
-                      <Form.Group>
-                        <Form.Control as="select" className="form-select form-select-sm border-0 mt-2"
-                          id="citySelect"
-                          onChange={handleOnCountrySelect}
-                          onClick={countryList}
-                          placeholder="Country"
-                        >
-                          <option disabled selected>Choose a Country</option>
-                          {
-                            contries?.map((countryDetail) => (
-                              <option value={countryDetail.id} key={countryDetail.id}
-                                id={countryDetail.id}
-                                selected={countryDetail.id === filters?.filter_country}
-                              >{countryDetail.country_name}</option>
-                            ))
-                          }
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Control as="select"
-                          className="form-select form-select-sm border-0 mt-2"
-                          onChange={handleOnCitySelect}
-                          disabled={!filters?.filter_country}
-                        >
-                          <option disabled selected>Choose a City</option>
-                          {
-                            cities?.map((cityDetail) => (
-                              <option value={cityDetail.id} key={cityDetail.id}
-                                id={cityDetail.id}
-                                selected={cityDetail.id === filters?.filter_city}
-                              >{cityDetail.city_name}</option>
-                            ))
-                          }
-                        </Form.Control>
-                      </Form.Group>
+            {/*  /!*Filter-by Card*!/*/}
+            {/*  <div className="card filter-by-card mt-4 chat-list-card chat-card card-rounded overflow-hidden">*/}
+            {/*    <div className="card-header pb-0 border-bottom-0">*/}
+            {/*      <h4 className="card-title">Filter by</h4>*/}
+            {/*    </div>*/}
+            {/*    <div className="card-body overflow-hidden">*/}
+            {/*      <form className="form filter-form" action="#">*/}
+            {/*        <div className="form-check">*/}
+            {/*          <input*/}
+            {/*            className="form-check-input cursor-pointer"*/}
+            {/*            type="checkbox"*/}
+            {/*            value={filters.filter_my_groups}*/}
+            {/*            id="MyGroupsOnly"*/}
+            {/*            onChange={toggleMyGroups}*/}
+            {/*          />*/}
+            {/*          <label className="form-check-label cursor-pointer" for="MyGroupsOnly">*/}
+            {/*            My Groups only*/}
+            {/*          </label>*/}
+            {/*        </div>*/}
+            {/*        <div className="location-group">*/}
+            {/*          <h5 className="shrtby-intitle">Location</h5>*/}
+            {/*          <label for="dateSelect" className="short-by-link active cursor-pointer"*/}
+            {/*            onClick={onClickAnywhere}>*/}
+            {/*            Anywhere*/}
+            {/*          </label>*/}
+            {/*          <Form.Group>*/}
+            {/*            <Form.Control as="select" className="form-select form-select-sm border-0 mt-2"*/}
+            {/*              id="citySelect"*/}
+            {/*              onChange={handleOnCountrySelect}*/}
+            {/*              onClick={countryList}*/}
+            {/*              placeholder="Country"*/}
+            {/*            >*/}
+            {/*              <option disabled selected>Choose a Country</option>*/}
+            {/*              {*/}
+            {/*                contries?.map((countryDetail) => (*/}
+            {/*                  <option value={countryDetail.id} key={countryDetail.id}*/}
+            {/*                    id={countryDetail.id}*/}
+            {/*                    selected={countryDetail.id === filters?.filter_country}*/}
+            {/*                  >{countryDetail.country_name}</option>*/}
+            {/*                ))*/}
+            {/*              }*/}
+            {/*            </Form.Control>*/}
+            {/*          </Form.Group>*/}
+            {/*          <Form.Group>*/}
+            {/*            <Form.Control as="select"*/}
+            {/*              className="form-select form-select-sm border-0 mt-2"*/}
+            {/*              onChange={handleOnCitySelect}*/}
+            {/*              disabled={!filters?.filter_country}*/}
+            {/*            >*/}
+            {/*              <option disabled selected>Choose a City</option>*/}
+            {/*              {*/}
+            {/*                cities?.map((cityDetail) => (*/}
+            {/*                  <option value={cityDetail.id} key={cityDetail.id}*/}
+            {/*                    id={cityDetail.id}*/}
+            {/*                    selected={cityDetail.id === filters?.filter_city}*/}
+            {/*                  >{cityDetail.city_name}</option>*/}
+            {/*                ))*/}
+            {/*              }*/}
+            {/*            </Form.Control>*/}
+            {/*          </Form.Group>*/}
 
-                    </div>
-                    <div>
-                      <div className="select-col">
-                        <h5 className="shrtby-intitle">Date created</h5>
-                        <label
-                          for="dateSelect"
-                          className="short-by-link active"
-                          onClick={onClikcAnyTime}
-                        >
-                          Anytime
-                        </label>
-                      </div>
-                      <div className="select-row">
-                        <select
-                          className="form-select form-select-sm date-select"
-                          id="dateSelect" onChange={handleOnMonthSelect}
-                        >
-                          {
-                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
-                              <option value={month} key={month}>{month}</option>
-                            ))
-                          }
-                        </select>
-                        <select
-                          className="form-select form-select-sm year-select"
-                          id="yearSelect"
-                          onChange={handleOnYearSelect}
-                        >
-                          {
-                            [2020, 2021].map((year) => (
-                              <option value={year} key={year}>{year}</option>
-                            ))
-                          }
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              {/*/Filter - by Card*/}
-            </div>
+            {/*        </div>*/}
+            {/*        <div>*/}
+            {/*          <div className="select-col">*/}
+            {/*            <h5 className="shrtby-intitle">Date created</h5>*/}
+            {/*            <label*/}
+            {/*              for="dateSelect"*/}
+            {/*              className="short-by-link active"*/}
+            {/*              onClick={onClikcAnyTime}*/}
+            {/*            >*/}
+            {/*              Anytime*/}
+            {/*            </label>*/}
+            {/*          </div>*/}
+            {/*          <div className="select-row">*/}
+            {/*            <select*/}
+            {/*              className="form-select form-select-sm date-select"*/}
+            {/*              id="dateSelect" onChange={handleOnMonthSelect}*/}
+            {/*            >*/}
+            {/*              {*/}
+            {/*                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (*/}
+            {/*                  <option value={month} key={month}>{month}</option>*/}
+            {/*                ))*/}
+            {/*              }*/}
+            {/*            </select>*/}
+            {/*            <select*/}
+            {/*              className="form-select form-select-sm year-select"*/}
+            {/*              id="yearSelect"*/}
+            {/*              onChange={handleOnYearSelect}*/}
+            {/*            >*/}
+            {/*              {*/}
+            {/*                [2020, 2021].map((year) => (*/}
+            {/*                  <option value={year} key={year}>{year}</option>*/}
+            {/*                ))*/}
+            {/*              }*/}
+            {/*            </select>*/}
+            {/*          </div>*/}
+            {/*        </div>*/}
+            {/*      </form>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*  /!Filter - by Card*!/*/}
+            {/*</div>*/}
             {/*/Short-by & Filter-by Col*/}
           </div>
         </div>

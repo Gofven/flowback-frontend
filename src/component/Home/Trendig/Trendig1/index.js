@@ -35,7 +35,7 @@ export default function Trendig1() {
         return <WorldwideTab />;
       case tab[1]:
         return <SwedenTab />;
-    }
+      }
   };
   return (
     <div className="card trending-card chat-list-card chat-card card-rounded overflow-hidden">

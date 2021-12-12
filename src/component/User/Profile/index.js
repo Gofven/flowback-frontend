@@ -361,23 +361,13 @@ export default function Profile(props) {
                                     <div className="profile-content-view">
                                         <form className="form">
                                             <div className='d-flex mb-2'>
-                                                <div className="form-group col-6 mr-2">
+                                                <div className="form-group col-12 mr-2">
                                                     <Textbox
                                                         type="text"
                                                         name="first_name"
-                                                        placeholder="First Name"
+                                                        placeholder="Name"
                                                         required
                                                         value={userForm.first_name}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                                <div className="form-group col-6">
-                                                    <Textbox
-                                                        type="text"
-                                                        name="last_name"
-                                                        placeholder="Last Name"
-                                                        required
-                                                        value={userForm.last_name}
                                                         onChange={handleOnChange}
                                                     />
                                                 </div>

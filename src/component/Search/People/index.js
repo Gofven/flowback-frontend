@@ -37,9 +37,6 @@ export default function People(props) {
               {person.city && person.city.city_name}, {person.country && person.country.country_name}
             </p>
           </div>
-          <a href="#" className="btn btn-sm btn-outline-secondary">
-            Message
-                  </a>
         </div>
 
       ))

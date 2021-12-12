@@ -197,7 +197,7 @@ function Counterproposals({ poll, group }) {
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
                 <div className="card-header flex-header d-flex justify-content-between">
-                    <h4 className="card-title fw-bolder">Counter Proposals</h4>
+                    <h4 className="card-title fw-bolder">Proposals</h4>
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
                             <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>

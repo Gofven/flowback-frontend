@@ -212,12 +212,6 @@ export default function Search() {
                       about event blip blop wee text about event blip blop wee
                       woo text tt about event blip blop wee woo text...
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Pin to calendar
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -251,12 +245,6 @@ export default function Search() {
                       about event blip blop wee text about event blip blop wee
                       woo text tt about event blip blop wee woo text...
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Pin to calendar
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -299,12 +287,6 @@ export default function Search() {
                       in the forest north of the south will be trees in forest
                       north of the south yea ..
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Bookmark
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -349,12 +331,6 @@ export default function Search() {
                       in the forest north of the south will be trees in forest
                       north of the south yea ..
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Bookmark
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>

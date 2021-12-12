@@ -30,9 +30,6 @@ export default function Events() {
       <section className="event-dashboard mt-4">
         <div className="container-xl">
           <div className="row">
-            <div className="col-md-3 mb-4">
-              <GroupChat />
-            </div>
 
             <div className="col-md-6">
               <div className="mission-post-card row g-0 mb-4">
@@ -63,12 +60,6 @@ export default function Events() {
                       about event blip blop wee text about event blip blop wee
                       woo text tt about event blip blop wee woo text...
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Pin to calendar
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -100,12 +91,6 @@ export default function Events() {
                       about event blip blop wee text about event blip blop wee
                       woo text tt about event blip blop wee woo text...
                     </p>
-                    <div className="text-end">
-                      <button className="btn btn-light">
-                        <i className="lar la-bookmark"></i>
-                        Pin to calendar
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>

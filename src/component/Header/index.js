@@ -31,7 +31,7 @@ const data = [
   { title: "Home", icon: "la-home", url: "/home" },
   { title: "Missions", icon: "la-globe-americas", url: "/missions" },
   { title: "Groups", icon: "la-user-friends", url: "/groups" },
-  { title: "Votings", icon: "la-chart-bar", url: "/votings" },
+  // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
   { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
 ];
 

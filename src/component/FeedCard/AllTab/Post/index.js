@@ -139,16 +139,6 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
                 <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
               </a>
             </div>
-            <div>
-              <a href="#">
-                <i className="las la-share-square"></i>
-                Share
-              </a>
-              <a href="#" className="ml-2">
-                <i className="las la-bookmark"></i>
-                Bookmark
-              </a>
-            </div>
           </div>
           {
             !readOnlyComments &&

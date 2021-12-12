@@ -314,10 +314,7 @@ export default function PollDetails() {
         <Layout1>
             <section className=" mt-4">
                 <div className="container-xl">
-                    <div className="row">
-                        <div className="col-md-3 mb-4">
-                            <GroupChat />
-                        </div>
+                    <div className="row justify-content-end">
                         {/*/Group chat col*/}
 
                         <div className="col-md-6">
@@ -442,7 +439,7 @@ export default function PollDetails() {
                                         <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">Discussion Time</div>
+                                        <div className="col-5">End Time</div>
                                         <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
 
@@ -481,7 +478,7 @@ export default function PollDetails() {
                                             <div className='d-flex'>
                                                 <label htmlFor='document' className="text-primary">
                                                     <div>
-                                                        Add More File
+                                                        Add More Files
                                                                     </div>
                                                 </label>
                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'

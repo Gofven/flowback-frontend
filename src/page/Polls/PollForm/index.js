@@ -174,10 +174,7 @@ export default function PollForm() {
         <Layout1>
             <section className="grupper-dashboard mt-4">
                 <div className="container-xl">
-                    <div className="row">
-                        <div className="col-md-3 mb-4">
-                            <GroupChat />
-                        </div>
+                    <div className="row justify-content-center">
                         {/*/Group chat col*/}
 
                         {/*/Missions Featured Cards Col*/}
@@ -215,7 +212,7 @@ export default function PollForm() {
                                                             <div className='d-flex'>
                                                                 <label htmlFor='document' className="text-primary">
                                                                     <div>
-                                                                        Add More File
+                                                                        Add More Files
                                                                     </div>
                                                                 </label>
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
@@ -303,9 +300,6 @@ export default function PollForm() {
                             </div>
                         </div>
                         {/*/Missions Featured Cards Col*/}
-
-                        <div className="col-md-3">
-                        </div>
                     </div>
                 </div>
             </section>
