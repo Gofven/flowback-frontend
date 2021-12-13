@@ -47,21 +47,74 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     setEditComment(comment);
   }
 
-  const renderComments = (reply) => {
-    return reply?.map((item, index) => {
-        //console.log(`${JSON.stringify(poll.comments_details.comments)} is a comment with index ${index}`);
-        console.log(poll.comments_details.comments)
-        //poll.comments_details[item.reply_to].reply.push(reply)
-        return ((!maxComments || index < maxComments) ?
-          <PostComment {...item} key={index} readOnly={readOnlyComments}
-            onReplyClick={(replyId) => onReplyClick(replyId)}
-            onUpdateComment={() => onUpdateComment(item)}
-            onDeleteComment={() => deleteComment(item.id)}
-            onLikeComment={() => likeComment(item)}>
-          </PostComment> : null
-        );
-    });
+  const renderComments = (inputComments) => {
+
+    
+    
+    
+    console.log("reply:")
+    //console.log(comments)
+    
+    let comments = inputComments;
+    let roots = comments.filter((comment)=>comment.reply_to===null);
+    let replies = comments.filter((comment)=>comment.reply_to!==null);
+    let commentDisplayOrder = roots
+    let depth = 0
+    //while comments.size > 0
+    //{
+      depth++;
+      replies.forEach(reply=>
+        {
+          roots.forEach(root=>{
+            
+            if (reply.reply_to === root.id )
+            {
+              const index = inputComments.findIndex((comment) => comment.id === reply.reply_to);
+              console.log(inputComments[index])
+            }
+          })
+        })
+
+        roots = replies
+        
+    //}
+
+    
+    
+    return comments.map((item, i)=>{
+      const index = comments.findIndex((comment) => comment.id === item.reply_to);
+      return <div>{item.comment} is {item.id} which replies to {item.reply_to || "no one"} which
+      is positioned at position {index}</div>
+    })
+
+    
+
+
+    // return reply?.map((item, index) => {
+    //     //console.log(`${JSON.stringify(poll.comments_details.comments)} is a comment with index ${index}`);
+    //     console.log(poll.comments_details.comments)
+    //     //poll.comments_details[item.reply_to].reply.push(reply)
+    //     return ((!maxComments || index < maxComments) ?
+    //       <PostComment {...item} key={index} readOnly={readOnlyComments}
+    //         onReplyClick={(replyId) => onReplyClick(replyId)}
+    //         onUpdateComment={() => onUpdateComment(item)}
+    //         onDeleteComment={() => deleteComment(item.id)}
+    //         onLikeComment={() => likeComment(item)}>
+    //       </PostComment> : null
+    //     );
+    // });
   };
+
+  const replies = (comments, comment, depth) => 
+  {
+    const output = []
+    comments.forEach(comment => {
+      if (comment.reply_to === comment.id)
+      {
+
+      }
+    });
+  }
 
   return (
     <div className="post-view">
