@@ -26,7 +26,7 @@ import Profile from "../../User/Profile";
 import Requests from "../../User/Requests";
 import ActionRow from "./ActionRow";
 
-const data = [
+const loggedInData = [
   {
     title: "User Profile",
     url: "#",
@@ -63,16 +63,26 @@ const data = [
     url: "#",
     onClick: () => {
       logOut();
-      window.location.href = '/';
+      window.location.href = "/";
     }
   },
 ];
 
+const loggedOutData = [
+  {
+    title: "Log In",
+    url: "#",
+    onClick: () => {
+      logOut();
+      window.location.href = "/Login";
+    }
+  }, 
+]
+
 export default function UserAction(user) {
-  // TODO if user is anonymous, replace logout with login.
-  // if (typeof user.user === "undefined") {
-  //   data.at(-1).title = "Log In"
-  // }
+
+  const data = typeof user.user === "undefined" ? loggedOutData : loggedInData 
+
   return (
     <ul
       className="dropdown-menu"
