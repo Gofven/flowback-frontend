@@ -79,6 +79,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               reply.depth = depth;
               //Puts the comments in the correct order
               commentDisplayOrder.splice(index+1, 0, reply);
+              
             }
           })
         })

@@ -22,10 +22,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { postRequest } from "../../../../utils/API";
 
-export default function CommentBox({ border = true, onAddComment, replyTo, onInputBlur, updateComment }) {
+export default function CommentBox({ border = true, onAddComment, replyTo, onInputBlur, updateComment, poll }) {
 
   const inputRef = useRef();
-  console.log(replyTo)
+  const commentBeingRepliedTo = poll.comments_details.comments.find(comment=>comment.id===replyTo);
   const handleKeypress = (e) => {
     console.log("e", e);
     console.log("e", e.target.value);
@@ -77,7 +77,7 @@ export default function CommentBox({ border = true, onAddComment, replyTo, onInp
         data-brackets-id="844"
         type="text"
         className="form-control"
-        placeholder="Write a comment"
+        placeholder={commentBeingRepliedTo ? `Replying to ${commentBeingRepliedTo.created_by.first_name}` : "Write a comment"}
         onKeyPress={handleKeypress}
         ref={inputRef}
         onBlur={onInputBlur}
