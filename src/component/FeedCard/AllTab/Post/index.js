@@ -70,13 +70,14 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             if (reply.reply_to === root.id )
             {
               //Finds the index in the Array where the reply replied to. 
+              const index2 = commentsLeft.findIndex((comment) => comment.id === reply.reply_to);
+              //commentsLeft.splice(index2,2)
+              
               const index = commentDisplayOrder.findIndex((comment) => comment.id === reply.reply_to);
               reply.depth = depth;
               //Puts the comments in the correct order
               commentDisplayOrder.splice(index+1, 0, reply);
               
-              const index2 = commentsLeft.findIndex((comment) => comment.id === reply.reply_to);
-              commentsLeft.pop(index2)
               console.log(commentsLeft)
             }
           })
@@ -90,7 +91,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     
     return commentDisplayOrder.map((item, i)=>{
       const index = commentDisplayOrder.findIndex((comment) => comment.id === item.reply_to);
-      return <div>{item.comment} is {item.id} which replies to {item.reply_to || "no one"} which
+      return <div style={{"margin-left":`${item.depth*10}px`}}>{item.comment} is {item.id} which replies to {item.reply_to || "no one"} which
       is positioned at position {index}</div>
     })
 
