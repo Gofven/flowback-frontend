@@ -55,9 +55,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     console.log("reply:")
     //console.log(comments)
     
-    let comments = inputComments;
-    let roots = comments.filter((comment)=>comment.reply_to===null);
-    let replies = comments.filter((comment)=>comment.reply_to!==null);
+    let roots = inputComments.filter((comment)=>comment.reply_to===null);
+    let replies = inputComments.filter((comment)=>comment.reply_to!==null);
+    let commentsLeft = replies;
     let commentDisplayOrder = roots
     let depth = 0
     //while comments.size > 0
@@ -69,20 +69,27 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             
             if (reply.reply_to === root.id )
             {
-              const index = inputComments.findIndex((comment) => comment.id === reply.reply_to);
-              console.log(inputComments[index])
+              //Finds the index in the Array where the reply replied to. 
+              const index = commentDisplayOrder.findIndex((comment) => comment.id === reply.reply_to);
+              reply.depth = depth;
+              //Puts the comments in the correct order
+              commentDisplayOrder.splice(index+1, 0, reply);
+              
+              const index2 = commentsLeft.findIndex((comment) => comment.id === reply.reply_to);
+              commentsLeft.pop(index2)
+              console.log(commentsLeft)
             }
           })
         })
 
-        roots = replies
+        //roots = replies
         
     //}
 
     
     
-    return comments.map((item, i)=>{
-      const index = comments.findIndex((comment) => comment.id === item.reply_to);
+    return commentDisplayOrder.map((item, i)=>{
+      const index = commentDisplayOrder.findIndex((comment) => comment.id === item.reply_to);
       return <div>{item.comment} is {item.id} which replies to {item.reply_to || "no one"} which
       is positioned at position {index}</div>
     })
