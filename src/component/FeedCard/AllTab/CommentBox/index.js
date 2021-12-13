@@ -25,7 +25,7 @@ import { postRequest } from "../../../../utils/API";
 export default function CommentBox({ border = true, onAddComment, replyTo, onInputBlur, updateComment }) {
 
   const inputRef = useRef();
-
+  console.log(replyTo)
   const handleKeypress = (e) => {
     console.log("e", e);
     console.log("e", e.target.value);
