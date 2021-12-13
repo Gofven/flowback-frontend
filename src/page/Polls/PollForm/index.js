@@ -90,6 +90,7 @@ export default function PollForm() {
 
     // Create Poll
     const handleSubmit = (e) => {
+        pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60*60*1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
         var data = new FormData();
