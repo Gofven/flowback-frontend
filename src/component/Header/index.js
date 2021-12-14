@@ -47,7 +47,7 @@ export default function Header() {
   return (
     <nav className="main-navbar navbar navbar-expand-lg">
       <div className="container-lg">
-        <a className="navbar-brand" href="/home">
+        <a className="navbar-brand" href="/">
           <img src="/img/Logo.png" className="main-logo" alt="logo" />
         </a>
         <button

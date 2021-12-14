@@ -77,7 +77,7 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
         setLoading(false);
         const { status, data } = response;
         if (status === "success") {
-          history.push("/home");
+          history.push("/");
         } else {
           setError({ ...error, ...data[0] });
         }
