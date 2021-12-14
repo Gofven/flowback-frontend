@@ -24,7 +24,7 @@ import "./styles.css";
 import Layout1 from "../../../layout/Layout1";
 import GroupChat from "../../../component/GroupChat";
 import { Link, useParams } from "react-router-dom";
-import { postRequest } from "../../../utils/API";
+import { getRequest, postRequest } from "../../../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCheckCircle, faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
@@ -259,7 +259,7 @@ export default function PollDetails() {
     const getCounterProposal = () => {
         var data = new FormData();
         data.append('poll', pollId);
-        postRequest("api/v1/group_poll/user_proposal", data).then(
+        getRequest(`api/v1/group_poll/${pollId}/user_proposal`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;

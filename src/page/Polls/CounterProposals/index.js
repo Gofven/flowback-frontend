@@ -21,7 +21,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { postRequest } from '../../../utils/API';
+import { postRequest, getRequest } from '../../../utils/API';
 import CounterProposal from './CounterProposal';
 import { faSort, faArrowsAltV, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FormatComments } from '../../../utils/common';
@@ -44,7 +44,7 @@ function Counterproposals({ poll, group }) {
     const getCounterProposals = () => {
         var data = new FormData();
         data.append('poll', poll.id);
-        postRequest("api/v1/group_poll/all_proposals", data).then(
+        getRequest(`api/v1/group_poll/${poll.id}/all_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
