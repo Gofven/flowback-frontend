@@ -44,7 +44,7 @@ function Counterproposals({ poll, group }) {
     const getCounterProposals = () => {
         var data = new FormData();
         data.append('poll', poll.id);
-        postRequest("api/v1/group_poll/get_all_counter_proposal", data).then(
+        postRequest("api/v1/group_poll/all_proposals", data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;

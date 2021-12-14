@@ -245,7 +245,7 @@ function SortCounterProposal(props) {
             negative_proposal_indexes: negative_proposal_indexes,
             poll: props.pollId
         }
-        postRequest("api/v1/group_poll/update_proposal_indexes", data).then(
+        postRequest("api/v1/group_poll/update_index_proposals", data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;

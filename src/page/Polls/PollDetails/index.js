@@ -259,7 +259,7 @@ export default function PollDetails() {
     const getCounterProposal = () => {
         var data = new FormData();
         data.append('poll', pollId);
-        postRequest("api/v1/group_poll/get_counter_proposal", data).then(
+        postRequest("api/v1/group_poll/user_proposal", data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
@@ -294,7 +294,7 @@ export default function PollDetails() {
         data.append('file', counterProposal.file);
         data.append('proposal', counterProposal.proposal);
         data.append('poll', pollId);
-        postRequest("api/v1/group_poll/add_counter_proposal", data).then(
+        postRequest("api/v1/group_poll/add_proposal", data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
