@@ -46,19 +46,10 @@ function Counterproposals({ poll, group }) {
         data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`, data).then(
             (response) => {
-                const { status, data } = response;
-                console.log('response', data);
-                if (status === "success") {
-                    if (data && data.counter_proposals) {
-                        data.counter_proposals.forEach((counterProposal) => {
-                            counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
-                        })
-                        setCounterProposals(data.counter_proposals);
-                    }
-                    if (data && data.proposal_indexes) {
-                        setProposalIndexes(data.proposal_indexes);
-                    }
-                }
+                if (response) {
+                    setCounterProposals(response);
+                    setProposalIndexes(response);
+                }     
             });
     }
 
@@ -192,8 +183,6 @@ function Counterproposals({ poll, group }) {
             getCounterProposals();
         }
     }
-    console.log("COUNTER")
-    console.log(counterProposals)
 
     return (
         <div>
