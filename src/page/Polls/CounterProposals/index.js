@@ -42,12 +42,19 @@ function Counterproposals({ poll, group }) {
      * To get counter proposals
      */
     const getCounterProposals = () => {
-        var data = new FormData();
-        data.append('poll', poll.id);
-        getRequest(`api/v1/group_poll/${poll.id}/all_proposals`, data).then(
+        getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
                 if (response) {
                     setCounterProposals(response);
+                }     
+            });
+    }
+
+    const getProposalIndexes = () => {
+        getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
+            (response) => {
+                if (response) {
+                    //console.log("INDEX RESPONSE", response)
                     setProposalIndexes(response);
                 }     
             });
@@ -173,7 +180,6 @@ function Counterproposals({ poll, group }) {
                         setCounterProposals(counterProposalsDup);
                     }
                 }
-
             }
         );
     }

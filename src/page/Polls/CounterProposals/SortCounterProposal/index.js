@@ -71,7 +71,7 @@ const initialData = {
 };
 
 function Column(props) {
-    console.log('columns', props);
+    //console.log('columns', props);
     return <Container>
         <Title>{props.column.title}</Title>
         <Droppable droppableId={props.column.id + ''}>
@@ -240,12 +240,15 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
+        console.log("positive", positive_proposal_indexes)
+        console.log("negative", negative_proposal_indexes)
         const data = {
-            positive_proposal_indexes: positive_proposal_indexes,
-            negative_proposal_indexes: negative_proposal_indexes,
-            poll: props.pollId
+            positive: positive_proposal_indexes,
+            negative: negative_proposal_indexes
         }
-        postRequest("api/v1/group_poll/index_proposals", data).then(
+
+        console.log("data", data)
+        postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
