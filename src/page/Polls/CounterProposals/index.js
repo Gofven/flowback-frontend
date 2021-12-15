@@ -46,8 +46,8 @@ function Counterproposals({ poll, group }) {
         data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`, data).then(
             (response) => {
-                console.log('response', response);
                 const { status, data } = response;
+                console.log('response', data);
                 if (status === "success") {
                     if (data && data.counter_proposals) {
                         data.counter_proposals.forEach((counterProposal) => {
@@ -192,6 +192,8 @@ function Counterproposals({ poll, group }) {
             getCounterProposals();
         }
     }
+    console.log("COUNTER")
+    console.log(counterProposals)
 
     return (
         <div>
