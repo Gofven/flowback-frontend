@@ -32,12 +32,11 @@ import { UserTypes } from '../../../constants/constants';
 function Counterproposals({ poll, group }) {
 
     const [counterProposals, setCounterProposals] = useState([]);
-    const [proposalIndexes, setProposalIndexes] = useState(null);
 
     useEffect(() => {
         getCounterProposals();
     }, [])
-
+    
     /**
      * To get counter proposals
      */
@@ -48,17 +47,7 @@ function Counterproposals({ poll, group }) {
                     setCounterProposals(response);
                 }     
             });
-    }
-
-    const getProposalIndexes = () => {
-        getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
-            (response) => {
-                if (response) {
-                    //console.log("INDEX RESPONSE", response)
-                    setProposalIndexes(response);
-                }     
-            });
-    }
+        }
 
     /**
      * To add comment in counter proposal
@@ -197,7 +186,7 @@ function Counterproposals({ poll, group }) {
                     <h4 className="card-title fw-bolder">Proposals</h4>
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
-                            <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>
+                            <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} onUpdateIndexes={onUpdateIndexes}>
                                 <FontAwesomeIcon icon={faArrowsAltV} color="black" />
                                 {/* testing */}
                             </SortCounterProposal>

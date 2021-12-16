@@ -25,7 +25,7 @@ import Loader from '../../../../component/common/Loader';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './styles.css';
 import styled from 'styled-components';
-import { postRequest } from '../../../../utils/API';
+import { postRequest, getRequest } from '../../../../utils/API';
 import Image from '../../../../component/common/Image';
 import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
@@ -137,11 +137,13 @@ function SortCounterProposal(props) {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
+    const [proposalIndexes, setProposalIndexes] = useState({negative:[], positive:[]});
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
+        getProposalIndexes();
         if (show) {
             initializeState();
         }
@@ -151,10 +153,14 @@ function SortCounterProposal(props) {
      * To intialize counter proposal sorting state
      */
     const initializeState = () => {
+        //props.getProposalIndexes();
+        console.log("COOL INDESX", proposalIndexes)
         const cpList = props.counterProposals || [];
         const cpMap = cpList.reduce((acc, cp) => (acc[cp.id] = cp, acc), {});
-        let cpPoints = props.proposalIndexes || {};
+        //console.log("LISTA", cpMap)
         const data = state;
+        let cpPoints = props.proposalIndexes || {};
+        console.log("CPPOINTS", cpPoints)
         cpPoints = Object.fromEntries(
             Object.entries(cpPoints).sort(([, a], [, b]) => a - b)
         );
@@ -182,7 +188,7 @@ function SortCounterProposal(props) {
             list.push(cp);
             pointsMap.set('neutral', list);
         });
-        data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
+        //data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
 
         Object.keys(data.columns).forEach((column) => {
             data.columns[column].taskIds = pointsMap.get(column) || [];
@@ -210,7 +216,16 @@ function SortCounterProposal(props) {
         data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId);
         setState({ ...data });
     }
-
+    
+    const getProposalIndexes = () => {
+        getRequest(`api/v1/group_poll/${props.pollId}/index_proposals`).then(
+            (response) => {
+                if (response) {
+                    console.log("COOL INDEX RESPONSE",response)
+                    setProposalIndexes(response);
+            }     
+        });
+    }
     /**
      * To save proposal positions provided by a user
      */
