@@ -217,37 +217,10 @@ function SortCounterProposal(props) {
     const saveIndexies = () => {
         setLoading(true);
         const newPoints = calculatePoints();
-        console.log('points on save', newPoints);
-        const ppi = {};
-        const npi = {};
-
-        // Split into two list containing positives and negatives
-        for (const [key, value] of Object.entries(newPoints)) {
-            if (value > 0) {
-                ppi[key] = value;
-            }
-            if (value < 0) {
-                npi[key] = value;
-            }
-        }
-
-        // Sort values highest to lowest
-        const positive_proposal_indexes = Object.keys(ppi).sort(function(a,b){
-            return ppi[a] - ppi[b];
-        }).map(Number)
-
-        const negative_proposal_indexes = Object.keys(npi).sort(function(a,b){
-            return npi[a] - npi[b];
-        }).map(Number)
-
-        console.log("positive", positive_proposal_indexes)
-        console.log("negative", negative_proposal_indexes)
         const data = {
-            positive: positive_proposal_indexes,
-            negative: negative_proposal_indexes
+            positive: newPoints[0],
+            negative: newPoints[1]
         }
-
-        console.log("data", data)
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
@@ -270,16 +243,16 @@ function SortCounterProposal(props) {
      */
     const calculatePoints = () => {
         const data = state;
-        const points = {};
-        data.columns['positive'].taskIds.forEach((taskId, index) => {
-            points[taskId] = data.columns['positive'].taskIds.length - index;
+        let negative = []
+        let positive = []
+
+        data.columns['positive'].taskIds.forEach(taskID => {
+            positive.push(taskID)
         });
-        data.columns['neutral'].taskIds.forEach((taskId, index) => {
-            points[taskId] = 0;
+        data.columns['negative'].taskIds.forEach(taskID => {
+            negative.push(taskID)
         });
-        data.columns['negative'].taskIds.forEach((taskId, index) => {
-            points[taskId] = (index + 1) * -1;
-        });
+        const points = [positive, negative]
         return points;
     }
 
