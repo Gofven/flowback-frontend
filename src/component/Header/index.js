@@ -82,7 +82,7 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <i className="las la-bell"></i>
-                <span className="notification-badge">1</span>
+                {/* <span className="notification-badge">1</span> */}
               </a>
               <Notifiaction />
             </li>
