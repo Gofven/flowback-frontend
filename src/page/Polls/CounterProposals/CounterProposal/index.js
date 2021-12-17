@@ -85,6 +85,7 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
                             <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
+                    
                 }
             </div>
             <div className="counterproposal-body card-body">

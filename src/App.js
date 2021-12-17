@@ -43,14 +43,13 @@ import Chat from "./component/Chat";
 const { REACT_APP_PROXY } = process.env;
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
         <Switch>
           <PublicRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/events" component={Events} />
-          {/*<PrivateRoute exact path="/missions" component={Missions} />*/}
+          <PrivateRoute exact path="/missions" component={Missions} />
           <PrivateRoute exact path="/votings" component={Votings} />
           <PrivateRoute exact path="/mentions" component={Mentions} />
           <PrivateRoute exact path="/groups" component={Friends} />

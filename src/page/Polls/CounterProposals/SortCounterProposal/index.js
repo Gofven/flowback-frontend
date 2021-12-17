@@ -133,6 +133,7 @@ function Task(props) {
     </Draggable>;
 }
 
+
 function SortCounterProposal(props) {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -241,11 +242,12 @@ function SortCounterProposal(props) {
         }).map(Number)
 
         const data = {
-            positive_proposal_indexes: positive_proposal_indexes,
-            negative_proposal_indexes: negative_proposal_indexes,
-            poll: props.pollId
+            positive: positive_proposal_indexes,
+            negative: negative_proposal_indexes
         }
-        postRequest("api/v1/group_poll/update_proposal_indexes", data).then(
+
+        console.log("DATA", data)
+        postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
@@ -283,7 +285,7 @@ function SortCounterProposal(props) {
     useEffect(() => {
         console.log('state changes', state);
     }, [state])
-
+    
     return (
         <>
             <div className={props.className} onClick={handleShow}>
@@ -306,7 +308,7 @@ function SortCounterProposal(props) {
                                         const column = state.columns[columnId];
                                         const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                        return <Column key={column.id} column={column} tasks={tasks} />;
+                                        return <Column key={tasks.id} column={column} tasks={tasks} />;
                                     })}
                                 </DragDropContext>
                             }

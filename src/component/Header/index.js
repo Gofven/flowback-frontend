@@ -29,7 +29,7 @@ import UserAction from "./UserAction";
 const data = [
   { title: "Search", icon: "la-search", url: "/search" },
   { title: "Home", icon: "la-home", url: "/" },
-  // { title: "Missions", icon: "la-globe-americas", url: "/missions" },
+  { title: "Missions", icon: "la-globe-americas", url: "/missions" },
   { title: "Groups", icon: "la-user-friends", url: "/groups" },
   // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
   { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
@@ -47,7 +47,7 @@ export default function Header() {
   return (
     <nav className="main-navbar navbar navbar-expand-lg">
       <div className="container-lg">
-        <a className="navbar-brand" href="/home">
+        <a className="navbar-brand" href="/">
           <img src="/img/Logo.png" className="main-logo" alt="logo" />
         </a>
         <button
@@ -82,7 +82,7 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <i className="las la-bell"></i>
-                <span className="notification-badge">1</span>
+                {/* <span className="notification-badge">1</span> */}
               </a>
               <Notifiaction />
             </li>
