@@ -25,7 +25,7 @@ import Loader from '../../../../component/common/Loader';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './styles.css';
 import styled from 'styled-components';
-import { postRequest, getRequest } from '../../../../utils/API';
+import { postRequest } from '../../../../utils/API';
 import Image from '../../../../component/common/Image';
 import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
@@ -71,7 +71,7 @@ const initialData = {
 };
 
 function Column(props) {
-    //console.log('columns', props);
+    console.log('columns', props);
     return <Container>
         <Title>{props.column.title}</Title>
         <Droppable droppableId={props.column.id + ''}>
@@ -133,17 +133,16 @@ function Task(props) {
     </Draggable>;
 }
 
+
 function SortCounterProposal(props) {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
-    const [proposalIndexes, setProposalIndexes] = useState({negative:[], positive:[]});
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        getProposalIndexes();
         if (show) {
             initializeState();
         }
@@ -153,14 +152,10 @@ function SortCounterProposal(props) {
      * To intialize counter proposal sorting state
      */
     const initializeState = () => {
-        //props.getProposalIndexes();
-        console.log("COOL INDESX", proposalIndexes)
         const cpList = props.counterProposals || [];
         const cpMap = cpList.reduce((acc, cp) => (acc[cp.id] = cp, acc), {});
-        //console.log("LISTA", cpMap)
-        const data = state;
         let cpPoints = props.proposalIndexes || {};
-        console.log("CPPOINTS", cpPoints)
+        const data = state;
         cpPoints = Object.fromEntries(
             Object.entries(cpPoints).sort(([, a], [, b]) => a - b)
         );
@@ -188,7 +183,7 @@ function SortCounterProposal(props) {
             list.push(cp);
             pointsMap.set('neutral', list);
         });
-        //data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
+        data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
 
         Object.keys(data.columns).forEach((column) => {
             data.columns[column].taskIds = pointsMap.get(column) || [];
@@ -216,26 +211,42 @@ function SortCounterProposal(props) {
         data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId);
         setState({ ...data });
     }
-    
-    const getProposalIndexes = () => {
-        getRequest(`api/v1/group_poll/${props.pollId}/index_proposals`).then(
-            (response) => {
-                if (response) {
-                    console.log("COOL INDEX RESPONSE",response)
-                    setProposalIndexes(response);
-            }     
-        });
-    }
+
     /**
      * To save proposal positions provided by a user
      */
     const saveIndexies = () => {
         setLoading(true);
         const newPoints = calculatePoints();
-        const data = {
-            positive: newPoints[0],
-            negative: newPoints[1]
+        console.log('points on save', newPoints);
+        const ppi = {};
+        const npi = {};
+
+        // Split into two list containing positives and negatives
+        for (const [key, value] of Object.entries(newPoints)) {
+            if (value > 0) {
+                ppi[key] = value;
+            }
+            if (value < 0) {
+                npi[key] = value;
+            }
         }
+
+        // Sort values highest to lowest
+        const positive_proposal_indexes = Object.keys(ppi).sort(function(a,b){
+            return ppi[a] - ppi[b];
+        }).map(Number)
+
+        const negative_proposal_indexes = Object.keys(npi).sort(function(a,b){
+            return npi[a] - npi[b];
+        }).map(Number)
+
+        const data = {
+            positive: positive_proposal_indexes,
+            negative: negative_proposal_indexes
+        }
+
+        console.log("DATA", data)
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
@@ -258,23 +269,23 @@ function SortCounterProposal(props) {
      */
     const calculatePoints = () => {
         const data = state;
-        let negative = []
-        let positive = []
-
-        data.columns['positive'].taskIds.forEach(taskID => {
-            positive.push(taskID)
+        const points = {};
+        data.columns['positive'].taskIds.forEach((taskId, index) => {
+            points[taskId] = data.columns['positive'].taskIds.length - index;
         });
-        data.columns['negative'].taskIds.forEach(taskID => {
-            negative.push(taskID)
+        data.columns['neutral'].taskIds.forEach((taskId, index) => {
+            points[taskId] = 0;
         });
-        const points = [positive, negative]
+        data.columns['negative'].taskIds.forEach((taskId, index) => {
+            points[taskId] = (index + 1) * -1;
+        });
         return points;
     }
 
     useEffect(() => {
         console.log('state changes', state);
     }, [state])
-
+    
     return (
         <>
             <div className={props.className} onClick={handleShow}>
@@ -297,7 +308,7 @@ function SortCounterProposal(props) {
                                         const column = state.columns[columnId];
                                         const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                        return <Column key={column.id} column={column} tasks={tasks} />;
+                                        return <Column key={tasks.id} column={column} tasks={tasks} />;
                                     })}
                                 </DragDropContext>
                             }

@@ -21,7 +21,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { postRequest, getRequest } from '../../../utils/API';
+import { postRequest, getRequest, getJsonRequest } from '../../../utils/API';
 import CounterProposal from './CounterProposal';
 import { faSort, faArrowsAltV, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FormatComments } from '../../../utils/common';
@@ -32,6 +32,7 @@ import { UserTypes } from '../../../constants/constants';
 function Counterproposals({ poll, group }) {
 
     const [counterProposals, setCounterProposals] = useState([]);
+    const [proposalIndexes, setProposalIndexes] = useState(null);
 
     useEffect(() => {
         getCounterProposals();
@@ -41,13 +42,33 @@ function Counterproposals({ poll, group }) {
      * To get counter proposals
      */
     const getCounterProposals = () => {
+        //var data = new FormData();
+        //data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
-                if (response) {
-                    setCounterProposals(response);
-                }     
+                console.log('response', response);
+                //const { status, data } = response;
+                //if (response === "success") {
+                    console.log("the counter proposasls", response)
+                    setCounterProposals(response)
+                    // if (response && response.counter_proposals) {
+                    //     response.forEach((counterProposal) => {
+                    //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
+                    //         setCounterProposals(response);
+                    //     })
+                    // }
+                //}
+            });
+        getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
+            (response) => {
+                //console.log('RESPONSE!!!!', response);
+                    if (response && response.proposal_indexes) {
+                        setProposalIndexes(response.proposal_indexes);
+                    }
+                
             });
         }
+            
 
     /**
      * To add comment in counter proposal
@@ -179,14 +200,14 @@ function Counterproposals({ poll, group }) {
         }
     }
 
-    return (
+return (
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
                 <div className="card-header flex-header d-flex justify-content-between">
                     <h4 className="card-title fw-bolder">Proposals</h4>
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
-                            <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} onUpdateIndexes={onUpdateIndexes}>
+                            <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>
                                 <FontAwesomeIcon icon={faArrowsAltV} color="black" />
                                 {/* testing */}
                             </SortCounterProposal>
@@ -207,16 +228,16 @@ function Counterproposals({ poll, group }) {
                             likeComment={(comment) => likeComment(comment)}
                             readOnlyComments={poll.discussion === "Finished" || !(group && group.user_type && group.user_type !== UserTypes.Delegator)}
                         >
-                            <a href={counterProposal.file}>
+                            <>
                                 <div className='d-flex'>
-                                    <FontAwesomeIcon className='counter-proposal-file' icon={counterProposal.file === null ? null : faFileAlt} />
+                                    <FontAwesomeIcon className='counter-proposal-file' icon={faFileAlt} />
                                     <p className="post-text">
                                         {counterProposal.proposal}
                                     </p>
                                 </div>
                                 <div className="post-img-wrapper">
                                 </div>
-                            </a>
+                            </>
                         </CounterProposal>
                     ))
                     }
