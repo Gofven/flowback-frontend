@@ -109,7 +109,7 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                I accept the <a href="media/legal/terms_of_service.pdf">Terms & Conditions.</a>
+                I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>
