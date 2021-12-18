@@ -91,20 +91,22 @@ export default function PollsTab(props) {
                 console.log('response', response);
                 if (response) {
                     const { status, data: res } = response;
-                    const data = res.data;
-                    if (status == "success") {
-                        if (first_page) {
-                            setLastPollCreatedDate(res.last_poll_created_at);
+                    if(res != undefined) {
+                        const data = res.data;
+                        if (status == "success") {
+                            if (first_page) {
+                                setLastPollCreatedDate(res.last_poll_created_at);
+                            }
+                            console.log('poll data', data)
+                            if (data) {
+                                data.forEach((poll) => {
+                                    poll.comments_details.comments = FormatComments(poll.comments_details.comments);
+                                })
+                            }
+                            setPolls([...polls, ...data]);
+                            setPage(page + 1);
+                            setTotalPage(res.total_page);
                         }
-                        console.log('poll data', data)
-                        if (data) {
-                            data.forEach((poll) => {
-                                poll.comments_details.comments = FormatComments(poll.comments_details.comments);
-                            })
-                        }
-                        setPolls([...polls, ...data]);
-                        setPage(page + 1);
-                        setTotalPage(res.total_page);
                     }
                 }
 
