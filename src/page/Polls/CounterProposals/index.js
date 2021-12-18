@@ -1,27 +1,27 @@
 /**
  * FlowBack was created and project lead by Loke Hagberg. The design was
- * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
+ * made by Lina Forsberg. Emilio MÃ¼ller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
  * Copyright (C) 2021  Astroneatech AB
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { postRequest } from '../../../utils/API';
+import { postRequest, getRequest, getJsonRequest } from '../../../utils/API';
 import CounterProposal from './CounterProposal';
 import { faSort, faArrowsAltV, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FormatComments } from '../../../utils/common';
@@ -37,36 +37,44 @@ function Counterproposals({ poll, group }) {
     useEffect(() => {
         getCounterProposals();
     }, [])
-
+    
     /**
      * To get counter proposals
      */
     const getCounterProposals = () => {
-        var data = new FormData();
-        data.append('poll', poll.id);
-        postRequest("api/v1/group_poll/get_all_counter_proposal", data).then(
+        //var data = new FormData();
+        //data.append('poll', poll.id);
+        getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
-                if (status === "success") {
-                    if (data && data.counter_proposals) {
-                        data.counter_proposals.forEach((counterProposal) => {
-                            counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
-                        })
-                        setCounterProposals(data.counter_proposals);
-                    }
-                    if (data && data.proposal_indexes) {
-                        setProposalIndexes(data.proposal_indexes);
-                    }
-                }
+                //const { status, data } = response;
+                //if (response === "success") {
+                    console.log("the counter proposasls", response)
+                    setCounterProposals(response)
+                    // if (response && response.counter_proposals) {
+                    //     response.forEach((counterProposal) => {
+                    //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
+                    //         setCounterProposals(response);
+                    //     })
+                    // }
+                //}
             });
-    }
+        getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
+            (response) => {
+                //console.log('RESPONSE!!!!', response);
+                    if (response && response.proposal_indexes) {
+                        setProposalIndexes(response.proposal_indexes);
+                    }
+                
+            });
+        }
+            
 
     /**
      * To add comment in counter proposal
-     * @param {*} message 
-     * @param {*} counterProposalId 
-     * @param {*} replyTo 
+     * @param {*} message
+     * @param {*} counterProposalId
+     * @param {*} replyTo
      */
     const addComment = (message, counterProposalId, replyTo) => {
         var data = {
@@ -132,7 +140,7 @@ function Counterproposals({ poll, group }) {
 
     /**
      * To like a comment
-     * @param {*} comment 
+     * @param {*} comment
      */
     const likeComment = (comment) => {
         var data = {
@@ -161,7 +169,7 @@ function Counterproposals({ poll, group }) {
 
     /**
      * To delete a comment
-     * @param {*} commentId 
+     * @param {*} commentId
      */
     const deleteComment = (commentId) => {
         var data = {
@@ -182,7 +190,6 @@ function Counterproposals({ poll, group }) {
                         setCounterProposals(counterProposalsDup);
                     }
                 }
-
             }
         );
     }
@@ -193,7 +200,7 @@ function Counterproposals({ poll, group }) {
         }
     }
 
-    return (
+return (
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
                 <div className="card-header flex-header d-flex justify-content-between">

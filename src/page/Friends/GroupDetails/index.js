@@ -216,10 +216,7 @@ export default function GroupDetails() {
             </section>
             <section className="home-dashboard">
                 <div className="container-xl">
-                    <div className="row">
-                        <div className="col-md-3 mb-4">
-                            <GroupChat group={group} />
-                        </div>
+                    <div className="row justify-content-end">
                         <div className="col-md-6">
                             {renderTab()}
                         </div>

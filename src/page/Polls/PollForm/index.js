@@ -90,6 +90,7 @@ export default function PollForm() {
 
     // Create Poll
     const handleSubmit = (e) => {
+        pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60*60*1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
         var data = new FormData();
@@ -174,10 +175,7 @@ export default function PollForm() {
         <Layout1>
             <section className="grupper-dashboard mt-4">
                 <div className="container-xl">
-                    <div className="row">
-                        <div className="col-md-3 mb-4">
-                            <GroupChat />
-                        </div>
+                    <div className="row justify-content-center">
                         {/*/Group chat col*/}
 
                         {/*/Missions Featured Cards Col*/}
@@ -215,7 +213,7 @@ export default function PollForm() {
                                                             <div className='d-flex'>
                                                                 <label htmlFor='document' className="text-primary">
                                                                     <div>
-                                                                        Add More File
+                                                                        Add More Files
                                                                     </div>
                                                                 </label>
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
@@ -263,13 +261,14 @@ export default function PollForm() {
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
                                                 <option selected value="poll">Default</option>
                                                 <option value="mission">Mission</option>
+                                                <option value="event">Event</option>
                                             </select>
                                         </div>
 
                                         <div className="form-group field">
                                             <div>
                                                 <Label>
-                                                    Admission Time
+                                                    End Time
                                             </Label>
                                             </div>
                                             {/* <DateTimePicker
@@ -302,9 +301,6 @@ export default function PollForm() {
                             </div>
                         </div>
                         {/*/Missions Featured Cards Col*/}
-
-                        <div className="col-md-3">
-                        </div>
                     </div>
                 </div>
             </section>

@@ -119,13 +119,20 @@ export const formatDate = (date, format = 'DD/MM/YYYY') => {
 }
 
 export const FormatComments = (inputComments) => {
+  
+  return inputComments
+  //return inputComments || []
   const comments = [];
   const inputData = inputComments.slice();
-  inputData.forEach((comment) => {
+  //Root comments with no replies are placed in the set
+  inputData.forEach((comment, ) => {
     if (!comment.reply_to) {
       comments.push({ ...comment, reply: [] });
     }
   })
+
+
+
   inputData.forEach((input) => {
     if (input.reply_to) {
       const index = comments.findIndex((comment) => comment.id === input.reply_to);

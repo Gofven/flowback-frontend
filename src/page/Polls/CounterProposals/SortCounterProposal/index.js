@@ -133,6 +133,7 @@ function Task(props) {
     </Draggable>;
 }
 
+
 function SortCounterProposal(props) {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -155,13 +156,13 @@ function SortCounterProposal(props) {
         const cpMap = cpList.reduce((acc, cp) => (acc[cp.id] = cp, acc), {});
         let cpPoints = props.proposalIndexes || {};
         const data = state;
-        cpPoints = Object.fromEntries(
-            Object.entries(cpPoints).sort(([, a], [, b]) => a - b)
-        );
+        let cpPointsArr = Object.keys(cpPoints).map((key) => [Number(key), cpPoints[key]]);
+        cpPointsArr = cpPointsArr.sort((a, b) => b[1] - a[1]);
+        cpPoints = new Map();
+        cpPointsArr.forEach((val, i) => cpPoints.set(val[0],val[1]));
         const pointsMap = new Map();
-        Object.keys(cpPoints).forEach((key, index) => {
-            if (cpPoints[key]) {
-                if (cpPoints[key] > 0) {
+       cpPoints.forEach((val, key) => {
+                if (val > 0) {
                     const list = pointsMap.get('positive') || [];
                     list.push(key);
                     pointsMap.set('positive', list);
@@ -170,11 +171,6 @@ function SortCounterProposal(props) {
                     list.push(key);
                     pointsMap.set('negative', list);
                 }
-            } else {
-                const list = pointsMap.get('neutral') || [];
-                list.push(key);
-                pointsMap.set('neutral', list);
-            }
             delete cpMap[key];
         });
         Object.keys(cpMap).forEach((cp) => {
@@ -182,7 +178,9 @@ function SortCounterProposal(props) {
             list.push(cp);
             pointsMap.set('neutral', list);
         });
+
         data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
+
 
         Object.keys(data.columns).forEach((column) => {
             data.columns[column].taskIds = pointsMap.get(column) || [];
@@ -241,11 +239,12 @@ function SortCounterProposal(props) {
         }).map(Number)
 
         const data = {
-            positive_proposal_indexes: positive_proposal_indexes,
-            negative_proposal_indexes: negative_proposal_indexes,
-            poll: props.pollId
+            positive: positive_proposal_indexes,
+            negative: negative_proposal_indexes
         }
-        postRequest("api/v1/group_poll/update_proposal_indexes", data).then(
+
+        console.log("DATA", data)
+        postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
@@ -258,7 +257,7 @@ function SortCounterProposal(props) {
                 setLoading(false);
             }).catch((err) => {
                 setLoading(false);
-            });
+            }).finally(() => window.location.reload());
     }
 
     /**
@@ -283,7 +282,7 @@ function SortCounterProposal(props) {
     useEffect(() => {
         console.log('state changes', state);
     }, [state])
-
+    
     return (
         <>
             <div className={props.className} onClick={handleShow}>
@@ -306,7 +305,7 @@ function SortCounterProposal(props) {
                                         const column = state.columns[columnId];
                                         const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                        return <Column key={column.id} column={column} tasks={tasks} />;
+                                        return <Column key={tasks.id} column={column} tasks={tasks} />;
                                     })}
                                 </DragDropContext>
                             }

@@ -47,33 +47,68 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     setEditComment(comment);
   }
 
-  const reanderReply = (reply) => {
-    return reply?.map((item, index) => {
-      if (item.reply) {
-        return ((!maxComments || index < maxComments) ?
+  /*
+  This algorithm is strange because the input values are a bit weird. 
+  The inputs given from each comment is only who it replies to, not what replies it has.
+  So this algorithm builds a forest of comment trees where the root node is the 
+  first comment that doesn't reply to anyone, and it builds from there. Made by Emil
+  */
+  const renderComments = (inputComments) => {    
+    let roots = inputComments.filter((comment)=>comment.reply_to===null);
+    let replies = inputComments.filter((comment)=>comment.reply_to!==null);
+    let commentsLeft = inputComments.filter((comment)=>comment.reply_to!==null);
+    //The finished rendering of the comments will use this one
+    let commentDisplayOrder = roots
+    //How many parent comments a reply has, 0 means root
+    let depth = 0
+
+    while (commentsLeft.size > 0 || depth < 10)
+    {
+      depth++;
+      replies.forEach(reply=>
+        {
+          roots.forEach(root=>{
+            
+            if (reply.reply_to === root.id )
+            {
+              //Finds the index in the Array where the reply replied to. 
+              const index2 = commentsLeft.findIndex((comment) => comment.id === reply.id);
+              commentsLeft.splice(index2,1)
+              
+              const index = commentDisplayOrder.findIndex((comment) => comment.id === reply.reply_to);
+              reply.depth = depth;
+              //Puts the comments in the correct order
+              commentDisplayOrder.splice(index+1, 0, reply);
+              
+            }
+          })
+        })
+        roots = commentDisplayOrder;
+        replies = commentsLeft;        
+    } 
+    
+    return commentDisplayOrder?.map((item, index) => {
+      return ((!maxComments || index < maxComments) ?
           <PostComment {...item} key={index} readOnly={readOnlyComments}
             onReplyClick={(replyId) => onReplyClick(replyId)}
             onUpdateComment={() => onUpdateComment(item)}
             onDeleteComment={() => deleteComment(item.id)}
-            onLikeComment={() => likeComment(item)}
-          >
-            {reanderReply(item.reply)}
+            onLikeComment={() => likeComment(item)}>
           </PostComment> : null
         );
-      } else {
-        return (
-          (!maxComments || index < maxComments) ?
-            <PostComment {...item} key={index} readOnly={readOnlyComments}
-              onReplyClick={(replyId) => onReplyClick(replyId)}
-              onUpdateComment={() => onUpdateComment(item)}
-              onDeleteComment={() => deleteComment(item.id)}
-              onLikeComment={() => likeComment(item)}
-            /> : null);
-      }
     });
   };
 
+  const replies = (comments, comment, depth) => 
+  {
+    const output = []
+    comments.forEach(comment => {
+      if (comment.reply_to === comment.id)
+      {
 
+      }
+    });
+  }
 
   return (
     <div className="post-view">
@@ -92,8 +127,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
           <FontAwesomeIcon icon={faExternalLinkAlt} color='#737373' />
         </Link>
-
-        {/* <div className="post-action dropdown">
+        
+      <>{/* <div className="post-action dropdown">
           <a
             href="#"
             id="postAction"
@@ -128,7 +163,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               </a>
             </li>
           </ul>
-        </div> */}
+        </div> */}</>
+
       </div>
       <div className="post-body">
         {children}
@@ -137,16 +173,6 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             <div>
               <a href="#">
                 <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
-              </a>
-            </div>
-            <div>
-              <a href="#">
-                <i className="las la-share-square"></i>
-                Share
-              </a>
-              <a href="#" className="ml-2">
-                <i className="las la-bookmark"></i>
-                Bookmark
               </a>
             </div>
           </div>
@@ -177,7 +203,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               </div>
             </div>
           }
-          <div className="comment-reply">{reanderReply(poll && poll.comments_details && poll.comments_details.comments)}</div>
+          <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
         </div>
       </div>
     </div>

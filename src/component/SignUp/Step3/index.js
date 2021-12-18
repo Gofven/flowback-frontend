@@ -36,12 +36,10 @@ import Loader from "../../common/Loader";
 const initialState = {
   password: "",
   repassword: "",
-  accepted_terms_use: false,
   accepted_terms_condition: false,
 };
 const initialError = {
   password: "",
-  accepted_terms_use: false,
   accepted_terms_condition: false,
 };
 export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
@@ -52,7 +50,6 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
   const {
     password,
     repassword,
-    accepted_terms_use,
     accepted_terms_condition,
   } = state;
 
@@ -64,11 +61,10 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
     setFormValid(
       checkAnyOneEmpty({
         password,
-        accepted_terms_use,
         accepted_terms_condition,
       })
     );
-  }, [password, accepted_terms_use, accepted_terms_condition]);
+  }, [password, accepted_terms_condition]);
 
   const handleSubmit = (e) => {
     if (formValid) {
@@ -76,13 +72,12 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
       postRequest("api/v1/user/sign_up_three", {
         email: email,
         password,
-        accepted_terms_use,
         accepted_terms_condition,
       }).then((response) => {
         setLoading(false);
         const { status, data } = response;
         if (status === "success") {
-          history.push("/home");
+          history.push("/");
         } else {
           setError({ ...error, ...data[0] });
         }
@@ -110,20 +105,11 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
           <div className="form-group">
             <div className="form-check">
               <Checkbox
-                name="accepted_terms_use"
-                checked={accepted_terms_use}
-                onChange={handleOnChange}
-              >
-                I accept the <a href="#">Terms of use.</a>
-              </Checkbox>
-            </div>
-            <div className="form-check">
-              <Checkbox
                 checked={accepted_terms_condition}
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                I accept the <a href="#">Terms & Conditions.</a>
+                I accept the <a href="media/legal/terms_of_service.pdf">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>

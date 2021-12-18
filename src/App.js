@@ -43,12 +43,11 @@ import Chat from "./component/Chat";
 const { REACT_APP_PROXY } = process.env;
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
         <Switch>
-          <PublicRoute exact path="/home" component={Home} />
+          <PublicRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/events" component={Events} />
           <PrivateRoute exact path="/missions" component={Missions} />
           <PrivateRoute exact path="/votings" component={Votings} />
@@ -62,7 +61,7 @@ function App() {
           <PrivateRoute exact path="/groupdetails/:groupId/poll/:pollId/edit" component={PollForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/polldetails/:pollId" component={PollDetails} />
 
-          <Route path="/" component={Login} />
+          <PublicRoute path="/login" component={Login} />
         </Switch>
       </BrowserRouter>
       {  localStorage.getItem('user') &&

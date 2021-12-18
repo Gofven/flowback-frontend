@@ -81,7 +81,7 @@ export default function LoginCard() {
           if (status === "success") {
             const { token, user } = data;
             dispatch(loginUser(token, user));
-            history.push("/home");
+            history.push("/");
             // dispatch(addToast("Login Success."));
           } else {
             setError({ ...error, email: data });
@@ -103,9 +103,6 @@ export default function LoginCard() {
       ...onValidation(e),
     });
   };
-
-  const handleKeypress = e => {if (e.keyCode === 13) {      handleSubmit();    }  };
-  //Added by Loke Hagberg
 
   return (
     <Loader loading={loading}>
@@ -139,7 +136,7 @@ export default function LoginCard() {
         </div>
         <div className="text-center">
           <button
-            type="submit"
+            type="button"
             className="btn login-btn btn-hover"
             disabled={!formValid}
             onClick={handleSubmit}

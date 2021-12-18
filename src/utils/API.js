@@ -47,6 +47,11 @@ export function getRequest(url) {
     .catch((error) => error?.response?.data);
 }
 
+export function getJsonRequest(url) {
+  return API.get(url)
+    .then((response) => response.json())
+    .catch((error) => error?.response?.data);
+}
 export function deleteRequest(url) {
   return API.delete(url)
     .then((response) => response?.data)

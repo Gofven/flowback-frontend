@@ -59,18 +59,10 @@ export default function Home() {
 
       <section className="home-dashboard">
         <div className="container-xl mt-4">
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <GroupChat />
-            </div>
+          <div className="row justify-content-center">
 
             <div className="col-md-6">
               <FeedCard />
-            </div>
-
-            <div className="col-md-3">
-              <Trendig1 />
-              <Trendig2 />
             </div>
           </div>
         </div>

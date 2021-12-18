@@ -24,7 +24,7 @@ import "./styles.css";
 import Layout1 from "../../../layout/Layout1";
 import GroupChat from "../../../component/GroupChat";
 import { Link, useParams } from "react-router-dom";
-import { postRequest } from "../../../utils/API";
+import { getRequest, postRequest } from "../../../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCheckCircle, faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
@@ -35,6 +35,7 @@ import { Button, Textbox } from "../../../component/common";
 import Counterproposals from "../CounterProposals";
 import Loader from "../../../component/common/Loader";
 import { UserTypes } from "../../../constants/constants";
+import DatePicker from "react-datepicker";
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -144,7 +145,6 @@ export default function PollDetails() {
                         // setPoll(data);
                     }
                 }
-
             }
         );
     }
@@ -260,7 +260,7 @@ export default function PollDetails() {
     const getCounterProposal = () => {
         var data = new FormData();
         data.append('poll', pollId);
-        postRequest("api/v1/group_poll/get_counter_proposal", data).then(
+        getRequest(`api/v1/group_poll/${pollId}/user_proposal`, data).then(
             (response) => {
                 console.log('response', response);
                 const { status, data } = response;
@@ -291,13 +291,19 @@ export default function PollDetails() {
     // Save Counter Proposal
     const saveCounterProposal = () => {
         setCounterProposalLoading(true);
+
         var data = new FormData();
         data.append('file', counterProposal.file);
         data.append('proposal', counterProposal.proposal);
+
+        //end_time: new Date(data.end_time)
+        //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
+        //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
+        
         data.append('poll', pollId);
-        postRequest("api/v1/group_poll/add_counter_proposal", data).then(
+        postRequest("api/v1/group_poll/add_proposal", data).then(
             (response) => {
-                console.log('response', response);
+                console.log('COOL RESPONSE', response);
                 const { status, data } = response;
                 if (status === "success") {
                     getPollDetails();
@@ -309,15 +315,16 @@ export default function PollDetails() {
             });
     }
 
+    const onDateTimeSelect = (e) => {
+        console.log(e);
+        seteCounterProposal({ ...counterProposal, date: e });
+    }
 
     return (
         <Layout1>
             <section className=" mt-4">
                 <div className="container-xl">
-                    <div className="row">
-                        <div className="col-md-3 mb-4">
-                            <GroupChat />
-                        </div>
+                    <div className="row justify-content-end">
                         {/*/Group chat col*/}
 
                         <div className="col-md-6">
@@ -351,7 +358,7 @@ export default function PollDetails() {
                                     <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                         <div className="card-header flex-header">
                                             <h4 className="card-title fw-bolder">
-                                                Counter Proposal
+                                                Proposal
                                     </h4>
                                         </div>
                                         <div className="card-body overflow-hidden">
@@ -362,6 +369,14 @@ export default function PollDetails() {
                                                     </div>
                                                     :
                                                     <form className="form create_poll_form" id="createPollForm">
+            {/*TODO: fix this shit
+             <DatePicker
+                selected={counterProposal.date}
+                onChange={onDateTimeSelect}
+                minDate={new Date()}
+                showTimeSelect
+                dateFormat="Pp"
+            /> */}
                                                         <div className="form-group">
                                                             <div className='field d-flex '>
                                                                 {counterProposal?.file ?
@@ -389,7 +404,7 @@ export default function PollDetails() {
                                                             <Textbox
                                                                 type="text"
                                                                 name="proposal"
-                                                                placeholder="Counter Proposal Details"
+                                                                placeholder="Proposal Details"
                                                                 required
                                                                 onChange={handleOnChange}
                                                                 defaultValue={counterProposal.proposal}
@@ -442,7 +457,7 @@ export default function PollDetails() {
                                         <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">Discussion Time</div>
+                                        <div className="col-5">End Time</div>
                                         <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
 
@@ -481,7 +496,7 @@ export default function PollDetails() {
                                             <div className='d-flex'>
                                                 <label htmlFor='document' className="text-primary">
                                                     <div>
-                                                        Add More File
+                                                        Add More Files
                                                                     </div>
                                                 </label>
                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
