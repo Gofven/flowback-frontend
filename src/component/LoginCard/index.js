@@ -44,6 +44,7 @@ export default function LoginCard() {
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
+  const [wrongUseOrPass, setWrongUseOrPass] = useState(false);
   const { email, password, rememberMe } = state;
   const dispatch = useDispatch();
   let history = useHistory();
@@ -71,15 +72,12 @@ export default function LoginCard() {
     e.stopPropagation();
     setLoading(true);
     setLocalStorage("rememberMe", rememberMe);
-    if (rememberMe)
-    {
-      setLocalStorage("user", email);
-    }
+    if (rememberMe){setLocalStorage("user", email);}
     if (formValid) {
       postRequest("api/v1/login", { username: email, password }).then(
         (response) => {
           setLoading(false);
-          console.log('response', response);
+          //console.log('response', response);
           const { status, data } = response;
           if (status === "success") {
             const { token, user } = data;
@@ -88,6 +86,7 @@ export default function LoginCard() {
             // dispatch(addToast("Login Success."));
           } else {
             //console.log("data", data)
+            setWrongUseOrPass(true)
             setError({ ...error, email: data });
           }
         }
@@ -111,6 +110,7 @@ export default function LoginCard() {
   return (
     <Loader loading={loading}>
       <form className="form login_form" id="loginForm">
+        <span style={{color:"red"}}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
         <div className="form-group">
           <Textbox
             type="email"
