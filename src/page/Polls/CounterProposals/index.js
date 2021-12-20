@@ -220,7 +220,7 @@ return (
                             <div className='text-center'>No counter proposals are available.</div>
                             : null
                     }
-                    {counterProposals.detail !== "Not found." ?  counterProposals?.map((counterProposal, index) => (
+                    {typeof(counterProposals) === Array && counterProposals.detail !== "Not found." ?  counterProposals?.map((counterProposal, index) => (
                         <CounterProposal counterProposal={counterProposal} key={counterProposal.id}
                             addComment={(message, pollId, replyTo) => addComment(message, counterProposal.id, replyTo)}
                             updateComment={(comment) => updateComment(comment)}
