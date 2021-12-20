@@ -36,7 +36,7 @@ export default function auth(state = initialState, action) {
   switch (type) {
     case LOGIN_USER:
       const { token, user } = payload;
-
+      console.log("USER!!", user)
       setLocalStorage("user", user);
       setLocalStorage("jwtToken", token);
       return {

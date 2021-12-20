@@ -165,6 +165,7 @@ export default function Profile(props) {
                     console.log("uesr data", data);
                     setUser(data);
                     setEditMode(false);
+                    console.log("USER!!", data)
                     setLocalStorage('user', data);
                     setLoading(false);
                 }

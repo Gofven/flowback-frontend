@@ -71,7 +71,10 @@ export default function LoginCard() {
     e.stopPropagation();
     setLoading(true);
     setLocalStorage("rememberMe", rememberMe);
-    setLocalStorage("user", rememberMe ? email : "");
+    if (rememberMe)
+    {
+      setLocalStorage("user", email);
+    }
     if (formValid) {
       postRequest("api/v1/login", { username: email, password }).then(
         (response) => {
@@ -84,6 +87,7 @@ export default function LoginCard() {
             history.push("/");
             // dispatch(addToast("Login Success."));
           } else {
+            //console.log("data", data)
             setError({ ...error, email: data });
           }
         }
