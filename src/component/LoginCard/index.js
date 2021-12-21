@@ -151,7 +151,7 @@ export default function LoginCard() {
         </div>
       </form>
       <div className="text-center pt-2">
-        <a href="home">Or enter as Guest</a>
+        <a href="/">Or enter as Guest</a>
       </div>
     </Loader>
   );
