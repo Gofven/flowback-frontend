@@ -275,7 +275,7 @@ export default function PollsTab(props) {
                     deleteComment={(commentId) => deleteComment(commentId)}
                     likeComment={(comment) => likeComment(comment)}
                     readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                    maxComments={2}
+                    maxComments={-1}
                 >
                     <>
                         <div className="poll-title" >{poll.title}</div>

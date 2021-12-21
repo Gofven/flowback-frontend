@@ -25,19 +25,28 @@ import Image from "../common/Image";
 import "./header.css";
 import Notifiaction from "./Notifiaction";
 import UserAction from "./UserAction";
-
-const data = [
-  { title: "Search", icon: "la-search", url: "/search" },
-  { title: "Home", icon: "la-home", url: "/" },
-  { title: "Missions", icon: "la-globe-americas", url: "/missions" },
-  { title: "Groups", icon: "la-user-friends", url: "/groups" },
-  // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
-  { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
-];
+import ActionRow from "./UserAction/ActionRow";
 
 export default function Header() {
   const [user, setUser] = useState({})
-
+  const data = localStorage.user ? [
+    { title: "Home", icon: "la-home", url: "/" },
+    { title: "Search", icon: "la-search", url: "/search" },
+    { title: "Missions", icon: "la-globe-americas", url: "/missions" },
+    { title: "Groups", icon: "la-user-friends", url: "/groups" },
+    // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
+    // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
+  ] : [{ title: "Home", icon: "la-home", url: "/" }];
+  
+  const loggedOutData = 
+    {
+      title: "Log In/Register",
+      url: "#",
+      onClick: () => {
+        window.location.href = "/Login";
+      }
+    } 
+  
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
@@ -74,7 +83,7 @@ export default function Header() {
           </ul>
           <ul className="navbar-nav user-nav">
             <li className="nav-item dropdown notification-drop">
-              <a
+              {/* <a
                 className="nav-link notification-link"
                 href="#notificationDrop"
                 id="notificationDrop"
@@ -82,11 +91,11 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <i className="las la-bell"></i>
-                {/* <span className="notification-badge">1</span> */}
-              </a>
-              <Notifiaction />
+                {/* <span className="notification-badge">1</span> }
+              </a> */}
+              {/* <Notifiaction /> */}
             </li>
-            <li className="nav-item dropdown profile-drop">
+            {localStorage.user ? <li className="nav-item dropdown profile-drop">
               <a
                 className="nav-link avtar-link"
                 href="#avtarDrop"
@@ -116,7 +125,7 @@ export default function Header() {
                 </div>
               </a>
               <UserAction user={user.id}/>
-            </li>
+            </li> : <ActionRow {...loggedOutData} key={1} >Log in</ActionRow>}
           </ul>
         </div>
       </div>
