@@ -25,7 +25,7 @@ import Image from "../common/Image";
 import "./header.css";
 import Notifiaction from "./Notifiaction";
 import UserAction from "./UserAction";
-
+import ActionRow from "./UserAction/ActionRow";
 
 export default function Header() {
   const [user, setUser] = useState({})
@@ -38,7 +38,16 @@ export default function Header() {
     // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
   ] : [{ title: "Home", icon: "la-home", url: "/" }];
   
+  const loggedOutData = 
+    {
+      title: "Log In/Register",
+      url: "#",
+      onClick: () => {
+        window.location.href = "/Login";
+      }
+    } 
   
+
   useEffect(() => {
     if (localStorage.getItem('user')) {
       setUser(JSON.parse(localStorage.getItem('user')));
@@ -86,7 +95,7 @@ export default function Header() {
               </a> */}
               {/* <Notifiaction /> */}
             </li>
-            <li className="nav-item dropdown profile-drop">
+            {localStorage.user ? <li className="nav-item dropdown profile-drop">
               <a
                 className="nav-link avtar-link"
                 href="#avtarDrop"
@@ -116,7 +125,7 @@ export default function Header() {
                 </div>
               </a>
               <UserAction user={user.id}/>
-            </li>
+            </li> : <ActionRow {...loggedOutData} key={1} >Log in</ActionRow>}
           </ul>
         </div>
       </div>
