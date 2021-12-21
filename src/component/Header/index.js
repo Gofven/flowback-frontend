@@ -32,7 +32,7 @@ const data = [
   { title: "Missions", icon: "la-globe-americas", url: "/missions" },
   { title: "Groups", icon: "la-user-friends", url: "/groups" },
   // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
-  { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
+  // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
 ];
 
 export default function Header() {
@@ -74,7 +74,7 @@ export default function Header() {
           </ul>
           <ul className="navbar-nav user-nav">
             <li className="nav-item dropdown notification-drop">
-              <a
+              {/* <a
                 className="nav-link notification-link"
                 href="#notificationDrop"
                 id="notificationDrop"
@@ -82,9 +82,9 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <i className="las la-bell"></i>
-                {/* <span className="notification-badge">1</span> */}
-              </a>
-              <Notifiaction />
+                {/* <span className="notification-badge">1</span> }
+              </a> */}
+              {/* <Notifiaction /> */}
             </li>
             <li className="nav-item dropdown profile-drop">
               <a
