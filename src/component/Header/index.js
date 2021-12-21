@@ -26,19 +26,19 @@ import "./header.css";
 import Notifiaction from "./Notifiaction";
 import UserAction from "./UserAction";
 
-const data = [
-  { title: "Search", icon: "la-search", url: "/search" },
-  { title: "Home", icon: "la-home", url: "/" },
-  { title: "Missions", icon: "la-globe-americas", url: "/missions" },
-  { title: "Groups", icon: "la-user-friends", url: "/groups" },
-  // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
-  // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
-];
 
 export default function Header() {
   const [user, setUser] = useState({})
-
-
+  const data = localStorage.user ? [
+    { title: "Search", icon: "la-search", url: "/search" },
+    { title: "Home", icon: "la-home", url: "/" },
+    { title: "Missions", icon: "la-globe-americas", url: "/missions" },
+    { title: "Groups", icon: "la-user-friends", url: "/groups" },
+    // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
+    // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
+  ] : [{ title: "Home", icon: "la-home", url: "/" }];
+  
+  
   useEffect(() => {
     if (localStorage.getItem('user')) {
       setUser(JSON.parse(localStorage.getItem('user')));
