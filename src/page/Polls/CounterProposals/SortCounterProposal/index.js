@@ -156,13 +156,13 @@ function SortCounterProposal(props) {
         const cpMap = cpList.reduce((acc, cp) => (acc[cp.id] = cp, acc), {});
         let cpPoints = props.proposalIndexes || {};
         const data = state;
-        cpPoints = Object.fromEntries(
-            Object.entries(cpPoints).sort(([, a], [, b]) => a - b)
-        );
+        let cpPointsArr = Object.keys(cpPoints).map((key) => [Number(key), cpPoints[key]]);
+        cpPointsArr = cpPointsArr.sort((a, b) => b[1] - a[1]);
+        cpPoints = new Map();
+        cpPointsArr.forEach((val, i) => cpPoints.set(val[0],val[1]));
         const pointsMap = new Map();
-        Object.keys(cpPoints).forEach((key, index) => {
-            if (cpPoints[key]) {
-                if (cpPoints[key] > 0) {
+       cpPoints.forEach((val, key) => {
+                if (val > 0) {
                     const list = pointsMap.get('positive') || [];
                     list.push(key);
                     pointsMap.set('positive', list);
@@ -171,11 +171,6 @@ function SortCounterProposal(props) {
                     list.push(key);
                     pointsMap.set('negative', list);
                 }
-            } else {
-                const list = pointsMap.get('neutral') || [];
-                list.push(key);
-                pointsMap.set('neutral', list);
-            }
             delete cpMap[key];
         });
         Object.keys(cpMap).forEach((cp) => {
@@ -183,7 +178,9 @@ function SortCounterProposal(props) {
             list.push(cp);
             pointsMap.set('neutral', list);
         });
+
         data.tasks = cpList.reduce((acc, cp) => (acc[cp.id] = { id: cp.id, content: cp }, acc), {});
+
 
         Object.keys(data.columns).forEach((column) => {
             data.columns[column].taskIds = pointsMap.get(column) || [];
@@ -260,7 +257,7 @@ function SortCounterProposal(props) {
                 setLoading(false);
             }).catch((err) => {
                 setLoading(false);
-            });
+            }).finally(() => window.location.reload());
     }
 
     /**
