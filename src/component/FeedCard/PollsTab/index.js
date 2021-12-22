@@ -274,7 +274,8 @@ export default function PollsTab(props) {
                     updateComment={(comment) => updateComment(comment)}
                     deleteComment={(commentId) => deleteComment(commentId)}
                     likeComment={(comment) => likeComment(comment)}
-                    readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
+                    readOnlyComments={true}
+                    //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
                     maxComments={-1}
                 >
                     <>
