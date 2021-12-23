@@ -43,7 +43,7 @@ export default function GroupForm(props) {
         profileImage: null,
         coverImage: null,
         tags: [],
-        type: "Public",
+        type: "Private",
         request: "Direct Join",
         poll_approval: 'direct_approve',
         country: "",
@@ -385,33 +385,7 @@ export default function GroupForm(props) {
                                                 </div>
                                             </div>
 
-                                            <div className="form-group field">
-                                                <Label>
-                                                    Group type
-                         </Label>
-                                                <div>
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="public"
-                                                        name="type"
-                                                        label="Public"
-                                                        value="Public"
-                                                        checked={type === "Public"}
-                                                        onClick={handleOnChange}
-                                                    />
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="private"
-                                                        name="type"
-                                                        label="Private"
-                                                        value="Private"
-                                                        checked={type === "Private"}
-                                                        onClick={handleOnChange}
-                                                    />
-                                                </div>
-                                            </div>
+                                      
                                             <div className="form-group field">
                                                 <Label>
                                                     Members request

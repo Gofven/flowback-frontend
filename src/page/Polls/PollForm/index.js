@@ -259,11 +259,11 @@ export default function PollForm() {
 
                                         <div className="form-group mx-2">
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
-                                                <option selected value="poll">Default</option>
-                                                <option value="mission">Mission</option>
-                                                <option value="event">Event</option>
+                                                <option selected value="poll">Private</option>
+                                                <option value="mission">Public</option>
+                                                
                                             </select>
-                                        </div>
+                                        </div> 
 
                                         <div className="form-group field">
                                             <div>
@@ -275,6 +275,8 @@ export default function PollForm() {
                                                 onChange={onDateTimeSelect}
                                                 value={pollDetail.end_time}
                                                 defaultValue={pollDetail.end_time}
+
+<option value="event">Event</option> was removed above as an option
 
                                             /> */}
 
