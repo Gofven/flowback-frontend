@@ -300,43 +300,7 @@ export default function Profile(props) {
                                                 {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : null}
                                             </h3>
                                         }
-                                        {
-                                            (!loggedInUser) &&
-                                            <div className="profile-btn-view">
-                                                {(user?.friendship_status == "not friend") &&
-                                                    <a className="btn btn-sm btn-block mb-2"
-                                                        onClick={friendRequest}>
-                                                        Add contact
-                                            </a>
-                                                }
-                                                {(user?.friendship_status == "friend") &&
-                                                    < a href="#" className="btn btn-sm btn-block mb-2">
-                                                        Send message
-                                            </a>
-                                                }
-                                                {(user?.friendship_status == "requested") &&
-                                                    < div className="btn btn-sm btn-block mb-2">
-                                                        Requested
-                                            </div>
-                                                }
-                                                {(user?.friendship_status == "respond") &&
-                                                    <>
-                                                        < a href="#" className="btn btn-sm btn-block mb-2"
-                                                            onClick={() => { acceptRejectRequest(user?.id, "accept") }}>
-                                                            Accept
-                                                         <FontAwesomeIcon className="cursor-pointer"
-                                                                icon={faCheckCircle} size='lg' color='#069035' />
-                                                        </a>
-                                                        < a href="#" className="btn btn-sm btn-block mb-2"
-                                                            onClick={() => { acceptRejectRequest(user?.id, "reject") }}>
-                                                            Reject
-                                                            <FontAwesomeIcon className="cursor-pointer"
-                                                                icon={faTimesCircle} size='lg' color='#DD4A4C' />
-                                                        </a>
-                                                    </>
-                                                }
-                                            </div>
-                                        }
+                                        
                                     </div>
                                 </div>
                                 <div>
