@@ -3,7 +3,6 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * Copyright (C) 2021  Astroneatech AB
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,11 +258,11 @@ export default function PollForm() {
 
                                         <div className="form-group mx-2">
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
-                                                <option selected value="poll">Default</option>
-                                                <option value="mission">Mission</option>
-                                                <option value="event">Event</option>
+                                                <option selected value="poll">Private</option>
+                                                <option value="mission">Public</option>
+                                                
                                             </select>
-                                        </div>
+                                        </div> 
 
                                         <div className="form-group field">
                                             <div>
@@ -275,6 +274,8 @@ export default function PollForm() {
                                                 onChange={onDateTimeSelect}
                                                 value={pollDetail.end_time}
                                                 defaultValue={pollDetail.end_time}
+
+<option value="event">Event</option> was removed above as an option
 
                                             /> */}
 

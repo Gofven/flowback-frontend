@@ -3,7 +3,6 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * Copyright (C) 2021  Astroneatech AB
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +31,7 @@ export default function Header() {
   const data = localStorage.user ? [
     { title: "Home", icon: "la-home", url: "/" },
     { title: "Search", icon: "la-search", url: "/search" },
-    { title: "Missions", icon: "la-globe-americas", url: "/missions" },
+    { title: "Public", icon: "la-globe-americas", url: "/missions" },
     { title: "Groups", icon: "la-user-friends", url: "/groups" },
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
     // { title: "Events", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
