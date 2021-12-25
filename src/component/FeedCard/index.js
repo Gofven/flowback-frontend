@@ -52,7 +52,7 @@ export default function FeedCard(props) {
   let feedCardTitle;
   switch (props.pollType) {
     case 'mission':
-      feedCardTitle = 'Public feed';
+      feedCardTitle = 'Feed';
       break;
     default:
       feedCardTitle = 'Feed'
