@@ -3,7 +3,6 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * Copyright (C) 2021  Astroneatech AB
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +42,7 @@ export default function GroupForm(props) {
         profileImage: null,
         coverImage: null,
         tags: [],
-        type: "Public",
+        type: "Private",
         request: "Direct Join",
         poll_approval: 'direct_approve',
         country: "",
@@ -385,33 +384,7 @@ export default function GroupForm(props) {
                                                 </div>
                                             </div>
 
-                                            <div className="form-group field">
-                                                <Label>
-                                                    Group type
-                         </Label>
-                                                <div>
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="public"
-                                                        name="type"
-                                                        label="Public"
-                                                        value="Public"
-                                                        checked={type === "Public"}
-                                                        onClick={handleOnChange}
-                                                    />
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="private"
-                                                        name="type"
-                                                        label="Private"
-                                                        value="Private"
-                                                        checked={type === "Private"}
-                                                        onClick={handleOnChange}
-                                                    />
-                                                </div>
-                                            </div>
+                                      
                                             <div className="form-group field">
                                                 <Label>
                                                     Members request
