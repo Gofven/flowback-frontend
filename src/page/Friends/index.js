@@ -226,21 +226,7 @@ export default function Friends() {
                           <p className="member-count">
                             {item.total_members || 0} <small>member</small>
                           </p>
-                          <p className="public-group-text">
-                            <i className="las la-globe-americas"></i>
-                            {item.public ?
-                              <span>
-                                Public
-                          <br />
-                          group
-                        </span> :
-                              <span>
-                                Private
-                          <br />
-                          group
-                        </span>}
-
-                          </p>
+                          
                         </div>
                         <div className="media-body">
                           <p className="grupper-description line-4">
