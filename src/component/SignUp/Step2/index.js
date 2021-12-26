@@ -38,7 +38,7 @@ const initialState = {
 const initialError = {
   recoveryCode: "",
 };
-export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext }) {
+export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState(initialError);
@@ -54,6 +54,7 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext }) {
   const handleSubmit = (e) => {
     // if (OnNext) OnNext();
     if (formValid) {
+      //setMainState({...mainState, verification_code:recoveryCode})
       setLoading(true);
       postRequest("api/v1/user/sign_up_two", {
         email: email,
@@ -61,8 +62,9 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext }) {
       }).then((response) => {
         setLoading(false);
         const { status, data } = response;
+        handlePasswordSubmit();
         if (status === "success") {
-          if (OnNext) OnNext();
+          //if (OnNext) OnNext();
         } else {
           setError({ ...error, error: data });
         }
@@ -71,6 +73,27 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext }) {
       });
     }
   };
+
+  const handlePasswordSubmit = () => {
+    console.log("happends")
+  postRequest("api/v1/user/sign_up_three", {
+    email,
+    password:mainState.password,
+    accepted_terms_condition:mainState.accepted_terms_condition,
+  }).then((response) => {
+    const { status, data } = response;
+    console.log("le response", response)
+    if (status === "success") {
+      //history.push("/");
+      window.location.href = "/"
+    } else {
+      setError({ ...error, ...data[0] });
+    }
+    }).catch((err) => {
+        setLoading(false);
+});
+}
+
   const handleOnChange = (e) => {
     setState({ ...state, ...inputKeyValue(e) });
   };

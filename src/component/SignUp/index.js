@@ -19,45 +19,66 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import React, { useState } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
+import Step13 from "./Step13";
+//importing useEffect the "normal" way leads to "undefined error so it's done
+//like this instead 
+import React, { useState } from "react";
+import react from "react";
 
 export default function SignUp() {
-  const totalStep = 3;
+  const totalStep = 2;
   const [stepNumber, setStepNumber] = useState(1);
+  const [mainState, setMainState] = useState({});
+  
+  react.useEffect=(() => {
+    console.log(mainState, "STATE");
+  });
+
+  
+  const handleSubmit = () => {
+
+  };
+
   const renderStep = () => {
     switch (stepNumber) {
       case 1:
         return (
-          <Step1
+          <Step13
             stepNumber={stepNumber}
             totalStep={totalStep}
             OnPrevious={handleOnPrevious}
             OnNext={handleOnNext}
-          />
-        );
-        break;
-      case 2:
-        return (
-          <Step2
+            mainState={mainState}
+            setMainState={setMainState}
+            />
+            );
+            break;
+        case 2:
+          return (
+            <Step2
             stepNumber={stepNumber}
             totalStep={totalStep}
             OnPrevious={handleOnPrevious}
             OnNext={handleOnNext}
-          />
-        );
-        break;
-      case 3:
-        return (
-          <Step3
+            mainState={mainState}
+            setMainState={setMainState}
+            />
+            );
+            break;
+        case 3:
+          return (
+            <Step3
             stepNumber={stepNumber}
             totalStep={totalStep}
             OnPrevious={handleOnPrevious}
             OnNext={handleOnNext}
-          />
-        );
+            state={mainState}
+            setMainState={setMainState}
+            />
+            );
         break;
     }
   };

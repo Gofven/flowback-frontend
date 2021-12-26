@@ -42,7 +42,7 @@ const initialError = {
   password: "",
   accepted_terms_condition: false,
 };
-export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
+export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState(initialError);
@@ -68,7 +68,8 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
 
   const handleSubmit = (e) => {
     if (formValid) {
-      setLoading(true);
+      setMainState({...mainState, password, accepted_terms_condition})
+      /*setLoading(true);
       postRequest("api/v1/user/sign_up_three", {
         email: email,
         password,
@@ -84,7 +85,9 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
       }).catch((err) => {
         setLoading(false);
       });
-    }
+    
+    
+    */}
   };
   const handleOnChange = (e) => {
     console.log(state);
