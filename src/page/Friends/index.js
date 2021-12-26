@@ -230,7 +230,7 @@ export default function Friends() {
                       <div className="media">
                         <div className="pr-2">
                           <p className="member-count">
-                            {item.total_members || 0} <p>member</p>
+                           {item.total_members || 0} <p>members</p>
                           </p>
                           
                         </div>
@@ -245,14 +245,14 @@ export default function Friends() {
 
                           {
                             item.user_type ?
-                              <a
-                                href="#"
-                                className="btn btn-sm btn-block btn-outline-secondary"
+                              <h4
+                                
+                                
                               >
                                 <i className="las la-check text-success mr-1"></i>
                                 {item.user_type}
 
-                              </a> :
+                              </h4> :
                               (
                                 (item.group_join_status == "Requested") ?
                                   <a
