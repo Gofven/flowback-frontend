@@ -26,10 +26,12 @@ export default function Groups(props) {
         <>
             {props.groups?.map((group) => (
                 <div key={group.id}>
-                    <a href="#" className="media groups-row">
+                    <a href={`/groupdetails/${group.id}`} className="media groups-row">
                         <Image src={group.image} className="groups-img" />
                         <div className="media-body">
+                        
                             <h6 className="groups-title text-truncate">{group.title}</h6>
+                            
                             {
                                 group.user_type &&
                                 <h6 className="groups-title text-truncate">{group.user_type}</h6>
