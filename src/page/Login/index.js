@@ -22,6 +22,7 @@
 import React, { useState } from "react";
 import LoginCard from "../../component/LoginCard";
 import SignUp from "../../component/SignUp";
+import ResetPassword from "../../component/LoginCard/ResetPassword";
 import { useTab } from "../../hook/useTab";
 import "./styles.css";
 
