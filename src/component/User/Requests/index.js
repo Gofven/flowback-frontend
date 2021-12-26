@@ -59,7 +59,7 @@ export default function Requests(props) {
     const BookmarkView = ({ data, index }) => {
         return (
             <div className="media bookmark-block my-3" key={index}>
-                <img src="/img/flower.jpg" className="media-img" alt="bookmark-img" />
+                <img src="/img/no-photo.jpg" className="media-img" alt="bookmark-img" />
                 <div className="media-body">
                     <p className="text-turncate mb-0">Cloe Decker</p>
                 </div>

@@ -24,7 +24,7 @@ export default function CommentReply() {
   return (
     <div className="comment-reply">
       <div className="media">
-        <img src="/img/flower.jpg" />
+        <img src="/img/no-photo.jpg" />
         <div className="media-body">
           <div className="reply-name">Emilio Mller</div>
           <p className="reply-text">Wow so cool!</p>
@@ -34,7 +34,7 @@ export default function CommentReply() {
             <a href="#">Reply</a>
           </div>
           <div className="media">
-            <img src="/img/flower.jpg" />
+            <img src="/img/no-photo.jpg" />
             <div className="media-body">
               <div className="reply-name">Emilio Mller</div>
               <p className="reply-text">Wow so cool!</p>
@@ -111,7 +111,7 @@ export default function CommentReply() {
       </div>
       <div className="collapse" id="showMoreCmt">
         <div className="media">
-          <img src="/img/flower.jpg" />
+          <img src="/img/no-photo.jpg" />
           <div className="media-body">
             <div className="reply-name">Emilio Mller</div>
             <p className="reply-text">Wow so cool!</p>

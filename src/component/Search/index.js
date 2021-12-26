@@ -188,7 +188,7 @@ export default function Search() {
                     <img src="/img/top-story-img.jpg" className="img-fluid" />
                     <div className="img-content">
                       <div>
-                        <img src="/img/flower.jpg" />
+                        <img src="/img/no-photo.jpg" />
                       </div>
                       <div>
                         <h5 className="mb-0 text-truncate">
@@ -221,7 +221,7 @@ export default function Search() {
                     <img src="/img/top-story-img.jpg" className="img-fluid" />
                     <div className="img-content">
                       <div>
-                        <img src="/img/flower.jpg" />
+                        <img src="/img/no-photo.jpg" />
                       </div>
                       <div>
                         <h5 className="mb-0 text-truncate">
@@ -265,7 +265,7 @@ export default function Search() {
                     <img src="/img/top-story-img.jpg" className="img-fluid" />
                     <div className="img-content">
                       <div>
-                        <img src="/img/flower.jpg" />
+                        <img src="/img/no-photo.jpg" />
                       </div>
                       <div>
                         <div className="d-flex align-items-center justify-content-between">
@@ -296,7 +296,7 @@ export default function Search() {
                     <img src="/img/top-story-img.jpg" className="img-fluid" />
                     <div className="img-content">
                       <div>
-                        <img src="/img/flower.jpg" />
+                        <img src="/img/no-photo.jpg" />
                       </div>
                       <div>
                         <div className="d-flex align-items-center justify-content-between">
