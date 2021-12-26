@@ -213,9 +213,15 @@ export default function Friends() {
                             <i className="las la-map-pin"></i>
                             {item.city && item.city.city_name}, {item.country && item.country.country_name}
                           </p>
+                         
+                          <Link to={`/groupdetails/${item.id}`}>
                           <h3 className="grupper-title text-truncate">
+                        
                             {item.title}
+                          
                           </h3>
+                          </Link>
+                        
                         </div>
                       </div>
                       <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
@@ -224,37 +230,19 @@ export default function Friends() {
                       <div className="media">
                         <div className="pr-2">
                           <p className="member-count">
-                            {item.total_members || 0} <small>member</small>
+                            {item.total_members || 0} <p>member</p>
                           </p>
-                          <p className="public-group-text">
-                            <i className="las la-globe-americas"></i>
-                            {item.public ?
-                              <span>
-                                Public
-                          <br />
-                          group
-                        </span> :
-                              <span>
-                                Private
-                          <br />
-                          group
-                        </span>}
-
-                          </p>
+                          
                         </div>
                         <div className="media-body">
+                        <Link to={`/groupdetails/${item.id}`}>
                           <p className="grupper-description line-4">
                             {item.description}
                           </p>
+                          </Link>
                         </div>
                         <div className="grupper-btn-view">
-                          <Link to={`/groupdetails/${item.id}`}>
-                            <a
-                              href="#"
-                              className="btn btn-sm btn-block btn-outline-secondary mb-2">
-                              View group
-                            </a>
-                          </Link>
+
                           {
                             item.user_type ?
                               <a

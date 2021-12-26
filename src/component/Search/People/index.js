@@ -32,8 +32,8 @@ export default function People(props) {
           <div className="media-body">
             <h6 className="contact-name">{person.first_name} {person.last_name}</h6>
             <p className="contact-location">
-              <i className="las la-map-marker"></i>
-              {person.city && person.city.city_name}, {person.country && person.country.country_name}
+              
+              {person.city && person.city.city_name} {person.country && person.country.country_name}
             </p>
           </div>
         </div>
