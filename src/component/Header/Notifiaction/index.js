@@ -23,7 +23,7 @@ import NotifiactionRow from "./NotifiactionRow";
 
 const data = [
   {
-    img: "/img/flower.jpg",
+    img: "/img/no-photo.jpg",
     username: "Lorem ipsum",
     message: "dolor sit amet, consectetur adipisicing elit",
     duration: "1d ago",

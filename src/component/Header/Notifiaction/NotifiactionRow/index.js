@@ -22,7 +22,7 @@ import React from "react";
 import Image from "../../../common/Image";
 
 export default function NotifiactionRow({
-  img = "/img/flower.jpg",
+  img = "/img/no-photo.jpg",
   username = "Lorem ipsum",
   message = "dolor sit amet, consectetur adipisicing elit",
   duration = "1d ago",

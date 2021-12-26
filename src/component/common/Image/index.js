@@ -34,7 +34,7 @@ export default function Image(props) {
         if (props.errImg) {
             setSrc(props.errImg);
         } else if (!props.noDefaultImg) {
-            setSrc('/img/flower.jpg');
+            setSrc('/img/no-photo.jpg');
         }
     }
 

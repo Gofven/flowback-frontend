@@ -112,6 +112,52 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   return (
     <div className="post-view">
       <div className="post-header d-flex justify-content-between">
+
+      <div className="post-body">
+      <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
+      {children}  
+          </Link>
+        
+        <div className="post-comment-view">
+          <div className="post-share">
+            <div>
+              <a href="#">
+                <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+              </a>
+            </div>
+          </div>
+          {
+            !readOnlyComments &&
+            <div className="media">
+              <Image src={user.image} className="userImage" errImg={'/img/no-photo.jpg'} />
+              <div className="media-body">
+                <CommentBox poll={poll} replyTo={replyTo}
+                  updateComment={editComment}
+                  onInputBlur={() => { setReplyTo(null); setEditComment(null) }}
+                  onAddComment={(message) => {
+                    if (editComment) {
+                      const comment = editComment;
+                      comment.comment = message;
+                      updateComment(comment);
+                    } else {
+                      if (addComment && typeof addComment === 'function') {
+                        try {
+                          console.log('in post add comment', replyTo);
+                          addComment(message, poll.id, replyTo)
+                        } catch (e) {
+                          // print error message
+                        }
+                      }
+                    }
+                  }} />
+              </div>
+            </div>
+          }
+          <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
+        </div>
+      </div>
+
+   
         {poll && poll.created_by &&
           <div className="media post-meida">
             <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
@@ -123,9 +169,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             </div>
           </div>
         }
-        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} color='#737373' />
-        </Link>
+
         
       <>{/* <div className="post-action dropdown">
           <a
@@ -165,46 +209,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         </div> */}</>
 
       </div>
-      <div className="post-body">
-        {children}
-        <div className="post-comment-view">
-          <div className="post-share">
-            <div>
-              <a href="#">
-                <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
-              </a>
-            </div>
-          </div>
-          {
-            !readOnlyComments &&
-            <div className="media">
-              <Image src={user.image} className="userImage" errImg={'/img/no-photo.jpg'} />
-              <div className="media-body">
-                <CommentBox poll={poll} replyTo={replyTo}
-                  updateComment={editComment}
-                  onInputBlur={() => { setReplyTo(null); setEditComment(null) }}
-                  onAddComment={(message) => {
-                    if (editComment) {
-                      const comment = editComment;
-                      comment.comment = message;
-                      updateComment(comment);
-                    } else {
-                      if (addComment && typeof addComment === 'function') {
-                        try {
-                          console.log('in post add comment', replyTo);
-                          addComment(message, poll.id, replyTo)
-                        } catch (e) {
-                          // print error message
-                        }
-                      }
-                    }
-                  }} />
-              </div>
-            </div>
-          }
-          <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
-        </div>
-      </div>
+      
     </div>
   );
 }
