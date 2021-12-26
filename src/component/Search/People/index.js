@@ -20,6 +20,7 @@
 
 import React from 'react'
 import Image from "../../common/Image";
+import Profile from "../../User/Profile";
 
 export default function People(props) {
   const people = props.people;
@@ -30,7 +31,12 @@ export default function People(props) {
         <div className="media contact-view" key={person.id}>
           <Image src={person.image} />
           <div className="media-body">
-            <h6 className="contact-name">{person.first_name} {person.last_name}</h6>
+
+            <h6 className="contact-name">
+
+            <Profile id={person.id} className='cursor-pointer'>{person.first_name || "Test"} {person.last_name}</Profile>
+
+            </h6>
             <p className="contact-location">
               
               {person.city && person.city.city_name} {person.country && person.country.country_name}
