@@ -42,20 +42,30 @@ const initialError = {
   screenName: "",
   loginName: "",
 };
-export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext }) {
+export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(false);
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
   const { email, screenName, loginName } = state;
   const dispatch = useDispatch();
-  useEffect(() => {
-    setFormValid(checkAnyOneEmpty({ email, screenName, loginName }));
-  }, [email, screenName, loginName]);
-
+  // react.useEffect(() => {
+  //   console.log("bruh")
+  //   setFormValid(checkAnyOneEmpty({ email, screenName, loginName }));
+  // }, [email, screenName, loginName]);
+  
   const handleSubmit = (e) => {
-    if (formValid) {
-      setLoading(true);
+    setMainState({...mainState, email, screen_name:screenName, login_name:loginName})
+    if (email && screenName && loginName) {
+      OnNext();
+    }
+    else {
+      setError({ ...error, email:"No field can be empty" });
+    }
+      //dispatch(submitScreen1(email, screenName, loginName));
+      //OnNext();
+      //}
+      /*  setLoading(true);
       postRequest("api/v1/user/sign_up_first", {
         email,
         screen_name: screenName,
@@ -73,19 +83,21 @@ export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext }) {
       }).catch((err) => {
         setLoading(false);
       });
-    }
-  };
-
+    };
+  */}
+  
   const handleOnChange = (e) => {
     setState({ ...state, ...inputKeyValue(e) });
+    setMainState({...mainState, email, screen_name:screenName, login_name:loginName})
   };
-
+  
   const vailadated = (e) => {
     setError({
       ...error,
       ...onValidation(e),
     });
   };
+
   return (
     <>
       <Loader loading={loading}>
