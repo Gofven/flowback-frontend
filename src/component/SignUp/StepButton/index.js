@@ -29,13 +29,11 @@ export default function StepButton({
   return (
     <div className="row">
       <div className="col-6">
-        <button
-          type="button"
-          className="btn register-btn register-btn1 prev btn-hover hover-blue"
-          onClick={OnPrevious}
+        <div
+          className="register-btn register-btn1 prev"
         >
           {stepNumber} Step / {totalStep} Step
-        </button>
+        </div>
       </div>
       <div className="col-6">
         <button

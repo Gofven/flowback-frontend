@@ -28,6 +28,7 @@ import { postRequest } from "../../utils/API";
 import { inputKeyValue, onValidation } from "../../utils/common";
 import { loginUser } from "../../store/actions/auth";
 import Loader from "../common/Loader";
+import ResetPassword from "./ResetPassword";
 
 const initialState = {
   email: "",
@@ -44,6 +45,7 @@ export default function LoginCard() {
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
   const [wrongUseOrPass, setWrongUseOrPass] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false)
   const { email, password, rememberMe } = state;
   const dispatch = useDispatch();
   let history = useHistory();
@@ -99,7 +101,7 @@ export default function LoginCard() {
     setState({ ...state, ...inputKeyValue(e) });
   };
 
-  const vailadated = (e) => {
+  const validated = (e) => {
     setError({
       ...error,
       ...onValidation(e),
@@ -108,8 +110,9 @@ export default function LoginCard() {
 
   const handleKeypress = e => {if (e.keyCode === 13) { handleSubmit(); } };
 
-  return (
-    <Loader loading={loading}>
+  if (!forgotPassword){
+    return (
+      <Loader loading={loading}>
       <form className="form login_form" id="loginForm">
         <span style={{color:"red"}}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
         <div className="form-group">
@@ -119,9 +122,9 @@ export default function LoginCard() {
             placeholder="markjohnson@gmail.com"
             value={email}
             onChange={handleOnChange}
-            onBlur={vailadated}
+            onBlur={validated}
             required
-          />
+            />
         </div>
         <div className="form-group">
           <Textbox
@@ -130,12 +133,12 @@ export default function LoginCard() {
             placeholder="Password"
             value={password}
             onChange={handleOnChange}
-            onBlur={vailadated}
+            onBlur={validated}
             required
-          />
+            />
         </div>
         <div className="form-group text-center">
-          <a href="#" className="forgot-link">
+          <a href="#" className="forgot-link" onClick={() => {setForgotPassword(true)}}>
             Forgot Password?
         </a>
         </div>
@@ -145,7 +148,7 @@ export default function LoginCard() {
             className="btn login-btn btn-hover"
             disabled={!formValid}
             onClick={handleSubmit}
-          >
+            >
             Login
         </button>
           {/* <Button>Login</Button> */}
@@ -156,4 +159,9 @@ export default function LoginCard() {
       </div>
     </Loader>
   );
+}
+else
+{
+  return <ResetPassword loading={loading} setLoading={setLoading}/>
+}
 }
