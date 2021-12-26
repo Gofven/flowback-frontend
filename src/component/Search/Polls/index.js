@@ -28,7 +28,7 @@ export default function Polls(props) {
                     <div className="media groups-row">
                         <div className="media-body">
                            
-                            <h6 className="groups-title text-truncate" href={''}>{poll.title}</h6>
+                            <h6 className="groups-title text-truncate" /*href={`/groupdetails/${poll.group.id}/polldetails/${poll.id}`}*/>{poll.title}</h6>
                             
                             <p className="groups-status text-justify">{poll.description}</p>
                         </div>
