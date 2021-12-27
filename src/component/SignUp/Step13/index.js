@@ -188,20 +188,8 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               <img src="/img/info_icon2.png" className="info-icon2" />
             </div>
           </div>
-          <div className="form-group">
-            <div className="form-check">
-              <Checkbox
-                checked={accepted_terms_condition}
-                name="accepted_terms_condition"
-                onChange={handleOnChange}
-              >
-                I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
-              </Checkbox>
-            </div>
-          </div>
-          <div className="form-group mb-0">
-            <h5>Password</h5>
-          </div>
+
+      
           <div className="form-group">
             <Textbox
               type="password"
@@ -223,6 +211,17 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               onBlur={vailadated}
               required
             />
+          </div>
+          <div className="form-group">
+            <div className="form-check">
+              <Checkbox
+                checked={accepted_terms_condition}
+                name="accepted_terms_condition"
+                onChange={handleOnChange}
+              >
+                I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
+              </Checkbox>
+            </div>
           </div>
         </form>
         <StepButton
