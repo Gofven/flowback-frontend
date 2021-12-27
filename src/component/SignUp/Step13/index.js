@@ -35,6 +35,8 @@ import StepButton from "../StepButton";
 import Checkbox from "../../common/Checkbox";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import ReactDOM from "react-dom";
+
 
 
 const initialState = {
@@ -219,10 +221,12 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
+                I accept the <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>
+
+          
         </form>
         <StepButton
           stepNumber={stepNumber}
