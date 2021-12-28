@@ -115,9 +115,7 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext, mainS
               </Checkbox>
             </div>
           </div>
-          <div className="form-group mb-0">
-            <h5>Password</h5>
-          </div>
+         
           <div className="form-group">
             <Textbox
               type="password"

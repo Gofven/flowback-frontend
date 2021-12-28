@@ -35,6 +35,8 @@ import StepButton from "../StepButton";
 import Checkbox from "../../common/Checkbox";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import ReactDOM from "react-dom";
+
 
 
 const initialState = {
