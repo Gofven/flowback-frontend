@@ -47,7 +47,7 @@ export default function Login() {
   return (
     <section className="login_container">
       <div className="logo-section">
-        <a href="#">
+        <a href="/">
           <img src="/img/Logo.png" className="img-fluid main-logo" alt="logo" />
         </a>
       </div>
