@@ -102,6 +102,11 @@ export default function LoginCard() {
     setState({ ...state, ...inputKeyValue(e) });
   };
 
+    //Clicking enter makes progress
+    document.addEventListener("keypress", function(event) {
+      if (event.key===13) handleSubmit()
+    });
+
   const validated = (e) => {
     setError({
       ...error,

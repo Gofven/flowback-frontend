@@ -31,7 +31,7 @@ export default function Header() {
   const [user, setUser] = useState({})
   const data = localStorage.user ? [
     { title: "Home", icon: "la-home", url: "/" },
-    { title: "Search", icon: "la-search", url: "/search" },
+   // { title: "Search", icon: "la-search", url: "/search" },
     { title: "Missions", icon: "la-globe-americas", url: "/missions" },
     { title: "Groups", icon: "la-user-friends", url: "/groups" },
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },

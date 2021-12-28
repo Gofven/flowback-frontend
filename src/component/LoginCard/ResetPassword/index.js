@@ -38,6 +38,18 @@ export default function ResetPassword({loading, setLoading}){
       }
     }
 
+      //Clicking enter makes progress
+  document.addEventListener("keypress", function(event) {
+    //console.log(event.key)
+    if (event.key==='Enter') 
+    {
+      if (stage===1)
+        handleSendToEmailWhenForgotPassword()
+      else if (stage===2)
+        handleFinalPasswordReset()
+    }  
+  });
+
     const handleOnChange = (e) => {
         setState({ ...state, ...inputKeyValue(e) });
       };

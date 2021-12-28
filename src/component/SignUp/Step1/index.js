@@ -88,6 +88,7 @@ export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext, mainS
   */}
   
   const handleOnChange = (e) => {
+    console.log("eEEEEEE", e);
     setState({ ...state, ...inputKeyValue(e) });
     setMainState({...mainState, email, screen_name:screenName, login_name:loginName})
   };

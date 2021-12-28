@@ -123,8 +123,15 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
 // }
 
   const handleOnChange = (e) => {
+    console.log("eEEEEEE", inputKeyValue(e));
     setState({ ...state, ...inputKeyValue(e) });
   };
+
+  //Clicking enter makes progress
+  document.addEventListener("keypress", function(event) {
+    if (event.key===13) handleSubmit()
+  });
+
   const vailadated = (e) => {
     setError({
       ...error,
