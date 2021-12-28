@@ -289,7 +289,7 @@ export default function Profile(props) {
                                         </label>
                                         {
                                             editMode &&
-                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange} />
+                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange}/>
                                         }
                                     </div>
                                     {/* <Image src={user.image} className="profile-dp" alt="User Profile" errImg={'/img/no-photo.jpg'} /> */}
