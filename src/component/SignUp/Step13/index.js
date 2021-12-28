@@ -62,17 +62,18 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
     accepted_terms_condition } = state;
   const dispatch = useDispatch();
   useEffect(() => {
-    setFormValid(checkAnyOneEmpty({ email, screenName, loginName, password, repassword,
+    setFormValid(checkAnyOneEmpty({ email, screenName, password, repassword,
         accepted_terms_condition }));
-  }, [email, screenName, loginName, password, repassword, accepted_terms_condition]);
+  }, [email, screenName, password, repassword, accepted_terms_condition]);
 
   const handleSubmit = (e) => {
     console.log("hu")
-    if (email&&screenName&&loginName&&password&&repassword&&accepted_terms_condition) {
+    if (email&&screenName&&password&&repassword&&accepted_terms_condition) {
       if (password===repassword)
       {
         setLoading(true);
-        setMainState(state)
+        //Login name is no longer used but removing it would f up the backend
+        setMainState({...state, loginName:""})
         postRequest("api/v1/user/sign_up_first", {
           email,
           screen_name: screenName,
@@ -80,6 +81,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
         }).then((response) => {
           //handlePasswordSubmit().then(()=>{   
             console.log("RESPONSÉ", response);
+            setLoading(false)
             const { status, data } = response;
             if (status === "success") {
               dispatch(submitScreen1(email, screenName, loginName));
@@ -123,8 +125,15 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
 // }
 
   const handleOnChange = (e) => {
+    console.log("eEEEEEE", inputKeyValue(e));
     setState({ ...state, ...inputKeyValue(e) });
   };
+
+  //Clicking enter makes progress
+  document.addEventListener("keypress", function(event) {
+    if (event.key===13) handleSubmit()
+  });
+
   const vailadated = (e) => {
     setError({
       ...error,
@@ -136,10 +145,11 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
       <Loader loading={loading}>
         <form action="#" className="form login_form stepOne" id="loginForm">
           <div className="form-group">
+            <h5>Email</h5>
             <Textbox
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="example@example.com"
               value={email}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -147,11 +157,12 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             />
             <Error>{error?.email}</Error>
           </div>
+            <h5>Name</h5>
           <div className="form-group">
             <Textbox
               name="screenName"
               className="right-icon-input"
-              placeholder="Full Name"
+              placeholder="Sven Svensson"
               value={screenName}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -168,7 +179,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               <img src="/img/info_icon2.png" className="info-icon2" />
             </div>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <Textbox
               name="loginName"
               value={loginName}
@@ -187,6 +198,32 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               <img src="/img/info_icon1.png" className="info-icon1" />
               <img src="/img/info_icon2.png" className="info-icon2" />
             </div>
+          </div> */}
+          <div className="form-group mb-0">
+            <h5>Password</h5>
+          </div>
+          <div className="form-group">
+            <Textbox
+              type="password"
+              name="password"
+              placeholder="********"
+              value={password}
+              onChange={handleOnChange}
+              onBlur={vailadated}
+              required
+            />
+          </div>
+          <h5>Re-type password</h5>
+          <div className="form-group">
+            <Textbox
+              type="password"
+              name="repassword"
+              placeholder="********"
+              value={repassword}
+              onChange={handleOnChange}
+              onBlur={vailadated}
+              required
+            />
           </div>
           <div className="form-group">
             <div className="form-check">
@@ -198,31 +235,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
                 I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
               </Checkbox>
             </div>
-          </div>
-          <div className="form-group mb-0">
-            <h5>Password</h5>
-          </div>
-          <div className="form-group">
-            <Textbox
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={password}
-              onChange={handleOnChange}
-              onBlur={vailadated}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <Textbox
-              type="password"
-              name="repassword"
-              placeholder="Re-type Password"
-              value={repassword}
-              onChange={handleOnChange}
-              onBlur={vailadated}
-              required
-            />
           </div>
         </form>
         <StepButton
