@@ -85,7 +85,7 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
     console.log("le response", response)
     if (status === "success") {
       //history.push("/");
-      window.location.href = "/"
+      window.location.reload(false);
     } else {
       setError({ ...error, ...data[0] });
     }
