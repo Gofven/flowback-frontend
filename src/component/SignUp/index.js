@@ -33,7 +33,7 @@ export default function SignUp() {
   const [mainState, setMainState] = useState({});
   
   react.useEffect=(() => {
-    console.log(mainState, "STATE");
+    //console.log(mainState, "STATE");
   });
 
   

@@ -29,11 +29,11 @@ export default function StepButton({
   return (
     <div className="row">
       <div className="col-6">
-        <div
+        {/* <div
           className="register-btn register-btn1 prev"
         >
           {stepNumber} Step / {totalStep} Step
-        </div>
+        </div> */}
       </div>
       <div className="col-6">
         <button

@@ -38,6 +38,18 @@ export default function ResetPassword({loading, setLoading}){
       }
     }
 
+      //Clicking enter makes progress
+  document.addEventListener("keypress", function(event) {
+    //console.log(event.key)
+    if (event.key==='Enter') 
+    {
+      if (stage===1)
+        handleSendToEmailWhenForgotPassword()
+      else if (stage===2)
+        handleFinalPasswordReset()
+    }  
+  });
+
     const handleOnChange = (e) => {
         setState({ ...state, ...inputKeyValue(e) });
       };
@@ -46,7 +58,10 @@ export default function ResetPassword({loading, setLoading}){
     if (stage===1){
         console.log("hiiiiiIIIIJFKILJIEOHN")
     return <Loader loading={loading}>
-        {/* <form>  */}
+      <div className="form login_form">
+        <div className="form-group"><h4>Restore password by writing in the email
+          for the account you lost</h4></div>
+        <div className="form-group">
         <Textbox
             type="email"
             name="email"
@@ -55,7 +70,8 @@ export default function ResetPassword({loading, setLoading}){
             onChange={handleOnChange}
             //onBlur={validated}
             // required
-            />
+            /></div>
+            <div className="form-group">
             <button
             type="button"
             className="btn login-btn btn-hover"
@@ -63,13 +79,17 @@ export default function ResetPassword({loading, setLoading}){
             onClick={handleSendToEmailWhenForgotPassword}>
             Send
         </button>
-        {/* </form>   */}
+        </div>
+      </div>
     </Loader>
     }
     else if (stage===2)
     {
         return <Loader loading={loading}>
         {/* <form>  */}
+        <div className="form login_form">
+        <div className="form-group"><h4>A code has been sent to the email adress</h4></div>
+        <div className="form-group">
         <Textbox
             type="email"
             name="email"
@@ -78,7 +98,7 @@ export default function ResetPassword({loading, setLoading}){
             onChange={handleOnChange}
             //onBlur={validated}
             // required
-            />
+            /></div><div className="form-group">
             <Textbox
             type="password"
             name="password"
@@ -87,7 +107,7 @@ export default function ResetPassword({loading, setLoading}){
             onChange={handleOnChange}
             //onBlur={validated}
             //required
-            />
+            /></div><div className="form-group">
             <Textbox
             type="integers"
             name="verification_code"
@@ -96,14 +116,15 @@ export default function ResetPassword({loading, setLoading}){
             onChange={handleOnChange}
             //onBlur={validated}
             //required
-            />
+            /></div><div className="form-group">
             <button
             type="button"
             className="btn login-btn btn-hover"
             //disabled={!formVaxlid}
             onClick={handleFinalPasswordReset}>
             Send
-        </button>
+        </button></div>
+        </div>
         {/* </form>   */}
     </Loader>
     }
