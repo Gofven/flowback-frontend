@@ -27,8 +27,8 @@ import './styles.css';
 
 export default function MemberCard(props) {
     let { tab, activeTab, bind: handleOnClick } = useTab([
-        "Group Members",
-        "Group Join Requests",
+        "Members",
+        "Join Requests",
     ]);
     const userType = props.userType;
 

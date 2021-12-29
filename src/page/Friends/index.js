@@ -209,10 +209,7 @@ export default function Friends() {
                       <div className="media grupper-img-content">
                         <Image src={item.image} className="grupper-dp" />
                         <div className="media-body">
-                          <p className="location-txt text-truncate">
-                            <i className="las la-map-pin"></i>
-                            {item.city && item.city.city_name}, {item.country && item.country.country_name}
-                          </p>
+                          
                          
                           <Link to={`/groupdetails/${item.id}`}>
                           <h3 className="grupper-title text-truncate">

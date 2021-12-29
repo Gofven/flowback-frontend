@@ -119,13 +119,10 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           </Link>
         
         <div className="post-comment-view">
-          <div className="post-share">
-            <div>
-              <a href="#">
-                <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+          {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
               </a>
             </div>
-          </div>
+  </div>*/}
           {
             !readOnlyComments &&
             <div className="media">
