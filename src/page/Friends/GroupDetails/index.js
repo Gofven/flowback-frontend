@@ -59,11 +59,11 @@ export default function GroupDetails() {
         "Feed",
         "About",
         "Documents",
-        "Group Members"
+        "Members"
     ]);
 
     // List of icon for list
-    const indexIcon = [faInfoCircle, faRss, faFileAlt, faUser];
+    const indexIcon = [faRss, faInfoCircle, faFileAlt, faUser];
 
     // List to render on the screen
     const renderTab = () => {
@@ -171,19 +171,17 @@ export default function GroupDetails() {
                             <div className="col-6 d-flex align-items-end justify-content-end flex-column mr-5 mb-2">
                                 <div className="mb-1">
                                     <p className="group-details-member-count">
-                                        {group.total_members} <small>member</small>
+                                        {group.total_members} <small>members</small>
                                     </p>                                </div>
                                 <div className="group-details-btn-view">
                                     {
                                         group.user_type ?
-                                            <a
-                                                href="#"
-                                                className="btn btn-sm btn-block btn-outline-light"
+                                            <p
                                             >
                                                 <i className="las la-check text-success mr-1"></i>
                                                 {group.user_type}
 
-                                            </a> :
+                                            </p> :
                                             (
                                                 (group.group_join_status == "Requested") ?
                                                     <a

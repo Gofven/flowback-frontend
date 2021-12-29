@@ -119,7 +119,7 @@ export default function LoginCard() {
           <Textbox
             type="email"
             name="email"
-            placeholder="markjohnson@gmail.com"
+            placeholder="Username or email"
             value={email}
             onChange={handleOnChange}
             onBlur={validated}
