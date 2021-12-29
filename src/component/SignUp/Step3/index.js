@@ -131,7 +131,7 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Textbox
               type="password"
               name="repassword"
-              placeholder="Re-type Password"
+              placeholder="Retype Password"
               value={repassword}
               onChange={handleOnChange}
               onBlur={vailadated}
