@@ -215,7 +215,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               required
             />
           </div>
-          <h5>Re-type password</h5>
+          <h5>Retype Password</h5>
           <div className="form-group">
             <Textbox
               type="password"
