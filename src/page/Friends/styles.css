@@ -167,6 +167,12 @@ select::selected{
     pointer-events: none;
     z-index: -10;
 }
+
+.grupper-img-view:hover{
+    filter:brightness(0.92);
+    /* box-shadow:10px #565656; */
+}
+
 .grupper-img-view .grupper-cover{
     position: absolute;
     top: 0;
