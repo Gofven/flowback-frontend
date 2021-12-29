@@ -297,7 +297,7 @@ export default function Profile(props) {
                                         {
                                             !editMode &&
                                             <h3 className="profile-title text-truncate">
-                                                {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : null}
+                                                {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : ""}
                                             </h3>
                                         }
                                         
@@ -346,7 +346,7 @@ export default function Profile(props) {
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
-                                            <div className="form-group">
+                                            {/* <div className="form-group">
                                                 <Textbox
                                                     type="text"
                                                     name="website"
@@ -355,7 +355,7 @@ export default function Profile(props) {
                                                     value={userForm.website || ''}
                                                     onChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </form>
                                     </div>
                                     :
@@ -365,7 +365,7 @@ export default function Profile(props) {
                                             {user.bio || 'No data added yet.'}
                                         </p>
                                         <div className='my-2'>
-                                            <span><FontAwesomeIcon icon={faLink} size='sm' /> {' '} {user?.website || 'no website added.'}</span>
+                                            {/* <span><FontAwesomeIcon icon={faLink} size='sm' /> {' '} user?.website || 'no website added.'</span> */}
                                         </div>
                                         <div>
                                             <span><FontAwesomeIcon icon={faMapPin} size='sm' /> {' '} {`Stockholm, Sweden`}</span>
