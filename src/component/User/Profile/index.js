@@ -279,7 +279,7 @@ export default function Profile(props) {
                             <div className="profile-img-view">
                                 <div className="media profile-img-content">
                                     <div>
-                                        <label className='position-relative' htmlFor='profileDp'>
+                                        <label className={`position-relative ${editMode ? "onHoverStuff" : ""}`} htmlFor='profileDp'>
                                             {
                                                 !userImage &&
                                                 <div className='profile-dp-label'></div>

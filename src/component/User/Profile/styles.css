@@ -115,8 +115,12 @@
     z-index: 564;
 }
 
+.onHoverStuff:hover{
+    filter:brightness(80%)
+}
+
 .edit-mode .media.profile-img-content .profile-dp-label:after {
-    content: 'Change Profile Picture';
+    /* content: 'Change Profile Picture'; */
     position: absolute;
     color: white;
     /* z-index: 400; */
