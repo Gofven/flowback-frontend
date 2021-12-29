@@ -205,24 +205,26 @@ export default function Friends() {
                 groups?.map((item, index) => (
                   <div className="grupper-card" key={item.id}>
 
+<Link to={`/groupdetails/${item.id}`}>
                     <div className="grupper-img-view">
                       <div className="media grupper-img-content">
                         <Image src={item.image} className="grupper-dp" />
                         <div className="media-body">
                           
                          
-                          <Link to={`/groupdetails/${item.id}`}>
+                          
                           <h3 className="grupper-title text-truncate">
                         
                             {item.title}
                           
                           </h3>
-                          </Link>
+                          
                         
                         </div>
                       </div>
                       <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
                     </div>
+                    </Link>
                     <div className="grupper-content-view">
                       <div className="media">
                         <div className="pr-2">
@@ -232,11 +234,11 @@ export default function Friends() {
                           
                         </div>
                         <div className="media-body">
-                        <Link to={`/groupdetails/${item.id}`}>
+                        
                           <p className="grupper-description line-4">
                             {item.description}
                           </p>
-                          </Link>
+                        
                         </div>
                         <div className="grupper-btn-view">
 
