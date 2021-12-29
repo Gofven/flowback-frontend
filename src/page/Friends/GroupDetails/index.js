@@ -162,9 +162,11 @@ export default function GroupDetails() {
                                     </h3>
                                     {
                                         ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
+                                        <div class="iconedit">
                                         <Link to={`/groupdetails/${groupId}/edit`}>
-                                            <FontAwesomeIcon icon={faEdit} size="lg" color="black" />
+                                            <FontAwesomeIcon icon={faEdit} size="lg" color="black"/>
                                         </Link>
+                                        </div>
                                     }
                                 </div>
                             </div>
