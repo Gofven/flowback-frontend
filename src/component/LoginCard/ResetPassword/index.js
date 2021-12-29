@@ -6,16 +6,15 @@ import { postRequest } from "../../../utils/API";
 
 
 export default function ResetPassword({loading, setLoading}){
-    //{/*api/v1/user/reset-password-one*/}{/*api/v1/user/reset-password-two*/}
-    const [state, setState] = useState({email:"", newPassword:"", verification_code:0})
+    const [state, setState] = useState({email:"", newPassword:"", repassword:"", verification_code:0})
     const [stage, setStage] = useState(1)
-    const { email, password, verification_code } = state;
+    const [wrongPass, setWrongPass] = useState(false)
+    const { email, password, repassword, verification_code } = state;
   
-    const handleSendToEmailWhenForgotPassword = () =>
+    const handleSendCodeToEmail = () =>
     {
       setLoading(true)
-      if (email)
-      {
+      if (email){
         postRequest("api/v1/user/reset-password-one", {email}).then(response => {
           setStage(2)
           setState({email:"", password:"", verification_code:""})
@@ -24,29 +23,31 @@ export default function ResetPassword({loading, setLoading}){
       }
     }
 
-    const handleFinalPasswordReset = () =>
+    const handlePasswordReset = () =>
     {
       setLoading(true)
-      if (email)
+      if (password!==repassword){
+        setWrongPass(true)
+      }
+      else if (email)
       {
         postRequest("api/v1/user/reset-password-two", {email, password, verification_code}).then(response => {
-          setStage(2)
           setState({email:"", password:"", verification_code:""})
           setLoading(false)
-          console.log("RESPNS", response)
+          console. log("RESPNS", response)
+          window.location.reload()
         })
       }
     }
 
       //Clicking enter makes progress
   document.addEventListener("keypress", function(event) {
-    //console.log(event.key)
     if (event.key==='Enter') 
     {
       if (stage===1)
-        handleSendToEmailWhenForgotPassword()
+        handleSendCodeToEmail()
       else if (stage===2)
-        handleFinalPasswordReset()
+        handlePasswordReset()
     }  
   });
 
@@ -54,9 +55,7 @@ export default function ResetPassword({loading, setLoading}){
         setState({ ...state, ...inputKeyValue(e) });
       };
 
-
     if (stage===1){
-        console.log("hiiiiiIIIIJFKILJIEOHN")
     return <Loader loading={loading}>
       <div className="form login_form">
         <div className="form-group"><h4>Restore password by writing in the email
@@ -65,7 +64,7 @@ export default function ResetPassword({loading, setLoading}){
         <Textbox
             type="email"
             name="email"
-            placeholder="Username or email"
+            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -76,7 +75,7 @@ export default function ResetPassword({loading, setLoading}){
             type="button"
             className="btn login-btn btn-hover"
             //disabled={!formVaxlid}
-            onClick={handleSendToEmailWhenForgotPassword}>
+            onClick={handleSendCodeToEmail}>
             Send
         </button>
         </div>
@@ -90,28 +89,42 @@ export default function ResetPassword({loading, setLoading}){
         <div className="form login_form">
         <div className="form-group"><h4>A code has been sent to the email adress</h4></div>
         <div className="form-group">
+          <h5>Email</h5>
         <Textbox
             type="email"
             name="email"
-            placeholder="Username"
+            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
             // required
             /></div><div className="form-group">
+              <h5 style={{"color":"red","fontSize":"14px"}}>{wrongPass ? "Passwords don't match" : ""}</h5>
+              <h5>Password</h5>
             <Textbox
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="********"
             value={password}
             onChange={handleOnChange}
             //onBlur={validated}
             //required
             /></div><div className="form-group">
+              <h5>Retype Password</h5>
+            <Textbox
+            type="password"
+            name="repassword"
+            placeholder="********"
+            value={repassword}
+            onChange={handleOnChange}
+            //onBlur={validated}
+            //required
+            /></div><div className="form-group">
+              <h5>Verification Code</h5>
             <Textbox
             type="integers"
             name="verification_code"
-            placeholder="123456"
+            placeholder="XXXXXXX"
             value={verification_code}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -121,7 +134,7 @@ export default function ResetPassword({loading, setLoading}){
             type="button"
             className="btn login-btn btn-hover"
             //disabled={!formVaxlid}
-            onClick={handleFinalPasswordReset}>
+            onClick={handlePasswordReset}>
             Send
         </button></div>
         </div>

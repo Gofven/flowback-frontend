@@ -28,14 +28,14 @@ export default function StepButton({
 }) {
   return (
     <div className="row">
-      <div className="col-6">
+      {/* <div className="col-6"> */}
         {/* <div
           className="register-btn register-btn1 prev"
         >
           {stepNumber} Step / {totalStep} Step
         </div> */}
-      </div>
-      <div className="col-6">
+      {/* </div> */}
+      <div className="col-6" style={{"boxShadow":"1000px", "marginLeft":"25%"}}>
         <button
           type="button"
           className="btn register-btn register-btn2 next btn-hover"

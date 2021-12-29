@@ -116,10 +116,11 @@ export default function LoginCard() {
       <form className="form login_form" id="loginForm">
         <span style={{color:"red"}}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
         <div className="form-group">
+          <h5>Email</h5>
           <Textbox
             type="email"
             name="email"
-            placeholder="Username or email"
+            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             onBlur={validated}
@@ -127,10 +128,11 @@ export default function LoginCard() {
             />
         </div>
         <div className="form-group">
+          <h5>Password</h5>
           <Textbox
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="*******"
             value={password}
             onChange={handleOnChange}
             onBlur={validated}

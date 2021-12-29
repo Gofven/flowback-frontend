@@ -65,6 +65,7 @@ export default function Login() {
                       <span
                         className={`nav-link${item === activeTab ? " active" : ""
                           }`}
+                        style={{"color":"#575757"}}
                         data-id={index}
                         {...handleOnClick}
                       >

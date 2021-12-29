@@ -85,11 +85,11 @@
     /* z-index: 400; */
     font-size: 24px;
     /* height: 100%; */
-    width: 100%;
+    width: 50%;
     /* background: blue; */
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 45%;
+    transform: translate(-20%, -20%);
     text-align: center;
     text-shadow: 0px 0px 4px #000000;
     /* background: #000; */
@@ -114,8 +114,12 @@
     z-index: 564;
 }
 
+.onHoverStuff:hover{
+    filter:brightness(80%)
+}
+
 .edit-mode .media.profile-img-content .profile-dp-label:after {
-    content: 'Change Profile Picture';
+    /* content: 'Change Profile Picture'; */
     position: absolute;
     color: white;
     /* z-index: 400; */
