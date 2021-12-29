@@ -236,13 +236,13 @@ export default function PollForm() {
                                                 </div>
                                             </div>
                                         }
-                                        <div className="form-group">
+                                        {/*<div className="form-group">
                                             <TagsInput className="tags-input"
                                                 name="tags"
                                                 value={tag}
                                                 onChange={handleOnTagChange}
                                                 defaultValue={tag} />
-                                        </div>
+                                    </div>*/}
 
                                         <div className="form-group mx-2">
                                             <Textarea

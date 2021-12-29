@@ -307,13 +307,7 @@ export default function GroupForm(props) {
                                                     defaultValue={state.description}
                                                 />
                                             </div>
-                                            <div className="form-group">
-                                                <TagsInput
-                                                    className="tags-input"
-                                                    name="tags"
-                                                    defaultValue={state.tags}
-                                                    value={tags} onChange={handleOnTagChange} />
-                                            </div>
+                                            {/*<div className="form-group">    <TagsInputclassName="tags-input"       name="tags"   defaultValue={state.tags}       value={tags} onChange={handleOnTagChange} />   </div>*/}
                                             <div className="form-group field">
                                                 <div>
                                                     <Label>
@@ -413,77 +407,9 @@ export default function GroupForm(props) {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="form-group field">
-                                                <Label>
-                                                    Poll approval
-                          </Label>
-                                                <div>
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="poll_approval_direct_approve"
-                                                        name="poll_approval"
-                                                        label="Direct Approve"
-                                                        value="direct_approve"
-                                                        checked={poll_approval === "direct_approve"}
-                                                        onClick={handleOnChange}
-                                                    />
+                                            
 
-                                                    <Form.Check
-                                                        inline
-                                                        type="radio"
-                                                        id="poll_approval_need_moderation"
-                                                        name="poll_approval"
-                                                        label="Needs Moderation"
-                                                        value="need_moderation"
-                                                        checked={poll_approval === "need_moderation"}
-                                                        onClick={handleOnChange}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="form-group field">
-                                                <Label>
-                                                    Location
-                          </Label>
-                                                <div>
-                                                    <Form.Group>
-
-                                                        <Form.Control as="select"
-                                                            onChange={handleOnCountrySelect}
-                                                            placeholder="Country"
-                                                        >
-                                                            <option disabled selected>Select a Country</option>
-                                                            {
-                                                                contries?.map((countryDetail) => (
-                                                                    <option value={countryDetail.id} key={countryDetail.id}
-                                                                        id={countryDetail.id}
-                                                                        selected={countryDetail.id === country}
-                                                                    >{countryDetail.country_name}</option>
-                                                                ))
-                                                            }
-                                                        </Form.Control>
-                                                    </Form.Group>
-
-                                                    <Form.Group>
-                                                        <Form.Control as="select"
-                                                            onChange={handleOnCitySelect}
-                                                            disabled={!state?.country}
-                                                        >
-                                                            <option disabled selected>Select a City</option>
-                                                            {
-                                                                cities?.map((cityDetail) => (
-                                                                    <option value={cityDetail.id} key={cityDetail.id}
-                                                                        id={cityDetail.id}
-                                                                        selected={cityDetail.id === city}
-                                                                    >{cityDetail.city_name}</option>
-                                                                ))
-                                                            }
-                                                        </Form.Control>
-                                                    </Form.Group>
-
-                                                </div>
-                                            </div>
+                                            
 
                                             <div className="text-center my-5">
                                                 <Button

@@ -18,7 +18,6 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-.profile-modal {}
 
 .profile-modal .modal-content {
     background-color: transparent;
@@ -218,3 +217,4 @@
     border-color: #f7f7f7;
     margin-right: 8px;
 }
+

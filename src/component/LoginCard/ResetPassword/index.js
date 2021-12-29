@@ -65,7 +65,7 @@ export default function ResetPassword({loading, setLoading}){
         <Textbox
             type="email"
             name="email"
-            placeholder="markjohnson@gmail.com"
+            placeholder="Username or email"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -93,7 +93,7 @@ export default function ResetPassword({loading, setLoading}){
         <Textbox
             type="email"
             name="email"
-            placeholder="markjohnson@gmail.com"
+            placeholder="Username"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
