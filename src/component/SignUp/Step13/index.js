@@ -164,7 +164,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               name="screenName"
               className="right-icon-input"
-              placeholder="Sven Svensson"
+              placeholder="Username"
               value={screenName}
               onChange={handleOnChange}
               onBlur={vailadated}
