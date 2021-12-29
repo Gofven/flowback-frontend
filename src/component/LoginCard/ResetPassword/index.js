@@ -51,10 +51,10 @@ export default function ResetPassword({loading, setLoading}){
       else if (email)
       {
         postRequest("api/v1/user/reset-password-two", {email, password, verification_code}).then(response => {
-          //setStage(2)
           setState({email:"", password:"", verification_code:""})
           setLoading(false)
           console.log("RESPNS", response)
+          window.location.reload()
         })
       }
     }
