@@ -394,6 +394,7 @@ export default function PollDetails() {
                                                                         <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                             onChange={onCounterProposalDocumentsSelect}
                                                                             multiple="multiple"
+                                                                            //FIX THIS
                                                                         />
                                                                     </div>
                                                                 }
