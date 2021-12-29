@@ -263,7 +263,7 @@ export default function Profile(props) {
                                             <div className='profile-edit-icon'>
                                                 <FontAwesomeIcon icon={faSave} onClick={() => updateUser()} />
                                             </div>
-                                            <div className='profile-edit-icon'>
+                                            <div className='profile-edit-icon' style={{"marginLeft":"5%"}}>
                                                 <FontAwesomeIcon icon={faTimes} onClick={() => toggleEditMode()} />
                                             </div>
                                         </>
