@@ -173,6 +173,10 @@ select::selected{
     transition:filter 400ms;
 }
 
+.grupper-img-view{
+    transition:filter 400ms;
+}
+
 .grupper-img-view .grupper-cover{
     position: absolute;
     top: 0;
