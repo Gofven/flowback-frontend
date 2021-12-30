@@ -119,13 +119,10 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           </Link>
         
         <div className="post-comment-view">
-          <div className="post-share">
-            <div>
-              <a href="#">
-                <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+          {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
               </a>
             </div>
-          </div>
+  </div>*/}
           {
             !readOnlyComments &&
             <div className="media">
@@ -166,7 +163,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
                 <Profile id={poll.created_by.id} className='cursor-pointer'>{poll.created_by.first_name || "Test"} {poll.created_by.last_name}</Profile><span>created a post</span>
               </h5>
               <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
+              <div className="post-time">{poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
             </div>
+
           </div>
         }
 

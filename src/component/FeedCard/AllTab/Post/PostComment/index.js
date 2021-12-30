@@ -56,20 +56,20 @@ export default function PostComment({
         <p className="reply-text">{comment}</p>
         <div className="reply-time">
           {formatDate(created_at)}
-          <a href="#">{likes_count || 0} {(likes_count === 1) ? 'Like' : 'Likes'}</a>
+          {/*<a href="#">{likes_count || 0} {(likes_count === 1) ? 'Like' : 'Likes'}</a>*/}
           {
             edited &&
             <a href="#">Edited</a>
           }
-          {(!readOnly) &&
+          {/*(!readOnly) &&
             <a className="cursor-pointer"
-              onClick={() => onReplyClick(id)}>Reply</a>
-          }
+          onClick={() => onReplyClick(id)}>Reply</a>
+          */}
         </div>
         {children}
       </div>
       <div className="post-action dropdown d-flex justify-content-center">
-        {
+        {/*
           (!readOnly || liked) &&
           <FontAwesomeIcon icon={(liked) ? faHeartSolid : faHeart} color="red"
             className={`${!readOnly ? "cursor-pointer " : ""}`}
@@ -79,7 +79,7 @@ export default function PostComment({
               }
             }}
           />
-        }
+          */}
         <div>&nbsp;&nbsp;</div>
         {
           (user && (user.id === created_by.id) && !readOnly) &&
