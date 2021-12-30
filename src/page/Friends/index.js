@@ -210,22 +210,21 @@ export default function Friends() {
                       <div className="media grupper-img-content">
                         <Image src={item.image} className="grupper-dp" />
                         <div className="media-body">
-                          <p className="location-txt text-truncate">
-                            <i className="las la-map-pin"></i>
-                            {item.city && item.city.city_name}, {item.country && item.country.country_name}
-                          </p>
+
                          
+
                           <h3 className="grupper-title text-truncate">
                         
                             {item.title}
                           
                           </h3>
+
                         
                         </div>
                       </div>
                       <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'}  />
                     </div>
-                  </Link>
+                    </Link>
                     <div className="grupper-content-view">
                       <div className="media">
                         <div className="pr-2">

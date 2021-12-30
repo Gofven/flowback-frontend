@@ -164,7 +164,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               name="screenName"
               className="right-icon-input"
-              placeholder="Sven Svensson"
+              placeholder="Username"
               value={screenName}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -234,7 +234,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                I accept the <a href="media/legal/terms_of_service.html">Terms & Conditions.</a>
+                I accept the <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>

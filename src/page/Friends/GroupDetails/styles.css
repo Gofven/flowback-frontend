@@ -26,6 +26,10 @@
     overflow: hidden;
 }
 
+.group-details-card .media-body .iconedit {
+    filter: drop-shadow(1px 1px 1px #ffffff);
+}
+
 .group-details-img-view {
     position: relative;
     width: 100%;

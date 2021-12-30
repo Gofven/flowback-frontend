@@ -82,3 +82,7 @@ input[type=file] {
 .create_group_form .form-group .tags-input {
     margin: 0 !important;
 }
+
+.create_group_form .form-group .delete {
+    filter: drop-shadow(1px 1px 1px #000000);
+}

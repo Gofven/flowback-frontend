@@ -270,7 +270,7 @@ export default function Profile(props) {
                                     }
                                     {
                                         !editMode &&
-                                        <div className='profile-edit-icon' onClick={() => toggleEditMode()}>
+                                        <div className='profile-edit-icon' id='1234' onClick={() => toggleEditMode()}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </div>
                                     }
