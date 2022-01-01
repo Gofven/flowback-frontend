@@ -148,7 +148,7 @@ export default function LoginCard() {
           <button
             type="submit"
             className="btn login-btn btn-hover"
-            disabled={!formValid}
+            //disabled={!formValid}
             onClick={handleSubmit}
             >
             Login

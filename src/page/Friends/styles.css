@@ -170,7 +170,11 @@ select::selected{
 
 .grupper-img-view:hover{
     filter:brightness(0.92);
-    /* box-shadow:10px #565656; */
+    transition:filter 400ms;
+}
+
+.grupper-img-view{
+    transition:filter 400ms;
 }
 
 .grupper-img-view .grupper-cover{
