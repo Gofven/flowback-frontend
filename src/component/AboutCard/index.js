@@ -36,7 +36,7 @@ export default function AboutCard(props) {
                                 <div className="col-5">Description</div>
                                 <div className="col-6">{group.description}</div>
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <div className="col-5">Tags</div>
                                 <div className="col-6">
                                     {group && group.tags &&
@@ -50,7 +50,7 @@ export default function AboutCard(props) {
                             <div className="row">
                                 <div className="col-5">Location</div>
                                 <div className="col-6">{group.city && group.city.city_name}, {group.country && group.country.country_name}</div>
-                            </div>
+                            </div> */}
                             <div className="row">
                                 <div className="col-5">Created By</div>
                                 <div className="col-6">{group.created_by && group.created_by.first_name} {group.created_by && group.created_by.last_name}</div>
