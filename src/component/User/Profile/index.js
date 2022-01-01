@@ -367,10 +367,10 @@ export default function Profile(props) {
                                         <div className='my-2'>
                                             {/* <span><FontAwesomeIcon icon={faLink} size='sm' /> {' '} user?.website || 'no website added.'</span> */}
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <span><FontAwesomeIcon icon={faMapPin} size='sm' /> {' '} {`Stockholm, Sweden`}</span>
                                             <span className='mx-4'><FontAwesomeIcon icon={faUserPlus} size='sm' /> {' '} {`Joined 2020 09 07`}</span>
-                                        </div>
+                                        </div> */}
                                     </div>
                             }
                         </div>

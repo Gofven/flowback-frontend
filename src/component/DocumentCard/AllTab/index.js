@@ -152,14 +152,18 @@ export default function AllTab(props) {
             {
                 documents.map((document, key) => (
                     <div className="media mb-2" key={document}>
-                        <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' />
+                        <div class = "cursor-pointer">
+                        <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' onClick={() => { viewDocument(document) }}/>
+                        </div>
                         <div className="media-body">
-                            <p className="text-turncate mb-0">{document.doc_name}</p>
+                            <div class = "cursor-pointer">
+                                <p className="text-turncate mb-0">{document.doc_name}</p>
+                            </div>
                             <p className="text-turncate small">Created {formatDate(document.created_at, 'DD/MM/YYYY')}</p>
                         </div>
                         <div className="d-flex" >
-                            <FontAwesomeIcon className="cursor-pointer"
-                                icon={faFileDownload} color='blue' size='md' onClick={() => { viewDocument(document) }} />
+                            {/* <FontAwesomeIcon className="cursor-pointer"
+                                icon={faFileDownload} color='blue' size='md' onClick={() => { viewDocument(document) }} /> */}
                             <div className='px-2'></div>
                             {["Owner", "Admin", "Moderator"].includes(props.userType) &&
                                 <FontAwesomeIcon className="cursor-pointer"
