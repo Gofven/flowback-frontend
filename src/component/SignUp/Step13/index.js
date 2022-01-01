@@ -99,11 +99,10 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
         }
         else{
           setError({...error, email:"Passwords need to match"})
-
         }
-        }
-        else{
-          setError({...error, email:"Leave no field empty"})
+      }
+      else{
+        setError({...error, email:"Leave no field empty"})
     }
   };
 // const handlePasswordSubmit = () => {
@@ -132,9 +131,9 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   };
 
   //Clicking enter makes progress
-  document.addEventListener("keypress", function(event) {
-    if (event.key===13) handleSubmit()
-  });
+  // document.addEventListener("keypress", function(event) {
+  //   if (event.key===13) handleSubmit()
+  // });
 
   const vailadated = (e) => {
     setError({
@@ -145,6 +144,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   return (
     <>
       <Loader loading={loading}>
+        <Error style={{"textAlign":"center"}}>{error?.email}</Error>
         <form action="#" className="form login_form stepOne" id="loginForm">
           <div className="form-group">
             <h5>Email</h5>
@@ -157,7 +157,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               onBlur={vailadated}
               required
             />
-            <Error>{error?.email}</Error>
           </div>
             <h5>Name</h5>
           <div className="form-group">
@@ -249,69 +248,3 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
     </>
   );
 }
-
-
-/*export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext }) {
-  const [state, setState] = useState(initialState);
-  const [formValid, setFormValid] = useState(true);
-  const [error, setError] = useState(initialError);
-  const [loading, setLoading] = useState(false);
-  const {
-    password,
-    repassword,
-    accepted_terms_condition,
-  } = state;
-
-  const { email } = useSelector((state) => state.signup);
-
-  let history = useHistory();
-
-  useEffect(() => {
-    setFormValid(
-      checkAnyOneEmpty({
-        password,
-        accepted_terms_condition,
-      })
-    );
-  }, [password, accepted_terms_condition]);
-
-  const handleSubmit = (e) => {
-    if (formValid) {
-      setLoading(true);
-      postRequest("api/v1/user/sign_up_three", {
-        email: email,
-        password,
-        accepted_terms_condition,
-      }).then((response) => {
-        setLoading(false);
-        const { status, data } = response;
-        if (status === "success") {
-          history.push("/");
-        } else {
-          setError({ ...error, ...data[0] });
-        }
-      }).catch((err) => {
-        setLoading(false);
-      });
-    }
-  };
-  const handleOnChange = (e) => {
-    console.log(state);
-    setState({ ...state, ...inputKeyValue(e) });
-    console.log(state);
-  };
-
-  const vailadated = (e) => {
-    setError({
-      ...error,
-      ...onValidation(e),
-    });
-  };
-  return (
-    <>
-      <Loader loading={loading}>
-
-      </Loader>
-    </>
-  );
-}*/

@@ -428,7 +428,7 @@ export default function PollDetails() {
                                     </div>
                                 </Loader>
                             }
-                            {/*<div className="card poll-details-card card-rounded overflow-hidden my-4">
+                            {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">{poll.title}</h4>
                                     {poll.accepted ?
@@ -441,7 +441,7 @@ export default function PollDetails() {
                                         )
                                     }
                                 </div>
-                            </div>*/}
+                            </div> */}
                             <div className="card poll-details-card  card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">Details</h4>
