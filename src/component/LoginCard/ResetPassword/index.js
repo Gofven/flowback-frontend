@@ -57,7 +57,7 @@ export default function ResetPassword({loading, setLoading}){
 
     if (stage===1){
     return <Loader loading={loading}>
-      <div className="form login_form">
+      <form action="#" className="form login_form">
         <div className="form-group"><h4>Restore password by writing in the email
           for the account you lost</h4></div>
         <div className="form-group">
@@ -79,13 +79,14 @@ export default function ResetPassword({loading, setLoading}){
             Send
         </button>
         </div>
-      </div>
+        {/* </form> */}
+      </form>
     </Loader>
     }
     else if (stage===2)
     {
         return <Loader loading={loading}>
-        {/* <form>  */}
+        <form action="#"> 
         <div className="form login_form">
         <div className="form-group"><h4>A code has been sent to the email adress</h4></div>
         <div className="form-group">
@@ -138,7 +139,7 @@ export default function ResetPassword({loading, setLoading}){
             Send
         </button></div>
         </div>
-        {/* </form>   */}
+        </form>
     </Loader>
     }
 }
