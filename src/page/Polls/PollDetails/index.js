@@ -292,8 +292,10 @@ export default function PollDetails() {
         setCounterProposalLoading(true);
 
         var data = new FormData();
-        data.append('file', counterProposal.file);
-        data.append('proposal', counterProposal.proposal);
+        if(counterProposal.file) data.append('file', counterProposal.file);
+        if (counterProposal.proposal !== "") data.append('proposal', counterProposal.proposal);
+        //TODO: Make an error show up to the user
+        else return null
 
         //end_time: new Date(data.end_time)
         //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
@@ -411,18 +413,17 @@ export default function PollDetails() {
                                                             // onBlur={vailadated}
                                                             />
                                                         </div>
+
                                                         <div className="text-center my-2 mt-4">
                                                             <Button
                                                                 type="button"
                                                                 className="btn btn-hover"
                                                                 // disabled={!formValid}
-                                                                onClick={saveCounterProposal}
-                                                            >
+                                                                onClick={saveCounterProposal}>
                                                                 Add
-                                            </Button>
+                                                            </Button>
                                                         </div>
                                                     </form>
-
                                             }
                                         </div>
                                     </div>
