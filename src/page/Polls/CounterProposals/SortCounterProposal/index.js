@@ -134,7 +134,7 @@ function Task(props) {
 
 
 function SortCounterProposal(props) {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
 
@@ -158,18 +158,18 @@ function SortCounterProposal(props) {
         let cpPointsArr = Object.keys(cpPoints).map((key) => [Number(key), cpPoints[key]]);
         cpPointsArr = cpPointsArr.sort((a, b) => b[1] - a[1]);
         cpPoints = new Map();
-        cpPointsArr.forEach((val, i) => cpPoints.set(val[0],val[1]));
+        cpPointsArr.forEach((val, i) => cpPoints.set(val[0], val[1]));
         const pointsMap = new Map();
-       cpPoints.forEach((val, key) => {
-                if (val > 0) {
-                    const list = pointsMap.get('positive') || [];
-                    list.push(key);
-                    pointsMap.set('positive', list);
-                } else {
-                    const list = pointsMap.get('negative') || [];
-                    list.push(key);
-                    pointsMap.set('negative', list);
-                }
+        cpPoints.forEach((val, key) => {
+            if (val > 0) {
+                const list = pointsMap.get('positive') || [];
+                list.push(key);
+                pointsMap.set('positive', list);
+            } else {
+                const list = pointsMap.get('negative') || [];
+                list.push(key);
+                pointsMap.set('negative', list);
+            }
             delete cpMap[key];
         });
         Object.keys(cpMap).forEach((cp) => {
@@ -229,11 +229,11 @@ function SortCounterProposal(props) {
         }
 
         // Sort values highest to lowest
-        const positive_proposal_indexes = Object.keys(ppi).sort(function(a,b){
+        const positive_proposal_indexes = Object.keys(ppi).sort(function (a, b) {
             return ppi[a] - ppi[b];
         }).map(Number)
 
-        const negative_proposal_indexes = Object.keys(npi).sort(function(a,b){
+        const negative_proposal_indexes = Object.keys(npi).sort(function (a, b) {
             return npi[a] - npi[b];
         }).map(Number)
 
@@ -281,40 +281,39 @@ function SortCounterProposal(props) {
     useEffect(() => {
         console.log('state changes', state);
     }, [state])
-    
+
     return (
         <>
-            <div className={props.className} onClick={handleShow}>
+            {/* <div className={props.className} onClick={handleShow}>
                 {props.children}
+            </div> */}
+
+            {/* <Modal show={show} onHide={handleClose} centered size='lg'> */}
+            <div className='p-4'>
+                <Loader loading={loading}>
+                    <h4>Sort Proposals</h4>
+                    <div>
+                        {
+                            <DragDropContext
+                                // onDragStart={onDragStart}
+                                // onDragUpdate={onDragUpdate}
+                                onDragEnd={onDragEnd}
+                            >
+                                {state.columnOrder.map(columnId => {
+                                    const column = state.columns[columnId];
+                                    const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+
+                                    return <Column key={tasks.id} column={column} tasks={tasks} />;
+                                })}
+                            </DragDropContext>
+                        }
+                    </div>
+                    <div>
+                        <Button color='secondary' onClick={saveIndexies}>Update</Button>
+                    </div>
+                </Loader>
             </div>
-
-            <Modal show={show} onHide={handleClose} centered size='lg'>
-                <div className='p-4'>
-                    <Loader loading={loading}>
-                        <h4>Sort Proposals</h4>
-                        <div>
-                            {
-                                show &&
-                                <DragDropContext
-                                    // onDragStart={onDragStart}
-                                    // onDragUpdate={onDragUpdate}
-                                    onDragEnd={onDragEnd}
-                                >
-                                    {state.columnOrder.map(columnId => {
-                                        const column = state.columns[columnId];
-                                        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
-
-                                        return <Column key={tasks.id} column={column} tasks={tasks} />;
-                                    })}
-                                </DragDropContext>
-                            }
-                        </div>
-                        <div>
-                            <Button color='secondary' onClick={saveIndexies}>Update</Button>
-                        </div>
-                    </Loader>
-                </div>
-            </Modal>
+            {/* </Modal> */}
         </>
     );
 }
