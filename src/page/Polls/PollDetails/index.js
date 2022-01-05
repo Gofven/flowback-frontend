@@ -43,6 +43,7 @@ export default function PollDetails() {
     const [group, setGroup] = useState({});
     const [counterProposal, seteCounterProposal] = useState({});
     const [counterProposalLoading, setCounterProposalLoading] = useState(false);
+    const [alreadyPosted, setAlreadyPosted] = useState(true)
 
     // Get Poll Details
     const getPollDetails = () => {
@@ -291,27 +292,34 @@ export default function PollDetails() {
     const saveCounterProposal = () => {
         setCounterProposalLoading(true);
 
-        var data = new FormData();
-        data.append('file', counterProposal.file);
-        data.append('proposal', counterProposal.proposal);
+        if (alreadyPosted) {
 
-        //end_time: new Date(data.end_time)
-        //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
-        //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
-        
-        data.append('poll', pollId);
-        postRequest("api/v1/group_poll/add_proposal", data).then(
-            (response) => {
-                console.log('COOL RESPONSE', response);
-                const { status, data } = response;
-                if (status === "success") {
-                    getPollDetails();
-                    getCounterProposal();
-                }
-                setCounterProposalLoading(false);
-            }).catch((err) => {
-                setCounterProposalLoading(false);
-            });
+            var data = new FormData();
+            if (counterProposal.file) data.append('file', counterProposal.file);
+            data.append('proposal', counterProposal.proposal);
+
+            //end_time: new Date(data.end_time)
+            //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
+            //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
+
+            data.append('poll', pollId);
+            postRequest("api/v1/group_poll/add_proposal", data).then(
+                (response) => {
+                    setAlreadyPosted(true);
+                    const { status, data } = response;
+                    if (status === "success") {
+                        getPollDetails();
+                        getCounterProposal();
+                    }
+                    setCounterProposalLoading(false);
+                }).catch((err) => {
+                    setCounterProposalLoading(false);
+                });
+        }
+        else {
+            console.log("bruh");
+            setCounterProposalLoading(false);
+        }
     }
 
     const onDateTimeSelect = (e) => {
@@ -358,7 +366,7 @@ export default function PollDetails() {
                                         <div className="card-header flex-header">
                                             <h4 className="card-title fw-bolder">
                                                 Proposal
-                                    </h4>
+                                            </h4>
                                         </div>
                                         <div className="card-body overflow-hidden">
                                             {
@@ -368,14 +376,14 @@ export default function PollDetails() {
                                                     </div>
                                                     :
                                                     <form className="form create_poll_form" id="createPollForm">
-            {/*TODO: fix this shit
-             <DatePicker
-                selected={counterProposal.date}
-                onChange={onDateTimeSelect}
-                minDate={new Date()}
-                showTimeSelect
-                dateFormat="Pp"
-            /> */}
+                                                        {/*TODO: fix this shit
+                                                        <DatePicker
+                                                            selected={counterProposal.date}
+                                                            onChange={onDateTimeSelect}
+                                                            minDate={new Date()}
+                                                            showTimeSelect
+                                                            dateFormat="Pp"
+                                                    /> */}
                                                         <div className="form-group">
                                                             <div className='field d-flex '>
                                                                 {counterProposal?.file ?
@@ -389,12 +397,12 @@ export default function PollDetails() {
                                                                         <label htmlFor='document'>
                                                                             <div>
                                                                                 Add File
-                                                            </div>
+                                                                            </div>
                                                                         </label>
                                                                         <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                             onChange={onCounterProposalDocumentsSelect}
                                                                             multiple="multiple"
-                                                                            //FIX THIS
+                                                                        //FIX THIS
                                                                         />
                                                                     </div>
                                                                 }
@@ -415,11 +423,10 @@ export default function PollDetails() {
                                                             <Button
                                                                 type="button"
                                                                 className="btn btn-hover"
-                                                                // disabled={!formValid}
-                                                                onClick={saveCounterProposal}
-                                                            >
+                                                                //disabled={alreadyPosted}
+                                                                onClick={saveCounterProposal}>
                                                                 Add
-                                            </Button>
+                                                            </Button>
                                                         </div>
                                                     </form>
 
@@ -497,7 +504,7 @@ export default function PollDetails() {
                                                 <label htmlFor='document' className="text-primary">
                                                     <div>
                                                         Add More Files
-                                                                    </div>
+                                                    </div>
                                                 </label>
                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                     onChange={addDocuments}
@@ -528,7 +535,7 @@ export default function PollDetails() {
 
                             {
                                 (poll && poll.id && !counterProposalLoading) &&
-                                <Counterproposals poll={poll} group={group} />
+                                <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted} />
                             }
                         </div>
                         <div className="col-md-3">

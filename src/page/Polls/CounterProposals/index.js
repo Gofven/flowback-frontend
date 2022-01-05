@@ -28,7 +28,7 @@ import SortCounterProposal from './SortCounterProposal';
 import './styles.css';
 import { UserTypes } from '../../../constants/constants';
 
-function Counterproposals({ poll, group }) {
+function Counterproposals({ poll, group, setAlreadyPosted }) {
 
     const [counterProposals, setCounterProposals] = useState([]);
     const [proposalIndexes, setProposalIndexes] = useState(null);
@@ -36,7 +36,7 @@ function Counterproposals({ poll, group }) {
     useEffect(() => {
         getCounterProposals();
     }, [])
-    
+
     /**
      * To get counter proposals
      */
@@ -45,29 +45,34 @@ function Counterproposals({ poll, group }) {
         //data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
+                response.forEach(proposal => {
+                    if (proposal.user.id === JSON.parse(localStorage.getItem("user")).id) {
+                        setAlreadyPosted(true);
+                        //TODO: User should be able to get feedback
+                        console.log("POSTED ALREADY")
+                        return null;
+                    }
+                });
                 console.log('response', response);
                 //const { status, data } = response;
                 //if (response === "success") {
-                    console.log("the counter proposasls", response)
-                    setCounterProposals(response)
-                    // if (response && response.counter_proposals) {
-                    //     response.forEach((counterProposal) => {
-                    //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
-                    //         setCounterProposals(response);
-                    //     })
-                    // }
+                console.log("the counter proposasls", response)
+                setCounterProposals(response)
+                // if (response && response.counter_proposals) {
+                //     response.forEach((counterProposal) => {
+                //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
+                //         setCounterProposals(response);
+                //     })
+                // }
                 //}
             });
         getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
             (response) => {
-                //console.log('RESPONSE!!!!', response);
-                    if (response && response.proposal_indexes) {
-                        setProposalIndexes(response.proposal_indexes);
-                    }
-                
+                if (response && response.proposal_indexes) {
+                    setProposalIndexes(response.proposal_indexes);
+                }
             });
-        }
-            
+    }
 
     /**
      * To add comment in counter proposal
@@ -199,16 +204,15 @@ function Counterproposals({ poll, group }) {
         }
     }
 
-return (
+    return (
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
                 <div className="card-header flex-header d-flex justify-content-between">
-                    <h4 className="card-title fw-bolder">Proposals</h4>
+                    {/* <h4 className="card-title fw-bolder">Proposals</h4> */}
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
                             <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>
                                 <FontAwesomeIcon icon={faArrowsAltV} color="black" />
-                                {/* testing */}
                             </SortCounterProposal>
                             : null
                     }
@@ -219,14 +223,14 @@ return (
                             <div className='text-center'>No proposals are available.</div>
                             : null
                     }
-                    {typeof(counterProposals) === Array && counterProposals.detail !== "Not found." ?  counterProposals?.map((counterProposal, index) => (
+                    {typeof (counterProposals) === Array && counterProposals.detail !== "Not found." ? counterProposals?.map((counterProposal, index) => (
                         <CounterProposal counterProposal={counterProposal} key={counterProposal.id}
                             addComment={(message, pollId, replyTo) => addComment(message, counterProposal.id, replyTo)}
                             updateComment={(comment) => updateComment(comment)}
                             deleteComment={(commentId) => deleteComment(commentId)}
                             likeComment={(comment) => likeComment(comment)}
                             readOnlyComments={poll.discussion === "Finished" || !(group && group.user_type && group.user_type !== UserTypes.Delegator)}
-                        > 
+                        >
                             <>
                                 <div className='d-flex'>
                                     <FontAwesomeIcon className='counter-proposal-file' icon={faFileAlt} />
@@ -239,7 +243,7 @@ return (
                             </>
                         </CounterProposal>
                     ))
-                    : null}
+                        : null}
                 </div>
             </div>
         </div>
