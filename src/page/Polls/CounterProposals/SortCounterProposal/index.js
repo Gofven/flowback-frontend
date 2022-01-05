@@ -118,12 +118,16 @@ function Task(props) {
                         }
                     </div>
                     <div className="counterproposal-body card-body">
-                        <LinesEllipsis
-                            text={counterProposal?.proposal}
+                        {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
+                        <h4><LinesEllipsis
+                            text={counterProposal?.proposal.split("~")[0]}
                             maxLine='3'
                             ellipsis='...'
                             trimRight
                             basedOn='letters'
+                        /></h4>
+                        <LinesEllipsis
+                            text={counterProposal?.proposal.split("~")[1]}
                         />
                     </div>
                 </div>
