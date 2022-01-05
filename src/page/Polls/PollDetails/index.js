@@ -419,6 +419,7 @@ export default function PollDetails() {
                                                             // onBlur={vailadated}
                                                             />
                                                         </div>
+
                                                         <div className="text-center my-2 mt-4">
                                                             <Button
                                                                 type="button"
@@ -429,7 +430,6 @@ export default function PollDetails() {
                                                             </Button>
                                                         </div>
                                                     </form>
-
                                             }
                                         </div>
                                     </div>
