@@ -128,6 +128,9 @@ function Task(props) {
                         /></h4>
                         <LinesEllipsis
                             text={counterProposal?.proposal.split("~")[1]}
+                            ellipsis="..."
+                            trimRight
+                            basedOn='letters'
                         />
                     </div>
                 </div>
