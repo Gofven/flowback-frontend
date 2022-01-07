@@ -301,7 +301,7 @@ export default function PollDetails() {
             //The backend only supports one text field at the moment so this is a workaround for having two text fields
             const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details}`;
 
-            data.append('proposal', counterProposal.proposal_title);
+            data.append('proposal', combinedProposal);
 
             //end_time: new Date(data.end_time)
             //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));

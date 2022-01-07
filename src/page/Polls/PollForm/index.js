@@ -89,7 +89,7 @@ export default function PollForm() {
 
     // Create Poll
     const handleSubmit = (e) => {
-        pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60*60*1000); // Bodge to Stockholm Timezone
+        pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
         var data = new FormData();
@@ -212,7 +212,7 @@ export default function PollForm() {
                                                             <div className='d-flex'>
                                                                 <label htmlFor='document' className="text-primary">
                                                                     <div>
-                                                                        Add More Files
+                                                                        {/* Add More Files */}
                                                                     </div>
                                                                 </label>
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
@@ -225,7 +225,7 @@ export default function PollForm() {
                                                             <label htmlFor='document'>
                                                                 <div>
                                                                     Add File
-                                                            </div>
+                                                                </div>
                                                             </label>
                                                             <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                 onChange={OnDocumentsSelect}
@@ -260,15 +260,15 @@ export default function PollForm() {
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
                                                 <option selected value="poll">Private</option>
                                                 <option value="mission">Public</option>
-                                                
+
                                             </select>
-                                        </div> 
+                                        </div>
 
                                         <div className="form-group field">
                                             <div>
                                                 <Label>
                                                     End Time
-                                            </Label>
+                                                </Label>
                                             </div>
                                             {/* <DateTimePicker
                                                 onChange={onDateTimeSelect}
