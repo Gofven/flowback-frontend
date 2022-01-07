@@ -118,6 +118,7 @@ function Task(props) {
                         }
                     </div>
                     <div className="counterproposal-body card-body">
+                        <button>RÖSTA UPPÅT</button>
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <h4><LinesEllipsis
                             text={counterProposal?.proposal.split("~")[0]}
