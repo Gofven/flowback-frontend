@@ -294,14 +294,18 @@ export default function PollDetails() {
 
         if (alreadyPosted) {
             setError("Already Posted a proposal (max 1 proposal per user)");
-            return null;
+            return;
+        }
+        if (counterProposal.proposal_title === "") {
+            setError("Proposal needs title");
+            return;
         }
         if (counterProposal.proposal_title.includes("~")) {
             setError("Character \"~\" is not allowed");
-            return null;
+            return;
         }
         if (counterProposal.file) data.append('file', counterProposal.file);
-        if (counterProposal.description === undefined) counterProposal.description = ""
+        if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
 
