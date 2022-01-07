@@ -41,9 +41,10 @@ export default function PollDetails() {
     let { pollId } = useParams();
     const [poll, setPoll] = useState({});
     const [group, setGroup] = useState({});
-    const [counterProposal, seteCounterProposal] = useState({});
+    const [counterProposal, setCounterProposal] = useState({});
     const [counterProposalLoading, setCounterProposalLoading] = useState(false);
-    const [alreadyPosted, setAlreadyPosted] = useState(true)
+    const [alreadyPosted, setAlreadyPosted] = useState(false);
+    const [error, setError] = useState("");
 
     // Get Poll Details
     const getPollDetails = () => {
@@ -265,7 +266,7 @@ export default function PollDetails() {
                 console.log('response', response);
                 const { status, data } = response;
                 if (status === "success") {
-                    seteCounterProposal(data);
+                    setCounterProposal(data);
                 }
             });
     }
@@ -273,30 +274,34 @@ export default function PollDetails() {
     // Set Counter Proposal
     const handleOnChange = (e) => {
         console.log("Value", e.target.value);
-        seteCounterProposal({ ...counterProposal, ...inputKeyValue(e) });
+        setCounterProposal({ ...counterProposal, ...inputKeyValue(e) });
     };
 
     // Document Selection for Counter Proposal Document
     const onCounterProposalDocumentsSelect = (e) => {
         const files = Array.from(e.target.files)
         var file = files[0];
-        seteCounterProposal({ ...counterProposal, file });
+        setCounterProposal({ ...counterProposal, file });
     }
 
     // Remove Document for Counter Proposal
     const removeCounterProposalDocument = () => {
-        seteCounterProposal({ ...counterProposal, file: null });
+        setCounterProposal({ ...counterProposal, file: null });
     }
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
         setCounterProposalLoading(true);
 
-        if (alreadyPosted) {
+        if (!alreadyPosted) {
 
             var data = new FormData();
             if (counterProposal.file) data.append('file', counterProposal.file);
-            data.append('proposal', counterProposal.proposal);
+
+            //The backend only supports one text field at the moment so this is a workaround for having two text fields
+            const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details}`;
+
+            data.append('proposal', counterProposal.proposal_title);
 
             //end_time: new Date(data.end_time)
             //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
@@ -317,14 +322,14 @@ export default function PollDetails() {
                 });
         }
         else {
-            console.log("bruh");
+            setError("Already Posted a proposal (max 1 proposal per user)")
             setCounterProposalLoading(false);
         }
     }
 
     const onDateTimeSelect = (e) => {
         console.log(e);
-        seteCounterProposal({ ...counterProposal, date: e });
+        setCounterProposal({ ...counterProposal, date: e });
     }
 
     return (
@@ -369,14 +374,14 @@ export default function PollDetails() {
                                             </h4>
                                         </div>
                                         <div className="card-body overflow-hidden">
-                                            {
+                                            {/* {
                                                 counterProposal?.id ?
                                                     <div>
                                                         <p>{counterProposal?.proposal}</p>
                                                     </div>
-                                                    :
-                                                    <form className="form create_poll_form" id="createPollForm">
-                                                        {/*TODO: fix this shit
+                                                    : */}
+                                            <form className="form create_poll_form" id="createPollForm">
+                                                {/*TODO: fix this shit
                                                         <DatePicker
                                                             selected={counterProposal.date}
                                                             onChange={onDateTimeSelect}
@@ -384,53 +389,65 @@ export default function PollDetails() {
                                                             showTimeSelect
                                                             dateFormat="Pp"
                                                     /> */}
-                                                        <div className="form-group">
-                                                            <div className='field d-flex '>
-                                                                {counterProposal?.file ?
-                                                                    <div className='d-flex flex-column w-100'>
-                                                                        <div className='d-flex justify-content-between align-items-center my-1'>
-                                                                            <div className="mr-2" > {counterProposal?.file.name}</div>
-                                                                            <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeCounterProposalDocument() }} />
-                                                                        </div>
-                                                                    </div> :
-                                                                    <div className=''>
-                                                                        <label htmlFor='document'>
-                                                                            <div>
-                                                                                Add File
-                                                                            </div>
-                                                                        </label>
-                                                                        <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
-                                                                            onChange={onCounterProposalDocumentsSelect}
-                                                                            multiple="multiple"
-                                                                        //FIX THIS
-                                                                        />
+                                                <h5 style={{ "color": "red" }}>{error}</h5>
+                                                <div className="form-group">
+                                                    <Textbox
+                                                        type="text"
+                                                        name="proposal_title"
+                                                        placeholder="Proposal Title"
+                                                        required
+                                                        onChange={handleOnChange}
+                                                        defaultValue={counterProposal.proposal}
+                                                    // onBlur={vailadated}
+                                                    />
+                                                </div>
+                                                <div className="form-group proposal-details">
+                                                    <textarea
+                                                        type="text"
+                                                        name="proposal_details"
+                                                        placeholder="Proposal Details"
+                                                        required
+                                                        onChange={handleOnChange}
+                                                        defaultValue={counterProposal.proposal}
+                                                    // onBlur={vailadated}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <div className='field d-flex '>
+                                                        {counterProposal?.file ?
+                                                            <div className='d-flex flex-column w-100'>
+                                                                <div className='d-flex justify-content-between align-items-center my-1'>
+                                                                    <div className="mr-2" > {counterProposal?.file.name}</div>
+                                                                    <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeCounterProposalDocument() }} />
+                                                                </div>
+                                                            </div> :
+                                                            <div className=''>
+                                                                <label htmlFor='document'>
+                                                                    <div>
+                                                                        Add File
                                                                     </div>
-                                                                }
+                                                                </label>
+                                                                <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
+                                                                    onChange={onCounterProposalDocumentsSelect}
+                                                                    multiple="multiple"
+                                                                //FIX THIS
+                                                                />
                                                             </div>
-                                                        </div>
-                                                        <div className="form-group mx-2">
-                                                            <Textbox
-                                                                type="text"
-                                                                name="proposal"
-                                                                placeholder="Proposal Details"
-                                                                required
-                                                                onChange={handleOnChange}
-                                                                defaultValue={counterProposal.proposal}
-                                                            // onBlur={vailadated}
-                                                            />
-                                                        </div>
+                                                        }
+                                                    </div>
+                                                </div>
 
-                                                        <div className="text-center my-2 mt-4">
-                                                            <Button
-                                                                type="button"
-                                                                className="btn btn-hover"
-                                                                //disabled={alreadyPosted}
-                                                                onClick={saveCounterProposal}>
-                                                                Add
-                                                            </Button>
-                                                        </div>
-                                                    </form>
-                                            }
+                                                <div className="text-center my-2 mt-4">
+                                                    <Button
+                                                        type="button"
+                                                        className="btn btn-hover"
+                                                        //disabled={alreadyPosted}
+                                                        onClick={saveCounterProposal}>
+                                                        Add
+                                                    </Button>
+                                                </div>
+                                            </form>
+                                            {/* } */}
                                         </div>
                                     </div>
                                 </Loader>
@@ -503,7 +520,7 @@ export default function PollDetails() {
                                             <div className='d-flex'>
                                                 <label htmlFor='document' className="text-primary">
                                                     <div>
-                                                        Add More Files
+                                                        {/* Add More Files */}
                                                     </div>
                                                 </label>
                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
