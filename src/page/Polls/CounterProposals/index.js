@@ -45,7 +45,7 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
         //data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
-                if (response) {
+                if (response.detail !== "Not found.") {
 
                     response.forEach(proposal => {
                         if (proposal.user.id === JSON.parse(localStorage.getItem("user")).id) {
@@ -69,7 +69,7 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                     //}
                 }
                 else {
-                    console.warn("No proposals");
+                    console.log("No proposals");
                 }
             });
         getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
