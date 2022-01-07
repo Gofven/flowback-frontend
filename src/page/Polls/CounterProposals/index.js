@@ -45,26 +45,32 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
         //data.append('poll', poll.id);
         getRequest(`api/v1/group_poll/${poll.id}/all_proposals`).then(
             (response) => {
-                response.forEach(proposal => {
-                    if (proposal.user.id === JSON.parse(localStorage.getItem("user")).id) {
-                        setAlreadyPosted(true);
-                        //TODO: User should be able to get feedback
-                        console.log("POSTED ALREADY")
-                        return null;
-                    }
-                });
-                console.log('response', response);
-                //const { status, data } = response;
-                //if (response === "success") {
-                console.log("the counter proposasls", response)
-                setCounterProposals(response)
-                // if (response && response.counter_proposals) {
-                //     response.forEach((counterProposal) => {
-                //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
-                //         setCounterProposals(response);
-                //     })
-                // }
-                //}
+                if (response) {
+
+                    response.forEach(proposal => {
+                        if (proposal.user.id === JSON.parse(localStorage.getItem("user")).id) {
+                            setAlreadyPosted(true);
+                            //TODO: User should be able to get feedback
+                            console.log("POSTED ALREADY")
+                            return null;
+                        }
+                    });
+                    console.log('response', response);
+                    //const { status, data } = response;
+                    //if (response === "success") {
+                    console.log("the counter proposasls", response)
+                    setCounterProposals(response)
+                    // if (response && response.counter_proposals) {
+                    //     response.forEach((counterProposal) => {
+                    //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
+                    //         setCounterProposals(response);
+                    //     })
+                    // }
+                    //}
+                }
+                else {
+                    console.warn("No proposals");
+                }
             });
         getRequest(`api/v1/group_poll/${poll.id}/index_proposals`).then(
             (response) => {
