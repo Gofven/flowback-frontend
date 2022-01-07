@@ -520,7 +520,7 @@ export default function PollDetails() {
                                             <div className='d-flex'>
                                                 <label htmlFor='document' className="text-primary">
                                                     <div>
-                                                        Add More Files
+                                                        {/* Add More Files */}
                                                     </div>
                                                 </label>
                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
