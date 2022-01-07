@@ -150,7 +150,7 @@ function SortCounterProposal(props) {
 
     useEffect(() => {
         if (show) {
-            initializeState();
+
         }
     }, [show]);
 
@@ -257,7 +257,7 @@ function SortCounterProposal(props) {
                 if (status === "success") {
                     if (props.onUpdateIndexes) {
                         props.onUpdateIndexes(true);
-                        handleClose();
+                        //handleClose();
                     }
                 }
                 setLoading(false);
@@ -299,6 +299,7 @@ function SortCounterProposal(props) {
             <div className='p-4'>
                 <Loader loading={loading}>
                     <h4>Sort Proposals</h4>
+                    <Button color='secondary' onClick={initializeState}>Show how I voted earlier</Button>
                     <div>
                         {
                             <DragDropContext
@@ -317,6 +318,7 @@ function SortCounterProposal(props) {
                     </div>
                     <div>
                         <Button color='secondary' onClick={saveIndexies}>Update</Button>
+
                     </div>
                 </Loader>
             </div>

@@ -297,7 +297,7 @@ export default function PollDetails() {
             return null;
         }
         if (counterProposal.proposal_title.includes("~")) {
-            setError("Character \"~\" not allowed");
+            setError("Character \"~\" is not allowed");
             return null;
         }
         if (counterProposal.file) data.append('file', counterProposal.file);
