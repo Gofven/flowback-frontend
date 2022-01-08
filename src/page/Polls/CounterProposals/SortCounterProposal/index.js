@@ -133,21 +133,21 @@ function Task(props) {
                             <div className="vote-buttons">
                                 <button
                                     onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
-                                    style={{ "backgroundColor": "green" }}>
+                                    className="for">
                                     <FontAwesomeIcon className=""
                                         icon={faCheck} color='' size='lg' />
                                     <div>FOR</div>
                                 </button>
                                 <button
                                     onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
-                                    style={{ "backgroundColor": "orange" }}>
+                                    className="abstain">
                                     <FontAwesomeIcon className=""
                                         icon={faCircle} color='' size='lg' />
                                     <div>ABSTAIN</div>
                                 </button>
                                 <button
                                     onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
-                                    style={{ "backgroundColor": "red" }}>
+                                    className="against">
                                     <FontAwesomeIcon className=""
                                         icon={faTimes} color='' size='lg' />
                                     <div>AGAINST</div>

@@ -37,6 +37,41 @@
 }
 
 .vote-buttons > button{
-    font-size: 0.8vw;
+    font-size: 0.8vmax;
     /* width: 33%; */
+}
+
+.for{
+    background-color: #5CBD7E;
+}
+
+.for:hover{
+    background-color: #68D48D;
+}
+
+.abstain{
+    background-color: #b9a245;
+}
+
+.abstain:hover{
+    background-color: #EDD15C;
+}
+
+.against{
+    background-color: #BD342F;
+}
+
+.against:hover
+{
+    background-color: #D43A35;
+}
+
+textarea{
+    width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+
+    border-radius: 2%;
+    
 }
