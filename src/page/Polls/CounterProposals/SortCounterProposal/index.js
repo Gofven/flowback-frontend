@@ -119,7 +119,7 @@ function Task(props) {
                     </div>
                     <div className="counterproposal-body card-body">
                         <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })} style={{ "color": "green" }}>VOTE UP</button>
-                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })} style={{ "color": "yellow" }}>VOTE NEUTRAL</button>
+                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })} style={{ "color": "orange" }}>VOTE NEUTRAL</button>
                         <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })} style={{ "color": "red" }}>VOTE DOWN</button>
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <h4>
