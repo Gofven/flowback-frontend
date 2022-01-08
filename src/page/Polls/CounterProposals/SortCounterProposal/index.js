@@ -29,6 +29,8 @@ import Image from '../../../../component/common/Image';
 import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -117,24 +119,48 @@ function Task(props) {
                             </div>
                         }
                     </div>
-                    <div className="counterproposal-body card-body">
-                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })} style={{ "color": "green" }}>VOTE UP</button>
-                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })} style={{ "color": "orange" }}>VOTE NEUTRAL</button>
-                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })} style={{ "color": "red" }}>VOTE DOWN</button>
+                    <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
-                        <h4>
+                        <div className="counter-proposal-top">
+                            <div className="counter-proposal-title">
+                                <h4><LinesEllipsis
+                                    text={counterProposal?.proposal.split("~")[0]}
+                                    maxLine='3'
+                                    ellipsis='...'
+                                    trimRight
+                                    basedOn='letters' /></h4>
+                            </div>
+                            <div className="vote-buttons">
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                                    style={{ "backgroundColor": "green" }}>
+                                    <FontAwesomeIcon className=""
+                                        icon={faCheck} color='' size='lg' />
+                                    <div>FOR</div>
+                                </button>
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
+                                    style={{ "backgroundColor": "orange" }}>
+                                    <FontAwesomeIcon className=""
+                                        icon={faCircle} color='' size='lg' />
+                                    <div>ABSTAIN</div>
+                                </button>
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
+                                    style={{ "backgroundColor": "red" }}>
+                                    <FontAwesomeIcon className=""
+                                        icon={faTimes} color='' size='lg' />
+                                    <div>AGAINST</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
                             <LinesEllipsis
-                                text={counterProposal?.proposal.split("~")[0]}
-                                maxLine='3'
-                                ellipsis='...'
+                                text={counterProposal?.proposal.split("~")[1]}
+                                ellipsis="..."
                                 trimRight
                                 basedOn='letters' />
-                        </h4>
-                        <LinesEllipsis
-                            text={counterProposal?.proposal.split("~")[1]}
-                            ellipsis="..."
-                            trimRight
-                            basedOn='letters' />
+                        </div>
                     </div>
                 </div>
             </TaskContainer>

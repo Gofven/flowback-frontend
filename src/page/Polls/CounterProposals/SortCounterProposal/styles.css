@@ -18,3 +18,25 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
+.counter-proposal-top{
+    display:flex;
+}
+
+.counter-proposal-top > div{
+    flex:1;
+}
+
+.counter-proposal-title{
+    padding:0.5rem
+}
+
+.vote-buttons{
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 80px;
+}
+
+.vote-buttons > button{
+    font-size: 0.8vw;
+    /* width: 33%; */
+}
