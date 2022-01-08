@@ -80,9 +80,11 @@ function Column(props) {
                     {...provided.droppableProps}
                     isDraggingOver={snapshot.isDraggingOver}
                 >
-                    {props.tasks.map((task, index) => (
-                        <Task key={task.id} task={task} index={index} />
-                    ))}
+                    {props.tasks.map((task, index) => {
+                        const rand = Math.floor(Math.random() * 100000000000);
+                        console.log(rand);
+                        return <Task key={rand} task={task} index={index} />
+                    })}
                     {provided.placeholder}
                 </TaskList>
             )}
@@ -145,6 +147,7 @@ function SortCounterProposal(props) {
     const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
+    const [error, setError] = useState("")
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -254,17 +257,25 @@ function SortCounterProposal(props) {
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
+                if (response === "User has no permission to vote") {
+                    setError("You don't have permission to vote")
+                    setLoading(false);
+                    return;
+                }
+
                 const { status, data } = response;
                 if (status === "success") {
                     if (props.onUpdateIndexes) {
                         props.onUpdateIndexes(true);
                         //handleClose();
                     }
+                    window.location.reload()
                 }
                 setLoading(false);
             }).catch((err) => {
                 setLoading(false);
-            }).finally(() => window.location.reload());
+                window.location.reload()
+            });
     }
 
     /**
@@ -316,6 +327,9 @@ function SortCounterProposal(props) {
                                 })}
                             </DragDropContext>
                         }
+                    </div>
+                    <div style={{ "color": "red" }}>
+                        {error}
                     </div>
                     <div>
                         <Button color='secondary' onClick={saveIndexies}>Update</Button>
