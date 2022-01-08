@@ -38,32 +38,36 @@
 
 .vote-buttons > button{
     font-size: 0.8vmax;
-    /* width: 33%; */
+    border-width: 0px;
+}
+
+.vote-buttons > button:active{
+    outline:none;
 }
 
 .for{
-    background-color: #5CBD7E;
+    background-color: #22e967;
 }
 
 .for:hover{
-    background-color: #68D48D;
+    background-color: #20be57;
 }
 
 .abstain{
-    background-color: #b9a245;
+    background-color: #fade6e;
 }
 
 .abstain:hover{
-    background-color: #EDD15C;
+    background-color: #d3b43b;
 }
 
 .against{
-    background-color: #BD342F;
+    background-color: #e24a45;
 }
 
 .against:hover
 {
-    background-color: #D43A35;
+    background-color: #c51812;
 }
 
 textarea{
@@ -73,5 +77,5 @@ textarea{
     box-sizing: border-box;         /* Opera/IE 8+ */
 
     border-radius: 2%;
-    
+
 }
