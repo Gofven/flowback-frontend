@@ -81,9 +81,7 @@ function Column(props) {
                     isDraggingOver={snapshot.isDraggingOver}
                 >
                     {props.tasks.map((task, index) => {
-                        const rand = Math.floor(Math.random() * 100000000000);
-                        console.log(rand);
-                        return <Task key={rand} task={task} index={index} />
+                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} />
                     })}
                     {provided.placeholder}
                 </TaskList>
@@ -120,26 +118,27 @@ function Task(props) {
                         }
                     </div>
                     <div className="counterproposal-body card-body">
-                        <button>RÖSTA UPPÅT</button>
+                        <button onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}>RÖSTA UPPÅT</button>
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
-                        <h4><LinesEllipsis
-                            text={counterProposal?.proposal.split("~")[0]}
-                            maxLine='3'
-                            ellipsis='...'
-                            trimRight
-                            basedOn='letters'
-                        /></h4>
+                        <h4>
+                            <LinesEllipsis
+                                text={counterProposal?.proposal.split("~")[0]}
+                                maxLine='3'
+                                ellipsis='...'
+                                trimRight
+                                basedOn='letters' />
+                        </h4>
                         <LinesEllipsis
                             text={counterProposal?.proposal.split("~")[1]}
                             ellipsis="..."
                             trimRight
-                            basedOn='letters'
-                        />
+                            basedOn='letters' />
                     </div>
                 </div>
             </TaskContainer>
-        )}
-    </Draggable>;
+        )
+        }
+    </Draggable >;
 }
 
 
@@ -205,7 +204,7 @@ function SortCounterProposal(props) {
      * @returns 
      */
     const onDragEnd = (event) => {
-        console.log('event', event);
+        // console.log('event', event);
         const { source, destination, draggableId } = event;
         if (!destination) {
             return;
@@ -216,6 +215,13 @@ function SortCounterProposal(props) {
         const data = state;
         data.columns[source.droppableId].taskIds.splice(source.index, 1);
         data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId);
+        setState({ ...data });
+    }
+
+    const onClickTrafficLight = ({ source, destination, draggableID }) => {
+        const data = state;
+        data.columns[source].taskIds.splice(0, 1);
+        data.columns[destination].taskIds.splice(0, 0, draggableID);
         setState({ ...data });
     }
 
@@ -323,7 +329,7 @@ function SortCounterProposal(props) {
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} />;
                                 })}
                             </DragDropContext>
                         }
