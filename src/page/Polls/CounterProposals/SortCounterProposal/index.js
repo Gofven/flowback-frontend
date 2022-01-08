@@ -269,9 +269,9 @@ function SortCounterProposal(props) {
                         props.onUpdateIndexes(true);
                         //handleClose();
                     }
-                    window.location.reload()
                 }
                 setLoading(false);
+                window.location.reload()
             }).catch((err) => {
                 setLoading(false);
                 window.location.reload()
