@@ -29,6 +29,8 @@ import Image from '../../../../component/common/Image';
 import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -80,9 +82,9 @@ function Column(props) {
                     {...provided.droppableProps}
                     isDraggingOver={snapshot.isDraggingOver}
                 >
-                    {props.tasks.map((task, index) => (
-                        <Task key={task.id} task={task} index={index} />
-                    ))}
+                    {props.tasks.map((task, index) => {
+                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} />
+                    })}
                     {provided.placeholder}
                 </TaskList>
             )}
@@ -117,26 +119,54 @@ function Task(props) {
                             </div>
                         }
                     </div>
-                    <div className="counterproposal-body card-body">
+                    <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
-                        <h4><LinesEllipsis
-                            text={counterProposal?.proposal.split("~")[0]}
-                            maxLine='3'
-                            ellipsis='...'
-                            trimRight
-                            basedOn='letters'
-                        /></h4>
-                        <LinesEllipsis
-                            text={counterProposal?.proposal.split("~")[1]}
-                            ellipsis="..."
-                            trimRight
-                            basedOn='letters'
-                        />
+                        <div className="counter-proposal-top">
+                            <div className="counter-proposal-title">
+                                <h4><LinesEllipsis
+                                    text={counterProposal?.proposal.split("~")[0]}
+                                    maxLine='3'
+                                    ellipsis='...'
+                                    trimRight
+                                    basedOn='letters' /></h4>
+                            </div>
+                            <div className="vote-buttons">
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                                    className="for">
+                                    <FontAwesomeIcon className=""
+                                        icon={faCheck} color='' size='lg' />
+                                    <div>FOR</div>
+                                </button>
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
+                                    className="abstain">
+                                    <FontAwesomeIcon className=""
+                                        icon={faCircle} color='' size='lg' />
+                                    <div>ABSTAIN</div>
+                                </button>
+                                <button
+                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
+                                    className="against">
+                                    <FontAwesomeIcon className=""
+                                        icon={faTimes} color='' size='lg' />
+                                    <div>AGAINST</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <LinesEllipsis
+                                text={counterProposal?.proposal.split("~")[1]}
+                                ellipsis="..."
+                                trimRight
+                                basedOn='letters' />
+                        </div>
                     </div>
                 </div>
             </TaskContainer>
-        )}
-    </Draggable>;
+        )
+        }
+    </Draggable >;
 }
 
 
@@ -144,13 +174,14 @@ function SortCounterProposal(props) {
     const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
+    const [error, setError] = useState("")
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
         if (show) {
-            initializeState();
+
         }
     }, [show]);
 
@@ -201,7 +232,7 @@ function SortCounterProposal(props) {
      * @returns 
      */
     const onDragEnd = (event) => {
-        console.log('event', event);
+        // console.log('event', event);
         const { source, destination, draggableId } = event;
         if (!destination) {
             return;
@@ -212,6 +243,13 @@ function SortCounterProposal(props) {
         const data = state;
         data.columns[source.droppableId].taskIds.splice(source.index, 1);
         data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId);
+        setState({ ...data });
+    }
+
+    const onClickTrafficLight = ({ source, destination, draggableID }) => {
+        const data = state;
+        data.columns[source].taskIds.splice(0, 1);
+        data.columns[destination].taskIds.splice(0, 0, draggableID);
         setState({ ...data });
     }
 
@@ -253,17 +291,25 @@ function SortCounterProposal(props) {
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
+                if (response === "User has no permission to vote") {
+                    setError("You don't have permission to vote")
+                    setLoading(false);
+                    return;
+                }
+
                 const { status, data } = response;
                 if (status === "success") {
                     if (props.onUpdateIndexes) {
                         props.onUpdateIndexes(true);
-                        handleClose();
+                        //handleClose();
                     }
                 }
                 setLoading(false);
+                window.location.reload()
             }).catch((err) => {
                 setLoading(false);
-            }).finally(() => window.location.reload());
+                window.location.reload()
+            });
     }
 
     /**
@@ -299,6 +345,7 @@ function SortCounterProposal(props) {
             <div className='p-4'>
                 <Loader loading={loading}>
                     <h4>Sort Proposals</h4>
+                    <Button color='secondary' onClick={initializeState}>Show how I voted earlier</Button>
                     <div>
                         {
                             <DragDropContext
@@ -310,13 +357,17 @@ function SortCounterProposal(props) {
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} />;
                                 })}
                             </DragDropContext>
                         }
                     </div>
+                    <div style={{ "color": "red" }}>
+                        {error}
+                    </div>
                     <div>
                         <Button color='secondary' onClick={saveIndexies}>Update</Button>
+
                     </div>
                 </Loader>
             </div>

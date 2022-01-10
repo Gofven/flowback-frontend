@@ -291,40 +291,42 @@ export default function PollDetails() {
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
+        if (counterProposal.proposal_title === "") {
+            setError("Proposal needs title");
+            return;
+        }
+        if (counterProposal.proposal_title.includes("~")) {
+            setError("Character \"~\" is not allowed");
+            return;
+        }
+        if (counterProposal.file) data.append('file', counterProposal.file);
+        if (counterProposal.description === undefined) counterProposal.description = "";
+
+        var data = new FormData();
+
+        //The backend only supports one text field at the moment so this is a workaround for having two text fields
+        const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details || "No description"}`;
+
+        data.append('proposal', combinedProposal);
+
+        //end_time: new Date(data.end_time)
+        //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
+        //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
+
         setCounterProposalLoading(true);
-
-        if (!alreadyPosted) {
-
-            var data = new FormData();
-            if (counterProposal.file) data.append('file', counterProposal.file);
-
-            //The backend only supports one text field at the moment so this is a workaround for having two text fields
-            const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details}`;
-
-            data.append('proposal', combinedProposal);
-
-            //end_time: new Date(data.end_time)
-            //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
-            //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
-
-            data.append('poll', pollId);
-            postRequest("api/v1/group_poll/add_proposal", data).then(
-                (response) => {
-                    setAlreadyPosted(true);
-                    const { status, data } = response;
-                    if (status === "success") {
-                        getPollDetails();
-                        getCounterProposal();
-                    }
-                    setCounterProposalLoading(false);
-                }).catch((err) => {
-                    setCounterProposalLoading(false);
-                });
-        }
-        else {
-            setError("Already Posted a proposal (max 1 proposal per user)")
-            setCounterProposalLoading(false);
-        }
+        data.append('poll', pollId);
+        postRequest("api/v1/group_poll/add_proposal", data).then(
+            (response) => {
+                setAlreadyPosted(true);
+                const { status, data } = response;
+                if (status === "success") {
+                    getPollDetails();
+                    getCounterProposal();
+                }
+                setCounterProposalLoading(false);
+            }).catch((err) => {
+                setCounterProposalLoading(false);
+            });
     }
 
     const onDateTimeSelect = (e) => {

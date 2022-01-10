@@ -213,7 +213,8 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
     return (
         <div>
             <div className="card poll-details-card card-rounded overflow-hidden my-4">
-                <div className="card-header flex-header d-flex justify-content-between">
+                <div className="card-header">
+                    {/* <div className="card-header flex-header d-flex justify-content-between"> */}
                     {/* <h4 className="card-title fw-bolder">Proposals</h4> */}
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?

@@ -53,7 +53,7 @@ export default function GroupMembers(props) {
     }
 
     useEffect(() => {
-        getAndSetDelegator({group_id:groupId});
+        getAndSetDelegator({ group_id: groupId });
         getGroupMembers();
     }, [])
 
@@ -81,25 +81,25 @@ export default function GroupMembers(props) {
     }
 
     // Delagator functions
-    const getAndSetDelegator = (data)=> postRequest("api/v1/group_poll/get_user_delegator", data).then(
+    const getAndSetDelegator = (data) => postRequest("api/v1/group_poll/get_user_delegator", data).then(
         (response) => {
-            if(response.status === "success"){
+            if (response.status === "success") {
                 setChosenDelegateId(response.data.delegator_id);
             }
             return response;
         }
     );
 
-    const setDelegator = (data)=> postRequest("api/v1/group_poll/delegate", data).then(
+    const setDelegator = (data) => postRequest("api/v1/group_poll/delegate", data).then(
         (response) => {
             if (response.status === "success") {
-                getAndSetDelegator({group_id:groupId});
+                getAndSetDelegator({ group_id: groupId });
             }
             return response;
         }
     );
 
-    const removeDelegator = (data)=> postRequest("api/v1/group_poll/remove_delegate", data).then(
+    const removeDelegator = (data) => postRequest("api/v1/group_poll/remove_delegate", data).then(
         (response) => {
             if (response.status === "success") {
                 setChosenDelegateId(null);
@@ -108,47 +108,47 @@ export default function GroupMembers(props) {
         }
     );
 
-    const SetDelegateButton = ({groupId, userId}) => <a
-                                    href="#"
-                                    className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
-                                    onClick={() => setDelegator({group_id:groupId*1, delegator_id:userId*1})}
-                                >Select as delegate</a>;
+    const SetDelegateButton = ({ groupId, userId }) => <a
+        href="#"
+        className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
+        onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
+    >Select as delegate</a>;
 
     const DeselectDelegateButton = () => {
         const [show, setShow] = useState(false);
 
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
-      
+
         return (
-          <>
-            <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-              Deselect as delegate
-            </Button>
-      
-            <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
-              <Modal.Header closeButton>
-                <Modal.Title>Delegate voting options</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-              <Button variant="primary" onClick={()=> {
-                    removeDelegator({group_id:groupId*1,keep_delegator_votes:true});
-                    handleClose();
-                    }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                Keep delegate votes
+            <>
+                <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
+                    Deselect as delegate
                 </Button>
-                <Button variant="primary" onClick={()=> {
-                    removeDelegator({group_id:groupId*1,keep_delegator_votes:false});
-                    handleClose();
-                    }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                Remove delegate votes
-                </Button>
-              </Modal.Body>
-            </Modal>
-          </>
+
+                <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Delegate voting options</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Button variant="primary" onClick={() => {
+                            removeDelegator({ group_id: groupId * 1, keep_delegator_votes: true });
+                            handleClose();
+                        }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
+                            Keep delegate votes
+                        </Button>
+                        <Button variant="primary" onClick={() => {
+                            removeDelegator({ group_id: groupId * 1, keep_delegator_votes: false });
+                            handleClose();
+                        }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
+                            Remove delegate votes
+                        </Button>
+                    </Modal.Body>
+                </Modal>
+            </>
         );
-}
-  
+    }
+
     return (
         <div>
             <div className="mb-2">
@@ -162,8 +162,8 @@ export default function GroupMembers(props) {
                             <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                         </div>
                         <div className="menu d-flex align-items-center">
-                        {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id}/> : null}
-                        {chosenDelegateId == member.id ? <DeselectDelegateButton/> :null}
+                            {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
+                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
                             <span className="mr-1"> {member.user_type} </span>
                             {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
                                 <Dropdown>
@@ -175,7 +175,7 @@ export default function GroupMembers(props) {
                                             return (member.user_type != type) ?
                                                 <Dropdown.Item className="cursor-pointer" onClick={() => changeMemberType(member, type)}>
                                                     <img src={`/img/${type}.svg`} className="svg-icon mr-2" />
-                                              Make {type}</Dropdown.Item>
+                                                    Make {type}</Dropdown.Item>
                                                 : null
                                         })}
                                     </Dropdown.Menu>
