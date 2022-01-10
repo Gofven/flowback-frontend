@@ -94,6 +94,59 @@ function Column(props) {
 
 function Task(props) {
 
+    const PriorityArrows = () => {
+        return <div className="vote-buttons">
+            <button
+                onClick={() => props.onClickTrafficLight({ source: { draggableId: props.task.id + '', index: props.index }, destination: "positive", draggableID: props.task.id + '' })}
+                className="for">
+                <FontAwesomeIcon className=""
+                    icon={faCheck} color='' size='lg' />
+                <div>UP</div>
+            </button>
+            <button
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
+                className="abstain">
+                <FontAwesomeIcon className=""
+                    icon={faCircle} color='' size='lg' />
+                <div>DOWN</div>
+            </button>
+            <button
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                className="against">
+                <FontAwesomeIcon className=""
+                    icon={faTimes} color='' size='lg' />
+                <div>ADD</div>
+            </button>
+        </div>
+    }
+
+    const TrafficLight = () => {
+        return <div className="vote-buttons">
+            <button
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                className="for">
+                <FontAwesomeIcon className=""
+                    icon={faCheck} color='' size='lg' />
+                <div>FOR</div>
+            </button>
+            <button
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
+                className="abstain">
+                <FontAwesomeIcon className=""
+                    icon={faCircle} color='' size='lg' />
+                <div>ABSTAIN</div>
+            </button>
+            <button
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
+                className="against">
+                <FontAwesomeIcon className=""
+                    icon={faTimes} color='' size='lg' />
+                <div>AGAINST</div>
+            </button>
+        </div>
+
+    }
+
     const counterProposal = props.task.content;
     return <Draggable draggableId={props.task.id + ''} index={props.index}>
         {(provided, snapshot) => (
@@ -130,31 +183,11 @@ function Task(props) {
                                     trimRight
                                     basedOn='letters' /></h4>
                             </div>
-                            <div className="vote-buttons">
-                                <button
-                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
-                                    className="for">
-                                    <FontAwesomeIcon className=""
-                                        icon={faCheck} color='' size='lg' />
-                                    <div>FOR</div>
-                                </button>
-                                <button
-                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
-                                    className="abstain">
-                                    <FontAwesomeIcon className=""
-                                        icon={faCircle} color='' size='lg' />
-                                    <div>ABSTAIN</div>
-                                </button>
-                                <button
-                                    onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
-                                    className="against">
-                                    <FontAwesomeIcon className=""
-                                        icon={faTimes} color='' size='lg' />
-                                    <div>AGAINST</div>
-                                </button>
-                            </div>
+
+                            <TrafficLight />
+
                         </div>
-                        <div>
+                        <div className="proposal-description">
                             <LinesEllipsis
                                 text={counterProposal?.proposal.split("~")[1]}
                                 ellipsis="..."
@@ -253,6 +286,12 @@ function SortCounterProposal(props) {
         setState({ ...data });
     }
 
+    const onClickPriority = ({ source, destination, draggableID }) => {
+        const data = state;
+        data.columns[source.droppableId].taskIds.splice(source.index, 1);
+        data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableID);
+        setState({ ...data });
+    }
     /**
      * To save proposal positions provided by a user
      */

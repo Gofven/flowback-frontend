@@ -340,7 +340,6 @@ export default function PollDetails() {
                 <div className="container-xl">
                     <div className="row justify-content-end">
                         {/*/Group chat col*/}
-
                         <div className="col-md-6">
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">
