@@ -198,43 +198,42 @@ export default function PollForm() {
                                         </div>
                                         {
                                             !pollId &&
-
-                                            <div className="form-group">
-                                                <div className='field d-flex '>
-                                                    {(pollDocs && pollDocs.length) ?
-                                                        <div className='d-flex flex-column w-100'>
-                                                            {pollDocs.map((pollDoc, index) => (
-                                                                <div className='d-flex justify-content-between align-items-center my-1' key={index}>
-                                                                    <div className="mr-2" > {pollDoc.name}</div>
-                                                                    <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeDocument(index) }} />
-                                                                </div>
-                                                            ))}
-                                                            <div className='d-flex'>
-                                                                <label htmlFor='document' className="text-primary">
-                                                                    <div>
-                                                                        {/* Add More Files */}
+                                            <label htmlFor='document'>
+                                                <div className="form-group">
+                                                    <div className='field d-flex '>
+                                                        {(pollDocs && pollDocs.length) ?
+                                                            <div className='d-flex flex-column w-100'>
+                                                                {pollDocs.map((pollDoc, index) => (
+                                                                    <div className='d-flex justify-content-between align-items-center my-1' key={index}>
+                                                                        <div className="mr-2" > {pollDoc.name}</div>
+                                                                        <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeDocument(index) }} />
                                                                     </div>
-                                                                </label>
+                                                                ))}
+                                                                <div className='d-flex'>
+                                                                    <label htmlFor='document' className="text-primary">
+                                                                        <div>
+                                                                            {/* Add More Files */}
+                                                                        </div>
+                                                                    </label>
+                                                                    <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
+                                                                        onChange={OnDocumentsSelect}
+                                                                        multiple="multiple"
+                                                                    />
+                                                                </div>
+                                                            </div> :
+                                                            <div className=''>
+                                                                <div>
+                                                                    Add File
+                                                                </div>
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                     onChange={OnDocumentsSelect}
                                                                     multiple="multiple"
                                                                 />
                                                             </div>
-                                                        </div> :
-                                                        <div className=''>
-                                                            <label htmlFor='document'>
-                                                                <div>
-                                                                    Add File
-                                                                </div>
-                                                            </label>
-                                                            <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
-                                                                onChange={OnDocumentsSelect}
-                                                                multiple="multiple"
-                                                            />
-                                                        </div>
-                                                    }
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </label>
                                         }
                                         {/*<div className="form-group">
                                             <TagsInput className="tags-input"

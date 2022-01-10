@@ -18,3 +18,64 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
+.counter-proposal-top{
+    display:flex;
+}
+
+.counter-proposal-top > div{
+    flex:1;
+}
+
+.counter-proposal-title{
+    padding:0.5rem
+}
+
+.vote-buttons{
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 80px;
+}
+
+.vote-buttons > button{
+    font-size: 0.8vmax;
+    border-width: 0px;
+}
+
+.vote-buttons > button:active{
+    outline:none;
+}
+
+.for{
+    background-color: #22e967;
+}
+
+.for:hover{
+    background-color: #20be57;
+}
+
+.abstain{
+    background-color: #fade6e;
+}
+
+.abstain:hover{
+    background-color: #d3b43b;
+}
+
+.against{
+    background-color: #e24a45;
+}
+
+.against:hover
+{
+    background-color: #c51812;
+}
+
+textarea{
+    width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+
+    border-radius: 2%;
+
+}
