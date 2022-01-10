@@ -291,11 +291,6 @@ export default function PollDetails() {
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
-
-        if (alreadyPosted) {
-            setError("Already Posted a proposal (max 1 proposal per user)");
-            return;
-        }
         if (counterProposal.proposal_title === "") {
             setError("Proposal needs title");
             return;
