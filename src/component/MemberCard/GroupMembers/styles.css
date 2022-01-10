@@ -54,3 +54,12 @@
 .temp-btn-bg-white:focus {
     background-color: white;
 }
+
+.titles{
+    display:flex;
+    justify-content: space-around;
+}
+
+.titles > div{
+    
+}
