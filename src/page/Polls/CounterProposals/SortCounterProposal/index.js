@@ -30,7 +30,7 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -126,21 +126,21 @@ function Task(props) {
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
                 className="for">
-                <FontAwesomeIcon className="fa-4x"
+                <FontAwesomeIcon className="fa-3x"
                     icon={faCheck} color='' size='lg' />
                 <div>FOR</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
                 className="abstain">
-                <FontAwesomeIcon className="fa-4x"
+                <FontAwesomeIcon className="fa-3x"
                     icon={faCircleNotch} color='' size='lg' />
                 <div>ABSTAIN</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
                 className="against">
-                <FontAwesomeIcon className="fa-4x"
+                <FontAwesomeIcon className="fa-3x"
                     icon={faTimes} color='' size='lg' />
                 <div>AGAINST</div>
             </button>
@@ -149,7 +149,7 @@ function Task(props) {
     }
 
     const counterProposal = props.task.content;
-    return <Draggable draggableId={props.task.id + ''} index={props.index}>{/*isDragDisabled={true}*/}
+    return <Draggable draggableId={props.task.id + ''} index={props.index} isDragDisabled={true}>{/*isDragDisabled={true}*/}
         {(provided, snapshot) => (
             <TaskContainer
                 {...provided.draggableProps}
@@ -159,7 +159,13 @@ function Task(props) {
             >
                 {/* {props.task.id} - {props.task.content.proposal} */}
                 <div className="card counter-proposal-card bg-white">
-                    <div className='points'>{counterProposal?.points || 0}</div>
+                    {/* TODO: ASK GOFVEN IF THIS WORKS IN PRODUCTION */}
+                    {props.task.content.file ? <a className='points' onClick={() => window.open(props.task.content.file, '_blank')} href="">
+                        <FontAwesomeIcon className="fa"
+                            icon={faDownload} color='' size='lg' />
+                        DOWNLOAD FILE
+                    </a>
+                        : null}
                     <div className="post-header d-flex justify-content-between card-header mb-0">
                         {counterProposal && counterProposal.user &&
                             <div className="media post-meida">
@@ -173,6 +179,7 @@ function Task(props) {
                             </div>
                         }
                     </div>
+                    <TrafficLight />
                     <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <div className="counter-proposal-top">
@@ -184,9 +191,6 @@ function Task(props) {
                                     trimRight
                                     basedOn='letters' /></h4>
                             </div>
-
-                            <TrafficLight />
-
                         </div>
                         <div className="proposal-description">
                             <LinesEllipsis
