@@ -30,7 +30,7 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -107,7 +107,7 @@ function Task(props) {
                 onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
                 className="abstain">
                 <FontAwesomeIcon className=""
-                    icon={faCircle} color='' size='lg' />
+                    icon={faCircleNotch} color='' size='lg' />
                 <div>DOWN</div>
             </button>
             <button
@@ -121,25 +121,26 @@ function Task(props) {
     }
 
     const TrafficLight = () => {
+        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
         return <div className="vote-buttons">
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
                 className="for">
-                <FontAwesomeIcon className=""
+                <FontAwesomeIcon className="fa-4x"
                     icon={faCheck} color='' size='lg' />
                 <div>FOR</div>
             </button>
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
                 className="abstain">
-                <FontAwesomeIcon className=""
-                    icon={faCircle} color='' size='lg' />
+                <FontAwesomeIcon className="fa-4x"
+                    icon={faCircleNotch} color='' size='lg' />
                 <div>ABSTAIN</div>
             </button>
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "negative", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
                 className="against">
-                <FontAwesomeIcon className=""
+                <FontAwesomeIcon className="fa-4x"
                     icon={faTimes} color='' size='lg' />
                 <div>AGAINST</div>
             </button>
@@ -148,7 +149,7 @@ function Task(props) {
     }
 
     const counterProposal = props.task.content;
-    return <Draggable draggableId={props.task.id + ''} index={props.index}>
+    return <Draggable draggableId={props.task.id + ''} index={props.index}>{/*isDragDisabled={true}*/}
         {(provided, snapshot) => (
             <TaskContainer
                 {...provided.draggableProps}
@@ -279,11 +280,13 @@ function SortCounterProposal(props) {
         setState({ ...data });
     }
 
-    const onClickTrafficLight = ({ source, destination, draggableID }) => {
-        const data = state;
-        data.columns[source].taskIds.splice(0, 1);
-        data.columns[destination].taskIds.splice(0, 0, draggableID);
-        setState({ ...data });
+    const onClickTrafficLight = ({ source, destination, draggableID, index }) => {
+        if (source !== destination) {
+            const data = state;
+            data.columns[source].taskIds.splice(index, 1);
+            data.columns[destination].taskIds.splice(0, 0, draggableID);
+            setState({ ...data });
+        }
     }
 
     const onClickPriority = ({ source, destination, draggableID }) => {
@@ -406,7 +409,6 @@ function SortCounterProposal(props) {
                     </div>
                     <div>
                         <Button color='secondary' onClick={saveIndexies}>Update</Button>
-
                     </div>
                 </Loader>
             </div>
