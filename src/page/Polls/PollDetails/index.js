@@ -299,10 +299,10 @@ export default function PollDetails() {
             setError("Character \"~\" is not allowed");
             return;
         }
-        if (counterProposal.file) data.append('file', counterProposal.file);
         if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
+        if (counterProposal.file) data.append('file', counterProposal.file);
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
         const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details || "No description"}`;
@@ -340,7 +340,6 @@ export default function PollDetails() {
                 <div className="container-xl">
                     <div className="row justify-content-end">
                         {/*/Group chat col*/}
-
                         <div className="col-md-6">
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">

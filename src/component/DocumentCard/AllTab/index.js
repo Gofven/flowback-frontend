@@ -25,6 +25,7 @@ import { faFileAlt, faTrash, faUpload, faTimes, faFileDownload } from '@fortawes
 import { Button } from "../../../component/common";
 import { postRequest, deleteRequest } from '../../../utils/API';
 import { formatDate } from "../../../utils/common";
+import Loader from '../../common/Loader';
 
 export default function AllTab(props) {
 
@@ -34,6 +35,7 @@ export default function AllTab(props) {
         group: props.groupId,
     });
     const [documents, setDocuments] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const OnDocumentSelect = (e) => {
         const files = Array.from(e.target.files)
@@ -47,6 +49,7 @@ export default function AllTab(props) {
      * To add document
      */
     const AddDocument = () => {
+        setLoading(true)
         var data = new FormData();
         Object.keys(document).forEach((key) => {
             data.append(key, document[key]);
@@ -59,8 +62,8 @@ export default function AllTab(props) {
                     removeDocument();
                     getDocuments();
                 } else {
-                    // setError();
                 }
+                setLoading(false)
             }
         );
     }
@@ -80,6 +83,7 @@ export default function AllTab(props) {
      * To get all documents
      */
     const getDocuments = () => {
+        setLoading(true);
         postRequest("api/v1/user_group/get_all_group_docs", { group: props.groupId }).then(
             (response) => {
                 console.log('response', response);
@@ -89,6 +93,7 @@ export default function AllTab(props) {
                 } else {
                     // setError();
                 }
+                setLoading(false);
             }
         );
     }
@@ -103,6 +108,7 @@ export default function AllTab(props) {
 
 
     const deleteDocument = (groupId, docId) => {
+        setLoading(true);
         console.log("group", groupId);
         console.log("Doc", docId);
         deleteRequest("api/v1/user_group/delete_group_doc?group=" + `${groupId}` + "&doc=" + `${docId}`).then(
@@ -112,6 +118,7 @@ export default function AllTab(props) {
                 if (status === "success") {
                     getDocuments();
                 }
+                setLoading(false);
             }
         );
     }
@@ -121,15 +128,15 @@ export default function AllTab(props) {
     }, [])
 
     return (
-        <div>
+        <Loader loading={loading}>
             {(!document.doc) ?
-                (["Owner", "Admin", "Moderator"].includes(props.userType) &&
+                (
                     <div className="grupper-card">
                         < div className=" text-center my-2"  >
                             <label htmlFor='document'>
                                 <div>
                                     + Add Document
-                            </div>
+                                </div>
                             </label>
                             <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document' onChange={OnDocumentSelect} />
 
@@ -152,11 +159,11 @@ export default function AllTab(props) {
             {
                 documents.map((document, key) => (
                     <div className="media mb-2" key={document}>
-                        <div class = "cursor-pointer">
-                        <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' onClick={() => { viewDocument(document) }}/>
+                        <div class="cursor-pointer">
+                            <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' onClick={() => { viewDocument(document) }} />
                         </div>
                         <div className="media-body">
-                            <div class = "cursor-pointer">
+                            <div class="cursor-pointer">
                                 <p className="text-turncate mb-0">{document.doc_name}</p>
                             </div>
                             <p className="text-turncate small">Created {formatDate(document.created_at, 'DD/MM/YYYY')}</p>
@@ -173,6 +180,6 @@ export default function AllTab(props) {
                     </div>
                 ))
             }
-        </div >
+        </Loader >
     );
 }
