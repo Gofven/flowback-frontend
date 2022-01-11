@@ -19,7 +19,7 @@
 */
 
 import React, { useState, useEffect } from "react";
-import { postRequest } from "../../../utils/API";
+import { postRequest, getRequest } from "../../../utils/API";
 import { Dropdown } from "react-bootstrap"
 import Image from "../../common/Image";
 import Modal from 'react-bootstrap/Modal';
@@ -55,6 +55,8 @@ export default function GroupMembers(props) {
     useEffect(() => {
         getAndSetDelegator({ group_id: groupId });
         getGroupMembers();
+        getVotingRights();
+        setVotingRights();
     }, [])
 
     /**
@@ -114,6 +116,21 @@ export default function GroupMembers(props) {
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
     >Select as delegate</a>;
 
+    const getVotingRights = () => {
+        getRequest(`api/v1/user_group/${props.groupId}/group_members_get`).then(response => {
+            console.log(response, "REPONSE");
+        })
+    }
+
+    const setVotingRights = () => {
+        postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: 33, allow_vote: true }).then(response => {
+            console.log(response, "REPONSE");
+            if (response.detail === "You do not have permission to perform this action.") {
+                console.warn("You don't have permission to change users voting rights");
+            }
+        })
+    }
+
     const DeselectDelegateButton = () => {
         const [show, setShow] = useState(false);
 
@@ -149,10 +166,14 @@ export default function GroupMembers(props) {
         );
     }
 
+
     return (
         <div>
-            <div className="mb-2">
-                {totalMembers} Members
+            <div className="mb-2 titles">
+                <div>{totalMembers} Members</div>
+                <div>Voting Rights</div>
+                {/* <div>Delegate</div> */}
+                <div>Group role</div>
             </div>
             {
                 members?.map((member, index) => (

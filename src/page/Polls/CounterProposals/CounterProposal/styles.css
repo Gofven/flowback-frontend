@@ -29,9 +29,11 @@
     position: absolute;
     right: 0px;
     background: lightgreen;
+    color:black;
     top: 0;
     padding: 4px 0;
-    width: 64px;
+    width: 150px;
+    font-size: small;
     border-bottom-left-radius: 12px;
     text-align: center;
 }

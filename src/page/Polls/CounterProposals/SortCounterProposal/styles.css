@@ -37,7 +37,7 @@
 }
 
 .vote-buttons > button{
-    font-size: 0.8vmax;
+    font-size: clamp(10px, 1.4vmax, 16px);
     border-width: 0px;
 }
 
@@ -46,11 +46,11 @@
 }
 
 .for{
-    background-color: #22e967;
+    background-color: lightgreen;
 }
 
 .for:hover{
-    background-color: #20be57;
+    background-color: #43da78;
 }
 
 .abstain{
@@ -58,16 +58,17 @@
 }
 
 .abstain:hover{
-    background-color: #d3b43b;
+    background-color: #e9ca50;
 }
 
 .against{
     background-color: #e24a45;
+    margin-right:-2.5px;
 }
 
 .against:hover
 {
-    background-color: #c51812;
+    background-color: #da241e;
 }
 
 textarea{
@@ -78,4 +79,8 @@ textarea{
 
     border-radius: 2%;
 
+}
+
+.proposal-description{
+    margin:10px 10px 10px 10px;
 }
