@@ -83,7 +83,7 @@ function Column(props) {
                     isDraggingOver={snapshot.isDraggingOver}
                 >
                     {props.tasks.map((task, index) => {
-                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} />
+                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
                     })}
                     {provided.placeholder}
                 </TaskList>
@@ -95,23 +95,24 @@ function Column(props) {
 function Task(props) {
 
     const Condorcet = () => {
+        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
         return <div className="vote-buttons">
-            <button
-                onClick={() => props.onClickTrafficLight({ source: { draggableId: props.task.id + '', index: props.index }, destination: "positive", draggableID: props.task.id + '' })}
+            {props.columnID === "positive" && <div><button
+                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive" })}
                 className="for">
                 <FontAwesomeIcon className=""
                     icon={faArrowUp} color='' size='lg' />
                 <div>UP</div>
             </button>
+                <button
+                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive" })}
+                    className="abstain">
+                    <FontAwesomeIcon className=""
+                        icon={faArrowDown} color='' size='lg' />
+                    <div>DOWN</div>
+                </button></div>}
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
-                className="abstain">
-                <FontAwesomeIcon className=""
-                    icon={faArrowDown} color='' size='lg' />
-                <div>DOWN</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: props.columnId === "neutral" ? "positive" : "neutral", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
                 className="against">
                 <FontAwesomeIcon className=""
                     icon={props.columnId === "neutral" ? faCheck : faTrash} color='' size='lg' />
@@ -297,10 +298,12 @@ function SortCounterProposal(props) {
         }
     }
 
-    const onClickPriority = ({ source, destination, draggableID }) => {
+    const onClickCondorcet = ({ source, destination, draggableID, index }) => {
+        console.log("STUFF", source, destination, draggableID, index)
         const data = state;
-        data.columns[source.droppableId].taskIds.splice(source.index, 1);
-        data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableID);
+        console.log("STATE", state)
+        data.columns[source].taskIds.splice(index, 1);
+        data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
         setState({ ...data });
     }
     /**
@@ -407,7 +410,7 @@ function SortCounterProposal(props) {
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} votingType={votingType} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={votingType} />;
                                 })}
                             </DragDropContext>
                         }
