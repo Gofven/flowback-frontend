@@ -30,7 +30,7 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -119,7 +119,7 @@ function Task(props) {
                 onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
                 className="against">
                 <FontAwesomeIcon className={iconSize}
-                    icon={props.columnId === "neutral" ? faCheck : faTrash} color='' size={iconSize} />
+                    icon={props.columnId === "neutral" ? faPlus : faTrash} color='' size={iconSize} />
                 <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
             </button>
         </div >
