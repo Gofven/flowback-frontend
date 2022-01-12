@@ -93,32 +93,36 @@ function Column(props) {
 }
 
 function Task(props) {
+    const iconSize = "fa-3x"
 
     const Condorcet = () => {
         const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
         return <div className="vote-buttons">
-            {props.columnID === "positive" && <div><button
-                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive" })}
+            {props.columnId === "positive" && <button
+                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: 1 })}
                 className="for">
-                <FontAwesomeIcon className=""
-                    icon={faArrowUp} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faArrowUp} color='' size={iconSize} />
                 <div>UP</div>
             </button>
-                <button
-                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive" })}
-                    className="abstain">
-                    <FontAwesomeIcon className=""
-                        icon={faArrowDown} color='' size='lg' />
+            }
+            {
+                props.columnId === "positive" && <button
+                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: -1 })}
+                    className="abstain" >
+                    <FontAwesomeIcon className={iconSize}
+                        icon={faArrowDown} color='' size={iconSize} />
                     <div>DOWN</div>
-                </button></div>}
+                </button >
+            }
             <button
                 onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
                 className="against">
-                <FontAwesomeIcon className=""
-                    icon={props.columnId === "neutral" ? faCheck : faTrash} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={props.columnId === "neutral" ? faCheck : faTrash} color='' size={iconSize} />
                 <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
             </button>
-        </div>
+        </div >
     }
 
     const TrafficLight = () => {
@@ -127,22 +131,22 @@ function Task(props) {
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
                 className="for">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faCheck} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faCheck} color='' size={iconSize} />
                 <div>FOR</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
                 className="abstain">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faCircleNotch} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faCircleNotch} color='' size={iconSize} />
                 <div>ABSTAIN</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
                 className="against">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faTimes} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faTimes} color='' size={iconSize} />
                 <div>AGAINST</div>
             </button>
         </div>
@@ -298,12 +302,16 @@ function SortCounterProposal(props) {
         }
     }
 
-    const onClickCondorcet = ({ source, destination, draggableID, index }) => {
+    const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
         console.log("STUFF", source, destination, draggableID, index)
         const data = state;
         console.log("STATE", state)
         data.columns[source].taskIds.splice(index, 1);
-        data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
+        if (source === "neutral")
+            data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
+        else
+            data.columns[destination].taskIds.splice(index - destinationIndex, 0, draggableID);
+
         setState({ ...data });
     }
     /**
