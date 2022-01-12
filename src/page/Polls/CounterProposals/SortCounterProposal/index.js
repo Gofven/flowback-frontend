@@ -30,7 +30,7 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -83,7 +83,7 @@ function Column(props) {
                     isDraggingOver={snapshot.isDraggingOver}
                 >
                     {props.tasks.map((task, index) => {
-                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} />
+                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} />
                     })}
                     {provided.placeholder}
                 </TaskList>
@@ -94,28 +94,28 @@ function Column(props) {
 
 function Task(props) {
 
-    const PriorityArrows = () => {
+    const Condorcet = () => {
         return <div className="vote-buttons">
             <button
                 onClick={() => props.onClickTrafficLight({ source: { draggableId: props.task.id + '', index: props.index }, destination: "positive", draggableID: props.task.id + '' })}
                 className="for">
                 <FontAwesomeIcon className=""
-                    icon={faCheck} color='' size='lg' />
+                    icon={faArrowUp} color='' size='lg' />
                 <div>UP</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
                 className="abstain">
                 <FontAwesomeIcon className=""
-                    icon={faCircleNotch} color='' size='lg' />
+                    icon={faArrowDown} color='' size='lg' />
                 <div>DOWN</div>
             </button>
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: props.columnId === "neutral" ? "positive" : "neutral", draggableID: props.task.id + '' })}
                 className="against">
                 <FontAwesomeIcon className=""
-                    icon={faTimes} color='' size='lg' />
-                <div>ADD</div>
+                    icon={props.columnId === "neutral" ? faCheck : faTrash} color='' size='lg' />
+                <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
             </button>
         </div>
     }
@@ -179,7 +179,10 @@ function Task(props) {
                             </div>
                         }
                     </div>
-                    <TrafficLight />
+
+                    {props.votingType === "traffic" && <TrafficLight />}
+                    {props.votingType === "condorcet" && <Condorcet />}
+
                     <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <div className="counter-proposal-top">
@@ -213,6 +216,7 @@ function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
     const [error, setError] = useState("")
+    const [votingType, setVotingType] = useState("condorcet")
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -403,7 +407,7 @@ function SortCounterProposal(props) {
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} votingType={votingType} />;
                                 })}
                             </DragDropContext>
                         }
