@@ -221,7 +221,8 @@ function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
     const [error, setError] = useState("")
-    const [votingType, setVotingType] = useState("condorcet")
+    const [votingType, setVotingType] = useState("traffic") //condorcet and traffic
+    const [hasLoaded, setHasLoaded] = useState(false)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -394,7 +395,11 @@ function SortCounterProposal(props) {
 
     useEffect(() => {
         console.log('state changes', state);
+        if (!hasLoaded) {initializeState(); setHasLoaded(true)}
     }, [state])
+      
+      useEffect(() => {initializeState()}, []); 
+
 
     return (
         <>
@@ -415,6 +420,10 @@ function SortCounterProposal(props) {
                                 onDragEnd={onDragEnd}
                             >
                                 {state.columnOrder.map(columnId => {
+                                    if (columnId === "negative" && votingType === "condorcet")
+                                    {
+                                        return;
+                                    }
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
