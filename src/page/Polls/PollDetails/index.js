@@ -431,7 +431,6 @@ export default function PollDetails() {
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                     onChange={onCounterProposalDocumentsSelect}
                                                                     multiple="multiple"
-                                                                //FIX THIS
                                                                 />
                                                             </div>
                                                         }
@@ -443,7 +442,10 @@ export default function PollDetails() {
                                                         type="button"
                                                         className="btn btn-hover"
                                                         //disabled={alreadyPosted}
-                                                        onClick={saveCounterProposal}>
+                                                        onClick={() => {
+                                                            saveCounterProposal();
+                                                            window.location.reload();
+                                                          }}>
                                                         Add
                                                     </Button>
                                                 </div>
