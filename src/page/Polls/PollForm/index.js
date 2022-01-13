@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
+import { Form } from 'react-bootstrap';
 
 export default function PollForm() {
 
@@ -42,7 +43,8 @@ export default function PollForm() {
         description: "",
         tags: "",
         type: "",
-        end_time: new Date()
+        end_time: new Date(),
+        votingType: ""
     });
 
     const [tag, setTag] = useState([])
@@ -52,9 +54,14 @@ export default function PollForm() {
 
     // Set values from the inputs
     const handleOnChange = (e) => {
-        console.log("Value", e.target.value);
         setPollDetail({ ...pollDetail, ...inputKeyValue(e) });
+        console.log("Value", e.target.value);
     };
+    
+    const changeVotingType = (e) => {
+        setPollDetail({ ...pollDetail, votingType: e.target.value });
+        console.log(e.target.value, pollDetail)
+    }
 
     // Set Documents
     const OnDocumentsSelect = (e) => {
@@ -237,11 +244,11 @@ export default function PollForm() {
                                         }
                                         {/*<div className="form-group">
                                             <TagsInput className="tags-input"
-                                                name="tags"
-                                                value={tag}
-                                                onChange={handleOnTagChange}
-                                                defaultValue={tag} />
-                                    </div>*/}
+                                            name="tags"
+                                            value={tag}
+                                            onChange={handleOnTagChange}
+                                            defaultValue={tag} />
+                                        </div>*/}
 
                                         <div className="form-group mx-2">
                                             <Textarea
@@ -261,6 +268,45 @@ export default function PollForm() {
                                                 <option value="mission">Public</option>
 
                                             </select>
+                                        </div>
+                                        <div className="form-group field">
+                                            <Label>
+                                                Voting Type
+                                            </Label>
+                                            <div>
+                                                <Form.Check
+                                                    inline
+                                                    type="radio"
+                                                    id="Ranking"
+                                                    name="request"
+                                                    label="Ranking"
+                                                    value="Ranking"
+                                                    checked={pollDetail.votingType === "Ranking"}
+                                                    onClick={changeVotingType}
+                                                />
+
+                                                <Form.Check
+                                                    inline
+                                                    type="radio"
+                                                    id="For/Against"
+                                                    name="request"
+                                                    label="For/Against"
+                                                    value="For/Against"
+                                                    checked={pollDetail.votingType === "For/Against"}
+                                                    onClick={changeVotingType}
+                                                />
+
+                                                <Form.Check
+                                                    inline
+                                                    type="radio"
+                                                    id="Time"
+                                                    name="request"
+                                                    label="Time"
+                                                    value="Time"
+                                                    checked={pollDetail.votingType === "Time"}
+                                                    onClick={changeVotingType}
+                                                />
+                                            </div>
                                         </div>
 
                                         <div className="form-group field">
