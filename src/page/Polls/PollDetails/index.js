@@ -431,7 +431,6 @@ export default function PollDetails() {
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                     onChange={onCounterProposalDocumentsSelect}
                                                                     multiple="multiple"
-                                                                //FIX THIS
                                                                 />
                                                             </div>
                                                         }
@@ -443,7 +442,10 @@ export default function PollDetails() {
                                                         type="button"
                                                         className="btn btn-hover"
                                                         //disabled={alreadyPosted}
-                                                        onClick={saveCounterProposal}>
+                                                        onClick={() => {
+                                                            saveCounterProposal();
+                                                            //window.location.reload();
+                                                          }}>
                                                         Add
                                                     </Button>
                                                 </div>
@@ -542,8 +544,7 @@ export default function PollDetails() {
                                                 updateComment={(comment) => updateComment(comment)}
                                                 deleteComment={(commentId) => deleteComment(commentId)}
                                                 likeComment={(comment) => likeComment(comment)}
-                                                readOnlyComments={poll.discussion === "Finished" ||
-                                                    !(group.user_type && group.user_type !== UserTypes.Delegator)}
+                                                readOnlyComments={poll.discussion === "Finished" }
                                             >
                                             </Post>
                                         </div>

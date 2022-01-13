@@ -181,7 +181,8 @@ export default function GroupDetails() {
                                             <p
                                             >
                                                 <i className="las la-check text-success mr-1"></i>
-                                                {group.user_type}
+                                                {group.user_type === "Delegator" ? "Delegator" : "member"} 
+
 
                                             </p> :
                                             (
@@ -236,7 +237,7 @@ export default function GroupDetails() {
                                     ))}
                                 </div>
                             </div>
-                            {group.user_type && group.user_type != "Delegator" &&
+                            {group.user_type &&
                                 <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden my-2">
                                     <div className="card-body overflow-hidden">
 
