@@ -3,7 +3,7 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * Copyright (C) 2021  Astroneatech AB
+ *
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
