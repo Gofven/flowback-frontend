@@ -444,7 +444,7 @@ export default function PollDetails() {
                                                         //disabled={alreadyPosted}
                                                         onClick={() => {
                                                             saveCounterProposal();
-                                                            window.location.reload();
+                                                            //window.location.reload();
                                                           }}>
                                                         Add
                                                     </Button>
