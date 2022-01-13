@@ -30,7 +30,7 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -83,7 +83,7 @@ function Column(props) {
                     isDraggingOver={snapshot.isDraggingOver}
                 >
                     {props.tasks.map((task, index) => {
-                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} />
+                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
                     })}
                     {provided.placeholder}
                 </TaskList>
@@ -93,31 +93,36 @@ function Column(props) {
 }
 
 function Task(props) {
+    const iconSize = "fa-3x"
 
-    const PriorityArrows = () => {
+    const Condorcet = () => {
+        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
         return <div className="vote-buttons">
-            <button
-                onClick={() => props.onClickTrafficLight({ source: { draggableId: props.task.id + '', index: props.index }, destination: "positive", draggableID: props.task.id + '' })}
+            {props.columnId === "positive" && <button
+                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: 1 })}
                 className="for">
-                <FontAwesomeIcon className=""
-                    icon={faCheck} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faArrowUp} color='' size={iconSize} />
                 <div>UP</div>
             </button>
+            }
+            {
+                props.columnId === "positive" && <button
+                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: -1 })}
+                    className="abstain" >
+                    <FontAwesomeIcon className={iconSize}
+                        icon={faArrowDown} color='' size={iconSize} />
+                    <div>DOWN</div>
+                </button >
+            }
             <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "neutral", draggableID: props.task.id + '' })}
-                className="abstain">
-                <FontAwesomeIcon className=""
-                    icon={faCircleNotch} color='' size='lg' />
-                <div>DOWN</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ source: props.columnId, destination: "positive", draggableID: props.task.id + '' })}
+                onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
                 className="against">
-                <FontAwesomeIcon className=""
-                    icon={faTimes} color='' size='lg' />
-                <div>ADD</div>
+                <FontAwesomeIcon className={iconSize}
+                    icon={props.columnId === "neutral" ? faPlus : faTrash} color='' size={iconSize} />
+                <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
             </button>
-        </div>
+        </div >
     }
 
     const TrafficLight = () => {
@@ -126,22 +131,22 @@ function Task(props) {
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
                 className="for">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faCheck} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faCheck} color='' size={iconSize} />
                 <div>FOR</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
                 className="abstain">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faCircleNotch} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faCircleNotch} color='' size={iconSize} />
                 <div>ABSTAIN</div>
             </button>
             <button
                 onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
                 className="against">
-                <FontAwesomeIcon className="fa-3x"
-                    icon={faTimes} color='' size='lg' />
+                <FontAwesomeIcon className={iconSize}
+                    icon={faTimes} color='' size={iconSize} />
                 <div>AGAINST</div>
             </button>
         </div>
@@ -179,7 +184,10 @@ function Task(props) {
                             </div>
                         }
                     </div>
-                    <TrafficLight />
+
+                    {props.votingType === "traffic" && <TrafficLight />}
+                    {props.votingType === "condorcet" && <Condorcet />}
+
                     <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <div className="counter-proposal-top">
@@ -213,6 +221,7 @@ function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
     const [error, setError] = useState("")
+    const [votingType, setVotingType] = useState("condorcet")
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -293,10 +302,16 @@ function SortCounterProposal(props) {
         }
     }
 
-    const onClickPriority = ({ source, destination, draggableID }) => {
+    const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
+        console.log("STUFF", source, destination, draggableID, index)
         const data = state;
-        data.columns[source.droppableId].taskIds.splice(source.index, 1);
-        data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableID);
+        console.log("STATE", state)
+        data.columns[source].taskIds.splice(index, 1);
+        if (source === "neutral")
+            data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
+        else
+            data.columns[destination].taskIds.splice(index - destinationIndex, 0, draggableID);
+
         setState({ ...data });
     }
     /**
@@ -403,7 +418,7 @@ function SortCounterProposal(props) {
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={votingType} />;
                                 })}
                             </DragDropContext>
                         }

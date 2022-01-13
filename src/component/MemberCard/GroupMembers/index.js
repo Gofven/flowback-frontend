@@ -186,7 +186,7 @@ export default function GroupMembers(props) {
                             {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
                             {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
                             <span className="mr-1"> {member.user_type} </span>
-                            {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
+                            {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
                                 <Dropdown>
                                     <Dropdown.Toggle variant="white" id="dropdown-basic">
                                     </Dropdown.Toggle>
@@ -202,7 +202,7 @@ export default function GroupMembers(props) {
                                     </Dropdown.Menu>
                                 </Dropdown> :
                                 null
-                            }
+                            } */}
                         </div>
                     </div>
                 ))
