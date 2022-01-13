@@ -414,7 +414,7 @@ export default function PollDetails() {
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <div className='field d-flex '>
+                                                    <div className='field d-flex' style={{ "width": "88.5px" }} >
                                                         {counterProposal?.file ?
                                                             <div className='d-flex flex-column w-100'>
                                                                 <div className='d-flex justify-content-between align-items-center my-1'>
@@ -422,8 +422,8 @@ export default function PollDetails() {
                                                                     <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeCounterProposalDocument() }} />
                                                                 </div>
                                                             </div> :
-                                                            <div className=''>
-                                                                <label htmlFor='document'>
+                                                            <div className='' htmlFor='document'>
+                                                                <label >
                                                                     <div>
                                                                         Add File
                                                                     </div>
