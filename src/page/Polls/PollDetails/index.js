@@ -422,8 +422,8 @@ export default function PollDetails() {
                                                                     <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeCounterProposalDocument() }} />
                                                                 </div>
                                                             </div> :
-                                                            <div className='' htmlFor='document'>
-                                                                <label >
+                                                            <div className='' >
+                                                                <label htmlFor='document'>
                                                                     <div>
                                                                         Add File
                                                                     </div>
