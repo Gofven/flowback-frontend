@@ -129,6 +129,7 @@
 .group-details-btn-view {
     width: 110px;
     text-align: right;
+    filter: drop-shadow(3px 1px 2px #ffffff);
 }
 
 .group-details-btn-view .btn {
