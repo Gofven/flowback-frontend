@@ -218,7 +218,12 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                     {/* <h4 className="card-title fw-bolder">Proposals</h4> */}
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
-                            <SortCounterProposal pollId={poll.id} counterProposals={counterProposals} proposalIndexes={proposalIndexes} onUpdateIndexes={onUpdateIndexes}>
+                            <SortCounterProposal pollId={poll.id} 
+                            counterProposals={counterProposals} 
+                            proposalIndexes={proposalIndexes} 
+                            onUpdateIndexes={onUpdateIndexes}
+                            votingType={poll.voting_type}
+                            >
                                 <FontAwesomeIcon icon={faArrowsAltV} color="black" />
                             </SortCounterProposal>
                             : null

@@ -44,7 +44,7 @@ export default function PollForm() {
         tags: "",
         type: "",
         end_time: new Date(),
-        votingType: ""
+        voting_type: ""
     });
 
     const [tag, setTag] = useState([])
@@ -59,7 +59,7 @@ export default function PollForm() {
     };
     
     const changeVotingType = (e) => {
-        setPollDetail({ ...pollDetail, votingType: e.target.value });
+        setPollDetail({ ...pollDetail, voting_type: e.target.value });
         console.log(e.target.value, pollDetail)
     }
 
@@ -280,8 +280,8 @@ export default function PollForm() {
                                                     id="Ranking"
                                                     name="request"
                                                     label="Ranking"
-                                                    value="Ranking"
-                                                    checked={pollDetail.votingType === "Ranking"}
+                                                    value="condorcet"
+                                                    checked={pollDetail.voting_type === "condorcet"}
                                                     onClick={changeVotingType}
                                                 />
 
@@ -291,8 +291,8 @@ export default function PollForm() {
                                                     id="For/Against"
                                                     name="request"
                                                     label="For/Against"
-                                                    value="For/Against"
-                                                    checked={pollDetail.votingType === "For/Against"}
+                                                    value="traffic"
+                                                    checked={pollDetail.voting_type === "traffic"}
                                                     onClick={changeVotingType}
                                                 />
 
@@ -303,7 +303,7 @@ export default function PollForm() {
                                                     name="request"
                                                     label="Time"
                                                     value="Time"
-                                                    checked={pollDetail.votingType === "Time"}
+                                                    checked={pollDetail.voting_type === "Time"}
                                                     onClick={changeVotingType}
                                                 />
                                             </div>
