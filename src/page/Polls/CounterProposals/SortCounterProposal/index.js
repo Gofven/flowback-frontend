@@ -221,7 +221,7 @@ function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
     const [error, setError] = useState("")
-    const [votingType, setVotingType] = useState("condorcet") //condorcet and traffic
+    // const [votingType, setVotingType] = useState("condorcet") //condorcet and traffic
     const [hasLoaded, setHasLoaded] = useState(false)
 
     const handleClose = () => setShow(false);
@@ -411,7 +411,7 @@ function SortCounterProposal(props) {
             <div className='p-4'>
                 <Loader loading={loading}>
                     <h4>Sort Proposals</h4>
-                <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button>
+                {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                     <Button color='secondary' onClick={initializeState}>Show how I voted earlier</Button>
                     <div>
                         {
@@ -421,14 +421,14 @@ function SortCounterProposal(props) {
                                 onDragEnd={onDragEnd}
                             >
                                 {state.columnOrder.map(columnId => {
-                                    if (columnId === "negative" && votingType === "condorcet")
+                                    if (columnId === "negative" && props.votingType === "condorcet")
                                     {
                                         return;
                                     }
                                     const column = state.columns[columnId];
                                     const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={votingType} />;
+                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
                                 })}
                             </DragDropContext>
                         }
