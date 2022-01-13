@@ -444,7 +444,7 @@ export default function PollDetails() {
                                                         //disabled={alreadyPosted}
                                                         onClick={() => {
                                                             saveCounterProposal();
-                                                            window.location.reload();
+                                                            //window.location.reload();
                                                           }}>
                                                         Add
                                                     </Button>
@@ -544,8 +544,7 @@ export default function PollDetails() {
                                                 updateComment={(comment) => updateComment(comment)}
                                                 deleteComment={(commentId) => deleteComment(commentId)}
                                                 likeComment={(comment) => likeComment(comment)}
-                                                readOnlyComments={poll.discussion === "Finished" ||
-                                                    !(group.user_type && group.user_type !== UserTypes.Delegator)}
+                                                readOnlyComments={poll.discussion === "Finished" }
                                             >
                                             </Post>
                                         </div>
