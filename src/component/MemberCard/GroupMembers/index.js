@@ -122,8 +122,8 @@ export default function GroupMembers(props) {
         })
     }
 
-    const setVotingRights = () => {
-        postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: 33, allow_vote: true }).then(response => {
+    const setVotingRights = (memberId) => {
+        postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: memberId, allow_vote: true }).then(response => {
             console.log(response, "REPONSE");
             if (response.detail === "You do not have permission to perform this action.") {
                 console.warn("You don't have permission to change users voting rights");
@@ -131,12 +131,16 @@ export default function GroupMembers(props) {
         })
     }
 
+    const handleChangeVotingRight = (memberId) =>{
+        setVotingRights(memberId);
+    }
+
     const DeselectDelegateButton = () => {
         const [show, setShow] = useState(false);
-
+        
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
-
+        
         return (
             <>
                 <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
@@ -167,6 +171,7 @@ export default function GroupMembers(props) {
     }
 
 
+
     return (
         <div>
             <div className="mb-2 titles">
@@ -184,7 +189,7 @@ export default function GroupMembers(props) {
                                 <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                             </div>
                         </div>
-                        <div>NO</div>
+                        <div><input type="checkbox" onClick={() => handleChangeVotingRight(member.id)} disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input> userID: {member.id}</div>
                         <div>NO</div>
                         <div className="menu d-flex align-items-center">
                             {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
