@@ -57,9 +57,13 @@
 
 .titles{
     display:flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-.titles > div{
+/* .titles > div{
     
+} */
+
+.user-block{
+    width:80px;
 }

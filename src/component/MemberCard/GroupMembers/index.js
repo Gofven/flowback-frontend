@@ -177,11 +177,15 @@ export default function GroupMembers(props) {
             </div>
             {
                 members?.map((member, index) => (
-                    <div className="media member-block" key={index}>
-                        <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
-                        <div className="media-body">
-                            <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
+                    <div className="titles media member-block" key={index}>
+                        <div className="user-block">
+                            <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
+                            <div>
+                                <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
+                            </div>
                         </div>
+                        <div>NO</div>
+                        <div>NO</div>
                         <div className="menu d-flex align-items-center">
                             {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
                             {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
