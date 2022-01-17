@@ -25,6 +25,7 @@ import Image from "../../common/Image";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import './styles.css';
+import Loader from '../../common/Loader';
 
 
 export default function GroupMembers(props) {
@@ -32,6 +33,9 @@ export default function GroupMembers(props) {
     const [userType, setUserType] = useState(props.userType);
     const [members, setMembers] = useState([]);
     const [totalMembers, setTotalMemebers] = useState(0);
+    const [canMemberVote, setCanMemberVote] = useState([]);
+    const [status, setStatus] = useState({text:"", color:"black"});
+    const [loading, setLoading] = useState(false);
 
     const [chosenDelegateId, setChosenDelegateId] = useState(null);
 
@@ -39,6 +43,7 @@ export default function GroupMembers(props) {
      * To get all group memebers
      */
     const getGroupMembers = () => {
+        setLoading(true)
         postRequest("api/v1/user_group/group_participants", { id: groupId }).then(
             (response) => {
                 if (response) {
@@ -47,7 +52,7 @@ export default function GroupMembers(props) {
                     setTotalMemebers(data.total_participant);
 
                 }
-
+                setLoading(false)
             }
         );
     }
@@ -55,9 +60,10 @@ export default function GroupMembers(props) {
     useEffect(() => {
         getAndSetDelegator({ group_id: groupId });
         getGroupMembers();
+
         getVotingRights();
-        setVotingRights();
-    }, [])
+        // postVotingRights();
+    }, [groupId])
 
     /**
      * To change member type in a group
@@ -117,26 +123,42 @@ export default function GroupMembers(props) {
     >Select as delegate</a>;
 
     const getVotingRights = () => {
+
         getRequest(`api/v1/user_group/${props.groupId}/group_members_get`).then(response => {
+            console.log(response, "REPONSE VOTING RIGHTS");
+            setCanMemberVote(response)
+            setLoading(false);
+        })
+        
+    }
+
+    const postVotingRights = (memberId, allowVote) => {
+        setLoading(true)
+        console.log(canMemberVote)
+        postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: memberId, allow_vote: allowVote }).then(response => {
             console.log(response, "REPONSE");
+            console.log(canMemberVote)
+            if (response.detail === "You do not have permission to perform this action.") {
+                setStatus({text: "You don't have permission to change users voting rights", color:"red"});
+            }
+            setStatus({text:"Successfully changed vote", color:"green"});
+            getVotingRights();
         })
     }
 
-    const setVotingRights = () => {
-        postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: 33, allow_vote: true }).then(response => {
-            console.log(response, "REPONSE");
-            if (response.detail === "You do not have permission to perform this action.") {
-                console.warn("You don't have permission to change users voting rights");
-            }
-        })
+    const handleChangeVotingRight = (memberId, index) =>{
+        const members = canMemberVote;
+        members[index].allow_vote = !members[index].allow_vote;
+        setCanMemberVote(members)
+        postVotingRights(memberId, members[index].allow_vote);
     }
 
     const DeselectDelegateButton = () => {
         const [show, setShow] = useState(false);
-
+        
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
-
+        
         return (
             <>
                 <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
@@ -167,8 +189,10 @@ export default function GroupMembers(props) {
     }
 
 
+
     return (
-        <div>
+        <Loader loading={loading}>
+            <div style={{"color":status.color}}>{status.text}</div>
             <div className="mb-2 titles">
                 <div>{totalMembers} Members</div>
                 <div>Voting Rights</div>
@@ -177,11 +201,19 @@ export default function GroupMembers(props) {
             </div>
             {
                 members?.map((member, index) => (
-                    <div className="media member-block" key={index}>
-                        <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
-                        <div className="media-body">
-                            <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
+                    <div className="titles media member-block" key={index}>
+                        <div className="user-block">
+                            <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
+                            <div>
+                                <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
+                            </div>
                         </div>
+                        <div>
+                            <input type="checkbox" checked={canMemberVote[index]?.allow_vote || false} 
+                            onChange={() => handleChangeVotingRight(member.id, index)} 
+                            disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
+                        </div>
+                        <div>NO</div>
                         <div className="menu d-flex align-items-center">
                             {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
                             {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
@@ -207,6 +239,6 @@ export default function GroupMembers(props) {
                     </div>
                 ))
             }
-        </div>
+        </Loader>
     );
 }
