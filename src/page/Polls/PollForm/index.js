@@ -59,7 +59,8 @@ export default function PollForm() {
     };
     
     const changeVotingType = (e) => {
-        setPollDetail({ ...pollDetail, voting_type: e.target.value });
+        const votingType = e.target.value
+        setPollDetail({ ...pollDetail, voting_type: votingType});
         console.log(e.target.value, pollDetail)
     }
 
@@ -99,6 +100,11 @@ export default function PollForm() {
         pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
+        if (pollDetails.voting_type === "time")
+        {
+            pollDetails.voting_type = "condorcet";
+            pollDetails.type = "event";
+        }    
         var data = new FormData();
         var obj = {
             poll_details: JSON.stringify(pollDetails)
@@ -109,6 +115,8 @@ export default function PollForm() {
         pollDocs.forEach((doc) => {
             data.append('poll_docs', doc, doc.file);
         })
+
+        // if (votingType === "time")
         postRequest("api/v1/group_poll/create_poll", data).then(
             (response) => {
                 console.log('response', response);
@@ -302,8 +310,8 @@ export default function PollForm() {
                                                     id="Time"
                                                     name="request"
                                                     label="Time"
-                                                    value="Time"
-                                                    checked={pollDetail.voting_type === "Time"}
+                                                    value="time"
+                                                    checked={pollDetail.voting_type === "time"}
                                                     onClick={changeVotingType}
                                                 />
                                             </div>

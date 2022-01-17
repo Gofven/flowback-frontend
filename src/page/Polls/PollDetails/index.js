@@ -85,6 +85,7 @@ export default function PollDetails() {
         getPollDetails();
         getGroupDetail(groupId);
         getCounterProposal();
+        console.log(poll)
     }, [])
 
     // Verify poll request
@@ -295,7 +296,7 @@ export default function PollDetails() {
             setError("Proposal needs title");
             return;
         }
-        if (counterProposal.proposal_title.includes("~")) {
+        if (counterProposal.proposal_title?.includes("~")) {
             setError("Character \"~\" is not allowed");
             return;
         }
@@ -303,9 +304,10 @@ export default function PollDetails() {
 
         var data = new FormData();
         if (counterProposal.file) data.append('file', counterProposal.file);
-
+        console.log(counterProposal.date)
+        data.append('date', JSON.stringify(counterProposal.date))
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
-        const combinedProposal = `${counterProposal.proposal_title}~${counterProposal.proposal_details || "No description"}`;
+        const combinedProposal = `${counterProposal.proposal_title || "" }~${counterProposal.proposal_details || "No description"}`;
 
         data.append('proposal', combinedProposal);
 
@@ -390,6 +392,18 @@ export default function PollDetails() {
                                                             showTimeSelect
                                                             dateFormat="Pp"
                                                     /> */}
+                                            {poll.type === "event" ? <div className="form-group field">
+                                                <div>
+                                                    Meeting Time
+                                                </div>
+                                            <DatePicker
+                                                selected={counterProposal.date}
+                                                onChange={onDateTimeSelect}
+                                                minDate={new Date()}
+                                                showTimeSelect
+                                                dateFormat="Pp"
+                                            />
+                                            </div>:<div>
                                                 <h5 style={{ "color": "red" }}>{error}</h5>
                                                 <div className="form-group">
                                                     <Textbox
@@ -401,7 +415,7 @@ export default function PollDetails() {
                                                         defaultValue={counterProposal.proposal}
                                                     // onBlur={vailadated}
                                                     />
-                                                </div>
+                                                </div></div>}
                                                 <div className="form-group proposal-details">
                                                     <textarea
                                                         type="text"
@@ -436,7 +450,6 @@ export default function PollDetails() {
                                                         }
                                                     </div>
                                                 </div>
-
                                                 <div className="text-center my-2 mt-4">
                                                     <Button
                                                         type="button"
