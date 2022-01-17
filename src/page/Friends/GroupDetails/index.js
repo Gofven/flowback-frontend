@@ -181,7 +181,7 @@ export default function GroupDetails() {
                                             <p
                                             >
                                                 <i className="las la-check text-success mr-1"></i>
-                                                {group.user_type === "Delegator" ? "Delegator" : "member"} 
+                                                {group.user_type === "Delegator" ? "Delegate" : "member"} 
 
 
                                             </p> :

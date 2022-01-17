@@ -146,10 +146,10 @@ export default function AllTab(props) {
                     <label htmlFor='document'>
                         <div>{document.doc_name}</div>
                     </label>
-                    <div className='d-flex'>
+                    <div className='d-flex'> Upload: 
                         <FontAwesomeIcon className="cursor-pointer"
                             icon={faUpload} color='black' size='lg' onClick={AddDocument} />
-                        <div className='px-2'></div>
+                        <div className='px-2'> Discard: </div>
                         <FontAwesomeIcon className="cursor-pointer"
                             icon={faTimes} color='#DD4A4C' size='lg' onClick={removeDocument} />
                     </div>

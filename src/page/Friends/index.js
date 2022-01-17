@@ -249,7 +249,7 @@ export default function Friends() {
                                 
                               >
                                 <i className="las la-check text-success mr-1"></i>
-                                {item.user_type === "Delegator" ? "Delegator" : "Member"} 
+                                {item.user_type === "Delegator" ? "Delegate" : "Member"} 
 
                               </h4> :
                               (
