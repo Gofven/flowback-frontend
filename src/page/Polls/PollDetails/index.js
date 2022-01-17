@@ -326,6 +326,7 @@ export default function PollDetails() {
                     getCounterProposal();
                 }
                 setCounterProposalLoading(false);
+                window.location.reload();
             }).catch((err) => {
                 setCounterProposalLoading(false);
             });
@@ -457,7 +458,8 @@ export default function PollDetails() {
                                                         //disabled={alreadyPosted}
                                                         onClick={() => {
                                                             saveCounterProposal();
-                                                            //window.location.reload();
+                                                           //Reload can not be set here
+                                                            
                                                           }}>
                                                         Add
                                                     </Button>
