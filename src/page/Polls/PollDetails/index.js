@@ -305,16 +305,12 @@ export default function PollDetails() {
         var data = new FormData();
         if (counterProposal.file) data.append('file', counterProposal.file);
 
-        data.append('date', JSON.stringify(counterProposal.date))
+        const newDate = JSON.parse(JSON.stringify(counterProposal.date).replace('Z','000-00:00'));
+        data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
         const combinedProposal = `${counterProposal.proposal_title || "" }~${counterProposal.proposal_details || "No description"}`;
-
         data.append('proposal', combinedProposal);
-
-        //end_time: new Date(data.end_time)
-        //console.log(formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]'));
-        //data.append('date', formatDate(counterProposal.date, 'YYYY-MM-DDThh:mm'));
 
         setCounterProposalLoading(true);
         data.append('poll', pollId);
