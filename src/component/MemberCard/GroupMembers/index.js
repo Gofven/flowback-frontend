@@ -23,7 +23,7 @@ import { postRequest, getRequest } from "../../../utils/API";
 import { Dropdown } from "react-bootstrap"
 import Image from "../../common/Image";
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import a from 'react-bootstrap/Button';
 import './styles.css';
 import Loader from '../../common/Loader';
 
@@ -116,12 +116,12 @@ export default function GroupMembers(props) {
         }
     );
 
-    const SetDelegateButton = ({ groupId, userId, disabled }) => <Button
+    const SetDelegateButton = ({ groupId, userId, disabled }) => <a
         href="#"
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
         disabled={disabled}
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
-    >Select</Button>;
+    >Select</a>;
 
     const getVotingRights = () => {
 
@@ -162,27 +162,27 @@ export default function GroupMembers(props) {
         
         return (
             <>
-                <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
+                <a variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
                     Deselect
-                </Button>
+                </a>
 
                 <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>Delegate voting options</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Button variant="primary" onClick={() => {
+                        <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: true });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
                             Keep delegate votes
-                        </Button>
-                        <Button variant="primary" onClick={() => {
+                        </a>
+                        <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: false });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
                             Remove delegate votes
-                        </Button>
+                        </a>
                     </Modal.Body>
                 </Modal>
             </>
