@@ -214,10 +214,10 @@ export default function GroupMembers(props) {
                             onChange={() => handleChangeVotingRight(member.id, index)} 
                             disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
-                        <div>NO</div>
+                        <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
                         <div >
                             {/* <div className="menu d-flex align-items-center"> */}
-                                {chosenDelegateId == member.id ? <DeselectDelegateButton /> : <SetDelegateButton groupId={groupId} userId={member.id} disabled={(userType === "Delegator" || member.user_type != "Delegator" || chosenDelegateId != null)} />}
+                                {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
                                 {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
                         </div>
