@@ -149,9 +149,11 @@ export default function GroupMembers(props) {
 
     const handleChangeVotingRight = (memberId, index) =>{
         const members = canMemberVote;
-        members[index].allow_vote = !members[index].allow_vote;
-        setCanMemberVote(members)
-        postVotingRights(memberId, members[index].allow_vote);
+        const member = members.find(member => member.user === memberId);
+        const newVoteRight = !members[members.indexOf(member)].allow_vote;
+        members[members.indexOf(member)].allow_vote = newVoteRight;
+        setCanMemberVote(members);
+        postVotingRights(memberId, newVoteRight);
     }
 
     const DeselectDelegateButton = () => {
@@ -210,10 +212,11 @@ export default function GroupMembers(props) {
                             </div>
                         </div>
                         <div>
-                            <input type="checkbox" checked={canMemberVote[index]?.allow_vote || false} 
+                            <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false} 
                             onChange={() => handleChangeVotingRight(member.id, index)} 
                             disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
+                        userID: {member.id}, {index}
                         <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
                         <div >
                             {/* <div className="menu d-flex align-items-center"> */}
