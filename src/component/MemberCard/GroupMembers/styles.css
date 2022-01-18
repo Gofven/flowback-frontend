@@ -33,8 +33,8 @@
 }
 
 .temp-btn-color-lightgreen {
-    color: rgb(98, 192, 110);
-    border-color: rgb(98, 192, 110);
+    color: rgb(152, 207, 159);
+    border-color: rgb(152, 207, 159);
 }
 
 .temp-btn-color-lightcoral {
@@ -58,12 +58,19 @@
 .titles{
     display:flex;
     justify-content: space-between;
+    
 }
+
+.titles > div{
+    flex:1;
+    text-align: center;
+}
+
 
 /* .titles > div{
     
 } */
 
-.user-block{
+/* .user-block{
     width:80px;
-}
+} */
