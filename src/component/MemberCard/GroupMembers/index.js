@@ -23,7 +23,7 @@ import { postRequest, getRequest } from "../../../utils/API";
 import { Dropdown } from "react-bootstrap"
 import Image from "../../common/Image";
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import a from 'react-bootstrap/Button';
 import './styles.css';
 import Loader from '../../common/Loader';
 
@@ -116,11 +116,12 @@ export default function GroupMembers(props) {
         }
     );
 
-    const SetDelegateButton = ({ groupId, userId }) => <a
+    const SetDelegateButton = ({ groupId, userId, disabled }) => <a
         href="#"
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
+        disabled={disabled}
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
-    >Select as delegate</a>;
+    >Select</a>;
 
     const getVotingRights = () => {
 
@@ -148,9 +149,11 @@ export default function GroupMembers(props) {
 
     const handleChangeVotingRight = (memberId, index) =>{
         const members = canMemberVote;
-        members[index].allow_vote = !members[index].allow_vote;
-        setCanMemberVote(members)
-        postVotingRights(memberId, members[index].allow_vote);
+        const member = members.find(member => member.user === memberId);
+        const newVoteRight = !members[members.indexOf(member)].allow_vote;
+        members[members.indexOf(member)].allow_vote = newVoteRight;
+        setCanMemberVote(members);
+        postVotingRights(memberId, newVoteRight);
     }
 
     const DeselectDelegateButton = () => {
@@ -161,27 +164,27 @@ export default function GroupMembers(props) {
         
         return (
             <>
-                <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                    Deselect as delegate
-                </Button>
+                <a variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
+                    Deselect
+                </a>
 
                 <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>Delegate voting options</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Button variant="primary" onClick={() => {
+                        <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: true });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
                             Keep delegate votes
-                        </Button>
-                        <Button variant="primary" onClick={() => {
+                        </a>
+                        <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: false });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
                             Remove delegate votes
-                        </Button>
+                        </a>
                     </Modal.Body>
                 </Modal>
             </>
@@ -197,7 +200,7 @@ export default function GroupMembers(props) {
                 <div>{totalMembers} Members</div>
                 <div>Voting Rights</div>
                 <div>Admin</div> 
-                <div>Group role</div>
+                <div>Select as Delegate</div>
             </div>
             {
                 members?.map((member, index) => (
@@ -209,15 +212,17 @@ export default function GroupMembers(props) {
                             </div>
                         </div>
                         <div>
-                            <input type="checkbox" checked={canMemberVote[index]?.allow_vote || false} 
+                            <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false} 
                             onChange={() => handleChangeVotingRight(member.id, index)} 
                             disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
-                        <div>NO</div>
-                        <div className="menu d-flex align-items-center">
-                            {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
-                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
-                            <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span>
+                        <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
+                        <div >
+                            {/* <div className="menu d-flex align-items-center"> */}
+                                {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
+                                {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
+                            {/* </div> */}
+                        </div>
                             {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
                                 <Dropdown>
                                     <Dropdown.Toggle variant="white" id="dropdown-basic">
@@ -235,7 +240,6 @@ export default function GroupMembers(props) {
                                 </Dropdown> :
                                 null
                             } */}
-                        </div>
                     </div>
                 ))
             }

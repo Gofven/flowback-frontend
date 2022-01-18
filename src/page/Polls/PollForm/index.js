@@ -169,8 +169,8 @@ export default function PollForm() {
             poll: pollId,
             title: pollDetails.title,
             description: pollDetails.description,
-            tags: pollDetails.tags,
-            end_time: pollDetails.end_time
+            // tags: pollDetails.tags,
+            // end_time: pollDetails.end_time
         }
         postRequest("api/v1/group_poll/update_poll_details", data).then(
             (response) => {
@@ -269,7 +269,8 @@ export default function PollForm() {
 
                                             />
                                         </div>
-
+                                        {pollId ? null : 
+                                        <>
                                         <div className="form-group mx-2">
                                             <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
                                                 <option selected value="poll">Private</option>
@@ -277,6 +278,7 @@ export default function PollForm() {
 
                                             </select>
                                         </div>
+                                         
                                         <div className="form-group field">
                                             <Label>
                                                 Voting Type
@@ -339,7 +341,7 @@ export default function PollForm() {
                                                 showTimeSelect
                                                 dateFormat="Pp"
                                             />
-                                        </div>
+                                        </div></>}
                                         <div className="text-center my-5">
                                             <Button
                                                 type="button"
@@ -349,7 +351,7 @@ export default function PollForm() {
                                             >
                                                 {pollId ? "Update" : "Submit"}
                                             </Button>
-                                        </div>
+                                        </div> 
                                     </form>
                                 </div>
                             </div>
