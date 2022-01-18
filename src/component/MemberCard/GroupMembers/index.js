@@ -116,11 +116,12 @@ export default function GroupMembers(props) {
         }
     );
 
-    const SetDelegateButton = ({ groupId, userId }) => <a
+    const SetDelegateButton = ({ groupId, userId, disabled }) => <Button
         href="#"
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
+        disabled={disabled}
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
-    >Select as delegate</a>;
+    >Select</Button>;
 
     const getVotingRights = () => {
 
@@ -161,8 +162,8 @@ export default function GroupMembers(props) {
         
         return (
             <>
-                <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                    Deselect as delegate
+                <Button variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
+                    Deselect
                 </Button>
 
                 <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
@@ -197,7 +198,7 @@ export default function GroupMembers(props) {
                 <div>{totalMembers} Members</div>
                 <div>Voting Rights</div>
                 <div>Admin</div> 
-                <div>Group role</div>
+                <div>Select as Delegate</div>
             </div>
             {
                 members?.map((member, index) => (
@@ -214,10 +215,12 @@ export default function GroupMembers(props) {
                             disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
                         <div>NO</div>
-                        <div className="menu d-flex align-items-center">
-                            {(userType != "Delegator" && member.user_type == "Delegator" && chosenDelegateId == null) ? <SetDelegateButton groupId={groupId} userId={member.id} /> : null}
-                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : null}
-                            <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span>
+                        <div >
+                            {/* <div className="menu d-flex align-items-center"> */}
+                                {chosenDelegateId == member.id ? <DeselectDelegateButton /> : <SetDelegateButton groupId={groupId} userId={member.id} disabled={(userType === "Delegator" || member.user_type != "Delegator" || chosenDelegateId != null)} />}
+                                {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
+                            {/* </div> */}
+                        </div>
                             {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
                                 <Dropdown>
                                     <Dropdown.Toggle variant="white" id="dropdown-basic">
@@ -235,7 +238,6 @@ export default function GroupMembers(props) {
                                 </Dropdown> :
                                 null
                             } */}
-                        </div>
                     </div>
                 ))
             }
