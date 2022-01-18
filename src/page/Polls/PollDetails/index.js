@@ -366,7 +366,92 @@ export default function PollDetails() {
                                     <p>{poll.description}</p>
                                 </div>
 
+                                                                <div className="card-body overflow-hidden">
+                                    <div className="row">
+                                        <div className="col-5">Created at</div>
+                                        <div className="col-6">{formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">Accepted at</div>
+                                        <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">End Time</div>
+                                        <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-5">Group Name</div>
+                                        <div className="col-6">
+                                            <Link to={`/groupdetails/${group.id}`}>
+                                                <div >{group.title}</div>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">Documents</div>
+                                        <div className="col-6">
+                                            {
+                                                poll && poll.files && poll.files.length ?
+                                                    poll.files?.map((file) => (
+                                                        <div className="d-flex justify-content-between align-items-center my-1 doc-view" key={file.id}>
+                                                            <div key={file.file} className="text-primary"
+                                                                onClick={() => { viewDocument(file) }}>{
+                                                                    file && file.file &&
+                                                                    file.file.slice(file.file.lastIndexOf("/") + 1, file.file.length)
+                                                                }
+                                                            </div>
+                                                            <FontAwesomeIcon
+                                                                icon={faTimes}
+                                                                color='red'
+                                                                className="cursor-pointer"
+                                                                onClick={() => { deleteDocument(file.id) }}
+                                                            />
+                                                        </div>
+                                                    )) :
+                                                    <div>NA</div>
+                                            }
+
+                                            <div className='d-flex'>
+                                                <label htmlFor='document' className="text-primary">
+                                                    <div>
+                                                        {/* Add More Files */}
+                                                    </div>
+                                                </label>
+                                                <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
+                                                    onChange={addDocuments}
+                                                    multiple="multiple"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+
+                            
+                            {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
+                                <div className="card-header flex-header">
+                                    <h4 className="card-title">{poll.title}</h4>
+                                    {poll.accepted ?
+                                        <div>
+                                            <FontAwesomeIcon icon={faCheckCircle} color='#13873B' size="lg" />
+                                            <p className="d-inline ml-2">Approved </p>
+                                        </div> :
+                                        (["Owner", "Admin", "Moderator"].includes(group.user_type) &&
+                                            <p className="d-inline ml-2 cursor-pointer" onClick={verifyPoll}>Verify Poll </p>
+                                        )
+                                    }
+                                </div>
+                            </div> */}
+
+
+ 
+
+                            {
+                                (poll && poll.id && !counterProposalLoading) &&
+                                <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted} />
+                            }
 
                             {
                                 //(poll?.voting_status || counterProposal?.id) &&
@@ -467,90 +552,14 @@ export default function PollDetails() {
                                                 </div>
                                             </form>
                                             {/* } */}
+                                            
                                         </div>
+                                        
                                     </div>
                                 </Loader>
                             }
-                            {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
-                                <div className="card-header flex-header">
-                                    <h4 className="card-title">{poll.title}</h4>
-                                    {poll.accepted ?
-                                        <div>
-                                            <FontAwesomeIcon icon={faCheckCircle} color='#13873B' size="lg" />
-                                            <p className="d-inline ml-2">Approved </p>
-                                        </div> :
-                                        (["Owner", "Admin", "Moderator"].includes(group.user_type) &&
-                                            <p className="d-inline ml-2 cursor-pointer" onClick={verifyPoll}>Verify Poll </p>
-                                        )
-                                    }
-                                </div>
-                            </div> */}
-                            <div className="card poll-details-card  card-rounded overflow-hidden my-4">
-                                <div className="card-header flex-header">
-                                    <h4 className="card-title">Details</h4>
-                                </div>
 
-                                <div className="card-body overflow-hidden">
-                                    <div className="row">
-                                        <div className="col-5">Created at</div>
-                                        <div className="col-6">{formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">Accepted at</div>
-                                        <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">End Time</div>
-                                        <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
-                                    </div>
 
-                                    <div className="row">
-                                        <div className="col-5">Group Name</div>
-                                        <div className="col-6">
-                                            <Link to={`/groupdetails/${group.id}`}>
-                                                <div >{group.title}</div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">Documents</div>
-                                        <div className="col-6">
-                                            {
-                                                poll && poll.files && poll.files.length ?
-                                                    poll.files?.map((file) => (
-                                                        <div className="d-flex justify-content-between align-items-center my-1 doc-view" key={file.id}>
-                                                            <div key={file.file} className="text-primary"
-                                                                onClick={() => { viewDocument(file) }}>{
-                                                                    file && file.file &&
-                                                                    file.file.slice(file.file.lastIndexOf("/") + 1, file.file.length)
-                                                                }
-                                                            </div>
-                                                            <FontAwesomeIcon
-                                                                icon={faTimes}
-                                                                color='red'
-                                                                className="cursor-pointer"
-                                                                onClick={() => { deleteDocument(file.id) }}
-                                                            />
-                                                        </div>
-                                                    )) :
-                                                    <div>NA</div>
-                                            }
-
-                                            <div className='d-flex'>
-                                                <label htmlFor='document' className="text-primary">
-                                                    <div>
-                                                        {/* Add More Files */}
-                                                    </div>
-                                                </label>
-                                                <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
-                                                    onChange={addDocuments}
-                                                    multiple="multiple"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             {poll.accepted && group.id &&
                                 <div className="card chat-list-card chat-card card-rounded overflow-hidden my-2 mb-4">
                                     <div className="card-body overflow-hidden">
@@ -568,11 +577,14 @@ export default function PollDetails() {
                                 </div>
                             }
 
-                            {
-                                (poll && poll.id && !counterProposalLoading) &&
-                                <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted} />
-                            }
+
+
                         </div>
+
+                        
+
+
+
                         <div className="col-md-3">
                             <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">
@@ -590,7 +602,6 @@ export default function PollDetails() {
                                         <p className="text-turncate small mb-0 d-inline poll-field ml-1">Voting</p>
                                         <p className="text-turncate ml-4">{poll.discussion}</p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
