@@ -216,7 +216,6 @@ export default function GroupMembers(props) {
                             onChange={() => handleChangeVotingRight(member.id, index)} 
                             disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
-                        userID: {member.id}, {index}
                         <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
                         <div >
                             {/* <div className="menu d-flex align-items-center"> */}
