@@ -303,11 +303,12 @@ export default function PollDetails() {
         if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
-        if (counterProposal.file) data.append('file', counterProposal.file);
+        if (counterProposal.file) 
+            data.append('file', counterProposal.file);
 
         let newDate = ""
         if (counterProposal.date)
-        newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z','000-00:00'));
+            newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z','000-00:00'));
         
         data.append('date', newDate)
 
