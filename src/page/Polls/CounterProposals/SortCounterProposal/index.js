@@ -219,7 +219,6 @@ function Task(props) {
     </Draggable >;
 }
 
-
 function SortCounterProposal(props) {
     const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
