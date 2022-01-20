@@ -68,8 +68,6 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
         });
     };
 
-
-
     return (
         <div className="card counter-proposal-card">
             {counterProposal.final_score !== null? <div className='points'>{counterProposal?.final_score || 0}</div> : null}
@@ -96,6 +94,7 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
                                 <i className="las la-comment"></i>{counterProposal?.comments_details?.total_comments} Comments
               </a>
                         </div>
+                        {counterProposal.date ? counterProposal.date : null}
                     </div>
                     {
                         !readOnlyComments &&
