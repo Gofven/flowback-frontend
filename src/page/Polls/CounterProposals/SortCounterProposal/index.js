@@ -420,7 +420,7 @@ function SortCounterProposal(props) {
                         {
                             <DragDropContext
                                 // onDragStart={onDragStart}
-                                // onDragUpdate={onDragUpdate}
+                                // onDragUpdate={onDragUpdate} 
                                 onDragEnd={onDragEnd}
                             >
                                 {state.columnOrder.map(columnId => {
