@@ -48,7 +48,7 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                 if (response.detail !== "Not found.") {
 
                     response.forEach(proposal => {
-                        if (proposal.user.id === JSON.parse(localStorage.getItem("user")).id) {
+                        if (proposal.user?.id === JSON.parse(localStorage.getItem("user")).id) {
                             setAlreadyPosted(true);
                             //TODO: User should be able to get feedback
                             console.log("POSTED ALREADY")

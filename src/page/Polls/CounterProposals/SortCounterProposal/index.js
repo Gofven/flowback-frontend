@@ -31,6 +31,7 @@ import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { counter } from '@fortawesome/fontawesome-svg-core';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -154,6 +155,8 @@ function Task(props) {
     }
 
     const counterProposal = props.task.content;
+    counterProposal.title = counterProposal?.proposal.split("~")[0];
+    counterProposal.description = counterProposal?.proposal.split("~")[1];
     return <Draggable draggableId={props.task.id + ''} index={props.index} isDragDisabled={true}>{/*isDragDisabled={true}*/}
         {(provided, snapshot) => (
             <TaskContainer
@@ -192,8 +195,9 @@ function Task(props) {
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <div className="counter-proposal-top">
                             <div className="counter-proposal-title">
-                                <h4><LinesEllipsis
-                                    text={counterProposal?.proposal.split("~")[0]}
+                                <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ? counterProposal.date : null}
+                                <LinesEllipsis
+                                    text={counterProposal?.title}
                                     maxLine='3'
                                     ellipsis='...'
                                     trimRight
@@ -202,7 +206,7 @@ function Task(props) {
                         </div>
                         <div className="proposal-description">
                             <LinesEllipsis
-                                text={counterProposal?.proposal.split("~")[1]}
+                                text={counterProposal?.description}
                                 ellipsis="..."
                                 trimRight
                                 basedOn='letters' />
@@ -214,7 +218,6 @@ function Task(props) {
         }
     </Draggable >;
 }
-
 
 function SortCounterProposal(props) {
     const [show, setShow] = useState(true);
