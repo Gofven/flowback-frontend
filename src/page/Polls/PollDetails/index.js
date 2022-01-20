@@ -303,9 +303,13 @@ export default function PollDetails() {
         if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
-        if (counterProposal.file) data.append('file', counterProposal.file);
+        if (counterProposal.file) 
+            data.append('file', counterProposal.file);
 
-        const newDate = JSON.parse(JSON.stringify(counterProposal.date).replace('Z','000-00:00'));
+        let newDate = ""
+        if (counterProposal.date)
+            newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z','000-00:00'));
+        
         data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
