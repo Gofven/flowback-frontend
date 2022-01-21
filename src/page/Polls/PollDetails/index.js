@@ -38,6 +38,8 @@ import DatePicker from "react-datepicker";
 import Image from '../../../component/common/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
 import Profile from '../../../component/User/Profile';
+import PollResultsCondorcet from "../PollResults/PollResultsCondorcet";
+import PollResults from "../PollResults/PollResults";
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -430,7 +432,7 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
-
+                            {(poll.discussion === "Finished") && <PollResults pollId={pollId} votingType={poll.voting_type} type={poll.type}/>}
                             {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">{poll.title}</h4>
