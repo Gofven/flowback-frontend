@@ -368,7 +368,6 @@ export default function PollDetails() {
                                 <div className="card-body overflow-hidden">
                                     <p>{poll.description}</p>
                                 </div>
-
                                                                 <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-5">Created at</div>
@@ -432,7 +431,6 @@ export default function PollDetails() {
 
                             </div>
 
-                            
                             {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">{poll.title}</h4>
@@ -452,7 +450,7 @@ export default function PollDetails() {
  
 
                             {
-                                (poll && poll.id && !counterProposalLoading) &&
+                                (poll && poll.id && !counterProposalLoading && poll.discussion != "Finished" ) &&
                                 <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted} />
                             }
 
@@ -563,7 +561,7 @@ export default function PollDetails() {
                             }
 
 
-                            {poll.accepted && group.id &&
+                            {poll.accepted && group.id && poll.discussion != "Finished" &&
                                 <div className="card chat-list-card chat-card card-rounded overflow-hidden my-2 mb-4">
                                     <div className="card-body overflow-hidden">
                                         <div className="tab-pane fade show active" id="PollsTab">
@@ -585,7 +583,7 @@ export default function PollDetails() {
                         </div>
 
                         
-                            {poll.discussion === "Finished" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
+                            {poll.discussion === "Finished" && poll.type == "event" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
 
 
                         <div className="col-md-3">
