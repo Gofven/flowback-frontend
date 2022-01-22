@@ -3,47 +3,53 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
-*/
+ */
 
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, {useState, useEffect, useRef, createRef} from "react";
 import "./styles.css";
 import Layout1 from "../../../layout/Layout1";
 import GroupChat from "../../../component/GroupChat";
-import { Link, useParams } from "react-router-dom";
-import { getRequest, postRequest } from "../../../utils/API";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCheckCircle, faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
-import { FormatComments, formatDate, inputKeyValue } from "../../../utils/common";
+import {Link, useParams} from "react-router-dom";
+import {getRequest, postRequest} from "../../../utils/API";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+    faCheck,
+    faCheckCircle,
+    faThumbsUp as faThumbsUpSolid,
+    faThumbsDown as faThumbsDownSolid,
+    faEdit,
+    faTimes
+} from '@fortawesome/free-solid-svg-icons'
+import {faThumbsUp, faThumbsDown} from '@fortawesome/free-regular-svg-icons'
+import {FormatComments, formatDate, inputKeyValue} from "../../../utils/common";
 import Post from "../../../component/FeedCard/AllTab/Post";
 import UserGroup from "../../../apis/UserGroup";
-import { Button, Textbox } from "../../../component/common";
+import {Button, Textbox} from "../../../component/common";
 import Counterproposals from "../CounterProposals";
 import Loader from "../../../component/common/Loader";
-import { UserTypes } from "../../../constants/constants";
+import {UserTypes} from "../../../constants/constants";
 import DatePicker from "react-datepicker";
 import Image from '../../../component/common/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
 import Profile from '../../../component/User/Profile';
-import PollResultsCondorcet from "../PollResults/PollResultsCondorcet";
 import PollResults from "../PollResults/PollResults";
 
 export default function PollDetails() {
-    let { groupId } = useParams();
-    let { pollId } = useParams();
+    let {groupId} = useParams();
+    let {pollId} = useParams();
     const [poll, setPoll] = useState({});
     const [group, setGroup] = useState({});
     const [counterProposal, setCounterProposal] = useState({});
@@ -60,7 +66,7 @@ export default function PollDetails() {
         postRequest("api/v1/group_poll/poll_details", data).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     if (data.comments_details) {
                         data.comments_details.comments = FormatComments(data.comments_details.comments);
@@ -77,7 +83,7 @@ export default function PollDetails() {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const { status, data } = response;
+                    const {status, data} = response;
                     setGroup(data);
                 }
 
@@ -95,10 +101,10 @@ export default function PollDetails() {
 
     // Verify poll request
     const verifyPoll = () => {
-        postRequest("api/v1/group_poll/verify_poll", { poll: pollId }).then(
+        postRequest("api/v1/group_poll/verify_poll", {poll: pollId}).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     getPollDetails();
                     //     data.comments_details.comments = FormatComments(data.comments_details.comments);
@@ -118,7 +124,7 @@ export default function PollDetails() {
         postRequest("api/v1/group_poll/poll_voting", data).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     getPollDetails();
                 }
@@ -144,7 +150,7 @@ export default function PollDetails() {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const { status, data } = response;
+                    const {status, data} = response;
                     if (status == "success") {
                         getPollDetails();
                         // console.log('polls data', data);
@@ -167,7 +173,7 @@ export default function PollDetails() {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const { status, data } = response;
+                    const {status, data} = response;
                     if (status == "success") {
                         getPollDetails();
                         // data.comments_details.comments = FormatComments(data.comments_details.comments);
@@ -190,7 +196,7 @@ export default function PollDetails() {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const { status, data } = response;
+                    const {status, data} = response;
                     if (status == "success") {
                         getPollDetails();
                         // data.comments_details.comments = FormatComments(data.comments_details.comments);
@@ -212,7 +218,7 @@ export default function PollDetails() {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const { status, data } = response;
+                    const {status, data} = response;
                     if (status == "success") {
                         getPollDetails();
                         // data.comments_details.comments = FormatComments(data.comments_details.comments);
@@ -233,7 +239,7 @@ export default function PollDetails() {
         postRequest("api/v1/group_poll/remove_poll_doc", data).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     getPollDetails();
                 }
@@ -255,7 +261,7 @@ export default function PollDetails() {
         postRequest("api/v1/group_poll/add_new_poll_docs", data).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     getPollDetails();
                 }
@@ -270,7 +276,7 @@ export default function PollDetails() {
         getRequest(`api/v1/group_poll/${pollId}/user_proposal`, data).then(
             (response) => {
                 console.log('response', response);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     setCounterProposal(data);
                 }
@@ -280,19 +286,19 @@ export default function PollDetails() {
     // Set Counter Proposal
     const handleOnChange = (e) => {
         console.log("Value", e.target.value);
-        setCounterProposal({ ...counterProposal, ...inputKeyValue(e) });
+        setCounterProposal({...counterProposal, ...inputKeyValue(e)});
     };
 
     // Document Selection for Counter Proposal Document
     const onCounterProposalDocumentsSelect = (e) => {
         const files = Array.from(e.target.files)
         var file = files[0];
-        setCounterProposal({ ...counterProposal, file });
+        setCounterProposal({...counterProposal, file});
     }
 
     // Remove Document for Counter Proposal
     const removeCounterProposalDocument = () => {
-        setCounterProposal({ ...counterProposal, file: null });
+        setCounterProposal({...counterProposal, file: null});
     }
 
     // Save Counter Proposal
@@ -308,17 +314,17 @@ export default function PollDetails() {
         if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
-        if (counterProposal.file) 
+        if (counterProposal.file)
             data.append('file', counterProposal.file);
 
         let newDate = ""
         if (counterProposal.date)
-            newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z','000-00:00'));
-        
+            newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z', '000-00:00'));
+
         data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
-        const combinedProposal = `${counterProposal.proposal_title || "" }~${counterProposal.proposal_details || "No description"}`;
+        const combinedProposal = `${counterProposal.proposal_title || ""}~${counterProposal.proposal_details || "No description"}`;
         data.append('proposal', combinedProposal);
 
         setCounterProposalLoading(true);
@@ -326,7 +332,7 @@ export default function PollDetails() {
         postRequest("api/v1/group_poll/add_proposal", data).then(
             (response) => {
                 setAlreadyPosted(true);
-                const { status, data } = response;
+                const {status, data} = response;
                 if (status === "success") {
                     getPollDetails();
                     getCounterProposal();
@@ -334,13 +340,13 @@ export default function PollDetails() {
                 setCounterProposalLoading(false);
                 window.location.reload();
             }).catch((err) => {
-                setCounterProposalLoading(false);
-            });
+            setCounterProposalLoading(false);
+        });
     }
 
     const onDateTimeSelect = (e) => {
         console.log(e);
-        setCounterProposal({ ...counterProposal, date: e });
+        setCounterProposal({...counterProposal, date: e});
     }
 
     return (
@@ -356,28 +362,30 @@ export default function PollDetails() {
                                         {
                                             ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
                                             <Link to={`/groupdetails/${groupId}/poll/${pollId}/edit`}>
-                                                <FontAwesomeIcon className="ml-2" icon={faEdit} size="lg" color="black" />
+                                                <FontAwesomeIcon className="ml-2" icon={faEdit} size="lg"
+                                                                 color="black"/>
                                             </Link>
                                         }
                                     </h4>
                                     <div>
                                         <span className="poll-field" small>Created by: </span>
 
-                                        {poll.created_by && poll.created_by.first_name}  {poll.created_by && poll.created_by.last_name}
+                                        {poll.created_by && poll.created_by.first_name} {poll.created_by && poll.created_by.last_name}
                                     </div>
                                 </div>
 
                                 <div className="card-body overflow-hidden">
                                     <p>{poll.description}</p>
                                 </div>
-                                                                <div className="card-body overflow-hidden">
+                                <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-5">Created at</div>
                                         <div className="col-6">{formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
                                     <div className="row">
                                         <div className="col-5">Accepted at</div>
-                                        <div className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
+                                        <div
+                                            className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
                                         <div className="col-5">End Time</div>
@@ -388,7 +396,7 @@ export default function PollDetails() {
                                         <div className="col-5">Group Name</div>
                                         <div className="col-6">
                                             <Link to={`/groupdetails/${group.id}`}>
-                                                <div >{group.title}</div>
+                                                <div>{group.title}</div>
                                             </Link>
                                         </div>
                                     </div>
@@ -398,18 +406,24 @@ export default function PollDetails() {
                                             {
                                                 poll && poll.files && poll.files.length ?
                                                     poll.files?.map((file) => (
-                                                        <div className="d-flex justify-content-between align-items-center my-1 doc-view" key={file.id}>
+                                                        <div
+                                                            className="d-flex justify-content-between align-items-center my-1 doc-view"
+                                                            key={file.id}>
                                                             <div key={file.file} className="text-primary"
-                                                                onClick={() => { viewDocument(file) }}>{
-                                                                    file && file.file &&
-                                                                    file.file.slice(file.file.lastIndexOf("/") + 1, file.file.length)
-                                                                }
+                                                                 onClick={() => {
+                                                                     viewDocument(file)
+                                                                 }}>{
+                                                                file && file.file &&
+                                                                file.file.slice(file.file.lastIndexOf("/") + 1, file.file.length)
+                                                            }
                                                             </div>
                                                             <FontAwesomeIcon
                                                                 icon={faTimes}
                                                                 color='red'
                                                                 className="cursor-pointer"
-                                                                onClick={() => { deleteDocument(file.id) }}
+                                                                onClick={() => {
+                                                                    deleteDocument(file.id)
+                                                                }}
                                                             />
                                                         </div>
                                                     )) :
@@ -422,9 +436,10 @@ export default function PollDetails() {
                                                         {/* Add More Files */}
                                                     </div>
                                                 </label>
-                                                <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
-                                                    onChange={addDocuments}
-                                                    multiple="multiple"
+                                                <input type='file' accept='image/*,application/pdf,application/msword'
+                                                       name="document" id='document'
+                                                       onChange={addDocuments}
+                                                       multiple="multiple"
                                                 />
                                             </div>
                                         </div>
@@ -432,7 +447,9 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
-                            {(poll.discussion === "Finished") && <PollResults pollId={pollId} votingType={poll.voting_type} type={poll.type}/>}
+                            {(poll.discussion === "Finished") &&
+                                <PollResults pollId={pollId} pollDetails={poll} votingType={poll.voting_type}
+                                             type={poll.type}/>}
                             {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">{poll.title}</h4>
@@ -449,11 +466,9 @@ export default function PollDetails() {
                             </div> */}
 
 
- 
-
                             {
-                                (poll && poll.id && !counterProposalLoading && poll.discussion != "Finished" ) &&
-                                <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted} />
+                                (poll && poll.id && !counterProposalLoading && poll.discussion != "Finished") &&
+                                <Counterproposals poll={poll} group={group} setAlreadyPosted={setAlreadyPosted}/>
                             }
 
                             {
@@ -482,30 +497,31 @@ export default function PollDetails() {
                                                             showTimeSelect
                                                             dateFormat="Pp"
                                                     /> */}
-                                            {poll.type === "event" ? <div className="form-group field">
-                                                <div>
-                                                    Meeting Time
-                                                </div>
-                                            <DatePicker
-                                                selected={counterProposal.date}
-                                                onChange={onDateTimeSelect}
-                                                minDate={new Date()}
-                                                showTimeSelect
-                                                dateFormat="Pp"
-                                            />
-                                            </div>:<div>
-                                                <h5 style={{ "color": "red" }}>{error}</h5>
-                                                <div className="form-group">
-                                                    <Textbox
-                                                        type="text"
-                                                        name="proposal_title"
-                                                        placeholder="Proposal Title"
-                                                        required
-                                                        onChange={handleOnChange}
-                                                        defaultValue={counterProposal.proposal}
-                                                    // onBlur={vailadated}
+                                                {poll.type === "event" ? <div className="form-group field">
+                                                    <div>
+                                                        Meeting Time
+                                                    </div>
+                                                    <DatePicker
+                                                        selected={counterProposal.date}
+                                                        onChange={onDateTimeSelect}
+                                                        minDate={new Date()}
+                                                        showTimeSelect
+                                                        dateFormat="Pp"
                                                     />
-                                                </div></div>}
+                                                </div> : <div>
+                                                    <h5 style={{"color": "red"}}>{error}</h5>
+                                                    <div className="form-group">
+                                                        <Textbox
+                                                            type="text"
+                                                            name="proposal_title"
+                                                            placeholder="Proposal Title"
+                                                            required
+                                                            onChange={handleOnChange}
+                                                            defaultValue={counterProposal.proposal}
+                                                            // onBlur={vailadated}
+                                                        />
+                                                    </div>
+                                                </div>}
                                                 <div className="form-group proposal-details">
                                                     <textarea
                                                         type="text"
@@ -514,27 +530,34 @@ export default function PollDetails() {
                                                         required
                                                         onChange={handleOnChange}
                                                         defaultValue={counterProposal.proposal}
-                                                    // onBlur={vailadated}
+                                                        // onBlur={vailadated}
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <div className='field d-flex' style={{ "width": "88.5px" }} >
+                                                    <div className='field d-flex' style={{"width": "88.5px"}}>
                                                         {counterProposal?.file ?
                                                             <div className='d-flex flex-column w-100'>
-                                                                <div className='d-flex justify-content-between align-items-center my-1'>
-                                                                    <div className="mr-2" > {counterProposal?.file.name}</div>
-                                                                    <FontAwesomeIcon icon={faTimes} color='red' onClick={() => { removeCounterProposalDocument() }} />
+                                                                <div
+                                                                    className='d-flex justify-content-between align-items-center my-1'>
+                                                                    <div
+                                                                        className="mr-2"> {counterProposal?.file.name}</div>
+                                                                    <FontAwesomeIcon icon={faTimes} color='red'
+                                                                                     onClick={() => {
+                                                                                         removeCounterProposalDocument()
+                                                                                     }}/>
                                                                 </div>
                                                             </div> :
-                                                            <div className='' >
+                                                            <div className=''>
                                                                 <label htmlFor='document'>
                                                                     <div>
                                                                         Add File
                                                                     </div>
                                                                 </label>
-                                                                <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
-                                                                    onChange={onCounterProposalDocumentsSelect}
-                                                                    multiple="multiple"
+                                                                <input type='file'
+                                                                       accept='image/*,application/pdf,application/msword'
+                                                                       name="document" id='document'
+                                                                       onChange={onCounterProposalDocumentsSelect}
+                                                                       multiple="multiple"
                                                                 />
                                                             </div>
                                                         }
@@ -547,17 +570,17 @@ export default function PollDetails() {
                                                         //disabled={alreadyPosted}
                                                         onClick={() => {
                                                             saveCounterProposal();
-                                                           //Reload can not be set here
-                                                            
-                                                          }}>
+                                                            //Reload can not be set here
+
+                                                        }}>
                                                         Add
                                                     </Button>
                                                 </div>
                                             </form>
                                             {/* } */}
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </Loader>
                             }
@@ -568,11 +591,11 @@ export default function PollDetails() {
                                     <div className="card-body overflow-hidden">
                                         <div className="tab-pane fade show active" id="PollsTab">
                                             <Post poll={poll} key={poll.id}
-                                                addComment={(message, pollId, replyTo) => addComment(message, poll.id, replyTo)}
-                                                updateComment={(comment) => updateComment(comment)}
-                                                deleteComment={(commentId) => deleteComment(commentId)}
-                                                likeComment={(comment) => likeComment(comment)}
-                                                readOnlyComments={poll.discussion === "Finished" }
+                                                  addComment={(message, pollId, replyTo) => addComment(message, poll.id, replyTo)}
+                                                  updateComment={(comment) => updateComment(comment)}
+                                                  deleteComment={(commentId) => deleteComment(commentId)}
+                                                  likeComment={(comment) => likeComment(comment)}
+                                                  readOnlyComments={poll.discussion === "Finished"}
                                             >
                                             </Post>
                                         </div>
@@ -581,11 +604,11 @@ export default function PollDetails() {
                             }
 
 
-
                         </div>
 
-                        
-                            {poll.discussion === "Finished" && poll.type == "event" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
+
+                        {poll.discussion === "Finished" && poll.type == "event" ?
+                            <TopProposal topProposal={poll.top_proposal}/> : null}
 
 
                         <div className="col-md-3">
@@ -596,12 +619,12 @@ export default function PollDetails() {
 
                                 <div className="card-body overflow-hidden">
                                     <div>
-                                        <FontAwesomeIcon icon={faCheck} color='#737373' />
+                                        <FontAwesomeIcon icon={faCheck} color='#737373'/>
                                         <p className="text-turncate small mb-0 d-inline poll-field ml-1">Discussion</p>
                                         <p className="text-turncate ml-4">{poll.discussion}</p>
                                     </div>
                                     <div>
-                                        <FontAwesomeIcon icon={faCheck} color='#737373' />
+                                        <FontAwesomeIcon icon={faCheck} color='#737373'/>
                                         <p className="text-turncate small mb-0 d-inline poll-field ml-1">Voting</p>
                                         <p className="text-turncate ml-4">{poll.discussion}</p>
                                     </div>
@@ -611,7 +634,7 @@ export default function PollDetails() {
                     </div>
                 </div>
             </section>
-        </Layout1 >
+        </Layout1>
     );
 }
 
@@ -621,12 +644,14 @@ const TopProposal = ({topProposal}) => {
         <div className="post-header d-flex justify-content-between card-header mb-0">
             {topProposal && topProposal.user &&
                 <div className="media post-meida">
-                    <Image src={topProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
+                    <Image src={topProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'}/>
                     <div className="media-body">
                         <h5 className="user-name">
-                            <Profile className='inline-block' id={topProposal.user.id}>{topProposal.user.first_name} {topProposal.user.last_name} </Profile>
+                            <Profile className='inline-block'
+                                     id={topProposal.user.id}>{topProposal.user.first_name} {topProposal.user.last_name} </Profile>
                         </h5>
-                        <div className="post-time">{topProposal && formatDate(topProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                        <div
+                            className="post-time">{topProposal && formatDate(topProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                     </div>
                 </div>
             }
@@ -636,12 +661,12 @@ const TopProposal = ({topProposal}) => {
             <div className="counter-proposal-top">
                 <div className="counter-proposal-title">
                     <h4>{topProposal?.date && topProposal?.title !== "Drop this mission" ? topProposal.date : null}
-                    <LinesEllipsis
-                        text={topProposal?.title}
-                        maxLine='3'
-                        ellipsis='...'
-                        trimRight
-                        basedOn='letters' /></h4>
+                        <LinesEllipsis
+                            text={topProposal?.title}
+                            maxLine='3'
+                            ellipsis='...'
+                            trimRight
+                            basedOn='letters'/></h4>
                 </div>
             </div>
             <div className="proposal-description">
@@ -649,7 +674,7 @@ const TopProposal = ({topProposal}) => {
                     text={topProposal?.description}
                     ellipsis="..."
                     trimRight
-                    basedOn='letters' />
+                    basedOn='letters'/>
             </div>
         </div>
     </div>
