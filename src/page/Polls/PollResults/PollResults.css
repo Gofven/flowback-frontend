@@ -17,3 +17,15 @@
 .rm-accordion-icon:after {
     content: none;
 }
+
+.bg-for {
+    background-color: lightgreen;
+}
+
+.bg-abstain {
+    background-color: #fade6e;
+}
+
+.bg-against {
+    background-color: #e24a45;
+}

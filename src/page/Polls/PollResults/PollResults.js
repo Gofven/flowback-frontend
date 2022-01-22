@@ -1,14 +1,15 @@
-import PollResultsCondorcet from "./PollResultsCondorcet";
 import React from "react";
+import PollResultsCondorcet from "./PollResultsCondorcet";
+import PollResultsTraffic from "./PollResultsTraffic";
 
-export default function PollResults({pollId, votingType, type}) {
+export default function PollResults({pollId, pollDetails, votingType, type}) {
     const showResults = () => {
         if (type !== "event") {
             switch (votingType) {
                 case 'condorcet':
                     return <PollResultsCondorcet pollId={pollId}/>
                 case 'traffic':
-                    return <PollResultsCondorcet pollId={pollId}/> // TODO: change to traffic results component
+                    return <PollResultsTraffic pollId={pollId} pollDetails={pollDetails}/>
                 default:
                     return <></>;
             }

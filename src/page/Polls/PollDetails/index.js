@@ -3,17 +3,17 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
@@ -38,7 +38,6 @@ import DatePicker from "react-datepicker";
 import Image from '../../../component/common/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
 import Profile from '../../../component/User/Profile';
-import PollResultsCondorcet from "../PollResults/PollResultsCondorcet";
 import PollResults from "../PollResults/PollResults";
 
 export default function PollDetails() {
@@ -308,13 +307,13 @@ export default function PollDetails() {
         if (counterProposal.description === undefined) counterProposal.description = "";
 
         var data = new FormData();
-        if (counterProposal.file) 
+        if (counterProposal.file)
             data.append('file', counterProposal.file);
 
         let newDate = ""
         if (counterProposal.date)
             newDate = JSON.parse(JSON.stringify(counterProposal.date)?.replace('Z','000-00:00'));
-        
+
         data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
@@ -432,7 +431,7 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
-                            {(poll.discussion === "Finished") && <PollResults pollId={pollId} votingType={poll.voting_type} type={poll.type}/>}
+                            {(poll.discussion === "Finished") && <PollResults pollId={pollId} pollDetails={poll} votingType={poll.voting_type} type={poll.type}/>}
                             {/* <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <h4 className="card-title">{poll.title}</h4>
@@ -449,7 +448,7 @@ export default function PollDetails() {
                             </div> */}
 
 
- 
+
 
                             {
                                 (poll && poll.id && !counterProposalLoading && poll.discussion != "Finished" ) &&
@@ -548,16 +547,16 @@ export default function PollDetails() {
                                                         onClick={() => {
                                                             saveCounterProposal();
                                                            //Reload can not be set here
-                                                            
+
                                                           }}>
                                                         Add
                                                     </Button>
                                                 </div>
                                             </form>
                                             {/* } */}
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </Loader>
                             }
@@ -584,7 +583,7 @@ export default function PollDetails() {
 
                         </div>
 
-                        
+
                             {poll.discussion === "Finished" && poll.type == "event" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
 
 
