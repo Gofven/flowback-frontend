@@ -3,6 +3,7 @@ import {getRequest} from "../../../utils/API";
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import './PollResults.css';
+import ProposalDetails from "./ProposalDetails";
 
 export default function PollResultsCondorcet({pollId}) {
     const [proposals, setProposals] = useState(null);
@@ -44,7 +45,7 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
             <div className="d-flex flex-row font-big">
                 <div className="pr-2 fw-bold"> {ranking + "."}
                 </div>
-                <div className="pr-2">{proposalName}</div>
+                <div className="pr-2 fw-bold">{proposalName}</div>
             </div>
             <div className="d-flex flex-row">
                 {fileLink &&
@@ -53,15 +54,15 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
                         icon={faDownload}
                         color=''
                         size='lg'/></a>}
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column fw-bold text-center">
                     <div>{percentOfVotes}</div>
-                    <div className="font-small">{"votes"}</div>
+                    <div className="font-small">{"of votes"}</div>
                 </div>
             </div>
         </div>
         <div>
-            <div>{proposalDescription}</div>
-            <div className="font-small mt-2 text-grey">{createdBy} · {createdAt}</div>
+            <ProposalDetails proposal={proposal} proposalDescription={proposalDescription}/>
+            <div className="font-small mt-2 text-grey pl-3">{createdBy} · {createdAt}</div>
         </div>
     </div>
 }
