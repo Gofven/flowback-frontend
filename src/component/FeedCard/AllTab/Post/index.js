@@ -52,7 +52,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   So this algorithm builds a forest of comment trees where the root node is the 
   first comment that doesn't reply to anyone, and it builds from there. Made by Emil
   */
-  const renderComments = (inputComments) => {    
+  const renderComments = (inputComments) => {  
+    console.log(poll.top_proposal)  
     let roots = inputComments.filter((comment)=>comment.reply_to===null);
     let replies = inputComments.filter((comment)=>comment.reply_to!==null);
     let commentsLeft = inputComments.filter((comment)=>comment.reply_to!==null);
@@ -109,10 +110,11 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     });
   }
 
+
+
   return (
     <div className="post-view">
       <div className="post-header d-flex justify-content-between">
-
       <div className="post-body">
       <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
       {children}  
@@ -121,8 +123,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         <div className="post-comment-view">
           {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
               </a>
-            </div>
-  </div>*/}
+              </div>
+            </div>*/}
           {
             !readOnlyComments &&
             <div className="media">
@@ -152,9 +154,14 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           }
           <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
         </div>
-      </div>
+          {poll.top_proposal ? 
+            <div><h5>Meeting date:</h5> 
+            <h4>{poll.top_proposal.proposal === "Drop this mission" 
+            ? "No Meeting" 
+            : <>{poll.top_proposal.date.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal.date.split('T')[1].split(".")[0].split(":")[1]}</>
+          }</h4></div> : null}
+          </div>
 
-   
         {poll && poll.created_by &&
           <div className="media post-meida">
             <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
@@ -166,6 +173,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
               <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
               <div className="post-time">{poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
             </div>
+
             
           </div>
         }
