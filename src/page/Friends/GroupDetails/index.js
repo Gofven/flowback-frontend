@@ -44,6 +44,7 @@ import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import FeedCard from "../../../component/FeedCard";
 import DocumentCard from "../../../component/DocumentCard";
 import MemberCard from "../../../component/MemberCard";
+import EmailCard from "../../../component/EmailCard";
 import Image from "../../../component/common/Image";
 import UserGroup, { getGroupDetails } from "../../../apis/UserGroup";
 import AboutCard from "../../../component/AboutCard";
@@ -59,7 +60,8 @@ export default function GroupDetails() {
         "Feed",
         "About",
         "Documents",
-        "Members"
+        "Members",
+        "Send Email"
     ]);
 
     // List of icon for list
@@ -89,6 +91,12 @@ export default function GroupDetails() {
                     group.user_type ?
                         <MemberCard groupId={groupId} userType={group.user_type} />
                         : <NoAccessBlock message="Please join group to view members of this group." />
+                );
+            case tab[4]:
+                return (
+                    group.user_type ?
+                        <EmailCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to email." />
                 );
             default:
                 return <FeedCard />;
@@ -178,12 +186,9 @@ export default function GroupDetails() {
                                 <div className="group-details-btn-view">
                                     {
                                         group.user_type ?
-                                            <p
-                                            >
+                                            <p>
                                                 <i className="las la-check text-success mr-1"></i>
                                                 {group.user_type === "Delegator" ? "Delegate" : "member"} 
-
-
                                             </p> :
                                             (
                                                 (group.group_join_status == "Requested") ?
