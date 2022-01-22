@@ -582,10 +582,10 @@ export default function PollDetails() {
 
 
 
+                            {poll.discussion === "Finished" && poll.type == "event" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
                         </div>
 
                         
-                            {poll.discussion === "Finished" && poll.type == "event" ? <TopProposal topProposal = {poll.top_proposal}/> : null }
 
 
                         <div className="col-md-3">
@@ -635,7 +635,8 @@ const TopProposal = ({topProposal}) => {
             {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
             <div className="counter-proposal-top">
                 <div className="counter-proposal-title">
-                    <h4>{topProposal?.date && topProposal?.title !== "Drop this mission" ? topProposal.date : null}
+                    <h4>{topProposal?.date && topProposal?.title !== "Drop this mission" ? <><h4>{topProposal.date.split('T')[0]}</h4>
+                                <h4>{topProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{topProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></> : null}
                     <LinesEllipsis
                         text={topProposal?.title}
                         maxLine='3'
