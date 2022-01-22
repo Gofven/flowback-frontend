@@ -45,7 +45,7 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
             <div className="d-flex flex-row font-big">
                 <div className="pr-2 fw-bold"> {ranking + "."}
                 </div>
-                <div className="pr-2">{proposalName}</div>
+                <div className="pr-2 fw-bold">{proposalName}</div>
             </div>
             <div className="d-flex flex-row">
                 {fileLink &&
@@ -54,9 +54,9 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
                         icon={faDownload}
                         color=''
                         size='lg'/></a>}
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column fw-bold text-center">
                     <div>{percentOfVotes}</div>
-                    <div className="font-small">{"votes"}</div>
+                    <div className="font-small">{"of votes"}</div>
                 </div>
             </div>
         </div>
