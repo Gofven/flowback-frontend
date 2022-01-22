@@ -208,7 +208,7 @@ function Task(props) {
                         </div>
                         <div className="proposal-description">
                             <LinesEllipsis
-                                text={counterProposal?.description}
+                                text={counterProposal?.proposal}
                                 ellipsis="..."
                                 trimRight
                                 basedOn='letters' />
