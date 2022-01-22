@@ -11,7 +11,7 @@ export default function PollResultsTraffic({pollId, pollDetails}) {
 
     useEffect(() => {
         getProposals(pollId).then((response) => {
-            response.sort((a, b) => b.final_score_positive - a.final_score_positive);
+            response.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative));
             setProposals(response);
         })
     }, []);
@@ -51,7 +51,7 @@ function TrafficProposal({proposal, ranking = 0, totalVotes = 0}) {
             <div className="d-flex flex-row font-big">
                 <div className="pr-2 fw-bold"> {ranking + "."}
                 </div>
-                <div className="pr-2">{proposalName}</div>
+                <div className="pr-2 fw-bold">{proposalName}</div>
             </div>
             <div className="d-flex flex-row">
                 {fileLink &&
