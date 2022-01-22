@@ -96,7 +96,7 @@ export default function PollDetails() {
         getPollDetails();
         getGroupDetail(groupId);
         getCounterProposal();
-        console.log(poll)
+        console.log(poll, "DAS POLL")
     }, [])
 
     // Verify poll request

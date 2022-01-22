@@ -196,7 +196,7 @@ function Task(props) {
                         <div className="counter-proposal-top">
                             <div className="counter-proposal-title">
                                 <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ? 
-                                <><h4>{counterProposal.date.split('T')[0]}</h4>
+                                <>{counterProposal.date.split('T')[0]}
                                 <h4>{counterProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{counterProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>: null}
                                 <LinesEllipsis
                                     text={counterProposal?.title}
