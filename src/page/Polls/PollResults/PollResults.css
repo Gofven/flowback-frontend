@@ -9,3 +9,11 @@
 .text-grey {
     color: gray;
 }
+
+.accordion {
+    border: 0;
+}
+
+.rm-accordion-icon:after {
+    content: none;
+}
