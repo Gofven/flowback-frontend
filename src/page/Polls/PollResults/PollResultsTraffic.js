@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getRequest, postRequest} from "../../../utils/API";
+import {getRequest} from "../../../utils/API";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import ProposalDetails from "./ProposalDetails";
@@ -41,9 +41,9 @@ function TrafficProposal({proposal, ranking = 0, totalVotes = 0}) {
 
     const votesAbstained = totalVotes - proposal.final_score_negative - proposal.final_score_positive;
 
-    const votes = proposal.final_score_positive;
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
+
     const fileLink = proposal.file;
 
     return <div className="card-rounded my-4 p-2 ">
