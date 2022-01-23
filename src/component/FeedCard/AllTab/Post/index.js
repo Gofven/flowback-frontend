@@ -53,7 +53,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   first comment that doesn't reply to anyone, and it builds from there. Made by Emil
   */
   const renderComments = (inputComments) => {  
-    console.log(poll.top_proposal)  
+    console.log(poll?.top_proposal)  
     let roots = inputComments.filter((comment)=>comment.reply_to===null);
     let replies = inputComments.filter((comment)=>comment.reply_to!==null);
     let commentsLeft = inputComments.filter((comment)=>comment.reply_to!==null);
@@ -156,9 +156,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         </div>
           {poll.top_proposal ? 
             <div><h5>Meeting date:</h5> 
-            {poll.top_proposal.proposal === "Drop this mission" 
+            {poll.top_proposal?.proposal === "Drop this mission" 
             ? "No Meeting" 
-            : <><h4>{poll.top_proposal.date.split('T')[0]}</h4><h4>{poll.top_proposal.date.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>
+            : <><h4>{poll.top_proposal?.date.split('T')[0]}</h4><h4>{poll.top_proposal?.date.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>
           }</div> : null}
           </div>
 
