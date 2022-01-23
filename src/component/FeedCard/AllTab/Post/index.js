@@ -154,7 +154,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           }
           <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
         </div>
-          {poll.top_proposal && poll.type === "event" ? 
+          {(poll.top_proposal && poll.type === "event") ? 
             <div><h5>Meeting date:</h5> 
             {poll.top_proposal?.proposal === "Drop this mission" 
             ? "No Meeting" 
