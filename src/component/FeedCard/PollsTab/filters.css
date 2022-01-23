@@ -3,3 +3,8 @@
     display: inline-flex;
     width: 100%;
 }
+
+.filterDropdown{
+    display:flex;
+    justify-content:space-between;
+}

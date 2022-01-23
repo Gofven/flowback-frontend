@@ -1,6 +1,8 @@
 import { Dropdown } from "react-bootstrap"
 import './filters.css'
 import SearchBox from "../../Search/SearchBox";
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Filters({pollFilter, setPollFilter}) {
     return <div>
@@ -10,10 +12,16 @@ export default function Filters({pollFilter, setPollFilter}) {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {["condorcet", "traffic", "event"].map(filter => {
-                    return <Dropdown.Item className="cursor-pointer" 
-                    onClick={() => setPollFilter({...pollFilter, pollType:filter})}
+                    return <Dropdown.Item className="cursor-pointer filterDropdown" 
+                    onClick={() => setPollFilter({...pollFilter, pollType:filter===pollFilter.pollType ? null : filter})}
                     >
-                        {filter}
+                        <div>
+                        {filter==="condorcet" ? "Ranking" : null}
+                        {filter==="traffic" ? "For/Against" : null}
+                        {filter==="event" ? "Time" : null}
+                        </div>
+
+                        <div>{pollFilter.pollType === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>
                 })}
             </Dropdown.Menu>
@@ -23,10 +31,11 @@ export default function Filters({pollFilter, setPollFilter}) {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {["In Progress", "Finished"].map(filter => {
-                    return <Dropdown.Item className="cursor-pointer" 
-                    onClick={() => setPollFilter({...pollFilter, discussion:filter})}
+                    return <Dropdown.Item className="cursor-pointer filterDropdown" 
+                    onClick={() => setPollFilter({...pollFilter, discussion:filter===pollFilter.discussion ? null : filter})}
                     >
-                        {filter}
+                        <div>{filter}</div>
+                        <div>{pollFilter.discussion === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>
                 })}
             </Dropdown.Menu>
