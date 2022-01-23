@@ -39,10 +39,10 @@ export default function SendEmail({groupId})
     <div className="document-card card-rounded mb-4">
         <div className="card-header flex-header tab-header">
             <h4 className="card-title">Send Email</h4>
-            <h4 style={{"color":status.color}}>{status.text}</h4>
         </div>
         <Loader loading={loading}>
             <div className="card-body">
+            <h4 style={{"color":status.color}}>{status.text}</h4>
             <form className="form login_form" id="loginForm">
                 <div className="form-group">
                 <h5>Title</h5>
