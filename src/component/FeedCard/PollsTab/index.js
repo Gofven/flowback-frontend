@@ -28,14 +28,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { UserTypes } from "../../../constants/constants";
-
-
+import Filters from './filters'
 
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
     let pollType = props.pollType;
     const [polls, setPolls] = useState([]);
+    const [pollFilter, setPollFilter] = useState({pollType:null, discussion:null, search:""});
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
@@ -266,8 +266,22 @@ export default function PollsTab(props) {
 
     return (
         <div className="tab-pane fade show active" id="PollsTab">
-            {  polls?.map((poll, index) => (
-                <Post poll={poll} key={poll.id}
+            
+            <Filters setPollFilter={setPollFilter} pollFilter={pollFilter}/>
+
+            {polls?.map((poll, index) => { 
+                if (
+                  (pollFilter.discussion === poll.discussion
+                || pollFilter.discussion === null) 
+                && (
+                    (pollFilter.pollType === poll.voting_type && poll.type !== "event")
+                || pollFilter.pollType === poll.type 
+                || pollFilter.pollType === null)
+                && (
+                   poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
+                )
+                )
+                return <Post poll={poll} key={poll.id}
                     addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
                     updateComment={(comment) => updateComment(comment)}
                     deleteComment={(commentId) => deleteComment(commentId)}
@@ -284,7 +298,7 @@ export default function PollsTab(props) {
                         <div className="post-img-wrapper"></div>
                     </>
                 </Post>
-            ))
+            })
             }
             {
                 (page < totalPage + 1) &&
