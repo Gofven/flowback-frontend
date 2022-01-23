@@ -30,7 +30,7 @@ export default function Filters({pollFilter, setPollFilter}) {
             <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                {["In Progress", "Finished"].map(filter => {
+                {["In progress", "Finished"].map(filter => {
                     return <Dropdown.Item className="cursor-pointer filterDropdown" 
                     onClick={() => setPollFilter({...pollFilter, discussion:filter===pollFilter.discussion ? null : filter})}
                     >
