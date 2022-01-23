@@ -34,6 +34,7 @@ export default function SearchBox({ onSearch }) {
         <input
           type="text"
           className="form-control search-input"
+          style={{"border-radius":"10px"}}
           placeholder="Search here..."
           onChange={onSearchChange}
         />
