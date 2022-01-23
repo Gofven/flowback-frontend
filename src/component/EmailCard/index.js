@@ -52,7 +52,7 @@ export default function SendEmail({groupId})
             </div>
             <button
                 type="button"
-                className="btn login-btn btn-hover"
+                className="btn btn-primary btn-hover"
                 //disabled={!formVaxlid}
                 onClick={handleSendMail}>
                 Send
