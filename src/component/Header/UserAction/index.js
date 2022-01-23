@@ -84,7 +84,7 @@ export default function UserAction(user) {
 
   return (
     <ul
-      className="dropdown-menu"
+      className="dropdown-menu-mobile-fix dropdown-menu"
       aria-labelledby="avtarDrop"
       id="avtarDropdown"
     >
