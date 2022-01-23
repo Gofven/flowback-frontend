@@ -158,7 +158,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             <div><h5>Meeting date:</h5> 
             {poll.top_proposal?.proposal === "Drop this mission" 
             ? "No Meeting" 
-            : <><h4>{poll.top_proposal?.date.split('T')[0]}</h4><h4>{poll.top_proposal?.date.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>
+            : <><h4>{poll.top_proposal?.date?.split('T')[0]}</h4><h4>{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[1]}</h4></>
           }</div> : null}
           </div>
 
