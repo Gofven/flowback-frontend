@@ -38,7 +38,9 @@ import {
     faFileAlt,
     faUser,
     faPoll,
-    faLayerGroup, faUsers
+    faLayerGroup, 
+    faUsers,
+    faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import FeedCard from "../../../component/FeedCard";
@@ -65,7 +67,7 @@ export default function GroupDetails() {
     ]);
 
     // List of icon for list
-    const indexIcon = [faRss, faInfoCircle, faFileAlt, faUser];
+    const indexIcon = [faRss, faInfoCircle, faFileAlt, faUser, faEnvelope];
 
     // List to render on the screen
     const renderTab = () => {

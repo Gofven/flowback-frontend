@@ -4,31 +4,39 @@ import { Textarea } from "../../component/common/Textarea";
 import { inputKeyValue } from '../../utils/common';
 import { postRequest } from "../../utils/API";
 
-export default function SendEmail({group})
+export default function SendEmail({groupId})
 {
-    const [state, setState] = useState({title:"", email:""});
-    const {title, email} = state;
+    const [state, setState] = useState({subject:"", message:""});
+    const {subject, message} = state;
 
     const handleOnChange = (e) => {
         console.log(state)
         setState({ ...state, ...inputKeyValue(e) });
       }; 
 
-      
-
       const handleSendMail = () => {
-        postRequest(`api/v1/user_group/${group.id}/mail_all_group_members`)
+        // console.log(groupId)
+        var data = new FormData();
+        data.append("subject", state.subject);
+        data.append("message", state.message);
+
+        postRequest(`api/v1/user_group/${groupId}/mail_all_group_members`, data).then(response => {
+            console.log(response);
+        })
       }
 
-    return <div className="feed-card card-rounded mb-4">
-    <div action="#" className="card-header flex-header tab-header">
-        <h4 className="card-title">Send Email</h4>
+    return (
+    <div className="document-card card-rounded mb-4">
+        <div className="card-header flex-header tab-header">
+            <h4 className="card-title">Send Email</h4>
+        </div>
+        <div className="card-body">
         <form className="form login_form" id="loginForm">
             <div className="form-group">
             <h5>Title</h5>
             <Textbox
-                name="title"
-                value={title}
+                name="subject"
+                value={subject}
                 onChange={handleOnChange}
                 required
                 />
@@ -36,8 +44,8 @@ export default function SendEmail({group})
             <div className="form-group">
             <h5>Email</h5>
             <Textarea
-                name="email"
-                value={email}
+                name="message"
+                value={message}
                 onChange={handleOnChange}
                 required
                 />
@@ -51,5 +59,5 @@ export default function SendEmail({group})
             </button>
         </form>
         </div>
-        </div>
+        </div>)
 }
