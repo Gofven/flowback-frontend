@@ -62,7 +62,7 @@ export default function FeedCard(props) {
     <div className="feed-card card-rounded mb-4">
       <div className="card-header flex-header tab-header">
         <h4 className="card-title">{feedCardTitle}</h4>
-        <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
+        {/* <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
           {tab?.map((item, index) => (
             <li className="nav-item" key={index}>
               <span
@@ -74,7 +74,7 @@ export default function FeedCard(props) {
               </span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
       <div className="card-body">
         <div className="tab-content" id="pills-tabContent">

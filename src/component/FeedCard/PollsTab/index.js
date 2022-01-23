@@ -35,7 +35,7 @@ export default function PollsTab(props) {
     let groupId = props.groupId;
     let pollType = props.pollType;
     const [polls, setPolls] = useState([]);
-    const [pollFilter, setPollFilter] = useState({pollType:"", discussion:null, search:""});
+    const [pollFilter, setPollFilter] = useState({pollType:null, discussion:null, search:""});
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
@@ -270,9 +270,14 @@ export default function PollsTab(props) {
             <Filters setPollFilter={setPollFilter} pollFilter={pollFilter}/>
 
             {polls?.map((poll, index) => { 
-                if ((pollFilter.discussion === "In Progress" && poll.discussion === "In progress") 
-                || (pollFilter.discussion === "Finished" && poll.discussion === "Finished")
-                || pollFilter.discussion === null)
+                if (
+                  (pollFilter.discussion === poll.discussion
+                || pollFilter.discussion === null) 
+                && 
+                  ((pollFilter.pollType === poll.voting_type && poll.type !== "event")
+                || pollFilter.pollType === poll.type 
+                || pollFilter.pollType === null)
+                )
                 return <Post poll={poll} key={poll.id}
                     addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
                     updateComment={(comment) => updateComment(comment)}
