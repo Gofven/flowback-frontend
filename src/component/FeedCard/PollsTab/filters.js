@@ -1,8 +1,10 @@
 import { Dropdown } from "react-bootstrap"
+import './filters.css'
+import SearchBox from "../../Search/SearchBox";
 
 export default function Filters({pollFilter, setPollFilter}) {
-    return <div className="filters">
-    <div>
+    return <div>
+    <div className="filters">
         <Dropdown>
             <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Type
             </Dropdown.Toggle>
@@ -16,8 +18,6 @@ export default function Filters({pollFilter, setPollFilter}) {
                 })}
             </Dropdown.Menu>
         </Dropdown>
-    </div>
-    <div>
         <Dropdown>
             <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
             </Dropdown.Toggle>
@@ -32,5 +32,8 @@ export default function Filters({pollFilter, setPollFilter}) {
             </Dropdown.Menu>
         </Dropdown>
     </div>
+    
+    <SearchBox onSearch={e => setPollFilter({...pollFilter, search:e})}></SearchBox>
+    
  </div>
  }

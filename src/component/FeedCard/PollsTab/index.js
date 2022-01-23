@@ -273,10 +273,13 @@ export default function PollsTab(props) {
                 if (
                   (pollFilter.discussion === poll.discussion
                 || pollFilter.discussion === null) 
-                && 
-                  ((pollFilter.pollType === poll.voting_type && poll.type !== "event")
+                && (
+                    (pollFilter.pollType === poll.voting_type && poll.type !== "event")
                 || pollFilter.pollType === poll.type 
                 || pollFilter.pollType === null)
+                && (
+                   poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
+                )
                 )
                 return <Post poll={poll} key={poll.id}
                     addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
