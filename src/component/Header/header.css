@@ -169,8 +169,8 @@
 }
 
 .user-nav .dropdown-menu {
-    top: -5px;
-    padding-top: 70px;
+    /* top: -5px;
+    padding-top: 70px; */
     border-radius: 15px;
     background-color: #ffffff;
     border: 1px solid #d4d4d4;
