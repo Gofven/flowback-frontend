@@ -28,6 +28,7 @@ import Image from "../../../common/Image";
 import Profile from "../../../User/Profile";
 import CommentBox from "../CommentBox";
 import PostComment from "./PostComment";
+import ProposalDetails from "../../../../page/Polls/PollResults/ProposalDetails.js"
 
 export default function Post({ poll, addComment, updateComment, deleteComment, likeComment, maxComments, children, readOnlyComments }) {
   let { groupId } = useParams();
@@ -162,21 +163,19 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           }</div> : null}
           </div>
 
-        {poll && poll.created_by &&
-          <div className="media post-meida">
-            <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
-            <div className="media-body">
-              <h5 className="user-name">
-                <Profile id={poll.created_by.id} className='cursor-pointer'>{poll.created_by.first_name || "Test"} {poll.created_by.last_name}</Profile><span>created a post in <br></br> <Link to={`/groupdetails/${poll.group.id}`}> {poll.group.title} </Link> </span>
-                {/*FIX THE DISPLAY NAME OF THE GROUP HERE TODO*/}
-              </h5>
-              <div className="post-time">start time: {poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
-              <div className="post-time">end time: {poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
-            </div>
+          {/* // <div className="media post-meida">
+          //   <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
+          //   <div className="media-body">
+          //     <h5 className="user-name">
+          //       <Profile id={poll.created_by.id} className='cursor-pointer'>{poll.created_by.first_name || "Test"} {poll.created_by.last_name}</Profile><span>created a post in <br></br> <Link to={`/groupdetails/${poll.group.id}`}> {poll.group.title} </Link> </span>
+          //       
+          //     </h5>
+          //     <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
+          //     <div className="post-time">{poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+          //   </div>
 
             
-          </div>
-        }
+          // </div> */}
 
         
       <>{/* <div className="post-action dropdown">
@@ -218,6 +217,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
 
       </div>
       
+        {poll && poll.created_by &&            
+              <div className="font-small mt-2 text-grey">{poll.created_by?.first_name} · {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
+        }
     </div>
   );
 }
