@@ -25,6 +25,11 @@ import MessageListPopup from "../../component/MessageListPopup";
 import Layout1 from "../../layout/Layout1";
 
 export default function HomePage() {
+  
+  document.addEventListener('scroll', () => {
+    document.documentElement.dataset.scroll = window.scrollY;
+  });
+
   return (
     <Layout1>
       <Home />

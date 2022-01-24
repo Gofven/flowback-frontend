@@ -40,7 +40,7 @@ const initialError = {
 export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(true);
-  const [error, setError] = useState(initialError);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { recoveryCode } = state;
 
@@ -51,27 +51,28 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
   }, [recoveryCode]);
 
   const handleSubmit = (e) => {
-    // if (OnNext) OnNext();
-    if (formValid) {
-      //setMainState({...mainState, verification_code:recoveryCode})
-      setLoading(true);
-      postRequest("api/v1/user/sign_up_two", {
-        email: email,
-        verification_code: recoveryCode,
-      }).then((response) => {
-        setLoading(false);
-        const { status, data } = response;
-        handlePasswordSubmit();
-        if (status === "success") {
-          //if (OnNext) OnNext();
-        } else {
-          setError({ ...error, error: data });
-        }
-      }).catch((err) => {
-        setLoading(false);
-      });
+    if (recoveryCode.length < 1) {
+      setError("Can't input empty recovery code")
+      return;
     }
-  };
+    
+    setLoading(true);
+    postRequest("api/v1/user/sign_up_two", {
+      email: email,
+      verification_code: recoveryCode,
+    }).then((response) => {
+      setLoading(false);
+      const { status, data } = response;
+      handlePasswordSubmit();
+      if (status === "success") {
+      } else {
+        setError("Wrong recovery code");
+      }
+    }).catch((err) => {
+      setLoading(false);
+    });
+  }
+  
 
   const handlePasswordSubmit = () => {
     console.log("happends")
@@ -85,8 +86,6 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
     if (status === "success") {
       //history.push("/");
       window.location.reload(false);
-    } else {
-      setError({ ...error, ...data[0] });
     }
     }).catch((err) => {
         setLoading(false);
@@ -98,10 +97,10 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
   };
 
   const vailadated = (e) => {
-    setError({
-      ...error,
-      ...onValidation(e),
-    });
+    // setError({
+    //   ...error,
+    //   ...onValidation(e),
+    // });
   };
   return (
     <>
@@ -117,13 +116,12 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
           <div className="form-group">
             <Textbox
               name="recoveryCode"
-              placeholder="Recovery code"
               value={recoveryCode}
               onChange={handleOnChange}
               onBlur={vailadated}
               required
             />
-            <Error>{error?.error}</Error>
+            <Error>{error}</Error>
           </div>
         </form>
         <StepButton

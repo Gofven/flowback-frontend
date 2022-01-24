@@ -41,7 +41,7 @@ export default function StepButton({
           className="btn register-btn register-btn2 next btn-hover"
           onClick={OnNext}
         >
-          Next Step
+          Register
         </button>
       </div>
     </div>
