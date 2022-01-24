@@ -120,7 +120,6 @@ export default function LoginCard() {
           <Textbox
             type="email"
             name="email"
-            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             onBlur={validated}
@@ -132,7 +131,6 @@ export default function LoginCard() {
           <Textbox
             type="password"
             name="password"
-            placeholder="*******"
             value={password}
             onChange={handleOnChange}
             onBlur={validated}

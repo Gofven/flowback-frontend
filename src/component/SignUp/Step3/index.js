@@ -120,7 +120,6 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Textbox
               type="password"
               name="password"
-              placeholder="Password"
               value={password}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -131,7 +130,6 @@ export default function Step3({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Textbox
               type="password"
               name="repassword"
-              placeholder="Retype Password"
               value={repassword}
               onChange={handleOnChange}
               onBlur={vailadated}

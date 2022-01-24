@@ -107,7 +107,6 @@ export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Textbox
               type="email"
               name="email"
-              placeholder="Email"
               value={email}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -119,7 +118,6 @@ export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Textbox
               name="screenName"
               className="right-icon-input"
-              placeholder="Full Name"
               value={screenName}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -143,7 +141,6 @@ export default function Step1({ stepNumber, totalStep, OnPrevious, OnNext, mainS
               onChange={handleOnChange}
               onBlur={vailadated}
               className="right-icon-input"
-              placeholder="Login Name"
               required
             />
             <div

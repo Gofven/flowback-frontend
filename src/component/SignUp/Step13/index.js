@@ -150,7 +150,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               type="email"
               name="email"
-              placeholder="example@example.com"
               value={email}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -162,7 +161,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               name="screenName"
               className="right-icon-input"
-              placeholder="Username"
               value={screenName}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -206,7 +204,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               type="password"
               name="password"
-              placeholder="********"
               value={password}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -218,7 +215,6 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
             <Textbox
               type="password"
               name="repassword"
-              placeholder="********"
               value={repassword}
               onChange={handleOnChange}
               onBlur={vailadated}
@@ -232,7 +228,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                I accept the <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
+                <span style={{"color":"#212529"}}>I accept the</span> <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>

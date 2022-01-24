@@ -117,7 +117,6 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
           <div className="form-group">
             <Textbox
               name="recoveryCode"
-              placeholder="Recovery code"
               value={recoveryCode}
               onChange={handleOnChange}
               onBlur={vailadated}

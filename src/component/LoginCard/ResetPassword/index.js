@@ -64,7 +64,6 @@ export default function ResetPassword({loading, setLoading}){
         <Textbox
             type="email"
             name="email"
-            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -94,7 +93,6 @@ export default function ResetPassword({loading, setLoading}){
         <Textbox
             type="email"
             name="email"
-            placeholder="example@example.com"
             value={email}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -105,7 +103,6 @@ export default function ResetPassword({loading, setLoading}){
             <Textbox
             type="password"
             name="password"
-            placeholder="********"
             value={password}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -115,7 +112,6 @@ export default function ResetPassword({loading, setLoading}){
             <Textbox
             type="password"
             name="repassword"
-            placeholder="********"
             value={repassword}
             onChange={handleOnChange}
             //onBlur={validated}
@@ -125,7 +121,6 @@ export default function ResetPassword({loading, setLoading}){
             <Textbox
             type="integers"
             name="verification_code"
-            placeholder="XXXXXXX"
             value={verification_code}
             onChange={handleOnChange}
             //onBlur={validated}
