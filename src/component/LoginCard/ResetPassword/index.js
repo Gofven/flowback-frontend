@@ -25,12 +25,12 @@ export default function ResetPassword({loading, setLoading}){
 
     const handlePasswordReset = () =>
     {
-      setLoading(true)
       if (password!==repassword){
         setWrongPass(true)
       }
       else if (email)
       {
+        setLoading(true)
         postRequest("api/v1/user/reset-password-two", {email, password, verification_code}).then(response => {
           setState({email:"", password:"", verification_code:""})
           setLoading(false)
@@ -58,9 +58,9 @@ export default function ResetPassword({loading, setLoading}){
     if (stage===1){
     return <Loader loading={loading}>
       <form action="#" className="form login_form">
-        <div className="form-group"><h4>Restore password by writing in the email
-          for the account you lost</h4></div>
+        <div className="form-group"><h4>Reset password by typing your account email below to receive verification code</h4></div>
         <div className="form-group">
+        <h5>Mail</h5>
         <Textbox
             type="email"
             name="email"
@@ -87,7 +87,7 @@ export default function ResetPassword({loading, setLoading}){
         return <Loader loading={loading}>
         <form action="#"> 
         <div className="form login_form">
-        <div className="form-group"><h4>A code has been sent to the email adress</h4></div>
+        <div className="form-group"><h4 style={{"color":"green"}}>A verification code has been sent to the email adress</h4></div>
         <div className="form-group">
           <h5>Email</h5>
         <Textbox
@@ -131,7 +131,7 @@ export default function ResetPassword({loading, setLoading}){
             className="btn login-btn btn-hover"
             //disabled={!formVaxlid}
             onClick={handlePasswordReset}>
-            Send
+            Set password
         </button></div>
         </div>
         </form>

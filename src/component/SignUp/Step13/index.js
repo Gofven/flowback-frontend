@@ -68,42 +68,44 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   }, [email, screenName, password, repassword, accepted_terms_condition]);
 
   const handleSubmit = (e) => {
-    console.log("hu")
-    if (email&&screenName&&password&&repassword&&accepted_terms_condition) {
-      if (password===repassword)
-      {
-        setLoading(true);
-        //Login name is no longer used but removing it would f up the backend
-        setMainState({...state, loginName:""})
-        postRequest("api/v1/user/sign_up_first", {
-          email,
-          screen_name: screenName,
-          login_name: loginName,
-        }).then((response) => {
-          //handlePasswordSubmit().then(()=>{   
-            console.log("RESPONSÉ", response);
-            setLoading(false)
-            const { status, data } = response;
-            if (status === "success") {
-              dispatch(submitScreen1(email, screenName, loginName));
-              if (OnNext) OnNext();
-            } else {
-              setError({ ...error, email: data });
-            }
-            //}
-            //)
-          }).catch((err) => {
-            setLoading(false);
-          });
-        }
-        else{
-          setError({...error, email:"Passwords need to match"})
-        }
-      }
-      else{
-        setError({...error, email:"Leave no field empty"})
+    if (!(email&&screenName&&password&&repassword)) {
+      setError({...error, email:"Leave no field empty"})
+      return;
     }
-  };
+    if (password!==repassword){
+      setError({...error, email:"Passwords need to match"})
+      return;
+    }
+    if (!accepted_terms_condition){
+      setError({...error, email:"Need to accept terms and conditions"})
+      return;
+    }
+    if (password.length <= 9){
+      setError({...error, email:"Password needs to be longer than 8 characters"})
+      return;
+    }
+
+    setLoading(true);
+    //Login name is no longer used but removing it would f up the backend
+    setMainState({...state, loginName:""})
+    postRequest("api/v1/user/sign_up_first", {
+      email,
+      screen_name: screenName,
+      login_name: loginName,
+    }).then((response) => {
+        console.log("RESPONSÉ", response);
+        setLoading(false)
+        const { status, data } = response;
+        if (status === "success") {
+          dispatch(submitScreen1(email, screenName, loginName));
+          if (OnNext) OnNext();
+        } else {
+          setError({ email: "Something went wrong" });
+        }
+      }).catch((err) => {
+        setLoading(false);
+      });   
+  }
 // const handlePasswordSubmit = () => {
 //   postRequest("api/v1/user/sign_up_three", {
 //     email,
