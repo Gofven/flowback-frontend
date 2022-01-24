@@ -171,8 +171,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
                 <Profile id={poll.created_by.id} className='cursor-pointer'>{poll.created_by.first_name || "Test"} {poll.created_by.last_name}</Profile><span>created a post in <br></br> <Link to={`/groupdetails/${poll.group.id}`}> {poll.group.title} </Link> </span>
                 {/*FIX THE DISPLAY NAME OF THE GROUP HERE TODO*/}
               </h5>
-              <div className="post-time">{poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
-              <div className="post-time">{poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+              <div className="post-time">start time: {poll && formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
+              <div className="post-time">end time: {poll && formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
             </div>
 
             
