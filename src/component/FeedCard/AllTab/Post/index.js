@@ -28,6 +28,7 @@ import Image from "../../../common/Image";
 import Profile from "../../../User/Profile";
 import CommentBox from "../CommentBox";
 import PostComment from "./PostComment";
+import ProposalDetails from "../../../../page/Polls/PollResults/ProposalDetails.js"
 
 export default function Post({ poll, addComment, updateComment, deleteComment, likeComment, maxComments, children, readOnlyComments }) {
   let { groupId } = useParams();
