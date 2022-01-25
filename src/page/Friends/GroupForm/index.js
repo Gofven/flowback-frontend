@@ -312,7 +312,7 @@ export default function GroupForm(props) {
                                                 <div>
                                                     <Label>
                                                         Profile Photo
-                                                </Label>
+                                                    </Label>
                                                 </div>
                                                 <div className='buttons fadein'>
                                                     <div className="">
@@ -347,7 +347,7 @@ export default function GroupForm(props) {
                                                 <div>
                                                     <Label>
                                                         Cover Photo
-                         </Label>
+                                                    </Label>
                                                 </div>
                                                 <div className='buttons fadein'>
                                                     {
@@ -364,8 +364,6 @@ export default function GroupForm(props) {
                                                                     src={coverImage}
                                                                     className="cover-image-size"
                                                                     defaultValue={''}
-
-
                                                                 />
                                                             </div> :
                                                             <div className='button field cover-upload-size d-flex align-items-center justify-content-center'>
@@ -378,11 +376,10 @@ export default function GroupForm(props) {
                                                 </div>
                                             </div>
 
-                                      
                                             <div className="form-group field">
                                                 <Label>
                                                     Members request
-                          </Label>
+                                                </Label>
                                                 <div>
                                                     <Form.Check
                                                         inline
@@ -407,9 +404,9 @@ export default function GroupForm(props) {
                                                     />
                                                 </div>
                                             </div>
-                                            
 
-                                            
+
+
 
                                             <div className="text-center my-5">
                                                 <Button
@@ -429,122 +426,122 @@ export default function GroupForm(props) {
                         {/*/Missions Featured Cards Col*/}
 
                         {/*Short-by, Filter-by & Supported Col*/}
-                      {/*  <div className="col-md-3">*/}
-                      {/*      /!*Short-by Card*!/*/}
-                      {/*      <div className="card short-by-card chat-list-card chat-card card-rounded overflow-hidden">*/}
-                      {/*          <div className="card-header pb-0 border-bottom-0">*/}
-                      {/*              <h4 className="card-title">Short by</h4>*/}
-                      {/*          </div>*/}
-                      {/*          <div className="card-body overflow-hidden">*/}
-                      {/*              <div className="pre-scrollable">*/}
-                      {/*                  <ul*/}
-                      {/*                      className="active-vertical-nav nav nav-pills"*/}
-                      {/*                      id="pills-tab"*/}
-                      {/*                  >*/}
-                      {/*                      <li className="nav-item">*/}
-                      {/*                          <a*/}
-                      {/*                              className="nav-link short-by-link active"*/}
-                      {/*                              href="#"*/}
-                      {/*                              data-bs-toggle="pill"*/}
-                      {/*                          >*/}
-                      {/*                              New*/}
-                      {/*  </a>*/}
-                      {/*                      </li>*/}
-                      {/*                      <li className="nav-item">*/}
-                      {/*                          <a*/}
-                      {/*                              className="nav-link short-by-link"*/}
-                      {/*                              href="#"*/}
-                      {/*                              data-bs-toggle="pill"*/}
-                      {/*                          >*/}
-                      {/*                              Popular*/}
-                      {/*  </a>*/}
-                      {/*                      </li>*/}
-                      {/*                      <li className="nav-item">*/}
-                      {/*                          <a*/}
-                      {/*                              className="nav-link short-by-link"*/}
-                      {/*                              href="#"*/}
-                      {/*                              data-bs-toggle="pill"*/}
-                      {/*                          >*/}
-                      {/*                              Rising*/}
-                      {/*  </a>*/}
-                      {/*                      </li>*/}
-                      {/*                  </ul>*/}
-                      {/*              </div>*/}
-                      {/*          </div>*/}
-                      {/*      </div>*/}
-                      {/*      /!Short-by Card*!/*/}
+                        {/*  <div className="col-md-3">*/}
+                        {/*      /!*Short-by Card*!/*/}
+                        {/*      <div className="card short-by-card chat-list-card chat-card card-rounded overflow-hidden">*/}
+                        {/*          <div className="card-header pb-0 border-bottom-0">*/}
+                        {/*              <h4 className="card-title">Short by</h4>*/}
+                        {/*          </div>*/}
+                        {/*          <div className="card-body overflow-hidden">*/}
+                        {/*              <div className="pre-scrollable">*/}
+                        {/*                  <ul*/}
+                        {/*                      className="active-vertical-nav nav nav-pills"*/}
+                        {/*                      id="pills-tab"*/}
+                        {/*                  >*/}
+                        {/*                      <li className="nav-item">*/}
+                        {/*                          <a*/}
+                        {/*                              className="nav-link short-by-link active"*/}
+                        {/*                              href="#"*/}
+                        {/*                              data-bs-toggle="pill"*/}
+                        {/*                          >*/}
+                        {/*                              New*/}
+                        {/*  </a>*/}
+                        {/*                      </li>*/}
+                        {/*                      <li className="nav-item">*/}
+                        {/*                          <a*/}
+                        {/*                              className="nav-link short-by-link"*/}
+                        {/*                              href="#"*/}
+                        {/*                              data-bs-toggle="pill"*/}
+                        {/*                          >*/}
+                        {/*                              Popular*/}
+                        {/*  </a>*/}
+                        {/*                      </li>*/}
+                        {/*                      <li className="nav-item">*/}
+                        {/*                          <a*/}
+                        {/*                              className="nav-link short-by-link"*/}
+                        {/*                              href="#"*/}
+                        {/*                              data-bs-toggle="pill"*/}
+                        {/*                          >*/}
+                        {/*                              Rising*/}
+                        {/*  </a>*/}
+                        {/*                      </li>*/}
+                        {/*                  </ul>*/}
+                        {/*              </div>*/}
+                        {/*          </div>*/}
+                        {/*      </div>*/}
+                        {/*      /!Short-by Card*!/*/}
 
-                      {/*      /!*Filter-by Card*!/*/}
-                      {/*      <div className="card filter-by-card mt-4 chat-list-card chat-card card-rounded overflow-hidden">*/}
-                      {/*          <div className="card-header pb-0 border-bottom-0">*/}
-                      {/*              <h4 className="card-title">Filter by</h4>*/}
-                      {/*          </div>*/}
-                      {/*          <div className="card-body overflow-hidden">*/}
-                      {/*              <form className="form filter-form" action="#">*/}
-                      {/*                  <div className="form-check">*/}
-                      {/*                      <input*/}
-                      {/*                          className="form-check-input"*/}
-                      {/*                          type="checkbox"*/}
-                      {/*                          value=""*/}
-                      {/*                          id="MyGroupsOnly"*/}
-                      {/*                      />*/}
-                      {/*                      <label className="form-check-label" for="MyGroupsOnly">*/}
-                      {/*                          My Groups only*/}
-                      {/*</label>*/}
-                      {/*                  </div>*/}
-                      {/*                  <div className="location-group">*/}
-                      {/*                      <h5 className="shrtby-intitle">Location</h5>*/}
-                      {/*                      <label for="dateSelect" className="short-by-link active">*/}
-                      {/*                          Anywhere*/}
-                      {/*</label>*/}
-                      {/*                      <select*/}
-                      {/*                          className="form-select form-select-sm city-select border-0 mt-2"*/}
-                      {/*                          id="citySelect"*/}
-                      {/*                      >*/}
-                      {/*                          <option selected>Choose a city...</option>*/}
-                      {/*                          <option value="1">city-1</option>*/}
-                      {/*                          <option value="2">city-2</option>*/}
-                      {/*                          <option value="3">city-3</option>*/}
-                      {/*                          <option value="4">city-4</option>*/}
-                      {/*                      </select>*/}
-                      {/*                  </div>*/}
-                      {/*                  <div>*/}
-                      {/*                      <div className="select-col">*/}
-                      {/*                          <h5 className="shrtby-intitle">Date created</h5>*/}
-                      {/*                          <label*/}
-                      {/*                              for="dateSelect"*/}
-                      {/*                              className="short-by-link active"*/}
-                      {/*                          >*/}
-                      {/*                              Anytime*/}
-                      {/*  </label>*/}
-                      {/*                      </div>*/}
-                      {/*                      <div className="select-row">*/}
-                      {/*                          <select*/}
-                      {/*                              className="form-select form-select-sm date-select"*/}
-                      {/*                              id="dateSelect"*/}
-                      {/*                          >*/}
-                      {/*                              <option selected>09</option>*/}
-                      {/*                              <option value="1">02</option>*/}
-                      {/*                              <option value="2">03</option>*/}
-                      {/*                              <option value="3">04</option>*/}
-                      {/*                              <option value="4">05</option>*/}
-                      {/*                          </select>*/}
-                      {/*                          <select*/}
-                      {/*                              className="form-select form-select-sm year-select"*/}
-                      {/*                              id="yearSelect"*/}
-                      {/*                          >*/}
-                      {/*                              <option selected>2020</option>*/}
-                      {/*                              <option value="1">2021</option>*/}
-                      {/*                              <option value="2">2022</option>*/}
-                      {/*                              <option value="3">2023</option>*/}
-                      {/*                          </select>*/}
-                      {/*                      </div>*/}
-                      {/*                  </div>*/}
-                      {/*              </form>*/}
-                      {/*          </div>*/}
-                      {/*      </div>*/}
-                      {/*      /!Filter-by Card*!*/}
-                      {/*  </div>*/}
+                        {/*      /!*Filter-by Card*!/*/}
+                        {/*      <div className="card filter-by-card mt-4 chat-list-card chat-card card-rounded overflow-hidden">*/}
+                        {/*          <div className="card-header pb-0 border-bottom-0">*/}
+                        {/*              <h4 className="card-title">Filter by</h4>*/}
+                        {/*          </div>*/}
+                        {/*          <div className="card-body overflow-hidden">*/}
+                        {/*              <form className="form filter-form" action="#">*/}
+                        {/*                  <div className="form-check">*/}
+                        {/*                      <input*/}
+                        {/*                          className="form-check-input"*/}
+                        {/*                          type="checkbox"*/}
+                        {/*                          value=""*/}
+                        {/*                          id="MyGroupsOnly"*/}
+                        {/*                      />*/}
+                        {/*                      <label className="form-check-label" for="MyGroupsOnly">*/}
+                        {/*                          My Groups only*/}
+                        {/*</label>*/}
+                        {/*                  </div>*/}
+                        {/*                  <div className="location-group">*/}
+                        {/*                      <h5 className="shrtby-intitle">Location</h5>*/}
+                        {/*                      <label for="dateSelect" className="short-by-link active">*/}
+                        {/*                          Anywhere*/}
+                        {/*</label>*/}
+                        {/*                      <select*/}
+                        {/*                          className="form-select form-select-sm city-select border-0 mt-2"*/}
+                        {/*                          id="citySelect"*/}
+                        {/*                      >*/}
+                        {/*                          <option selected>Choose a city...</option>*/}
+                        {/*                          <option value="1">city-1</option>*/}
+                        {/*                          <option value="2">city-2</option>*/}
+                        {/*                          <option value="3">city-3</option>*/}
+                        {/*                          <option value="4">city-4</option>*/}
+                        {/*                      </select>*/}
+                        {/*                  </div>*/}
+                        {/*                  <div>*/}
+                        {/*                      <div className="select-col">*/}
+                        {/*                          <h5 className="shrtby-intitle">Date created</h5>*/}
+                        {/*                          <label*/}
+                        {/*                              for="dateSelect"*/}
+                        {/*                              className="short-by-link active"*/}
+                        {/*                          >*/}
+                        {/*                              Anytime*/}
+                        {/*  </label>*/}
+                        {/*                      </div>*/}
+                        {/*                      <div className="select-row">*/}
+                        {/*                          <select*/}
+                        {/*                              className="form-select form-select-sm date-select"*/}
+                        {/*                              id="dateSelect"*/}
+                        {/*                          >*/}
+                        {/*                              <option selected>09</option>*/}
+                        {/*                              <option value="1">02</option>*/}
+                        {/*                              <option value="2">03</option>*/}
+                        {/*                              <option value="3">04</option>*/}
+                        {/*                              <option value="4">05</option>*/}
+                        {/*                          </select>*/}
+                        {/*                          <select*/}
+                        {/*                              className="form-select form-select-sm year-select"*/}
+                        {/*                              id="yearSelect"*/}
+                        {/*                          >*/}
+                        {/*                              <option selected>2020</option>*/}
+                        {/*                              <option value="1">2021</option>*/}
+                        {/*                              <option value="2">2022</option>*/}
+                        {/*                              <option value="3">2023</option>*/}
+                        {/*                          </select>*/}
+                        {/*                      </div>*/}
+                        {/*                  </div>*/}
+                        {/*              </form>*/}
+                        {/*          </div>*/}
+                        {/*      </div>*/}
+                        {/*      /!Filter-by Card*!*/}
+                        {/*  </div>*/}
                         {/*/Short-by & Filter-by Col*/}
                     </div>
                 </div>

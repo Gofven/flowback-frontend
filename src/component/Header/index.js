@@ -31,26 +31,27 @@ export default function Header() {
   const [user, setUser] = useState({})
   const data = localStorage.user ? [
     { title: "Home", icon: "la-home", url: "/" },
-   // { title: "Search", icon: "la-search", url: "/search" },
+    // { title: "Search", icon: "la-search", url: "/search" },
     { title: "Public", icon: "la-globe-americas", url: "/missions" },
     { title: "Groups", icon: "la-user-friends", url: "/groups" },
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
-     // { title: "Schedule", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
+    // { title: "Schedule", icon: "la-calendar-week", url: "/votings" }, /* url: "/events" */
   ] : [{ title: "Public", icon: "la-globe-americas", url: "/" }];
-  
-  const loggedOutData = 
-    {
-      title: "Log In/Register",
-      url: "#",
-      onClick: () => {
-        window.location.href = "/Login";
-      }
-    } 
-  
+
+  const loggedOutData =
+  {
+    title: "Log In/Register",
+    url: "#",
+    onClick: () => {
+      window.location.href = "/Login";
+    }
+  }
+
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
       setUser(JSON.parse(localStorage.getItem('user')));
+      console.log(window.location.href.split("/")[3], "HREFFFFR");
     }
   }, []);
   return (
@@ -73,9 +74,9 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav mx-auto main-nav">
             {data?.map((item, index) => (
-              <li className="nav-item" key={index}>
-                <Link className="nav-link" to={item.url}>
-                  <i className={`las ${item.icon}`}></i>
+              <li className="nav-item" key={index} >
+                <Link className={`nav-link ${("/" + window.location.href.split('/')[3]) === item.url ? 'disabled' : null}`} to={item.url}>
+                  <i className={`las ${item.icon} currently-selected`}></i>
                   <span>{item.title}</span>
                 </Link>
               </li>
@@ -124,11 +125,11 @@ export default function Header() {
                   </div>
                 </div>
               </a>
-              <UserAction user={user.id}/>
+              <UserAction user={user.id} />
             </li> : <ActionRow {...loggedOutData} key={1} >Log in</ActionRow>}
           </ul>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 }
