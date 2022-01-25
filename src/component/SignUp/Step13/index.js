@@ -70,6 +70,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   }, [email, screenName, password, repassword, accepted_terms_condition]);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (!(email && screenName && password && repassword)) {
       setError({ ...error, email: "Leave no field empty" })
       return;
@@ -236,13 +237,12 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               </Checkbox>
             </div>
           </div>
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="btn login-btn btn-hover"
+          >Register</button>
         </form>
-        <StepButton
-          stepNumber={stepNumber}
-          totalStep={totalStep}
-          OnPrevious={OnPrevious}
-          OnNext={handleSubmit}
-        />
       </Loader>
     </>
   );
