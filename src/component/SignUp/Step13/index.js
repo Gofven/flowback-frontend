@@ -41,7 +41,7 @@ import ReactDOM from "react-dom";
 const initialState = {
   email: "",
   screenName: "",
-  loginName: "",  
+  loginName: "",
   password: "",
   repassword: "",
   accepted_terms_condition: false,
@@ -49,7 +49,7 @@ const initialState = {
 const initialError = {
   email: "",
   screenName: "",
-  loginName: "",  
+  loginName: "",
   password: "",
   accepted_terms_condition: false,
 };
@@ -63,68 +63,70 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
     accepted_terms_condition } = state;
   const dispatch = useDispatch();
   useEffect(() => {
-    setFormValid(checkAnyOneEmpty({ email, screenName, password, repassword,
-        accepted_terms_condition }));
+    setFormValid(checkAnyOneEmpty({
+      email, screenName, password, repassword,
+      accepted_terms_condition
+    }));
   }, [email, screenName, password, repassword, accepted_terms_condition]);
 
   const handleSubmit = (e) => {
-    if (!(email&&screenName&&password&&repassword)) {
-      setError({...error, email:"Leave no field empty"})
+    if (!(email && screenName && password && repassword)) {
+      setError({ ...error, email: "Leave no field empty" })
       return;
     }
-    if (password!==repassword){
-      setError({...error, email:"Passwords need to match"})
+    if (password !== repassword) {
+      setError({ ...error, email: "Passwords need to match" })
       return;
     }
-    if (!accepted_terms_condition){
-      setError({...error, email:"Need to accept terms and conditions"})
+    if (!accepted_terms_condition) {
+      setError({ ...error, email: "Need to accept terms and conditions" })
       return;
     }
-    if (password.length <= 9){
-      setError({...error, email:"Password needs to be longer than 8 characters"})
+    if (password.length < 8) {
+      setError({ ...error, email: "Password must be longer than 7 letters" })
       return;
     }
 
     setLoading(true);
     //Login name is no longer used but removing it would f up the backend
-    setMainState({...state, loginName:""})
+    setMainState({ ...state, loginName: "" })
     postRequest("api/v1/user/sign_up_first", {
       email,
       screen_name: screenName,
       login_name: loginName,
     }).then((response) => {
-        console.log("RESPONSÉ", response);
-        setLoading(false)
-        const { status, data } = response;
-        if (status === "success") {
-          dispatch(submitScreen1(email, screenName, loginName));
-          if (OnNext) OnNext();
-        } else {
-          setError({ email: "Something went wrong" });
-        }
-      }).catch((err) => {
-        setLoading(false);
-      });   
+      console.log("RESPONSÉ", response);
+      setLoading(false)
+      const { status, data } = response;
+      if (status === "success") {
+        dispatch(submitScreen1(email, screenName, loginName));
+        if (OnNext) OnNext();
+      } else {
+        setError({ email: "Something went wrong" });
+      }
+    }).catch((err) => {
+      setLoading(false);
+    });
   }
-// const handlePasswordSubmit = () => {
-//   postRequest("api/v1/user/sign_up_three", {
-//     email,
-//     password,
-//     accepted_terms_condition,
-//   }).then((response) => {
-//     setLoading(false);
-//     const { status, data } = response;
-//     console.log("le response", response)
-//     if (status === "success") {
-//       //history.push("/");
-//       //window.location.href = "/"
-//     } else {
-//       setError({ ...error, ...data[0] });
-//     }
-//     }).catch((err) => {
-//         setLoading(false);
-// });
-// }
+  // const handlePasswordSubmit = () => {
+  //   postRequest("api/v1/user/sign_up_three", {
+  //     email,
+  //     password,
+  //     accepted_terms_condition,
+  //   }).then((response) => {
+  //     setLoading(false);
+  //     const { status, data } = response;
+  //     console.log("le response", response)
+  //     if (status === "success") {
+  //       //history.push("/");
+  //       //window.location.href = "/"
+  //     } else {
+  //       setError({ ...error, ...data[0] });
+  //     }
+  //     }).catch((err) => {
+  //         setLoading(false);
+  // });
+  // }
 
   const handleOnChange = (e) => {
     console.log("eEEEEEE", inputKeyValue(e));
@@ -145,7 +147,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   return (
     <>
       <Loader loading={loading}>
-        <Error style={{"textAlign":"center"}}>{error?.email}</Error>
+        <Error style={{ "textAlign": "center" }}>{error?.email}</Error>
         <form action="#" className="form login_form stepOne" id="loginForm">
           <div className="form-group">
             <h5>Email</h5>
@@ -158,7 +160,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               required
             />
           </div>
-            <h5>Name</h5>
+          <h5>Name</h5>
           <div className="form-group">
             <Textbox
               name="screenName"
@@ -230,7 +232,7 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
                 name="accepted_terms_condition"
                 onChange={handleOnChange}
               >
-                <span style={{"color":"#212529"}}>I accept the</span> <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
+                <span style={{ "color": "#212529" }}>I accept the</span> <a href="media/legal/terms_of_service.html" target="_blank">Terms & Conditions.</a>
               </Checkbox>
             </div>
           </div>

@@ -75,7 +75,7 @@ export default function Header() {
           <ul className="navbar-nav mx-auto main-nav">
             {data?.map((item, index) => (
               <li className="nav-item" key={index} >
-                <Link className={`nav-link ${("/" + window.location.href.split('/')[3]) === item.url ? 'disabled' : null}`} to={item.url}>
+                <Link className={`nav-link ${window.location.pathname === item.url ? 'disabled' : null}`} to={item.url}>
                   <i className={`las ${item.icon} currently-selected`}></i>
                   <span>{item.title}</span>
                 </Link>
