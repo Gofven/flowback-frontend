@@ -73,7 +73,15 @@ const initialData = {
 function Column(props) {
     console.log('columns', props);
     return <Container>
-        <Title>{props.column.title}</Title>
+        {props.votingType === "traffic" ?
+            (props.column.id === "positive" && <Title>For</Title>) ||
+            (props.column.id === "neutral" && <Title>Abstain</Title>) ||
+            (props.column.id === "negative" && <Title>Against</Title>)
+            : null}
+        {props.votingType === "condorcet" ?
+            (props.column.id === "positive" && <Title>Added</Title>) ||
+            (props.column.id === "neutral" && <Title>Abstain</Title>)
+            : null}
         <div className="column-style">
             {props.tasks.map((task, index) => {
                 return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
