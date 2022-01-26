@@ -30,8 +30,9 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { counter } from '@fortawesome/fontawesome-svg-core';
+import { Condorcet, TrafficLight } from './VoteButtons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -94,66 +95,6 @@ function Column(props) {
 }
 
 function Task(props) {
-    const iconSize = "fa-3x"
-
-    const Condorcet = () => {
-        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
-        return <div className="vote-buttons">
-            {props.columnId === "positive" && <button
-                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: 1 })}
-                className="for">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faArrowUp} color='' size={iconSize} />
-                <div>UP</div>
-            </button>
-            }
-            {
-                props.columnId === "positive" && <button
-                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: -1 })}
-                    className="abstain" >
-                    <FontAwesomeIcon className={iconSize}
-                        icon={faArrowDown} color='' size={iconSize} />
-                    <div>DOWN</div>
-                </button >
-            }
-            <button
-                onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
-                className="against">
-                <FontAwesomeIcon className={iconSize}
-                    icon={props.columnId === "neutral" ? faPlus : faTrash} color='' size={iconSize} />
-                <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
-            </button>
-        </div >
-    }
-
-    const TrafficLight = () => {
-        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
-        return <div className="vote-buttons">
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
-                className="for">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faCheck} color='' size={iconSize} />
-                <div>FOR</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
-                className="abstain">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faCircleNotch} color='' size={iconSize} />
-                <div>ABSTAIN</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
-                className="against">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faTimes} color='' size={iconSize} />
-                <div>AGAINST</div>
-            </button>
-        </div>
-
-    }
-
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
@@ -188,8 +129,8 @@ function Task(props) {
                         }
                     </div>
 
-                    {props.votingType === "traffic" && <TrafficLight />}
-                    {props.votingType === "condorcet" && <Condorcet />}
+                    {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-3x"} />}
+                    {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-3x"} />}
 
                     <div className="counterproposal-body">
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
