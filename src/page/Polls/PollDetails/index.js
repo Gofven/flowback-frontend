@@ -46,6 +46,7 @@ import Image from '../../../component/common/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
 import Profile from '../../../component/User/Profile';
 import PollResults from "../PollResults/PollResults";
+import './styles.css'
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -522,8 +523,9 @@ export default function PollDetails() {
                                                         />
                                                     </div>
                                                 </div>}
-                                                <div className="form-group proposal-details">
+                                                <div className="form-group">
                                                     <textarea
+                                                        className="proposal-details"
                                                         type="text"
                                                         name="proposal_details"
                                                         placeholder="Proposal Details"
