@@ -19,9 +19,7 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import Loader from '../../../../component/common/Loader';
-import { DragDropContext, Droppable, Draggable as div } from 'react-beautiful-dnd';
 import './styles.css';
 import styled from 'styled-components';
 import { postRequest } from '../../../../utils/API';
@@ -31,7 +29,6 @@ import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { counter } from '@fortawesome/fontawesome-svg-core';
 import { Condorcet, TrafficLight } from './VoteButtons';
 
 const Container = styled.div`
@@ -77,7 +74,7 @@ function Column(props) {
     console.log('columns', props);
     return <Container>
         <Title>{props.column.title}</Title>
-        <div>
+        <div className="column-style">
             {props.tasks.map((task, index) => {
                 return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
             })}
@@ -289,7 +286,7 @@ function SortCounterProposal(props) {
         return points;
     }
 
-    useEffect(() => { initializeState() }, [props.proposalIndexes]);
+    useEffect(() => { initializeState(); console.log(state, "STATEE") }, [props.proposalIndexes]);
 
 
     return (
@@ -299,6 +296,7 @@ function SortCounterProposal(props) {
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
+                    {/* {props.votingType !== "traffic" ? */}
                     {state.columnOrder.map(columnId => {
                         if (columnId === "negative" && props.votingType === "condorcet") {
                             return;
@@ -308,6 +306,38 @@ function SortCounterProposal(props) {
 
                         return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
                     })}
+                    {/* : <div>
+                            <div className="column-style">
+                                {console.log(state.tasks, "TASKS")}
+                                {state.tasks.map((task, index) => {
+                                    console.log(task, "TASK")
+                                    return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                                })}
+                            </div>
+                        </div>
+
+                    } */}
+
+
+
+                    {/* //     // const column = state.columns["neutral"];
+                        //     const tasks = state.tasks.map(taskId => state.tasks[taskId]);
+                        //     console.log(tasks, "TASKS");
+                        //     console.log(state, "TASKS");
+
+                        //     return null
+                        // return (
+
+                        //     <div className="column-style">
+                        //         {state.tasks.map((task, index) => {
+                        //             console.log(task)
+                        //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                        //         })}
+                        //     </div>
+
+                        // )
+                        // } */}
+
                 </div>
             </Loader>
         </div>

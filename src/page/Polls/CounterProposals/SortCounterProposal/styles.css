@@ -84,3 +84,7 @@ textarea{
 .proposal-description{
     margin:10px 10px 10px 10px;
 }
+
+.column-style{
+    padding: 8px 16px;
+}
