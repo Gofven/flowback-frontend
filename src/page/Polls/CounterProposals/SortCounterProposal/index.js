@@ -212,7 +212,6 @@ function SortCounterProposal(props) {
      * To save proposal positions provided by a user
      */
     const saveIndexies = () => {
-        setLoading(true);
         const newPoints = calculatePoints();
         console.log('points on save', newPoints);
         const ppi = {};
@@ -241,13 +240,13 @@ function SortCounterProposal(props) {
             positive: positive_proposal_indexes,
             negative: negative_proposal_indexes
         }
-
-        console.log("DATA", data)
+        setLoading(true);
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 if (response === "User has no permission to vote") {
                     setMessege({ content: "You don't have permission to vote", color: "red" })
+                    initializeState();
                     setLoading(false);
                     return;
                 }
@@ -286,7 +285,7 @@ function SortCounterProposal(props) {
         return points;
     }
 
-    useEffect(() => { initializeState(); console.log(state, "STATEE") }, [props.proposalIndexes]);
+    useEffect(() => { initializeState(); console.log(props, "GROUP") }, [props.proposalIndexes]);
 
 
     return (
