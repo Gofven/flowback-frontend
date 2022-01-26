@@ -44,6 +44,7 @@
     html:not([data-scroll='0'])  .main-navbar > div > * {
         height: 80%;
     }
+
 }
 
 .main-logo {
@@ -64,6 +65,10 @@
 
 .main-nav .nav-item:last-child .nav-link {
     margin-right: 0;
+}
+
+.disabled > .currently-selected{
+    color:rgb(202, 201, 201);
 }
 
 .main-nav .nav-link:before {
