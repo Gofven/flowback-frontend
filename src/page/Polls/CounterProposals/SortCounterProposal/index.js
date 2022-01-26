@@ -117,31 +117,31 @@ function ProposalBox(props) {
                     </div>
                 }
             </div>
+            <div className="proposal-top-part">
+                <div className="counter-proposal-title">
+                    <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
+                        <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
+                        <LinesEllipsis
+                            text={counterProposal?.title}
+                            maxLine='3'
+                            ellipsis='...'
+                            trimRight
+                            basedOn='letters' /></h4>
+                </div>
+                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-3x"} />}
+                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-3x"} />}
 
-            {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-3x"} />}
-            {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-3x"} />}
-
-            <div className="counterproposal-body">
                 {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
-                <div className="counter-proposal-top">
-                    <div className="counter-proposal-title">
-                        <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
-                            <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
-                            <LinesEllipsis
-                                text={counterProposal?.title}
-                                maxLine='3'
-                                ellipsis='...'
-                                trimRight
-                                basedOn='letters' /></h4>
-                    </div>
-                </div>
-                <div className="proposal-description">
-                    <LinesEllipsis
-                        text={counterProposal?.description}
-                        ellipsis="..."
-                        trimRight
-                        basedOn='letters' />
-                </div>
+
+
+
+            </div>
+            <div className="proposal-description">
+                <LinesEllipsis
+                    text={counterProposal?.description}
+                    ellipsis="..."
+                    trimRight
+                    basedOn='letters' />
             </div>
         </div>
     </div>

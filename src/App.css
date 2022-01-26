@@ -299,7 +299,7 @@ a:active {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
     .pl-md-1 {
         padding-left: .25rem;
     }
@@ -509,7 +509,7 @@ a:active {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
     .ml-md-1 {
         margin-left: .25rem;
     }

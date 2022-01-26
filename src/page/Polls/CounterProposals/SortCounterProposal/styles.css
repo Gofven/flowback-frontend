@@ -37,7 +37,7 @@
 }
 
 .vote-buttons > button{
-    font-size: clamp(10px, 1.4vmax, 16px);
+    font-size: clamp(10px, 1.4vmax, 11px);
     border-width: 0px;
 }
 
@@ -71,6 +71,12 @@
     background-color: #da241e;
 }
 
+.voteDisabled{
+    background-color: grey;
+    pointer-events: none;
+
+}
+
 textarea{
     width: 100%;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -87,4 +93,16 @@ textarea{
 
 .column-style{
     padding: 8px 16px;
+}
+
+.proposal-top-part{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 2px solid lightgrey;
+}
+
+.proposal-top-part > .vote-buttons{
+    width:50%;
 }
