@@ -73,7 +73,7 @@ export default function LoginCard() {
     e.stopPropagation();
     setLoading(true);
     setLocalStorage("rememberMe", rememberMe);
-    if (rememberMe){setLocalStorage("user", email);}
+    if (rememberMe) { setLocalStorage("user", email); }
     if (formValid) {
       postRequest("api/v1/login", { username: email, password }).then(
         (response) => {
@@ -93,6 +93,7 @@ export default function LoginCard() {
         }
       ).catch((err) => {
         setLoading(false);
+        setError({ ...error, email: "Something went wrong" });
       });
     }
   };
@@ -108,60 +109,59 @@ export default function LoginCard() {
     });
   };
 
-  const handleKeypress = e => {if (e.keyCode === 13) { handleSubmit(); } };
+  const handleKeypress = e => { if (e.keyCode === 13) { handleSubmit(); } };
 
-  if (!forgotPassword){
+  if (!forgotPassword) {
     return (
       <Loader loading={loading}>
-      <form className="form login_form" id="loginForm">
-        <span style={{color:"red"}}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
-        <div className="form-group">
-          <h5>Email</h5>
-          <Textbox
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleOnChange}
-            onBlur={validated}
-            required
+        <form className="form login_form" id="loginForm">
+          <span style={{ color: "red" }}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
+          <div className="form-group">
+            <h5>Email</h5>
+            <Textbox
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleOnChange}
+              onBlur={validated}
+              required
             />
-        </div>
-        <div className="form-group">
-          <h5>Password</h5>
-          <Textbox
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleOnChange}
-            onBlur={validated}
-            required
+          </div>
+          <div className="form-group">
+            <h5>Password</h5>
+            <Textbox
+              type="password"
+              name="password"
+              value={password}
+              onChange={handleOnChange}
+              onBlur={validated}
+              required
             />
-        </div>
-        <div className="form-group text-center">
-          <a href="#" className="forgot-link" onClick={() => {setForgotPassword(true)}}>
-            Forgot Password?
-        </a>
-        </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="btn login-btn btn-hover"
-            //disabled={!formValid}
-            onClick={handleSubmit}
+          </div>
+          <div className="form-group text-center">
+            <a href="#" className="forgot-link" onClick={() => { setForgotPassword(true) }}>
+              Forgot Password?
+            </a>
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="btn login-btn btn-hover"
+              //disabled={!formValid}
+              onClick={handleSubmit}
             >
-            Login
-        </button>
-          {/* <Button>Login</Button> */}
+              Login
+            </button>
+            {/* <Button>Login</Button> */}
+          </div>
+        </form>
+        <div className="text-center pt-2">
+          <a href="/">Or enter as Guest</a>
         </div>
-      </form>
-      <div className="text-center pt-2">
-        <a href="/">Or enter as Guest</a>
-      </div>
-    </Loader>
-  );
-}
-else
-{
-  return <ResetPassword loading={loading} setLoading={setLoading}/>
-}
+      </Loader>
+    );
+  }
+  else {
+    return <ResetPassword loading={loading} setLoading={setLoading} />
+  }
 }

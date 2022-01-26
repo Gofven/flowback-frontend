@@ -32,65 +32,65 @@ import Loader from "../../common/Loader";
 import StepButton from "../StepButton";
 
 const initialState = {
-  recoveryCode: "",
+  verificationCode: "",
 };
 const initialError = {
-  recoveryCode: "",
+  verificationCode: "",
 };
 export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { recoveryCode } = state;
+  const { verificationCode } = state;
 
   const { email } = useSelector((state) => state.signup);
 
   useEffect(() => {
-    setFormValid(checkAnyOneEmpty({ recoveryCode }));
-  }, [recoveryCode]);
+    setFormValid(checkAnyOneEmpty({ verificationCode }));
+  }, [verificationCode]);
 
   const handleSubmit = (e) => {
-    if (recoveryCode.length < 1) {
-      setError("Can't input empty recovery code")
+    if (verificationCode.length < 1) {
+      setError("Can't input empty verification code")
       return;
     }
-    
+
     setLoading(true);
     postRequest("api/v1/user/sign_up_two", {
       email: email,
-      verification_code: recoveryCode,
+      verification_code: verificationCode,
     }).then((response) => {
       setLoading(false);
       const { status, data } = response;
       handlePasswordSubmit();
       if (status === "success") {
       } else {
-        setError("Wrong recovery code");
+        setError("Wrong verification code");
       }
     }).catch((err) => {
       setLoading(false);
     });
   }
-  
+
 
   const handlePasswordSubmit = () => {
     console.log("happends")
-  postRequest("api/v1/user/sign_up_three", {
-    email,
-    password:mainState.password,
-    accepted_terms_condition:mainState.accepted_terms_condition,
-  }).then((response) => {
-    const { status, data } = response;
-    console.log("le response", response)
-    if (status === "success") {
-      //history.push("/");
-      window.location.reload(false);
-    }
+    postRequest("api/v1/user/sign_up_three", {
+      email,
+      password: mainState.password,
+      accepted_terms_condition: mainState.accepted_terms_condition,
+    }).then((response) => {
+      const { status, data } = response;
+      console.log("le response", response)
+      if (status === "success") {
+        //history.push("/");
+        window.location.reload(false);
+      }
     }).catch((err) => {
-        setLoading(false);
-});
-}
+      setLoading(false);
+    });
+  }
 
   const handleOnChange = (e) => {
     setState({ ...state, ...inputKeyValue(e) });
@@ -108,15 +108,15 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
         <form action="#" className="form login_form stepOne" id="loginForm">
           <div className="form-group">
             <p>
-              Please enter the recovery code
-            <br />
-            you've received.
-          </p>
+              Please enter the verification code
+              <br />
+              you've received.
+            </p>
           </div>
           <div className="form-group">
             <Textbox
-              name="recoveryCode"
-              value={recoveryCode}
+              name="verificationCode"
+              value={verificationCode}
               onChange={handleOnChange}
               onBlur={vailadated}
               required
@@ -124,12 +124,11 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
             <Error>{error}</Error>
           </div>
         </form>
-        <StepButton
-          stepNumber={stepNumber}
-          totalStep={totalStep}
-          OnPrevious={OnPrevious}
-          OnNext={handleSubmit}
-        />
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="btn login-btn btn-hover"
+        >Register</button>
       </Loader>
     </>
   );
