@@ -293,38 +293,24 @@ function SortCounterProposal(props) {
 
 
     return (
-        <>
-            {/* <div className={props.className} onClick={handleShow}>
-                {props.children}
-            </div> */}
+        <div className='p-4'>
+            <Loader loading={loading}>
+                <h4>Sort Proposals</h4>
+                <h4 style={{ "color": messege.color }}>{messege.content}</h4>
+                {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
+                <div>
+                    {state.columnOrder.map(columnId => {
+                        if (columnId === "negative" && props.votingType === "condorcet") {
+                            return;
+                        }
+                        const column = state.columns[columnId];
+                        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
 
-            {/* <Modal show={show} onHide={handleClose} centered size='lg'> */}
-            <div className='p-4'>
-                <Loader loading={loading}>
-                    <h4>Sort Proposals</h4>
-                    <h4 style={{ "color": messege.color }}>{messege.content}</h4>
-                    {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
-                    <div>
-                        {state.columnOrder.map(columnId => {
-                            if (columnId === "negative" && props.votingType === "condorcet") {
-                                return;
-                            }
-                            const column = state.columns[columnId];
-                            const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
-
-                            return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
-                        })}
-
-                    </div>
-                    <div style={{ "color": "red" }}>
-                    </div>
-                    <div>
-                        {/* <Button color='secondary' onClick={saveIndexies}>Update</Button> */}
-                    </div>
-                </Loader>
-            </div>
-            {/* </Modal> */}
-        </>
+                        return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
+                    })}
+                </div>
+            </Loader>
+        </div>
     );
 }
 
