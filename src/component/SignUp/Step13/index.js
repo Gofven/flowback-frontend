@@ -35,7 +35,7 @@ import Checkbox from "../../common/Checkbox";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
-
+import './index.css'
 
 
 const initialState = {
@@ -237,11 +237,13 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
               </Checkbox>
             </div>
           </div>
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            className="btn login-btn btn-hover"
-          >Register</button>
+          <div className="register-btn2">
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="btn login-btn btn-hover"
+            >Register</button>
+          </div>
         </form>
       </Loader>
     </>

@@ -44,7 +44,7 @@ export default function PollForm() {
         tags: "",
         type: "",
         end_time: new Date(),
-        voting_type: ""
+        voting_type: "condorcet"
     });
 
     const [tag, setTag] = useState([])
@@ -57,10 +57,10 @@ export default function PollForm() {
         setPollDetail({ ...pollDetail, ...inputKeyValue(e) });
         console.log("Value", e.target.value);
     };
-    
+
     const changeVotingType = (e) => {
         const votingType = e.target.value
-        setPollDetail({ ...pollDetail, voting_type: votingType});
+        setPollDetail({ ...pollDetail, voting_type: votingType });
         console.log(e.target.value, pollDetail)
     }
 
@@ -100,11 +100,10 @@ export default function PollForm() {
         pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
-        if (pollDetails.voting_type === "time")
-        {
+        if (pollDetails.voting_type === "time") {
             pollDetails.voting_type = "condorcet";
             pollDetails.type = "event";
-        }    
+        }
         var data = new FormData();
         var obj = {
             poll_details: JSON.stringify(pollDetails)
@@ -269,63 +268,63 @@ export default function PollForm() {
 
                                             />
                                         </div>
-                                        {pollId ? null : 
-                                        <>
-                                        <div className="form-group mx-2">
-                                            <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
-                                                <option selected value="poll">Private</option>
-                                                <option value="mission">Public</option>
+                                        {pollId ? null :
+                                            <>
+                                                <div className="form-group mx-2">
+                                                    <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
+                                                        <option selected value="poll">Private</option>
+                                                        <option value="mission">Public</option>
 
-                                            </select>
-                                        </div>
-                                         
-                                        <div className="form-group field">
-                                            <Label>
-                                                Voting Type
-                                            </Label>
-                                            <div>
-                                                <Form.Check
-                                                    inline
-                                                    type="radio"
-                                                    id="Ranking"
-                                                    name="request"
-                                                    label="Ranking"
-                                                    value="condorcet"
-                                                    checked={pollDetail.voting_type === "condorcet"}
-                                                    onClick={changeVotingType}
-                                                />
+                                                    </select>
+                                                </div>
 
-                                                <Form.Check
-                                                    inline
-                                                    type="radio"
-                                                    id="For/Against"
-                                                    name="request"
-                                                    label="For/Against"
-                                                    value="traffic"
-                                                    checked={pollDetail.voting_type === "traffic"}
-                                                    onClick={changeVotingType}
-                                                />
+                                                <div className="form-group field">
+                                                    <Label>
+                                                        Voting Type
+                                                    </Label>
+                                                    <div>
+                                                        <Form.Check
+                                                            inline
+                                                            type="radio"
+                                                            id="Ranking"
+                                                            name="request"
+                                                            label="Ranking"
+                                                            value="condorcet"
+                                                            checked={pollDetail.voting_type === "condorcet"}
+                                                            onClick={changeVotingType}
+                                                        />
 
-                                                <Form.Check
-                                                    inline
-                                                    type="radio"
-                                                    id="Time"
-                                                    name="request"
-                                                    label="Time"
-                                                    value="time"
-                                                    checked={pollDetail.voting_type === "time"}
-                                                    onClick={changeVotingType}
-                                                />
-                                            </div>
-                                        </div>
+                                                        <Form.Check
+                                                            inline
+                                                            type="radio"
+                                                            id="For/Against"
+                                                            name="request"
+                                                            label="For/Against"
+                                                            value="traffic"
+                                                            checked={pollDetail.voting_type === "traffic"}
+                                                            onClick={changeVotingType}
+                                                        />
 
-                                        <div className="form-group field">
-                                            <div>
-                                                <Label>
-                                                    End Time
-                                                </Label>
-                                            </div>
-                                            {/* <DateTimePicker
+                                                        <Form.Check
+                                                            inline
+                                                            type="radio"
+                                                            id="Time"
+                                                            name="request"
+                                                            label="Time"
+                                                            value="time"
+                                                            checked={pollDetail.voting_type === "time"}
+                                                            onClick={changeVotingType}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group field">
+                                                    <div>
+                                                        <Label>
+                                                            End Time
+                                                        </Label>
+                                                    </div>
+                                                    {/* <DateTimePicker
                                                 onChange={onDateTimeSelect}
                                                 value={pollDetail.end_time}
                                                 defaultValue={pollDetail.end_time}
@@ -334,14 +333,14 @@ export default function PollForm() {
 
                                             /> */}
 
-                                            <DatePicker
-                                                selected={pollDetail.end_time}
-                                                onChange={onDateTimeSelect}
-                                                minDate={new Date()}
-                                                showTimeSelect
-                                                dateFormat="Pp"
-                                            />
-                                        </div></>}
+                                                    <DatePicker
+                                                        selected={pollDetail.end_time}
+                                                        onChange={onDateTimeSelect}
+                                                        minDate={new Date()}
+                                                        showTimeSelect
+                                                        dateFormat="Pp"
+                                                    />
+                                                </div></>}
                                         <div className="text-center my-5">
                                             <Button
                                                 type="button"
@@ -351,7 +350,7 @@ export default function PollForm() {
                                             >
                                                 {pollId ? "Update" : "Submit"}
                                             </Button>
-                                        </div> 
+                                        </div>
                                     </form>
                                 </div>
                             </div>
