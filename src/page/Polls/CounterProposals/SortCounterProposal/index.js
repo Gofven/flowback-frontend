@@ -195,20 +195,20 @@ function Task(props) {
                         {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
                         <div className="counter-proposal-top">
                             <div className="counter-proposal-title">
-                                <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ? 
-                                <>{counterProposal.date.split('T')[0]}
-                                <h4>{counterProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{counterProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>: null}
-                                <LinesEllipsis
-                                    text={counterProposal?.title}
-                                    maxLine='3'
-                                    ellipsis='...'
-                                    trimRight
-                                    basedOn='letters' /></h4>
+                                <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
+                                    <>{counterProposal.date.split('T')[0]}
+                                        <h4>{counterProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{counterProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></> : null}
+                                    <LinesEllipsis
+                                        text={counterProposal?.title}
+                                        maxLine='3'
+                                        ellipsis='...'
+                                        trimRight
+                                        basedOn='letters' /></h4>
                             </div>
                         </div>
                         <div className="proposal-description">
                             <LinesEllipsis
-                                text={counterProposal?.proposal}
+                                text={counterProposal?.description}
                                 ellipsis="..."
                                 trimRight
                                 basedOn='letters' />
@@ -225,7 +225,7 @@ function SortCounterProposal(props) {
     const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
-    const [messege, setMessege] = useState({content:"",color:"black"})
+    const [messege, setMessege] = useState({ content: "", color: "black" })
     // const [votingType, setVotingType] = useState("condorcet") //condorcet and traffic
     const [hasLoaded, setHasLoaded] = useState(false)
 
@@ -361,11 +361,11 @@ function SortCounterProposal(props) {
             (response) => {
                 console.log('response', response);
                 if (response === "User has no permission to vote") {
-                    setMessege({content:"You don't have permission to vote", color:"red"})
+                    setMessege({ content: "You don't have permission to vote", color: "red" })
                     setLoading(false);
                     return;
                 }
-                
+
                 const { status, data } = response;
                 if (status === "success") {
                     if (props.onUpdateIndexes) {
@@ -373,10 +373,10 @@ function SortCounterProposal(props) {
                         //handleClose();
                     }
                 }
-                setMessege({content:"Successfully updated your vote", color:"green"})
+                setMessege({ content: "Successfully updated your vote", color: "green" })
                 setLoading(false);
             }).catch((err) => {
-                setMessege({content:"A problem has occurred", color:"red"})
+                setMessege({ content: "A problem has occurred", color: "red" })
                 setLoading(false);
             });
     }
@@ -402,10 +402,10 @@ function SortCounterProposal(props) {
 
     useEffect(() => {
         console.log('state changes', state);
-        if (!hasLoaded) {setHasLoaded(true)}
+        if (!hasLoaded) { setHasLoaded(true) }
     }, [state])
-      
-      useEffect(() => {initializeState()}, [props.proposalIndexes]); 
+
+    useEffect(() => { initializeState() }, [props.proposalIndexes]);
 
 
     return (
@@ -418,8 +418,8 @@ function SortCounterProposal(props) {
             <div className='p-4'>
                 <Loader loading={loading}>
                     <h4>Sort Proposals</h4>
-                    <h4 style={{"color":messege.color}}>{messege.content}</h4>
-                {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
+                    <h4 style={{ "color": messege.color }}>{messege.content}</h4>
+                    {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                     <div>
                         {
                             <DragDropContext
@@ -428,8 +428,7 @@ function SortCounterProposal(props) {
                                 onDragEnd={onDragEnd}
                             >
                                 {state.columnOrder.map(columnId => {
-                                    if (columnId === "negative" && props.votingType === "condorcet")
-                                    {
+                                    if (columnId === "negative" && props.votingType === "condorcet") {
                                         return;
                                     }
                                     const column = state.columns[columnId];
@@ -440,7 +439,7 @@ function SortCounterProposal(props) {
                             </DragDropContext>
                         }
                     </div>
-                    <div style={{ "color": "red" }}>  
+                    <div style={{ "color": "red" }}>
                     </div>
                     <div>
                         {/* <Button color='secondary' onClick={saveIndexies}>Update</Button> */}
