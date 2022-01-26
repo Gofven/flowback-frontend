@@ -437,11 +437,11 @@ export default function PollDetails() {
                                                         {/* Add More Files */}
                                                     </div>
                                                 </label>
-                                                <input type='file' accept='image/*,application/pdf,application/msword'
+                                                {/* <input type='file' accept='image/*,application/pdf,application/msword'
                                                     name="document" id='document'
                                                     onChange={addDocuments}
                                                     multiple="multiple"
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
                                     </div>
