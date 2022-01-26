@@ -33,8 +33,22 @@
     background: #f0f0f0;
 }
 
-.proposal-details {
+
+.proposal-details{
     margin-top:2%;
-    
-    
+    font-size: 16px;
+    font-weight: 600;
+    color: #575757;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    padding: .375rem .75rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 100%;
+}
+
+.proposal-details:focus {
+  outline-width:0px;
+  background-color: rgba(2, 100, 195, 0.05);
+  border-color: #0264c3;
 }

@@ -19,9 +19,7 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import Loader from '../../../../component/common/Loader';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './styles.css';
 import styled from 'styled-components';
 import { postRequest } from '../../../../utils/API';
@@ -30,8 +28,8 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { counter } from '@fortawesome/fontawesome-svg-core';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { Condorcet, TrafficLight } from './VoteButtons';
 
 const Container = styled.div`
   margin: 12px 0;
@@ -75,168 +73,84 @@ const initialData = {
 function Column(props) {
     console.log('columns', props);
     return <Container>
-        <Title>{props.column.title}</Title>
-        <Droppable droppableId={props.column.id + ''}>
-            {(provided, snapshot) => (
-                <TaskList
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    isDraggingOver={snapshot.isDraggingOver}
-                >
-                    {props.tasks.map((task, index) => {
-                        return <Task key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
-                    })}
-                    {provided.placeholder}
-                </TaskList>
-            )}
-        </Droppable>
+        {props.votingType === "traffic" ?
+            (props.column.id === "positive" && <Title>For</Title>) ||
+            (props.column.id === "neutral" && <Title>Abstain</Title>) ||
+            (props.column.id === "negative" && <Title>Against</Title>)
+            : null}
+        {props.votingType === "condorcet" ?
+            (props.column.id === "positive" && <Title>Added</Title>) ||
+            (props.column.id === "neutral" && <Title>Abstain</Title>)
+            : null}
+        <div className="column-style">
+            {props.tasks.map((task, index) => {
+                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
+            })}
+        </div>
     </Container>
 }
 
-function Task(props) {
-    const iconSize = "fa-3x"
-
-    const Condorcet = () => {
-        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
-        return <div className="vote-buttons">
-            {props.columnId === "positive" && <button
-                onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: 1 })}
-                className="for">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faArrowUp} color='' size={iconSize} />
-                <div>UP</div>
-            </button>
-            }
-            {
-                props.columnId === "positive" && <button
-                    onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: -1 })}
-                    className="abstain" >
-                    <FontAwesomeIcon className={iconSize}
-                        icon={faArrowDown} color='' size={iconSize} />
-                    <div>DOWN</div>
-                </button >
-            }
-            <button
-                onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
-                className="against">
-                <FontAwesomeIcon className={iconSize}
-                    icon={props.columnId === "neutral" ? faPlus : faTrash} color='' size={iconSize} />
-                <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
-            </button>
-        </div >
-    }
-
-    const TrafficLight = () => {
-        const inputs = { source: props.columnId, draggableID: props.task.id + '', index: props.index }
-        return <div className="vote-buttons">
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "positive" })}
-                className="for">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faCheck} color='' size={iconSize} />
-                <div>FOR</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "neutral" })}
-                className="abstain">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faCircleNotch} color='' size={iconSize} />
-                <div>ABSTAIN</div>
-            </button>
-            <button
-                onClick={() => props.onClickTrafficLight({ ...inputs, destination: "negative" })}
-                className="against">
-                <FontAwesomeIcon className={iconSize}
-                    icon={faTimes} color='' size={iconSize} />
-                <div>AGAINST</div>
-            </button>
-        </div>
-
-    }
-
+function ProposalBox(props) {
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
-    return <Draggable draggableId={props.task.id + ''} index={props.index} isDragDisabled={true}>{/*isDragDisabled={true}*/}
-        {(provided, snapshot) => (
-            <TaskContainer
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                ref={provided.innerRef}
-                isDragging={snapshot.isDragging}
-            >
-                {/* {props.task.id} - {props.task.content.proposal} */}
-                <div className="card counter-proposal-card bg-white">
-                    {/* TODO: ASK GOFVEN IF THIS WORKS IN PRODUCTION */}
-                    {props.task.content.file ? <a className='points' onClick={() => window.open(props.task.content.file, '_blank')} href="">
-                        <FontAwesomeIcon className="fa"
-                            icon={faDownload} color='' size='lg' />
-                        DOWNLOAD FILE
-                    </a>
-                        : null}
-                    <div className="post-header d-flex justify-content-between card-header mb-0">
-                        {counterProposal && counterProposal.user &&
-                            <div className="media post-meida">
-                                <Image src={counterProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
-                                <div className="media-body">
-                                    <h5 className="user-name">
-                                        <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
-                                    </h5>
-                                    <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
-                                </div>
-                            </div>
-                        }
+    return <div>
+        {/* {props.task.id} - {props.task.content.proposal} */}
+        <div className="card counter-proposal-card bg-white">
+            {/* TODO: ASK GOFVEN IF THIS WORKS IN PRODUCTION */}
+            {props.task.content.file ? <a className='points' onClick={() => window.open(props.task.content.file, '_blank')} href="">
+                <FontAwesomeIcon className="fa"
+                    icon={faDownload} color='' size='lg' />
+                DOWNLOAD FILE
+            </a>
+                : null}
+            <div className="post-header d-flex justify-content-between card-header mb-0">
+                {counterProposal && counterProposal.user &&
+                    <div className="media post-meida">
+                        <Image src={counterProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
+                        <div className="media-body">
+                            <h5 className="user-name">
+                                <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
+                            </h5>
+                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                        </div>
                     </div>
+                }
+            </div>
 
-                    {props.votingType === "traffic" && <TrafficLight />}
-                    {props.votingType === "condorcet" && <Condorcet />}
+            {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-3x"} />}
+            {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-3x"} />}
 
-                    <div className="counterproposal-body">
-                        {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
-                        <div className="counter-proposal-top">
-                            <div className="counter-proposal-title">
-                                <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ? 
-                                <>{counterProposal.date.split('T')[0]}
-                                <h4>{counterProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{counterProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></>: null}
-                                <LinesEllipsis
-                                    text={counterProposal?.title}
-                                    maxLine='3'
-                                    ellipsis='...'
-                                    trimRight
-                                    basedOn='letters' /></h4>
-                            </div>
-                        </div>
-                        <div className="proposal-description">
+            <div className="counterproposal-body">
+                {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
+                <div className="counter-proposal-top">
+                    <div className="counter-proposal-title">
+                        <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
+                            <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
                             <LinesEllipsis
-                                text={counterProposal?.proposal}
-                                ellipsis="..."
+                                text={counterProposal?.title}
+                                maxLine='3'
+                                ellipsis='...'
                                 trimRight
-                                basedOn='letters' />
-                        </div>
+                                basedOn='letters' /></h4>
                     </div>
                 </div>
-            </TaskContainer>
-        )
-        }
-    </Draggable >;
+                <div className="proposal-description">
+                    <LinesEllipsis
+                        text={counterProposal?.description}
+                        ellipsis="..."
+                        trimRight
+                        basedOn='letters' />
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 function SortCounterProposal(props) {
-    const [show, setShow] = useState(true);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
-    const [messege, setMessege] = useState({content:"",color:"black"})
-    // const [votingType, setVotingType] = useState("condorcet") //condorcet and traffic
-    const [hasLoaded, setHasLoaded] = useState(false)
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    useEffect(() => {
-        if (show) {
-
-        }
-    }, [show]);
+    const [messege, setMessege] = useState({ content: "", color: "black" })
 
     /**
      * To intialize counter proposal sorting state
@@ -279,26 +193,6 @@ function SortCounterProposal(props) {
         setState({ ...data });
     }
 
-    /**
-     * To update counter proposal positions when user has dragged any proposals
-     * @param {*} event 
-     * @returns 
-     */
-    const onDragEnd = (event) => {
-        // console.log('event', event);
-        const { source, destination, draggableId } = event;
-        if (!destination) {
-            return;
-        }
-        if (source.droppableId == destination.droppableId && source.index == destination.index) {
-            return;
-        }
-        const data = state;
-        data.columns[source.droppableId].taskIds.splice(source.index, 1);
-        data.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId);
-        setState({ ...data });
-    }
-
     const onClickTrafficLight = ({ source, destination, draggableID, index }) => {
         if (source !== destination) {
             const data = state;
@@ -326,7 +220,6 @@ function SortCounterProposal(props) {
      * To save proposal positions provided by a user
      */
     const saveIndexies = () => {
-        setLoading(true);
         const newPoints = calculatePoints();
         console.log('points on save', newPoints);
         const ppi = {};
@@ -355,17 +248,17 @@ function SortCounterProposal(props) {
             positive: positive_proposal_indexes,
             negative: negative_proposal_indexes
         }
-
-        console.log("DATA", data)
+        setLoading(true);
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
                 console.log('response', response);
                 if (response === "User has no permission to vote") {
-                    setMessege({content:"You don't have permission to vote", color:"red"})
+                    setMessege({ content: "You don't have permission to vote", color: "red" })
+                    initializeState();
                     setLoading(false);
                     return;
                 }
-                
+
                 const { status, data } = response;
                 if (status === "success") {
                     if (props.onUpdateIndexes) {
@@ -373,10 +266,10 @@ function SortCounterProposal(props) {
                         //handleClose();
                     }
                 }
-                setMessege({content:"Successfully updated your vote", color:"green"})
+                setMessege({ content: "Successfully updated your vote", color: "green" })
                 setLoading(false);
             }).catch((err) => {
-                setMessege({content:"A problem has occurred", color:"red"})
+                setMessege({ content: "A problem has occurred", color: "red" })
                 setLoading(false);
             });
     }
@@ -400,55 +293,61 @@ function SortCounterProposal(props) {
         return points;
     }
 
-    useEffect(() => {
-        console.log('state changes', state);
-        if (!hasLoaded) {setHasLoaded(true)}
-    }, [state])
-      
-      useEffect(() => {initializeState()}, [props.proposalIndexes]); 
+    useEffect(() => { initializeState(); console.log(props, "GROUP") }, [props.proposalIndexes]);
 
 
     return (
-        <>
-            {/* <div className={props.className} onClick={handleShow}>
-                {props.children}
-            </div> */}
-
-            {/* <Modal show={show} onHide={handleClose} centered size='lg'> */}
-            <div className='p-4'>
-                <Loader loading={loading}>
-                    <h4>Sort Proposals</h4>
-                    <h4 style={{"color":messege.color}}>{messege.content}</h4>
+        <div className='p-4'>
+            <Loader loading={loading}>
+                <h4>Sort Proposals</h4>
+                <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
-                    <div>
-                        {
-                            <DragDropContext
-                                // onDragStart={onDragStart}
-                                // onDragUpdate={onDragUpdate} 
-                                onDragEnd={onDragEnd}
-                            >
-                                {state.columnOrder.map(columnId => {
-                                    if (columnId === "negative" && props.votingType === "condorcet")
-                                    {
-                                        return;
-                                    }
-                                    const column = state.columns[columnId];
-                                    const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
-
-                                    return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
-                                })}
-                            </DragDropContext>
+                <div>
+                    {/* {props.votingType !== "traffic" ? */}
+                    {state.columnOrder.map(columnId => {
+                        if (columnId === "negative" && props.votingType === "condorcet") {
+                            return;
                         }
-                    </div>
-                    <div style={{ "color": "red" }}>  
-                    </div>
-                    <div>
-                        {/* <Button color='secondary' onClick={saveIndexies}>Update</Button> */}
-                    </div>
-                </Loader>
-            </div>
-            {/* </Modal> */}
-        </>
+                        const column = state.columns[columnId];
+                        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+
+                        return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
+                    })}
+                    {/* : <div>
+                            <div className="column-style">
+                                {console.log(state.tasks, "TASKS")}
+                                {state.tasks.map((task, index) => {
+                                    console.log(task, "TASK")
+                                    return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                                })}
+                            </div>
+                        </div>
+
+                    } */}
+
+
+
+                    {/* //     // const column = state.columns["neutral"];
+                        //     const tasks = state.tasks.map(taskId => state.tasks[taskId]);
+                        //     console.log(tasks, "TASKS");
+                        //     console.log(state, "TASKS");
+
+                        //     return null
+                        // return (
+
+                        //     <div className="column-style">
+                        //         {state.tasks.map((task, index) => {
+                        //             console.log(task)
+                        //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                        //         })}
+                        //     </div>
+
+                        // )
+                        // } */}
+
+                </div>
+            </Loader>
+        </div>
     );
 }
 
