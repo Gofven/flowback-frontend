@@ -84,7 +84,7 @@ function Column(props) {
             : null}
         <div className="column-style">
             {props.tasks.map((task, index) => {
-                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
+                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
             })}
         </div>
     </Container>
