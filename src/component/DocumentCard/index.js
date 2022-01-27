@@ -44,7 +44,7 @@ export default function DocumentCard(props) {
             <div className="card-header flex-header tab-header">
                 <h4 className="card-title">Documents</h4>
                 <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
-                    {tab?.map((item, index) => (
+                    {/* {tab?.map((item, index) => (
                         <li className="nav-item" key={index}>
                             <span
                                 className={`nav-link${item === activeTab ? " active" : ""}`}
@@ -54,7 +54,7 @@ export default function DocumentCard(props) {
                                 {item}
                             </span>
                         </li>
-                    ))}
+                    ))} */}
                 </ul>
             </div>
             <div className="card-body">

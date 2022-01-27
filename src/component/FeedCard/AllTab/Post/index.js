@@ -53,59 +53,54 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   So this algorithm builds a forest of comment trees where the root node is the 
   first comment that doesn't reply to anyone, and it builds from there. Made by Emil
   */
-  const renderComments = (inputComments) => {  
-    console.log(poll?.top_proposal)  
-    let roots = inputComments.filter((comment)=>comment.reply_to===null);
-    let replies = inputComments.filter((comment)=>comment.reply_to!==null);
-    let commentsLeft = inputComments.filter((comment)=>comment.reply_to!==null);
+  const renderComments = (inputComments) => {
+    console.log(poll?.top_proposal)
+    let roots = inputComments.filter((comment) => comment.reply_to === null);
+    let replies = inputComments.filter((comment) => comment.reply_to !== null);
+    let commentsLeft = inputComments.filter((comment) => comment.reply_to !== null);
     //The finished rendering of the comments will use this one
     let commentDisplayOrder = roots
     //How many parent comments a reply has, 0 means root
     let depth = 0
 
-    while (commentsLeft.size > 0 || depth < 10)
-    {
+    while (commentsLeft.size > 0 || depth < 10) {
       depth++;
-      replies.forEach(reply=>
-        {
-          roots.forEach(root=>{
-            
-            if (reply.reply_to === root.id )
-            {
-              //Finds the index in the Array where the reply replied to. 
-              const index2 = commentsLeft.findIndex((comment) => comment.id === reply.id);
-              commentsLeft.splice(index2,1)
-              
-              const index = commentDisplayOrder.findIndex((comment) => comment.id === reply.reply_to);
-              reply.depth = depth;
-              //Puts the comments in the correct order
-              commentDisplayOrder.splice(index+1, 0, reply);
-              
-            }
-          })
+      replies.forEach(reply => {
+        roots.forEach(root => {
+
+          if (reply.reply_to === root.id) {
+            //Finds the index in the Array where the reply replied to. 
+            const index2 = commentsLeft.findIndex((comment) => comment.id === reply.id);
+            commentsLeft.splice(index2, 1)
+
+            const index = commentDisplayOrder.findIndex((comment) => comment.id === reply.reply_to);
+            reply.depth = depth;
+            //Puts the comments in the correct order
+            commentDisplayOrder.splice(index + 1, 0, reply);
+
+          }
         })
-        roots = commentDisplayOrder;
-        replies = commentsLeft;        
-    } 
-    
+      })
+      roots = commentDisplayOrder;
+      replies = commentsLeft;
+    }
+
     return commentDisplayOrder?.map((item, index) => {
       return ((!maxComments || index < maxComments) ?
-          <PostComment {...item} key={index} readOnly={readOnlyComments}
-            onReplyClick={(replyId) => onReplyClick(replyId)}
-            onUpdateComment={() => onUpdateComment(item)}
-            onDeleteComment={() => deleteComment(item.id)}
-            onLikeComment={() => likeComment(item)}>
-          </PostComment> : null
-        );
+        <PostComment {...item} key={index} readOnly={readOnlyComments}
+          onReplyClick={(replyId) => onReplyClick(replyId)}
+          onUpdateComment={() => onUpdateComment(item)}
+          onDeleteComment={() => deleteComment(item.id)}
+          onLikeComment={() => likeComment(item)}>
+        </PostComment> : null
+      );
     });
   };
 
-  const replies = (comments, comment, depth) => 
-  {
+  const replies = (comments, comment, depth) => {
     const output = []
     comments.forEach(comment => {
-      if (comment.reply_to === comment.id)
-      {
+      if (comment.reply_to === comment.id) {
 
       }
     });
@@ -116,54 +111,54 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   return (
     <div className="post-view">
       <div className="post-header d-flex justify-content-between">
-      <div className="post-body">
-      <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
-      {children}  
+        <div className="post-body">
+          <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
+            {children}
           </Link>
-        
-        <div className="post-comment-view">
-          {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+
+          <div className="post-comment-view">
+            {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
               </a>
               </div>
             </div>*/}
-          {
-            !readOnlyComments &&
-            <div className="media">
-              <Image src={user.image} className="userImage" errImg={'/img/no-photo.jpg'} />
-              <div className="media-body">
-                <CommentBox poll={poll} replyTo={replyTo}
-                  updateComment={editComment}
-                  onInputBlur={() => { setReplyTo(null); setEditComment(null) }}
-                  onAddComment={(message) => {
-                    if (editComment) {
-                      const comment = editComment;
-                      comment.comment = message;
-                      updateComment(comment);
-                    } else {
-                      if (addComment && typeof addComment === 'function') {
-                        try {
-                          console.log('in post add comment', replyTo);
-                          addComment(message, poll.id, replyTo)
-                        } catch (e) {
-                          // print error message
+            {
+              !readOnlyComments &&
+              <div className="media">
+                <Image src={user.image} className="userImage" errImg={'/img/no-photo.jpg'} />
+                <div className="media-body">
+                  <CommentBox poll={poll} replyTo={replyTo}
+                    updateComment={editComment}
+                    onInputBlur={() => { setReplyTo(null); setEditComment(null) }}
+                    onAddComment={(message) => {
+                      if (editComment) {
+                        const comment = editComment;
+                        comment.comment = message;
+                        updateComment(comment);
+                      } else {
+                        if (addComment && typeof addComment === 'function') {
+                          try {
+                            console.log('in post add comment', replyTo);
+                            addComment(message, poll.id, replyTo)
+                          } catch (e) {
+                            // print error message
+                          }
                         }
                       }
-                    }
-                  }} />
+                    }} />
+                </div>
               </div>
-            </div>
-          }
-          <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
-        </div>
-          {(poll.top_proposal && poll.type === "event") ? 
-            <div><h5>Meeting date:</h5> 
-            {poll.top_proposal?.proposal === "Drop this mission" 
-            ? "No Meeting" 
-            : <><h4>{poll.top_proposal?.date?.split('T')[0]}</h4><h4>{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[1]}</h4></>
-          }</div> : null}
+            }
+            <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
           </div>
+          {(poll.top_proposal && poll.type === "event") ?
+            <div><h5>Meeting date:</h5>
+              {poll.top_proposal?.proposal === "Drop this mission"
+                ? "No Meeting"
+                : <><h4>{poll.top_proposal?.date?.split('T')[0]}</h4><h4>{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[1]}</h4></>
+              }</div> : null}
+        </div>
 
-          {/* // <div className="media post-meida">
+        {/* // <div className="media post-meida">
           //   <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
           //   <div className="media-body">
           //     <h5 className="user-name">
@@ -177,8 +172,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             
           // </div> */}
 
-        
-      <>{/* <div className="post-action dropdown">
+
+        <>{/* <div className="post-action dropdown">
           <a
             href="#"
             id="postAction"
@@ -216,10 +211,14 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
         </div> */}</>
 
       </div>
-      
-        {poll && poll.created_by &&            
-              <div className="font-small mt-2 text-grey">{poll.created_by?.first_name} · {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
-        }
+
+      {poll && poll.created_by &&
+        <div className="font-small mt-2 text-grey">
+          <div>{poll.created_by?.first_name}  </div>
+          <div>Created: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
+          <div>Ends: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+        </div>
+      }
     </div>
   );
 }
