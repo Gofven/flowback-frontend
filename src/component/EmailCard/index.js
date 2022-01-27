@@ -5,19 +5,18 @@ import { inputKeyValue } from '../../utils/common';
 import { postRequest } from "../../utils/API";
 import Loader from "../../component/common/Loader";
 
-export default function SendEmail({groupId})
-{
-    const [state, setState] = useState({subject:"", message:""});
-    const {subject, message} = state;
-    const [status, setStatus] = useState({text:"", color:"black"});
+export default function SendEmail({ groupId, userType }) {
+    const [state, setState] = useState({ subject: "", message: "" });
+    const { subject, message } = state;
+    const [status, setStatus] = useState({ text: "", color: "black" });
     const [loading, setLoading] = useState(false);
 
     const handleOnChange = (e) => {
         console.log(state)
         setState({ ...state, ...inputKeyValue(e) });
-      }; 
+    };
 
-      const handleSendMail = () => {
+    const handleSendMail = () => {
         // console.log(groupId)
         setLoading(true)
         var data = new FormData();
@@ -26,51 +25,56 @@ export default function SendEmail({groupId})
 
         postRequest(`api/v1/user_group/${groupId}/mail_all_group_members`, data).then(response => {
             setLoading(false)
-            if (response === "")
-            {
-                setStatus({text:"Successfully sent mail", color:"green"});
+            if (response === "") {
+                setStatus({ text: "Successfully sent mail", color: "green" });
             }
         }).catch(() => {
-            setStatus({text:"Something went wrong", color:"red"});
+            setStatus({ text: "Something went wrong", color: "red" });
         })
-      }
-
+    }
     return (
-    <div className="document-card card-rounded mb-4">
-        <div className="card-header flex-header tab-header">
-            <h4 className="card-title">Send Email</h4>
-        </div>
-        <Loader loading={loading}>
-            <div className="card-body">
-            <h4 style={{"color":status.color}}>{status.text}</h4>
-            <form className="form login_form" id="loginForm">
-                <div className="form-group">
-                <h5>Title</h5>
-                <Textbox
-                    name="subject"
-                    value={subject}
-                    onChange={handleOnChange}
-                    required
-                    />
+        userType === "Owner" ?
+            <div className="document-card card-rounded mb-4">
+                <div className="card-header flex-header tab-header">
+                    <h4 className="card-title">Send Email</h4>
                 </div>
-                <div className="form-group" style={{"margin-top":"3%"}}>
-                <h5>Email</h5>
-                <Textarea
-                    name="message"
-                    value={message}
-                    onChange={handleOnChange}
-                    required
-                    />
+                <Loader loading={loading}>
+                    <div className="card-body">
+                        <h4 style={{ "color": status.color }}>{status.text}</h4>
+                        <form className="form login_form" id="loginForm">
+                            <div className="form-group">
+                                <h5>Title</h5>
+                                <Textbox
+                                    name="subject"
+                                    value={subject}
+                                    onChange={handleOnChange}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group" style={{ "margin-top": "3%" }}>
+                                <h5>Email</h5>
+                                <Textarea
+                                    name="message"
+                                    value={message}
+                                    onChange={handleOnChange}
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-hover"
+                                //disabled={!formVaxlid}
+                                onClick={handleSendMail}>
+                                Send
+                            </button>
+                        </form>
+                    </div>
+                </Loader>
+            </div> : <div className="document-card card-rounded mb-4">
+                <div className="card-header flex-header tab-header">
+                    <h4 className="card-title">
+                        Only an Admin is allowed to send emails</h4>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-primary btn-hover"
-                    //disabled={!formVaxlid}
-                    onClick={handleSendMail}>
-                    Send
-                </button>
-            </form>
-            </div>
-        </Loader>
-        </div>)
+                <div className="card-body"></div>
+            </div>)
 }
