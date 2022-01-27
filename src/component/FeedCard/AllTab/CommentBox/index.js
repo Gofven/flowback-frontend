@@ -24,7 +24,7 @@ import { postRequest } from "../../../../utils/API";
 export default function CommentBox({ border = true, onAddComment, replyTo, onInputBlur, updateComment, poll }) {
 
   const inputRef = useRef();
-  const commentBeingRepliedTo = poll.comments_details.comments.find(comment=>comment.id===replyTo);
+  const commentBeingRepliedTo = poll.comments_details.comments.find(comment => comment.id === replyTo);
   const handleKeypress = (e) => {
     console.log("e", e);
     console.log("e", e.target.value);
