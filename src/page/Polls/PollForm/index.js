@@ -339,6 +339,7 @@ export default function PollForm() {
                                                         minDate={new Date()}
                                                         showTimeSelect
                                                         dateFormat="Pp"
+                                                        popperPlacement="top-start"
                                                     />
                                                 </div></>}
                                         <div className="text-center my-5">

@@ -502,13 +502,17 @@ export default function PollDetails() {
                                                     <div>
                                                         Meeting Time
                                                     </div>
-                                                    <DatePicker
-                                                        selected={counterProposal.date}
-                                                        onChange={onDateTimeSelect}
-                                                        minDate={new Date()}
-                                                        showTimeSelect
-                                                        dateFormat="Pp"
-                                                    />
+                                                    <div className="date-picker">
+                                                        <DatePicker
+                                                            selected={counterProposal.date}
+                                                            onChange={onDateTimeSelect}
+                                                            minDate={new Date()}
+                                                            showTimeSelect
+                                                            dateFormat="Pp"
+                                                            popperPlacement="right-start"
+
+                                                        />
+                                                    </div>
                                                 </div> : <div>
                                                     <h5 style={{ "color": "red" }}>{error}</h5>
                                                     <div className="form-group">

@@ -52,3 +52,9 @@
   background-color: rgba(2, 100, 195, 0.05);
   border-color: #0264c3;
 }
+
+/* Funny fix */
+.date-picker > .react-datepicker__tab-loop > .react-datepicker-popper{
+    left:-210px !important;
+    top:-20px !important;
+}

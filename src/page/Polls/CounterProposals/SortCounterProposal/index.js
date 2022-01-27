@@ -28,10 +28,10 @@ import { formatDate } from '../../../../utils/common';
 import Profile from '../../../../component/User/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
 
-const Container = styled.div`
+const div = styled.div`
   margin: 12px 0;
   border: 1px solid lightgrey;
   border-radius: 2px;
@@ -39,6 +39,9 @@ const Container = styled.div`
 const Title = styled.h5`
   padding: 8px;
   margin-bottom: 0;
+  text-align:center;
+  font-size:2rem;
+  font-weight:680;
 `;
 const TaskList = styled.div`
   padding: 8px 16px;
@@ -72,7 +75,7 @@ const initialData = {
 
 function Column(props) {
     console.log('columns', props);
-    return <Container>
+    return <div className="container">
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
             (props.column.id === "neutral" && <Title>Abstain</Title>) ||
@@ -87,10 +90,11 @@ function Column(props) {
                 return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
             })}
         </div>
-    </Container>
+    </div>
 }
 
 function ProposalBox(props) {
+    const [expandedDescription, setExpandedDescription] = useState(false)
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
@@ -105,43 +109,53 @@ function ProposalBox(props) {
             </a>
                 : null}
             <div className="post-header d-flex justify-content-between card-header mb-0">
-                {counterProposal && counterProposal.user &&
-                    <div className="media post-meida">
-                        <Image src={counterProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
-                        <div className="media-body">
-                            <h5 className="user-name">
-                                <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
-                            </h5>
-                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div className="proposal-top-part">
                 <div className="counter-proposal-title">
                     <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
                         <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
                         <LinesEllipsis
                             text={counterProposal?.title}
-                            maxLine='3'
+                            maxLine='2'
                             ellipsis='...'
                             trimRight
                             basedOn='letters' /></h4>
                 </div>
-                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-3x"} />}
-                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-3x"} />}
+            </div>
+            <div className="proposal-top-part">
+                <div className="proposal-description">
+                    <LinesEllipsis
+                        text={counterProposal?.description}
+                        ellipsis="..."
+                        trimRight
+                        maxLine={`${expandedDescription ? "1000" : "3"}`}
+                        basedOn='letters' />
 
+                    {counterProposal?.description !== "No description" &&
+                        <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
+                            icon={faArrowCircleDown}
+                            color=''
+                            size='2x'
+                            onClick={() => setExpandedDescription(!expandedDescription)} />}
+
+                </div>
+            </div>
+
+            <div className="proposal-buttons-and-user">
                 {/* The backend only supports one textfield for a proposal so putting "~" between the title and description is a workaround */}
 
-
-
-            </div>
-            <div className="proposal-description">
-                <LinesEllipsis
-                    text={counterProposal?.description}
-                    ellipsis="..."
-                    trimRight
-                    basedOn='letters' />
+                {counterProposal && counterProposal.user &&
+                    <div className="media post-meida">
+                        {/* <Image src={counterProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} /> */}
+                        <div className="media-body proposal-bottom">
+                            <a className="user-name user-name-proposal">
+                                <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
+                            </a>
+                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                        </div>
+                    </div>
+                }
+                {/* </div> */}
+                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
+                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
             </div>
         </div>
     </div>

@@ -26,9 +26,11 @@ import { Button } from "../../../component/common";
 import { postRequest, deleteRequest } from '../../../utils/API';
 import { formatDate } from "../../../utils/common";
 import Loader from '../../common/Loader';
+import { SearchFilter } from "../../common/Filter";
 
 export default function AllTab(props) {
 
+    const [filter, setFilter] = useState({ search: "" });
     const [document, setDocument] = useState({
         doc: null,
         doc_name: "",
@@ -49,6 +51,7 @@ export default function AllTab(props) {
      * To add document
      */
     const AddDocument = () => {
+        console.log("I am sure")
         setLoading(true)
         var data = new FormData();
         Object.keys(document).forEach((key) => {
@@ -84,6 +87,7 @@ export default function AllTab(props) {
      */
     const getDocuments = () => {
         setLoading(true);
+        console.log("I'm here")
         postRequest("api/v1/user_group/get_all_group_docs", { group: props.groupId }).then(
             (response) => {
                 console.log('response', response);
@@ -125,10 +129,12 @@ export default function AllTab(props) {
 
     useEffect(() => {
         getDocuments()
-    }, [])
+        console.log("I'm down here")
+    }, [props])
 
     return (
         <Loader loading={loading}>
+            <SearchFilter setFilter={setFilter} filter={filter} />
             {(!document.doc) ?
                 (
                     <div className="grupper-card">
@@ -146,7 +152,7 @@ export default function AllTab(props) {
                     <label htmlFor='document'>
                         <div>{document.doc_name}</div>
                     </label>
-                    <div className='d-flex'> Upload: 
+                    <div className='d-flex'> Upload:
                         <FontAwesomeIcon className="cursor-pointer"
                             icon={faUpload} color='black' size='lg' onClick={AddDocument} />
                         <div className='px-2'> Discard: </div>
@@ -158,7 +164,8 @@ export default function AllTab(props) {
 
             {
                 documents.map((document, key) => (
-                    <div className="media mb-2" key={document}>
+                    document.doc_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
+                    <div className="media mb-2" key={key}>
                         <div class="cursor-pointer">
                             <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' onClick={() => { viewDocument(document) }} />
                         </div>
