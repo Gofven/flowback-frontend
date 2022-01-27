@@ -41,7 +41,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
     </div>
 }
 
-export function DropDownPollFilter() {
+export function DropDownFilter({ pollFilter, setPollFilter }) {
     <Dropdown>
         <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
         </Dropdown.Toggle>

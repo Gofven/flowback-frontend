@@ -1,4 +1,4 @@
-import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCircleNotch, faCheck, faDownload, faArrowUp, faArrowDown, faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export function Condorcet(props) {
@@ -25,7 +25,7 @@ export function Condorcet(props) {
             onClick={() => props.onClickCondorcet({ ...inputs, destination: props.columnId === "neutral" ? "positive" : "neutral" })}
             className="against">
             <FontAwesomeIcon className={props.iconSize}
-                icon={props.columnId === "neutral" ? faPlus : faTrash} color='' size={props.iconSize} />
+                icon={props.columnId === "neutral" ? faPlus : faMinus} color='' size={props.iconSize} />
             <div>{props.columnId === "neutral" ? "ADD" : "REMOVE"}</div>
         </button>
     </div >
