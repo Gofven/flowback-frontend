@@ -26,9 +26,11 @@ import { Link } from "react-router-dom";
 import { postRequest } from "../../utils/API";
 import Image from "../../component/common/Image";
 import { Form } from "react-bootstrap";
+import { SearchFilter } from '../../component/common/Filter/'
 
 export default function Friends() {
 
+  const [filter, setFilter] = useState({ search: "" })
   const [groups, setGroups] = useState([]);
   const [contries, setContries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -124,14 +126,14 @@ export default function Friends() {
 
   // Join group request as a delegate
   const handleOnJoinGroupAsADelegate = (item) => {
-    postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true}).then(
-        (response) => {
-            if (response) {
-                const { status, data } = response;
-                getGroups();
-            }
-        });
-}
+    postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true }).then(
+      (response) => {
+        if (response) {
+          const { status, data } = response;
+          getGroups();
+        }
+      });
+  }
 
   // Reset filter for place
   const onClickAnywhere = () => {
@@ -183,7 +185,7 @@ export default function Friends() {
     setFilters({ ...filters, filter_city: e.target.value });
 
   }
-
+  console.log(groups)
 
   return (
     <Layout1>
@@ -201,40 +203,43 @@ export default function Friends() {
                   </div>
                 </div>
               </Link>
+              <SearchFilter setFilter={setFilter} filter={filter} />
               {
                 groups?.map((item, index) => (
-                  <div className="grupper-card" key={item.id}>
+                  (item.title?.toUpperCase().includes(filter.search.toUpperCase()) ||
+                    item.description?.toUpperCase().includes(filter.search.toUpperCase())) &&
+                  < div className="grupper-card" key={item.id} >
 
                     <Link to={`/groupdetails/${item.id}`}>
-                    <div className="grupper-img-view">
-                      <div className="media grupper-img-content">
-                        <Image src={item.image} className="grupper-dp" />
-                        <div className="media-body">
+                      <div className="grupper-img-view">
+                        <div className="media grupper-img-content">
+                          <Image src={item.image} className="grupper-dp" />
+                          <div className="media-body">
 
-                         
 
-                          <h3 className="grupper-title text-truncate">
-                        
-                            {item.title}
-                          
-                          </h3>
 
-                        
+                            <h3 className="grupper-title text-truncate">
+
+                              {item.title}
+
+                            </h3>
+
+
+                          </div>
                         </div>
+                        <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
                       </div>
-                      <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'}  />
-                    </div>
                     </Link>
                     <div className="grupper-content-view">
                       <div className="media">
                         <div className="pr-2">
                           <p className="member-count">
-                           {item.total_members || 0} <p>members</p>
+                            {item.total_members || 0} <p>members</p>
                           </p>
-                          
+
                         </div>
                         <div className="media-body">
-                        {/* <Link to={`/groupdetails/${item.id}`}> */}
+                          {/* <Link to={`/groupdetails/${item.id}`}> */}
                           <p className="grupper-description line-4">
                             {item.description}
                           </p>
@@ -245,11 +250,11 @@ export default function Friends() {
                           {
                             item.user_type ?
                               <h4
-                                
-                                
+
+
                               >
                                 <i className="las la-check text-success mr-1"></i>
-                                {item.user_type === "Delegator" ? "Delegate" : "Member"} 
+                                {item.user_type === "Delegator" ? "Delegate" : "Member"}
 
                               </h4> :
                               (
@@ -260,18 +265,18 @@ export default function Friends() {
                                   >
                                     {item.group_join_status}
                                   </a> :
-                                 <div className="flex-row">
-                                  <a
-                                    href="#"
-                                    className="btn btn-sm btn-block btn-outline-secondary"
-                                    onClick={() => { handleOnJoinGroupAsAMember(item) }}
-                                  >Join as member</a>
-                                  <a
-                                    href="#"
-                                    className="btn btn-sm btn-block btn-outline-secondary"
-                                    onClick={() => { handleOnJoinGroupAsADelegate(item) }}
-                                  >Join as delegate</a>
-                                </div>
+                                  <div className="flex-row">
+                                    <a
+                                      href="#"
+                                      className="btn btn-sm btn-block btn-outline-secondary"
+                                      onClick={() => { handleOnJoinGroupAsAMember(item) }}
+                                    >Join as member</a>
+                                    <a
+                                      href="#"
+                                      className="btn btn-sm btn-block btn-outline-secondary"
+                                      onClick={() => { handleOnJoinGroupAsADelegate(item) }}
+                                    >Join as delegate</a>
+                                  </div>
                               )
                           }
                         </div>
@@ -438,6 +443,6 @@ export default function Friends() {
         </div>
 
       </section>
-    </Layout1>
+    </Layout1 >
   );
 }

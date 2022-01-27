@@ -6,7 +6,7 @@ export function Condorcet(props) {
     return <div className="vote-buttons">
         {props.columnId === "positive" && <button
             onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: 1 })}
-            className="for">
+            className={`for ${props.index === 0 ? "voteDisabled" : null}`}>
             <FontAwesomeIcon className={props.iconSize}
                 icon={faArrowUp} color='' size={props.iconSize} />
             <div>UP</div>
@@ -15,7 +15,7 @@ export function Condorcet(props) {
         {
             props.columnId === "positive" && <button
                 onClick={() => props.onClickCondorcet({ ...inputs, destination: "positive", destinationIndex: -1 })}
-                className="abstain" >
+                className={`abstain ${props.index === props.columnLength - 1 ? "voteDisabled" : null}`} >
                 <FontAwesomeIcon className={props.iconSize}
                     icon={faArrowDown} color='' size={props.iconSize} />
                 <div>DOWN</div>
