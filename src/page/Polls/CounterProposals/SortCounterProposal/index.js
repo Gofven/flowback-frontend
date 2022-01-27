@@ -133,7 +133,7 @@ function ProposalBox(props) {
                         <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
                             icon={faArrowCircleDown}
                             color=''
-                            size='lg'
+                            size='2x'
                             onClick={() => setExpandedDescription(!expandedDescription)} />}
 
                 </div>
