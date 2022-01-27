@@ -268,6 +268,7 @@ export default function PollsTab(props) {
         <div className="tab-pane fade show active" id="PollsTab">
 
             <DropDownPollFilter setPollFilter={setPollFilter} pollFilter={pollFilter} />
+            {/* <DropDownFilter setPollFilter={setPollFilter} pollFilter={pollFilter} filterCategories={["In progress", "Finished"]} filterTitle="Poll Progress" /> */}
             <SearchFilter setFilter={setPollFilter} filter={pollFilter} />
 
             {polls?.map((poll, index) => {

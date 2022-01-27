@@ -26,11 +26,11 @@ import { Link } from "react-router-dom";
 import { postRequest } from "../../utils/API";
 import Image from "../../component/common/Image";
 import { Form } from "react-bootstrap";
-import { SearchFilter } from '../../component/common/Filter/'
+import { SearchFilter, DropDownFilterGroup } from '../../component/common/Filter/'
 
 export default function Friends() {
 
-  const [filter, setFilter] = useState({ search: "" })
+  const [filter, setFilter] = useState({ search: "", typeOfMember: null })
   const [groups, setGroups] = useState([]);
   const [contries, setContries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -204,10 +204,13 @@ export default function Friends() {
                 </div>
               </Link>
               <SearchFilter setFilter={setFilter} filter={filter} />
+              <DropDownFilterGroup setFilter={setFilter} filter={filter} />
+
               {
                 groups?.map((item, index) => (
                   (item.title?.toUpperCase().includes(filter.search.toUpperCase()) ||
                     item.description?.toUpperCase().includes(filter.search.toUpperCase())) &&
+                  (item.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                   < div className="grupper-card" key={item.id} >
 
                     <Link to={`/groupdetails/${item.id}`}>
@@ -215,16 +218,9 @@ export default function Friends() {
                         <div className="media grupper-img-content">
                           <Image src={item.image} className="grupper-dp" />
                           <div className="media-body">
-
-
-
                             <h3 className="grupper-title text-truncate">
-
                               {item.title}
-
                             </h3>
-
-
                           </div>
                         </div>
                         <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
@@ -246,13 +242,9 @@ export default function Friends() {
                           {/* </Link> */}
                         </div>
                         <div className="grupper-btn-view">
-
                           {
                             item.user_type ?
-                              <h4
-
-
-                              >
+                              <h4>
                                 <i className="las la-check text-success mr-1"></i>
                                 {item.user_type === "Delegator" ? "Delegate" : "Member"}
 
