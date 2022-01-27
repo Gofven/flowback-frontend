@@ -26,6 +26,7 @@ import Modal from 'react-bootstrap/Modal';
 import a from 'react-bootstrap/Button';
 import './styles.css';
 import Loader from '../../common/Loader';
+import { SearchFilter } from "../../common/Filter";
 
 
 export default function GroupMembers(props) {
@@ -34,11 +35,11 @@ export default function GroupMembers(props) {
     const [members, setMembers] = useState([]);
     const [totalMembers, setTotalMemebers] = useState(0);
     const [canMemberVote, setCanMemberVote] = useState([]);
-    const [status, setStatus] = useState({text:"", color:"black"});
+    const [status, setStatus] = useState({ text: "", color: "black" });
     const [loading, setLoading] = useState(false);
 
     const [chosenDelegateId, setChosenDelegateId] = useState(null);
-
+    const [filter, setFilter] = useState({ search: "" })
     /**
      * To get all group memebers
      */
@@ -130,7 +131,7 @@ export default function GroupMembers(props) {
             setCanMemberVote(response)
             setLoading(false);
         })
-        
+
     }
 
     const postVotingRights = (memberId, allowVote) => {
@@ -140,14 +141,14 @@ export default function GroupMembers(props) {
             console.log(response, "REPONSE");
             console.log(canMemberVote)
             if (response.detail === "You do not have permission to perform this action.") {
-                setStatus({text: "You don't have permission to change users voting rights", color:"red"});
+                setStatus({ text: "You don't have permission to change users voting rights", color: "red" });
             }
-            setStatus({text:"Successfully changed vote", color:"green"});
+            setStatus({ text: "Successfully changed vote", color: "green" });
             getVotingRights();
         })
     }
 
-    const handleChangeVotingRight = (memberId, index) =>{
+    const handleChangeVotingRight = (memberId, index) => {
         const members = canMemberVote;
         const member = members.find(member => member.user === memberId);
         const newVoteRight = !members[members.indexOf(member)].allow_vote;
@@ -158,10 +159,10 @@ export default function GroupMembers(props) {
 
     const DeselectDelegateButton = () => {
         const [show, setShow] = useState(false);
-        
+
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
-        
+
         return (
             <>
                 <a variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
@@ -191,20 +192,22 @@ export default function GroupMembers(props) {
         );
     }
 
-
+    console.log(members)
 
     return (
         <Loader loading={loading}>
-            <div style={{"color":status.color}}>{status.text}</div>
+            <SearchFilter setFilter={setFilter} filter={filter} />
+            <div style={{ "color": status.color }}>{status.text}</div>
             <div className="mb-2 titles">
                 <div>{totalMembers} Members</div>
                 <div>Voting Rights</div>
-                <div>Admin</div> 
+                <div>Admin</div>
                 <div>Select as Delegate</div>
             </div>
             {
                 members?.map((member, index) => (
-                    <div className="titles media member-block" key={index}>
+                    member.first_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
+                    < div className="titles media member-block" key={index} >
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
                             <div>
@@ -212,18 +215,18 @@ export default function GroupMembers(props) {
                             </div>
                         </div>
                         <div>
-                            <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false} 
-                            onChange={() => handleChangeVotingRight(member.id, index)} 
-                            disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
+                            <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false}
+                                onChange={() => handleChangeVotingRight(member.id, index)}
+                                disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
                         <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
                         <div >
                             {/* <div className="menu d-flex align-items-center"> */}
-                                {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
-                                {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
+                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
+                            {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
                         </div>
-                            {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
+                        {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
                                 <Dropdown>
                                     <Dropdown.Toggle variant="white" id="dropdown-basic">
                                     </Dropdown.Toggle>
@@ -243,6 +246,6 @@ export default function GroupMembers(props) {
                     </div>
                 ))
             }
-        </Loader>
+        </Loader >
     );
 }
