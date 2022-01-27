@@ -39,6 +39,8 @@ const div = styled.div`
 const Title = styled.h5`
   padding: 8px;
   margin-bottom: 0;
+  text-align:center;
+  font-size:2rem;
 `;
 const TaskList = styled.div`
   padding: 8px 16px;
