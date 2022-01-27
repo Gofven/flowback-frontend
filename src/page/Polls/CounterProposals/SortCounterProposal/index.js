@@ -156,6 +156,7 @@ function ProposalBox(props) {
                 {/* </div> */}
                 {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
                 {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
+                {props.votingType === "cardinal" && <input type="number"></input>}
             </div>
         </div>
     </div>
@@ -320,6 +321,9 @@ function SortCounterProposal(props) {
                     {/* {props.votingType !== "traffic" ? */}
                     {state.columnOrder.map(columnId => {
                         if (columnId === "negative" && props.votingType === "condorcet") {
+                            return;
+                        }
+                        if (columnId !== "neutral" && props.votingType === "cardinal") {
                             return;
                         }
                         const column = state.columns[columnId];
