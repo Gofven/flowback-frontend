@@ -40,6 +40,7 @@
 .vote-buttons > button{
     font-size: clamp(10px, 1.4vmax, 11px);
     border-width: 0px;
+    background-color: transparent;
 }
 
 .vote-buttons > button > div{
@@ -51,7 +52,7 @@
 }
 
 .for{
-    background-color: lightgreen;
+    color: lightgreen;
     transition: filter 0.6s cubic-bezier(0.165, 0.84, 0.15, 1);
 }
 
@@ -60,7 +61,7 @@
 }
 
 .abstain{
-    background-color: #fade6e;
+    color: #fade6e;
     transition: filter 0.6s cubic-bezier(0.165, 0.84, 0.15, 1);
 }
 
@@ -70,7 +71,7 @@
 
 .against{
     transition: filter 0.6s cubic-bezier(0.165, 0.84, 0.15, 1);
-    background-color: #f66c67;
+    color: #f66c67;
     margin-right:-2.5px;
 }
 
