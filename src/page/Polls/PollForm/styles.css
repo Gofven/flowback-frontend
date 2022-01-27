@@ -169,3 +169,24 @@ input[type=file] {
 .create_group_form .form-group .tags-input {
     margin: 0 !important;
 }
+
+.expand-description-circle{
+    cursor: pointer;
+    transition: transform 1.5s;
+}
+
+.clicked{
+    transform:rotate(180deg);
+}
+
+.votingExplanation{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.votingExplanationTexts > div{
+    
+    padding:1rem;
+    margin:0.5rem;
+}
