@@ -23,6 +23,8 @@
     position: relative;
     border-radius: 8px;
     margin-bottom: 16px;
+    box-shadow: inset 0rem 0rem 0.8rem rgb(0, 0, 0, 0.1)
+
 }
 
 .points {

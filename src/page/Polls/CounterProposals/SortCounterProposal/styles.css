@@ -31,9 +31,10 @@
 }
 
 .vote-buttons{
-    display:grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 80px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .vote-buttons > button{
@@ -113,4 +114,17 @@ textarea{
 
 .proposal-top-part > .vote-buttons{
     width:50%;
+}
+
+.user-name-proposal{
+    size:2rem;
+    cursor: pointer;
+
+}
+
+.container{
+    box-shadow: inset 0rem 0rem 0.4rem rgb(0 0 0 / 10%);
+    margin-bottom: 50px;
+    border-radius: 10px;
+    padding:0;
 }
