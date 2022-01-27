@@ -125,7 +125,7 @@ textarea{
 
 }
 
-.container{
+.column-container{
     box-shadow: inset 0rem 0rem 0.4rem rgb(0 0 0 / 10%);
     margin-bottom: 50px;
     border-radius: 10px;

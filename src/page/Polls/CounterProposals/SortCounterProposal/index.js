@@ -75,7 +75,7 @@ const initialData = {
 
 function Column(props) {
     console.log('columns', props);
-    return <div className="container">
+    return <div className="column-container">
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
             (props.column.id === "neutral" && <Title>Abstain</Title>) ||
