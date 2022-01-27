@@ -54,14 +54,14 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   first comment that doesn't reply to anyone, and it builds from there. Made by Emil
   */
   const renderComments = (inputComments) => {
-    console.log(poll?.top_proposal)
+    console.log(inputComments, "INPUT COPMMENTS")
     let roots = inputComments.filter((comment) => comment.reply_to === null);
     let replies = inputComments.filter((comment) => comment.reply_to !== null);
-    let commentsLeft = inputComments.filter((comment) => comment.reply_to !== null);
+    let commentsLeft = replies;
     //The finished rendering of the comments will use this one
-    let commentDisplayOrder = roots
+    let commentDisplayOrder = roots;
     //How many parent comments a reply has, 0 means root
-    let depth = 0
+    let depth = 0;
 
     while (commentsLeft.size > 0 || depth < 10) {
       depth++;
@@ -85,7 +85,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
       replies = commentsLeft;
     }
 
+    console.log(commentDisplayOrder)
     return commentDisplayOrder?.map((item, index) => {
+      if (item.reply_to === null) item.depth = 0;
       return ((!maxComments || index < maxComments) ?
         <PostComment {...item} key={index} readOnly={readOnlyComments}
           onReplyClick={(replyId) => onReplyClick(replyId)}
@@ -117,10 +119,10 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           </Link>
 
           <div className="post-comment-view">
-            {/*<div className="post-share"><div><a href="#"> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
-              </a>
-              </div>
-            </div>*/}
+            <div className="post-share"><div> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+
+            </div>
+            </div>
             {
               !readOnlyComments &&
               <div className="media">
@@ -157,6 +159,8 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
                 : <><h4>{poll.top_proposal?.date?.split('T')[0]}</h4><h4>{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[1]}</h4></>
               }</div> : null}
         </div>
+
+
 
         {/* // <div className="media post-meida">
           //   <Image src={poll.created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />

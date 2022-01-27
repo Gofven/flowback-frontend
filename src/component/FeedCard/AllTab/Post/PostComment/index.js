@@ -47,7 +47,7 @@ export default function PostComment({
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (                //Pushes comments further left for each reply in a chain of replies
-    <div className="media" style={{"margin-left":`${depth*15}px`}}>
+    <div className="media" style={{ "margin-left": `${depth * 15}px` }}>
       {created_by &&
         <Image src={created_by.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
       }
@@ -61,10 +61,10 @@ export default function PostComment({
             edited &&
             <a href="#">Edited</a>
           }
-          {/*(!readOnly) &&
-            <a className="cursor-pointer"
-          onClick={() => onReplyClick(id)}>Reply</a>
-          */}
+
+          <a className="cursor-pointer"
+            onClick={() => onReplyClick(id)}>Reply</a>
+
         </div>
         {children}
       </div>
