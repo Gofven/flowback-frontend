@@ -31,7 +31,7 @@ export default function ResetPassword({ loading, setLoading }) {
       return;
     }
     else if (password.length < 8) {
-      setStatus("Password must be longer than 7 letters");
+      setStatus("Password must be 8 characters or more");
       return;
     }
     else if (verification_code === "") {
