@@ -75,8 +75,9 @@
 }
 
 .voteDisabled{
-    filter: grayscale(.6);
+    filter: grayscale(.25);
     pointer-events: none;
+    color:grey;
 
 }
 
