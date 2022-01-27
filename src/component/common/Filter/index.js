@@ -4,7 +4,7 @@ import SearchBox from "../../Search/SearchBox";
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export function DropDownFilter({ pollFilter, setPollFilter }) {
+export function DropDownPollFilter({ pollFilter, setPollFilter }) {
     return <div>
         <div className="filters">
             <Dropdown>
@@ -39,6 +39,22 @@ export function DropDownFilter({ pollFilter, setPollFilter }) {
             </Dropdown>
         </div>
     </div>
+}
+
+export function DropDownPollFilter() {
+    <Dropdown>
+        <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+            {["In progress", "Finished"].map(filter => {
+                return <Dropdown.Item className="cursor-pointer filterDropdown"
+                    onClick={() => setPollFilter({ ...pollFilter, discussion: filter === pollFilter.discussion ? null : filter })}>
+                    <div>{filter}</div>
+                    <div>{pollFilter.discussion === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
+                </Dropdown.Item>
+            })}
+        </Dropdown.Menu>
+    </Dropdown>
 }
 
 export function SearchFilter({ filter, setFilter }) {

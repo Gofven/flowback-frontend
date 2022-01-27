@@ -28,7 +28,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { UserTypes } from "../../../constants/constants";
-import { DropDownFilter, SearchFilter } from '../../common/Filter/'
+import { DropDownPollFilter, SearchFilter } from '../../common/Filter/'
 
 
 export default function PollsTab(props) {
@@ -267,7 +267,7 @@ export default function PollsTab(props) {
     return (
         <div className="tab-pane fade show active" id="PollsTab">
 
-            <DropDownFilter setPollFilter={setPollFilter} pollFilter={pollFilter} />
+            <DropDownPollFilter setPollFilter={setPollFilter} pollFilter={pollFilter} />
             <SearchFilter setFilter={setPollFilter} filter={pollFilter} />
 
             {polls?.map((poll, index) => {
