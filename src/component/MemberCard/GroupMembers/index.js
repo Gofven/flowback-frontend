@@ -26,7 +26,7 @@ import Modal from 'react-bootstrap/Modal';
 import a from 'react-bootstrap/Button';
 import './styles.css';
 import Loader from '../../common/Loader';
-import { SearchFilter } from "../../common/Filter";
+import { SearchFilter, DropDownFilterGroup } from "../../common/Filter";
 
 
 export default function GroupMembers(props) {
@@ -39,7 +39,7 @@ export default function GroupMembers(props) {
     const [loading, setLoading] = useState(false);
 
     const [chosenDelegateId, setChosenDelegateId] = useState(null);
-    const [filter, setFilter] = useState({ search: "" })
+    const [filter, setFilter] = useState({ search: "", typeOfMember: null })
     /**
      * To get all group memebers
      */
@@ -197,6 +197,8 @@ export default function GroupMembers(props) {
     return (
         <Loader loading={loading}>
             <SearchFilter setFilter={setFilter} filter={filter} />
+            <DropDownFilterGroup setFilter={setFilter} filter={filter} />
+
             <div style={{ "color": status.color }}>{status.text}</div>
             <div className="mb-2 titles">
                 <div>{totalMembers} Members</div>
@@ -207,6 +209,7 @@ export default function GroupMembers(props) {
             {
                 members?.map((member, index) => (
                     member.first_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
+                    (member.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                     < div className="titles media member-block" key={index} >
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />

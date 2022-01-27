@@ -41,20 +41,27 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
     </div>
 }
 
-export function DropDownFilter({ pollFilter, setPollFilter }) {
-    <Dropdown>
-        <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-            {["In progress", "Finished"].map(filter => {
-                return <Dropdown.Item className="cursor-pointer filterDropdown"
-                    onClick={() => setPollFilter({ ...pollFilter, discussion: filter === pollFilter.discussion ? null : filter })}>
-                    <div>{filter}</div>
-                    <div>{pollFilter.discussion === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
-                </Dropdown.Item>
-            })}
-        </Dropdown.Menu>
-    </Dropdown>
+export function DropDownFilterGroup({ filter, setFilter }) {
+    return <div className="filters">
+        <Dropdown>
+            <Dropdown.Toggle variant="white" id="dropdown-basic">Type of Member
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                {["", "Member", "Delegator", "Owner"].map(filterCategory => {
+                    return <Dropdown.Item className="cursor-pointer filterDropdown"
+                        onClick={() => setFilter({ ...filter, typeOfMember: filterCategory === filter.typeOfMember ? null : filterCategory })}>
+                        <div>
+                            {filterCategory === "" && "Not member"}
+                            {filterCategory === "Delegator" && "Delegate"}
+                            {filterCategory === "Member" && "Member"}
+                            {filterCategory === "Owner" && "Admin"}
+                        </div>
+                        <div>{filter.typeOfMember === filterCategory ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
+                    </Dropdown.Item>
+                })}
+            </Dropdown.Menu>
+        </Dropdown>
+    </div>
 }
 
 export function SearchFilter({ filter, setFilter }) {
