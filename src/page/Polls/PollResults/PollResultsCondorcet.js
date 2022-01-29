@@ -44,7 +44,7 @@ function ResultsPieChart({allProposals, totalVotes}) {
     });
 
     const otherData = {
-        title: (colors.length + 1) + " other proposals",
+        title: (colors.length + 1) + ". other proposals",
         value: otherProposals.reduce((acc, proposal) => acc + (proposal.final_score_positive / totalVotes), 0),
         color: '#f1c45b',
     };
