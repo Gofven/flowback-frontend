@@ -75,16 +75,8 @@ const initialData = {
 };
 
 function Column(props) {
-
-    let totalCardinal = 0
-    props.cardinalState.forEach(cardinal => {
-        if (cardinal !== undefined)
-            totalCardinal += cardinal;
-    })
-
     console.log('columns', props);
     return <div className="column-container">
-        {totalCardinal}
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
             (props.column.id === "neutral" && <Title>Abstain</Title>) ||
@@ -150,12 +142,12 @@ function ProposalBox(props) {
                 {/* </div> */}
                 {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
                 {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "cardinal" && <input type="number" min="0" placeholder="0" value={props.cardinalState[props.task.id]}
+                {props.votingType === "cardinal" && <input type="number" min="0" max="1000000" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
                         newInput[props.task.id] = parseInt(e.target.value);
                         props.setCardinalState([...newInput]);
-                        console.log(props.cardinalState)
+                        props.saveCardinal()
                     }}>
                 </input>
                 }
@@ -273,20 +265,25 @@ function SortCounterProposal(props) {
 
     const saveCardinal = () => {
 
-        let toSend = [];
-        let index = 0;
-        cardinalState.forEach((score, scoreIndex) => {
-            if (typeof score === 'number') {
-                toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
-                index++;
+        if (totalCardinalVotes() <= 1000000) {
+            let toSend = [];
+            let index = 0;
+            cardinalState.forEach((score, scoreIndex) => {
+                if (typeof score === 'number') {
+                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
+                    index++;
+                }
+            });
+
+            const data = {
+                positive: toSend
             }
-        });
 
-        const data = {
-            positive: toSend
+            sendData(data)
         }
-
-        sendData(data)
+        else {
+            setMessege({ content: "Above maximum allowed votes", color: "red" })
+        }
     }
 
     const sendData = (data) => {
@@ -343,23 +340,35 @@ function SortCounterProposal(props) {
         const scores = props.scores;
         let cardinals = []
         scores.forEach(score => {
-            console.log(score, "SCORE")
             cardinals[score.proposal] = score.score
         })
 
         setCardinalState(cardinals)
-        console.log(cardinals)
+    }
 
+    const totalCardinalVotes = () => {
+        let totalCardinal = 0
+        if (props.votingType === "cardinal") {
+            cardinalState.forEach(cardinal => {
+                if (cardinal !== undefined)
+                    totalCardinal += cardinal;
+            })
+        }
+
+        return totalCardinal || 0
     }
 
     useEffect(() => { initializeState(); console.log(props, "GROUP") }, [props.proposalIndexes]);
-    useEffect(() => { intializeCardinal(); }, [props.scores]);
+    useEffect(() => { if (props.scores) intializeCardinal(); }, [props.scores]);
 
 
     return (
         <div className='p-4'>
             <Loader loading={loading}>
-                {props.votingType === "cardinal" && <button onClick={saveCardinal}>Save scores</button>}
+                {props.votingType === "cardinal" &&
+                    <div>
+                        <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}/1000000</div>
+                    </div>}
                 <h4>Sort Proposals</h4>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
@@ -389,7 +398,7 @@ function SortCounterProposal(props) {
                             return <Column key={allTasks}
                                 column={"neutral"} tasks={allTasks}
                                 onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet}
-                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} />
+                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} saveCardinal={saveCardinal} />
                         })
                     }
 
