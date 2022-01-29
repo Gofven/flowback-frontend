@@ -30,6 +30,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
+import ProposalDetails from '../../PollResults/ProposalDetails';
 
 const div = styled.div`
   margin: 12px 0;
@@ -94,7 +95,6 @@ function Column(props) {
 }
 
 function ProposalBox(props) {
-    const [expandedDescription, setExpandedDescription] = useState(false)
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
@@ -121,22 +121,7 @@ function ProposalBox(props) {
                 </div>
             </div>
             <div className="proposal-top-part">
-                <div className="proposal-description">
-                    <LinesEllipsis
-                        text={counterProposal?.description}
-                        ellipsis="..."
-                        trimRight
-                        maxLine={`${expandedDescription ? "1000" : "3"}`}
-                        basedOn='letters' />
-
-                    {counterProposal?.description !== "No description" &&
-                        <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
-                            icon={faArrowCircleDown}
-                            color=''
-                            size='2x'
-                            onClick={() => setExpandedDescription(!expandedDescription)} />}
-
-                </div>
+                <ProposalDetails proposal={counterProposal} proposalDescription={counterProposal.description} />
             </div>
 
             <div className="proposal-buttons-and-user">
