@@ -30,6 +30,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
+import ProposalDetails from '../../PollResults/ProposalDetails';
 
 const div = styled.div`
   margin: 12px 0;
@@ -87,17 +88,17 @@ function Column(props) {
             : null}
         <div className="column-style">
             {props.tasks.map((task, index) => {
-                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
+                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} {...props} />
             })}
         </div>
     </div>
 }
 
 function ProposalBox(props) {
-    const [expandedDescription, setExpandedDescription] = useState(false)
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
+
     return <div>
         {/* {props.task.id} - {props.task.content.proposal} */}
         <div className="card counter-proposal-card bg-white">
@@ -121,22 +122,7 @@ function ProposalBox(props) {
                 </div>
             </div>
             <div className="proposal-top-part">
-                <div className="proposal-description">
-                    <LinesEllipsis
-                        text={counterProposal?.description}
-                        ellipsis="..."
-                        trimRight
-                        maxLine={`${expandedDescription ? "1000" : "3"}`}
-                        basedOn='letters' />
-
-                    {counterProposal?.description !== "No description" &&
-                        <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
-                            icon={faArrowCircleDown}
-                            color=''
-                            size='2x'
-                            onClick={() => setExpandedDescription(!expandedDescription)} />}
-
-                </div>
+                <ProposalDetails proposal={counterProposal} proposalDescription={counterProposal.description} />
             </div>
 
             <div className="proposal-buttons-and-user">
@@ -156,16 +142,26 @@ function ProposalBox(props) {
                 {/* </div> */}
                 {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
                 {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "cardinal" && <input type="number"></input>}
+                {props.votingType === "cardinal" && <input type="number" min="0" max="1000000" placeholder="0" value={props.cardinalState[props.task.id]}
+                    onChange={e => {
+                        const newInput = props.cardinalState;
+                        newInput[props.task.id] = parseInt(e.target.value);
+                        props.setCardinalState([...newInput]);
+                        props.saveCardinal()
+                    }}>
+                </input>
+                }
             </div>
         </div>
-    </div>
+    </div >
 }
 
 function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
+    const [cardinalState, setCardinalState] = useState([])
     const [messege, setMessege] = useState({ content: "", color: "black" })
+
 
     /**
      * To intialize counter proposal sorting state
@@ -263,6 +259,34 @@ function SortCounterProposal(props) {
             positive: positive_proposal_indexes,
             negative: negative_proposal_indexes
         }
+
+        sendData(data)
+    }
+
+    const saveCardinal = () => {
+
+        if (totalCardinalVotes() <= 1000000) {
+            let toSend = [];
+            let index = 0;
+            cardinalState.forEach((score, scoreIndex) => {
+                if (typeof score === 'number') {
+                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
+                    index++;
+                }
+            });
+
+            const data = {
+                positive: toSend
+            }
+
+            sendData(data)
+        }
+        else {
+            setMessege({ content: "Above maximum allowed votes", color: "red" })
+        }
+    }
+
+    const sendData = (data) => {
         setLoading(true);
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
@@ -275,13 +299,16 @@ function SortCounterProposal(props) {
                 }
 
                 const { status, data } = response;
-                if (status === "success") {
+                if (status === "success" || response === "") {
                     if (props.onUpdateIndexes) {
                         props.onUpdateIndexes(true);
                         //handleClose();
                     }
+                    setMessege({ content: "Successfully updated your vote", color: "green" })
                 }
-                setMessege({ content: "Successfully updated your vote", color: "green" })
+                else {
+                    setMessege({ content: "A problem has occurred", color: "red" })
+                }
                 setLoading(false);
             }).catch((err) => {
                 setMessege({ content: "A problem has occurred", color: "red" })
@@ -308,40 +335,84 @@ function SortCounterProposal(props) {
         return points;
     }
 
+    const intializeCardinal = () => {
+
+        const scores = props.scores;
+        let cardinals = []
+        scores.forEach(score => {
+            cardinals[score.proposal] = score.score
+        })
+
+        setCardinalState(cardinals)
+    }
+
+    const totalCardinalVotes = () => {
+        let totalCardinal = 0
+        if (props.votingType === "cardinal") {
+            cardinalState.forEach(cardinal => {
+                if (cardinal !== undefined)
+                    totalCardinal += cardinal;
+            })
+        }
+
+        return totalCardinal || 0
+    }
+
     useEffect(() => { initializeState(); console.log(props, "GROUP") }, [props.proposalIndexes]);
+    useEffect(() => { if (props.scores) intializeCardinal(); }, [props.scores]);
 
 
     return (
         <div className='p-4'>
             <Loader loading={loading}>
+                {props.votingType === "cardinal" &&
+                    <div>
+                        <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}/1000000</div>
+                    </div>}
                 <h4>Sort Proposals</h4>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
                     {/* {props.votingType !== "traffic" ? */}
-                    {state.columnOrder.map(columnId => {
+                    {props.votingType !== "cardinal" ? state.columnOrder.map(columnId => {
                         if (columnId === "negative" && props.votingType === "condorcet") {
                             return;
                         }
-                        if (columnId !== "neutral" && props.votingType === "cardinal") {
-                            return;
+
+                        // if (columnId !== "neutral" && props.votingType === "cardinal") {
+                        //     return;
+                        // }
+
+                        if (props.votingType !== "cardinal") {
+                            const column = state.columns[columnId];
+                            const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+
+                            return <Column key={tasks.id} column={column} tasks={tasks}
+                                onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet}
+                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} />;
                         }
-                        const column = state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+                    })
+                        : ["neutral"].map(e => {
+                            let allTasks = Object.values(state.tasks)
 
-                        return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
-                    })}
+                            return <Column key={allTasks}
+                                column={"neutral"} tasks={allTasks}
+                                onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet}
+                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} saveCardinal={saveCardinal} />
+                        })
+                    }
+
                     {/* : <div>
-                            <div className="column-style">
-                                {console.log(state.tasks, "TASKS")}
-                                {state.tasks.map((task, index) => {
-                                    console.log(task, "TASK")
-                                    return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
-                                })}
+                        <div className="column-style">
+                            {console.log(state.tasks, "TASKS")}
+                            {state.tasks.map((task, index) => {
+                                console.log(task, "TASK")
+                                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                            })}
                             </div>
-                        </div>
-
-                    } */}
+                            </div>
+                            
+                        } */}
 
 
 
@@ -349,19 +420,19 @@ function SortCounterProposal(props) {
                         //     const tasks = state.tasks.map(taskId => state.tasks[taskId]);
                         //     console.log(tasks, "TASKS");
                         //     console.log(state, "TASKS");
-
+                        
                         //     return null
                         // return (
-
-                        //     <div className="column-style">
-                        //         {state.tasks.map((task, index) => {
-                        //             console.log(task)
-                        //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
-                        //         })}
-                        //     </div>
-
-                        // )
-                        // } */}
+                            
+                            //     <div className="column-style">
+                            //         {state.tasks.map((task, index) => {
+                                //             console.log(task)
+                                //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                                //         })}
+                                //     </div>
+                                
+                                // )
+                            // } */}
 
                 </div>
             </Loader>
