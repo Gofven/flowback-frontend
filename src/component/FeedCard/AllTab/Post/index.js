@@ -218,7 +218,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
 
       {poll && poll.created_by &&
         <div className="font-small mt-2 text-grey">
-          <div>{poll.created_by?.first_name}  </div>
+          <div>Creator: {poll.created_by?.first_name}  </div>
           <div>Created: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
           <div>Ends: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
         </div>
