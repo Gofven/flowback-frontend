@@ -309,6 +309,17 @@ export default function PollForm() {
                                                         <Form.Check
                                                             inline
                                                             type="radio"
+                                                            id="Cardinal"
+                                                            name="request"
+                                                            label="Cardinal"
+                                                            value="cardinal"
+                                                            checked={pollDetail.voting_type === "cardinal"}
+                                                            onClick={changeVotingType}
+                                                        />
+
+                                                        <Form.Check
+                                                            inline
+                                                            type="radio"
                                                             id="Time"
                                                             name="request"
                                                             label="Time"
@@ -317,19 +328,10 @@ export default function PollForm() {
                                                             onClick={changeVotingType}
                                                         />
 
-                                                        <Form.Check
-                                                            inline
-                                                            type="radio"
-                                                            id="Cardinal"
-                                                            name="request"
-                                                            label="Cardinal"
-                                                            value="cardinal"
-                                                            checked={pollDetail.voting_type === "cardinal"}
-                                                            onClick={changeVotingType}
-                                                        />
+
                                                     </div>
                                                 </div>
-                                                <div className="form-group field votingExplanation">
+                                                <div className="form-group field votingExplanation" onClick={() => setExpandedDescription(!expandedDescription)} style={{cursor:'pointer'}}>
 
                                                     {expandedDescription ? <div className="votingExplanationTexts">
                                                         <div>
@@ -345,8 +347,8 @@ export default function PollForm() {
                                                             <b>Time polls</b>  is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.
                                                         </div>
                                                     </div> :
-                                                        <div>
-                                                            Explain what the different voting types do
+                                                        <div >
+                                                            Click here to get information about the different voting types
                                                         </div>}
                                                     <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
                                                         icon={faArrowCircleDown}
