@@ -87,7 +87,7 @@ function Column(props) {
             : null}
         <div className="column-style">
             {props.tasks.map((task, index) => {
-                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} onClickTrafficLight={props.onClickTrafficLight} votingType={props.votingType} onClickCondorcet={props.onClickCondorcet} />
+                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} columnLength={props.column.taskIds?.length} {...props} />
             })}
         </div>
     </div>
@@ -156,16 +156,26 @@ function ProposalBox(props) {
                 {/* </div> */}
                 {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
                 {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "cardinal" && <input type="number"></input>}
+                {props.votingType === "cardinal" && <input type="number" placeholder="0" value={props.cardinalState[props.task.id]}
+                    onChange={e => {
+                        const newInput = props.cardinalState;
+                        newInput[props.task.id] = e.target.value;
+                        props.setCardinalState(newInput);
+                        console.log(props.cardinalState)
+                    }}>
+                </input>
+                }
             </div>
         </div>
-    </div>
+    </div >
 }
 
 function SortCounterProposal(props) {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(initialData);
+    const [cardinalState, setCardinalState] = useState([])
     const [messege, setMessege] = useState({ content: "", color: "black" })
+
 
     /**
      * To intialize counter proposal sorting state
@@ -263,6 +273,29 @@ function SortCounterProposal(props) {
             positive: positive_proposal_indexes,
             negative: negative_proposal_indexes
         }
+
+        sendData(data)
+    }
+
+    const saveCardinal = () => {
+
+        let toSend = [];
+        let index = 0;
+        cardinalState.forEach((score, scoreIndex) => {
+            if (typeof score === 'string') {
+                toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
+                index++;
+            }
+        });
+
+        const data = {
+            positive: toSend
+        }
+
+        sendData(data)
+    }
+
+    const sendData = (data) => {
         setLoading(true);
         postRequest(`api/v1/group_poll/${props.pollId}/update_index_proposals`, data).then(
             (response) => {
@@ -275,13 +308,16 @@ function SortCounterProposal(props) {
                 }
 
                 const { status, data } = response;
-                if (status === "success") {
+                if (status === "success" || response === "") {
                     if (props.onUpdateIndexes) {
                         props.onUpdateIndexes(true);
                         //handleClose();
                     }
+                    setMessege({ content: "Successfully updated your vote", color: "green" })
                 }
-                setMessege({ content: "Successfully updated your vote", color: "green" })
+                else {
+                    setMessege({ content: "A problem has occurred", color: "red" })
+                }
                 setLoading(false);
             }).catch((err) => {
                 setMessege({ content: "A problem has occurred", color: "red" })
@@ -314,34 +350,51 @@ function SortCounterProposal(props) {
     return (
         <div className='p-4'>
             <Loader loading={loading}>
+                {props.votingType === "cardinal" && <button onClick={saveCardinal}>Save scores</button>}
                 <h4>Sort Proposals</h4>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
                     {/* {props.votingType !== "traffic" ? */}
-                    {state.columnOrder.map(columnId => {
+                    {props.votingType !== "cardinal" ? state.columnOrder.map(columnId => {
                         if (columnId === "negative" && props.votingType === "condorcet") {
                             return;
                         }
-                        if (columnId !== "neutral" && props.votingType === "cardinal") {
-                            return;
+
+                        // if (columnId !== "neutral" && props.votingType === "cardinal") {
+                        //     return;
+                        // }
+
+                        if (props.votingType !== "cardinal") {
+                            const column = state.columns[columnId];
+                            const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+
+                            return <Column key={tasks.id} column={column} tasks={tasks}
+                                onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet}
+                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} />;
                         }
-                        const column = state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+                    })
+                        : ["neutral"].map(e => {
+                            let allTasks = Object.values(state.tasks)
 
-                        return <Column key={tasks.id} column={column} tasks={tasks} onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet} votingType={props.votingType} />;
-                    })}
+                            return <Column key={allTasks}
+                                column={"neutral"} tasks={allTasks}
+                                onClickTrafficLight={onClickTrafficLight} onClickCondorcet={onClickCondorcet}
+                                votingType={props.votingType} cardinalState={cardinalState} setCardinalState={setCardinalState} />
+                        })
+                    }
+
                     {/* : <div>
-                            <div className="column-style">
-                                {console.log(state.tasks, "TASKS")}
-                                {state.tasks.map((task, index) => {
-                                    console.log(task, "TASK")
-                                    return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
-                                })}
+                        <div className="column-style">
+                            {console.log(state.tasks, "TASKS")}
+                            {state.tasks.map((task, index) => {
+                                console.log(task, "TASK")
+                                return <ProposalBox key={task.id} task={task} index={index} columnId={props.column.id} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                            })}
                             </div>
-                        </div>
-
-                    } */}
+                            </div>
+                            
+                        } */}
 
 
 
@@ -349,19 +402,19 @@ function SortCounterProposal(props) {
                         //     const tasks = state.tasks.map(taskId => state.tasks[taskId]);
                         //     console.log(tasks, "TASKS");
                         //     console.log(state, "TASKS");
-
+                        
                         //     return null
                         // return (
-
-                        //     <div className="column-style">
-                        //         {state.tasks.map((task, index) => {
-                        //             console.log(task)
-                        //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
-                        //         })}
-                        //     </div>
-
-                        // )
-                        // } */}
+                            
+                            //     <div className="column-style">
+                            //         {state.tasks.map((task, index) => {
+                                //             console.log(task)
+                                //             return <ProposalBox key={task.id} task={task} index={index} columnId={task} onClickTrafficLight={onClickTrafficLight} votingType={"traffic"} />
+                                //         })}
+                                //     </div>
+                                
+                                // )
+                            // } */}
 
                 </div>
             </Loader>
