@@ -75,8 +75,16 @@ const initialData = {
 };
 
 function Column(props) {
+
+    let totalCardinal = 0
+    props.cardinalState.forEach(cardinal => {
+        if (cardinal !== undefined)
+            totalCardinal += cardinal;
+    })
+
     console.log('columns', props);
     return <div className="column-container">
+        {totalCardinal}
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
             (props.column.id === "neutral" && <Title>Abstain</Title>) ||
@@ -98,6 +106,7 @@ function ProposalBox(props) {
     const counterProposal = props.task.content;
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
+
     return <div>
         {/* {props.task.id} - {props.task.content.proposal} */}
         <div className="card counter-proposal-card bg-white">
@@ -141,7 +150,7 @@ function ProposalBox(props) {
                 {/* </div> */}
                 {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
                 {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "cardinal" && <input type="number" placeholder="0" value={props.cardinalState[props.task.id]}
+                {props.votingType === "cardinal" && <input type="number" min="0" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
                         newInput[props.task.id] = parseInt(e.target.value);
