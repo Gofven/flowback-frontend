@@ -32,6 +32,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
+import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function PollForm() {
 
@@ -46,10 +47,10 @@ export default function PollForm() {
         end_time: new Date(),
         voting_type: "condorcet"
     });
-
     const [tag, setTag] = useState([])
-
     const [pollDocs, setPollDocs] = useState([]);
+    const [expandedDescription, setExpandedDescription] = useState(false);
+
     let history = useHistory();
 
     // Set values from the inputs
@@ -315,9 +316,45 @@ export default function PollForm() {
                                                             checked={pollDetail.voting_type === "time"}
                                                             onClick={changeVotingType}
                                                         />
+
+                                                        <Form.Check
+                                                            inline
+                                                            type="radio"
+                                                            id="Cardinal"
+                                                            name="request"
+                                                            label="Cardinal"
+                                                            value="cardinal"
+                                                            checked={pollDetail.voting_type === "cardinal"}
+                                                            onClick={changeVotingType}
+                                                        />
                                                     </div>
                                                 </div>
+                                                <div className="form-group field votingExplanation">
 
+                                                    {expandedDescription ? <div className="votingExplanationTexts">
+                                                        <div>
+                                                            <b>Ranking</b> is the method is preferential voting known as the borda count. The top proposal in Added always gets the number of points as there are proposals (it does not depend on there being proposals below it), and the one below that gets that number minus one, the one below that gets that number minus two and so on. Each proposal that are in abstain each get zero points. This is added over all voters and is divided by the total number of votes to get the result.
+                                                        </div>
+                                                        <div>
+                                                            <b>For/Against</b> is the method where each proposal that is voted for gets one point and each voted against gets minus one independently of order, all other proposals get zero points. The points are then added over all voters and is divided by the total number of votes to get the result.
+                                                        </div>
+                                                        <div>
+                                                            <b>Cardinal</b> is the method where each member can rank by writing any number for all polls, which are ranked accordingly and get the percentage compared to the total that the member gives, the percentages are added up over all members and divided by the total to get the result. This means that not only are the proposals ranked by order of preference, but the degree by which one proposal is better than another is reflected. A technical detail is that ratios above 10^6 are rounded down after the final calculation and floored.
+                                                        </div>
+                                                        <div>
+                                                            <b>Time polls</b>  is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.
+                                                        </div>
+                                                    </div> :
+                                                        <div>
+                                                            Explain what the different voting types do
+                                                        </div>}
+                                                    <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
+                                                        icon={faArrowCircleDown}
+                                                        color=''
+                                                        size='2x'
+                                                        onClick={() => setExpandedDescription(!expandedDescription)} />
+
+                                                </div>
                                                 <div className="form-group field">
                                                     <div>
                                                         <Label>
