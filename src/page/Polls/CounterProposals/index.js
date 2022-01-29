@@ -32,6 +32,7 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
 
     const [counterProposals, setCounterProposals] = useState([]);
     const [proposalIndexes, setProposalIndexes] = useState(null);
+    const [scores, setScores] = useState([]);
 
     useEffect(() => {
         getCounterProposals();
@@ -76,6 +77,9 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
             (response) => {
                 if (response && response.proposal_indexes) {
                     setProposalIndexes(response.proposal_indexes);
+                    if (poll.voting_type === "cardinal") {
+                        setScores(response.score);
+                    }
                 }
             });
     }
@@ -218,11 +222,12 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                     {/* <h4 className="card-title fw-bolder">Proposals</h4> */}
                     {
                         (counterProposals?.length && poll?.discussion !== 'Finished' && group && group.user_type) ?
-                            <SortCounterProposal pollId={poll.id} 
-                            counterProposals={counterProposals} 
-                            proposalIndexes={proposalIndexes} 
-                            onUpdateIndexes={onUpdateIndexes}
-                            votingType={poll.voting_type}
+                            <SortCounterProposal pollId={poll.id}
+                                counterProposals={counterProposals}
+                                proposalIndexes={proposalIndexes}
+                                onUpdateIndexes={() => null}
+                                votingType={poll.voting_type}
+                                scores={poll.voting_type === "cardinal" ? scores : null}
                             >
                                 <FontAwesomeIcon icon={faArrowsAltV} color="black" />
                             </SortCounterProposal>

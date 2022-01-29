@@ -144,8 +144,8 @@ function ProposalBox(props) {
                 {props.votingType === "cardinal" && <input type="number" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
-                        newInput[props.task.id] = e.target.value;
-                        props.setCardinalState(newInput);
+                        newInput[props.task.id] = parseInt(e.target.value);
+                        props.setCardinalState([...newInput]);
                         console.log(props.cardinalState)
                     }}>
                 </input>
@@ -267,7 +267,7 @@ function SortCounterProposal(props) {
         let toSend = [];
         let index = 0;
         cardinalState.forEach((score, scoreIndex) => {
-            if (typeof score === 'string') {
+            if (typeof score === 'number') {
                 toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
                 index++;
             }
@@ -329,7 +329,22 @@ function SortCounterProposal(props) {
         return points;
     }
 
+    const intializeCardinal = () => {
+
+        const scores = props.scores;
+        let cardinals = []
+        scores.forEach(score => {
+            console.log(score, "SCORE")
+            cardinals[score.proposal] = score.score
+        })
+
+        setCardinalState(cardinals)
+        console.log(cardinals)
+
+    }
+
     useEffect(() => { initializeState(); console.log(props, "GROUP") }, [props.proposalIndexes]);
+    useEffect(() => { intializeCardinal(); }, [props.scores]);
 
 
     return (
