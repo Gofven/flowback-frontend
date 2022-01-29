@@ -62,7 +62,6 @@ export default function PollDetails() {
     // Get all proposals
     const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then((response) => {
         setAllProposals(response);
-        console.log("sfdsfsd: ", allProposals);
     });
 
     // Get Poll Details
