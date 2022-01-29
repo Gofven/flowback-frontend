@@ -1,30 +1,31 @@
-import React, {useEffect, useState} from "react";
-import {getRequest} from "../../../utils/API";
+import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import ProposalDetails from "./ProposalDetails";
 
-export default function PollResultsTraffic({pollId, pollDetails}) {
-    const [proposals, setProposals] = useState(null);
-    const totalVotes = pollDetails.total_participants
-    const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`);
+const {REACT_APP_PROXY} = process.env;
 
-    useEffect(() => {
-        getProposals(pollId).then((response) => {
-            response.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative));
-            setProposals(response);
-        })
-    }, []);
+export default function PollResultsTraffic({allProposals, pollDetails}) {
+    const [showAbstain, setShowAbstain] = useState(true);
+    const totalVotes = pollDetails.total_participants;
+    const proposals = allProposals ? allProposals.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative)) : [];
+
+    const toggleAbstainedVotes = () => setShowAbstain(!showAbstain);
 
     return <div className="card-rounded p-4 my-4">
-        <h4>Results</h4>
+        <div className="d-flex flex-row justify-content-between align-items-center"><h4>Results</h4>
+            <div className="d-flex flex-row"><label htmlFor="showAbstained">Show
+                abstained</label><input className="m-1" defaultChecked={showAbstain} onChange={toggleAbstainedVotes}
+                                        type="checkbox"/></div>
+        </div>
         {proposals ? proposals.map((proposal, index) => <TrafficProposal key={proposal.id} proposal={proposal}
                                                                          ranking={index + 1}
-                                                                         totalVotes={totalVotes}/>) : <></>}</div>
+                                                                         totalVotes={totalVotes}
+                                                                         showAbstain={showAbstain}/>) : <></>}</div>
 }
 
 function VoteTypePercent({totalVotes, votes, text = "vote type", cssClass = ""}) {
-    const percentageOfVotes = (votes / totalVotes).toLocaleString(undefined, {style: 'percent'})
+    const percentageOfVotes = votes !== 0 ? (votes / totalVotes).toLocaleString(undefined, {style: 'percent'}) : votes.toLocaleString(undefined, {style: 'percent'});
     const votesText = votes !== 1 ? "(" + votes + " votes)" : "(" + votes + " vote)"
 
     return <div className={"d-flex flex-column text-center p-1 px-2 " + cssClass}>
@@ -34,17 +35,18 @@ function VoteTypePercent({totalVotes, votes, text = "vote type", cssClass = ""})
     </div>
 }
 
-function TrafficProposal({proposal, ranking = 0, totalVotes = 0}) {
+function TrafficProposal({proposal, ranking = 0, totalVotes = 0, showAbstain = true}) {
     const proposalNameSplit = proposal.proposal.split("~");
     const proposalName = proposalNameSplit[0];
     const proposalDescription = proposalNameSplit[1];
 
     const votesAbstained = totalVotes - proposal.final_score_negative - proposal.final_score_positive;
+    const displayedTotalVotes = showAbstain ? totalVotes : proposal.final_score_negative + proposal.final_score_positive;
 
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
 
-    const fileLink = proposal.file;
+    const fileLink = proposal.file ? REACT_APP_PROXY + proposal.file.substring(1) : proposal.file;
 
     return <div className="card-rounded my-4 p-2 ">
         <div className="d-flex flex-row justify-content-between">
@@ -61,15 +63,15 @@ function TrafficProposal({proposal, ranking = 0, totalVotes = 0}) {
                         color=''
                         size='lg'/></a>}
                 <div className="d-flex flex-column text-center mr-2">
-                    <div className="fw-bold">{totalVotes}</div>
+                    <div className="fw-bold">{displayedTotalVotes}</div>
                     <div className="font-small">{"votes"}</div>
                 </div>
-                <VoteTypePercent totalVotes={totalVotes} votes={proposal.final_score_negative}
+                <VoteTypePercent totalVotes={displayedTotalVotes} votes={proposal.final_score_negative}
                                  text={"against"} cssClass={"bg-against"}/>
-                <VoteTypePercent totalVotes={totalVotes}
-                                 votes={votesAbstained}
-                                 text={"abstain"} cssClass={"bg-abstain"}/>
-                <VoteTypePercent totalVotes={totalVotes} votes={proposal.final_score_positive} text={"for"}
+                {showAbstain && <VoteTypePercent totalVotes={displayedTotalVotes}
+                                                 votes={votesAbstained}
+                                                 text={"abstain"} cssClass={"bg-abstain"}/>}
+                <VoteTypePercent totalVotes={displayedTotalVotes} votes={proposal.final_score_positive} text={"for"}
                                  cssClass={"bg-for"}/>
             </div>
         </div>

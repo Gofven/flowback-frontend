@@ -59,7 +59,7 @@ export default function PostComment({
           {/*<a href="#">{likes_count || 0} {(likes_count === 1) ? 'Like' : 'Likes'}</a>*/}
           {
             edited &&
-            <a href="#">Edited</a>
+            <a>Edited</a>
           }
 
           <a className="cursor-pointer"
