@@ -2,14 +2,14 @@ import React from "react";
 import PollResultsCondorcet from "./PollResultsCondorcet";
 import PollResultsTraffic from "./PollResultsTraffic";
 
-export default function PollResults({pollId, pollDetails, votingType, type}) {
+export default function PollResults({allProposals, pollDetails, votingType, type}) {
     const showResults = () => {
         if (type !== "event") {
             switch (votingType) {
                 case 'condorcet':
-                    return <PollResultsCondorcet pollId={pollId}/>
+                    return <PollResultsCondorcet allProposals={allProposals}/>
                 case 'traffic':
-                    return <PollResultsTraffic pollId={pollId} pollDetails={pollDetails}/>
+                    return <PollResultsTraffic allProposals={allProposals} pollDetails={pollDetails}/>
                 default:
                     return <></>;
             }

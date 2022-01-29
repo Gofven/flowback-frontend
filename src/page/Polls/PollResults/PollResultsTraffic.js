@@ -1,20 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {getRequest} from "../../../utils/API";
+import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import ProposalDetails from "./ProposalDetails";
 
-export default function PollResultsTraffic({pollId, pollDetails}) {
-    const [proposals, setProposals] = useState(null);
-    const totalVotes = pollDetails.total_participants
-    const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`);
+const {REACT_APP_PROXY} = process.env;
 
-    useEffect(() => {
-        getProposals(pollId).then((response) => {
-            response.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative));
-            setProposals(response);
-        })
-    }, []);
+export default function PollResultsTraffic({allProposals, pollDetails}) {
+    const totalVotes = pollDetails.total_participants
+    const proposals = allProposals ? allProposals.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative)) : [];
 
     return <div className="card-rounded p-4 my-4">
         <h4>Results</h4>
@@ -44,7 +37,7 @@ function TrafficProposal({proposal, ranking = 0, totalVotes = 0}) {
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
 
-    const fileLink = proposal.file;
+    const fileLink = proposal.file ? REACT_APP_PROXY + proposal.file.substring(1) : proposal.file;
 
     return <div className="card-rounded my-4 p-2 ">
         <div className="d-flex flex-row justify-content-between">
