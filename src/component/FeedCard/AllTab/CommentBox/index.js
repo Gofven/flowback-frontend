@@ -72,10 +72,11 @@ export default function CommentBox({ border = true, onAddComment, replyTo, onInp
         >
           <i data-brackets-id="843" className="las la-smile"></i>
         </a> */}
-      <input
+      <textarea
         data-brackets-id="844"
         type="text"
         className="form-control"
+        maxlength="1000"
         placeholder={commentBeingRepliedTo ? `Replying to ${commentBeingRepliedTo.created_by.first_name}` : "Write a comment"}
         onKeyPress={handleKeypress}
         ref={inputRef}

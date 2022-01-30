@@ -256,12 +256,22 @@ export default function PollsTab(props) {
         console.log("polls", polls);
     }, [polls])
 
-    let loadMoree = (ev) => {
+    useEffect(() => {
+        //Scuffed solution, for when one filters polls, there's some polls missing and they're not being automatically loaded.
+        //i.e one has to click the "load more..." button. 
+        getPolls(false)
+        getPolls(false)
+        getPolls(false)
+        getPolls(false)
+        getPolls(false)
+    }, [pollFilter])
+
+    let loadMore = (ev) => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            getPolls(false)
+            // getPolls(false)
         }
     };
-    window.onscroll = loadMoree;
+    window.onscroll = loadMore;
 
     return (
         <div className="tab-pane fade show active" id="PollsTab">

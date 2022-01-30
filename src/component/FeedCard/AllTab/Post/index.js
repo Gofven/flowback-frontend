@@ -113,7 +113,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
   return (
     <div className="post-view">
       <div className="post-header d-flex justify-content-between">
-        <div className="post-body">
+        <div className="post-body" style={{ "width": "100%" }}>
           <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
             {children}
           </Link>
