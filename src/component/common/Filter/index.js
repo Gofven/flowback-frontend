@@ -4,11 +4,19 @@ import SearchBox from "../../Search/SearchBox";
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+//TODO: Refactor the code so it's more reusible and modular, like the SearchFilter function. 
+//Also include a function that returns true or false based on if an item is filtered or not
+
 export function DropDownPollFilter({ pollFilter, setPollFilter }) {
     return <div>
         <div className="filters">
             <Dropdown>
-                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.pollType === null ? "Poll Type" : pollFilter.pollType}
+                <Dropdown.Toggle variant="white" id="dropdown-basic">
+                    {pollFilter.pollType === "condorcet" && "Ranking"}
+                    {pollFilter.pollType === "traffic" && "For/Against"}
+                    {pollFilter.pollType === "event" && "Time"}
+                    {pollFilter.pollType === "cardinal" && "Cardinal"}
+                    {pollFilter.pollType === null && "Poll Type"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {["condorcet", "traffic", "event"].map(filter => {
@@ -18,6 +26,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                                 {filter === "condorcet" ? "Ranking" : null}
                                 {filter === "traffic" ? "For/Against" : null}
                                 {filter === "event" ? "Time" : null}
+                                {filter === "cardinal" && "Cardinal"}
                             </div>
                             <div>{pollFilter.pollType === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>
