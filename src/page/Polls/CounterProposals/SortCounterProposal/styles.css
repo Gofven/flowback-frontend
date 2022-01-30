@@ -147,3 +147,7 @@ textarea{
 .clicked{
     transform:rotate(180deg);
 }
+
+.total-cardinal{
+    font-size: 1.4rem;
+}
