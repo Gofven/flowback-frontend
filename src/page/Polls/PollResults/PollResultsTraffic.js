@@ -14,7 +14,7 @@ export default function PollResultsTraffic({allProposals, pollDetails}) {
 
     return <div className="card-rounded p-4 my-4">
         <div className="d-flex flex-row justify-content-between align-items-center"><h4>Results</h4>
-            <div className="d-flex flex-row"><label htmlFor="showAbstained">Show
+            <div className="d-flex flex-row"><label htmlFor="includeAbstained">Include
                 abstained</label><input className="m-1" defaultChecked={showAbstain} onChange={toggleAbstainedVotes}
                                         type="checkbox"/></div>
         </div>
