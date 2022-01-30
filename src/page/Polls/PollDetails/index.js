@@ -61,7 +61,8 @@ export default function PollDetails() {
 
     // Get all proposals
     const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then((response) => {
-        setAllProposals(response);
+        if (response.detail !== "Not found.")
+            setAllProposals(response);
     });
 
     // Get Poll Details
@@ -310,7 +311,7 @@ export default function PollDetails() {
     }
 
     const existProposalWithSameTitle = () => {
-        const p = allProposals.find(proposal => proposal.proposal.split("~")[0] === counterProposal.proposal_title)
+        const p = allProposals?.find(proposal => proposal.proposal.split("~")[0] === counterProposal.proposal_title)
         if (p !== undefined) return true;
         else return false;
     }

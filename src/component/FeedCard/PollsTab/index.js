@@ -39,7 +39,7 @@ export default function PollsTab(props) {
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [pageSize, setPageSize] = useState(4);
+    const [pageSize, setPageSize] = useState(200);
 
     const getHomePolls = (first_page) => {
         let data = {
