@@ -29,7 +29,8 @@ import { faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid } from
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { UserTypes } from "../../../constants/constants";
 import { DropDownPollFilter, SearchFilter } from '../../common/Filter/'
-
+import ProposalDetails from "../../../page/Polls/PollResults/ProposalDetails";
+import { Link } from "react-router-dom";
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
@@ -290,22 +291,24 @@ export default function PollsTab(props) {
                         poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
                     )
                 )
-                    return <Post poll={poll} key={poll.id}
-                        addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
-                        updateComment={(comment) => updateComment(comment)}
-                        deleteComment={(commentId) => deleteComment(commentId)}
-                        likeComment={(comment) => likeComment(comment)}
-                        readOnlyComments={true}
-                        //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                        maxComments={-1}>
-                        <>
+                    return <div style={{ "borderTop": "rgb(221, 221, 221) solid 1px", "marginTop": "25px", "paddingTop": "8px" }}>
+                        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
                             <div className="poll-title" >{poll.title}</div>
-                            <p className="post-text">
-                                {poll.description}
-                            </p>
-                            <div className="post-img-wrapper"></div>
-                        </>
-                    </Post>
+                        </Link>
+                        <p className="post-text">
+                            <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
+                        </p>
+                        <div className="post-img-wrapper"></div>
+                        <Post poll={poll} key={poll.id}
+                            addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
+                            updateComment={(comment) => updateComment(comment)}
+                            deleteComment={(commentId) => deleteComment(commentId)}
+                            likeComment={(comment) => likeComment(comment)}
+                            readOnlyComments={true}
+                            //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
+                            maxComments={-1}>
+                        </Post>
+                    </div>
             })
             }
             {

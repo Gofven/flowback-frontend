@@ -5,7 +5,7 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
     const isLongDescription = proposalDescription.length > 45;
     const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
 
-    return <div className="">
+    return <div className="proposal-details-text-fix">
         {isLongDescription ? <div className="" id={"heading" + proposal.id}>
             <button className="accordion-button accordion collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target={"#collapse" + proposal.id} aria-expanded="false"
