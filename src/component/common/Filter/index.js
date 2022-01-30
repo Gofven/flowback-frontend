@@ -44,14 +44,14 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
 export function DropDownFilterGroup({ filter, setFilter }) {
     return <div className="filters">
         <Dropdown>
-            <Dropdown.Toggle variant="white" id="dropdown-basic">Type of Member
+            <Dropdown.Toggle variant="white" id="dropdown-basic">{filter.typeOfMember === null ? "Type of Member" : filter.typeOfMember}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                {["", "Member", "Delegator", "Owner"].map(filterCategory => {
+                {["Not Member", "Member", "Delegator", "Owner"].map(filterCategory => {
                     return <Dropdown.Item className="cursor-pointer filterDropdown"
                         onClick={() => setFilter({ ...filter, typeOfMember: filterCategory === filter.typeOfMember ? null : filterCategory })}>
                         <div>
-                            {filterCategory === "" && "Not member"}
+                            {filterCategory === "Not Member" && "Not Member"}
                             {filterCategory === "Delegator" && "Delegate"}
                             {filterCategory === "Member" && "Member"}
                             {filterCategory === "Owner" && "Admin"}
