@@ -29,3 +29,8 @@
 .bg-against {
     background-color: #e24a45;
 }
+
+.proposal-details-text-fix{
+    word-break: break-all;
+    border:solid rgb(221, 221, 221) 1px;
+}

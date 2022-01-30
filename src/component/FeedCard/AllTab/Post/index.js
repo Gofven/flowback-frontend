@@ -114,9 +114,9 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
     <div className="post-view">
       <div className="post-header d-flex justify-content-between">
         <div className="post-body" style={{ "width": "100%" }}>
-          <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
+          {/* <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
             {children}
-          </Link>
+          </Link> */}
 
           <div className="post-comment-view">
             <div className="post-share"><div> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
