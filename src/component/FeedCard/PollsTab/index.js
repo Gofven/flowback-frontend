@@ -290,8 +290,7 @@ export default function PollsTab(props) {
                         likeComment={(comment) => likeComment(comment)}
                         readOnlyComments={true}
                         //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                        maxComments={-1}
-                    >
+                        maxComments={-1}>
                         <>
                             <div className="poll-title" >{poll.title}</div>
                             <p className="post-text">

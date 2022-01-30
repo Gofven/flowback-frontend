@@ -19,7 +19,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                     {pollFilter.pollType === null && "Poll Type"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {["condorcet", "traffic", "event"].map(filter => {
+                    {["condorcet", "traffic", "event", "cardinal"].map(filter => {
                         return <Dropdown.Item className="cursor-pointer filterDropdown"
                             onClick={() => setPollFilter({ ...pollFilter, pollType: filter === pollFilter.pollType ? null : filter })}>
                             <div>
