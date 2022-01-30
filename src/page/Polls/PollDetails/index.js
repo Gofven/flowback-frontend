@@ -337,7 +337,7 @@ export default function PollDetails() {
         }
 
         const maxTitleLength = 75;
-        if (counterProposal.proposal_title.length > maxTitleLength) {
+        if (poll.type !== "event" && counterProposal.proposal_title.length > maxTitleLength) {
             setError(`Not allowed more than ${maxTitleLength} characters in title`);
             return;
         }

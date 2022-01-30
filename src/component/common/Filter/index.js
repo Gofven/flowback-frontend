@@ -16,10 +16,10 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                     {pollFilter.pollType === "traffic" && "For/Against"}
                     {pollFilter.pollType === "event" && "Time"}
                     {pollFilter.pollType === "cardinal" && "Cardinal"}
-                    {pollFilter.pollType === null && "Poll Type"}
+                    {pollFilter.pollType === null && "Any Poll Type"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {["condorcet", "traffic", "event"].map(filter => {
+                    {["condorcet", "traffic", "event", "cardinal"].map(filter => {
                         return <Dropdown.Item className="cursor-pointer filterDropdown"
                             onClick={() => setPollFilter({ ...pollFilter, pollType: filter === pollFilter.pollType ? null : filter })}>
                             <div>
@@ -34,7 +34,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                 </Dropdown.Menu>
             </Dropdown>
             <Dropdown>
-                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.discussion === null ? "Poll Progress" : pollFilter.discussion}
+                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.discussion === null ? "Any Poll Progress" : pollFilter.discussion}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {["In progress", "Finished"].map(filter => {

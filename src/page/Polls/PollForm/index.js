@@ -50,7 +50,9 @@ export default function PollForm() {
     const [tag, setTag] = useState([])
     const [pollDocs, setPollDocs] = useState([]);
     const [expandedDescription, setExpandedDescription] = useState(false);
-
+    const [messege, setMessege] = useState({ messege: "", color: "black" })
+    const maxTitleLength = 100;
+    const maxDescriptionLength = 3000;
     let history = useHistory();
 
     // Set values from the inputs
@@ -97,7 +99,16 @@ export default function PollForm() {
     }
 
     // Create Poll
+
     const handleSubmit = (e) => {
+        if (pollDetail.title.length > maxTitleLength) {
+            setMessege({ messege: `Title must be less than ${maxTitleLength} characters`, color: "red" })
+        }
+
+        if (pollDetail.description.length > maxDescriptionLength) {
+            setMessege({ messege: `Description must be less than ${maxDescriptionLength} characters`, color: "red" })
+        }
+
         pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
         pollDetails.tags = tag.join(" ");
@@ -200,11 +211,15 @@ export default function PollForm() {
                                         <h4 className="card-title">{pollId ? "Edit" : "Create"} a Poll</h4>
                                     </div>
                                     <form className="form create_poll_form" id="createPollForm">
+                                        <div className="mt-3 mx-2">
+                                            <h4 style={{ "color": messege.color }}>{messege.messege}</h4>
+                                        </div>
                                         <div className="form-group mt-3 mx-2">
                                             <Textbox
                                                 type="text"
                                                 name="title"
                                                 placeholder="Poll name"
+                                                maxLength={maxTitleLength}
                                                 required
                                                 onChange={handleOnChange}
                                                 defaultValue={pollDetail.title}
@@ -264,6 +279,7 @@ export default function PollForm() {
                                                 rows="6"
                                                 placeholder="Add Details"
                                                 required
+                                                maxLength={maxDescriptionLength}
                                                 onChange={handleOnChange}
                                                 defaultValue={pollDetail.description}
 
@@ -331,7 +347,7 @@ export default function PollForm() {
 
                                                     </div>
                                                 </div>
-                                                <div className="form-group field votingExplanation" onClick={() => setExpandedDescription(!expandedDescription)} style={{cursor:'pointer'}}>
+                                                <div className="form-group field votingExplanation" onClick={() => setExpandedDescription(!expandedDescription)} style={{ cursor: 'pointer' }}>
 
                                                     {expandedDescription ? <div className="votingExplanationTexts">
                                                         <div>
@@ -341,7 +357,7 @@ export default function PollForm() {
                                                             <b>For/Against</b> is the method where each proposal that is voted for gets one point and each voted against gets minus one independently of order, all other proposals get zero points. The points are then added over all voters and is divided by the total number of votes to get the result.
                                                         </div>
                                                         <div>
-                                                            <b>Cardinal</b> is the method where each member can rank by writing any number for all polls, which are ranked accordingly and get the percentage compared to the total that the member gives, the percentages are added up over all members and divided by the total to get the result. This means that not only are the proposals ranked by order of preference, but the degree by which one proposal is better than another is reflected. Totals will not exceed 10^6. 
+                                                            <b>Cardinal</b> is the method where each member can rank by writing any number for all polls, which are ranked accordingly and get the percentage compared to the total that the member gives, the percentages are added up over all members and divided by the total to get the result. This means that not only are the proposals ranked by order of preference, but the degree by which one proposal is better than another is reflected. Totals will not exceed 10^6.
                                                         </div>
                                                         <div>
                                                             <b>Time polls</b>  is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.
@@ -398,7 +414,7 @@ export default function PollForm() {
                         {/*/Missions Featured Cards Col*/}
                     </div>
                 </div>
-            </section>
-        </Layout1>
+            </section >
+        </Layout1 >
     );
 }

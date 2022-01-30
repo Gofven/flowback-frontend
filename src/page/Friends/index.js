@@ -260,12 +260,10 @@ export default function Friends() {
                                   </a> :
                                   <div className="flex-row">
                                     <a
-                                      href="#"
                                       className="btn btn-sm btn-block btn-outline-secondary"
                                       onClick={() => { handleOnJoinGroupAsAMember(item) }}
                                     >Join as member</a>
                                     <a
-                                      href="#"
                                       className="btn btn-sm btn-block btn-outline-secondary"
                                       onClick={() => { handleOnJoinGroupAsADelegate(item) }}
                                     >Join as delegate</a>

@@ -39,7 +39,8 @@ export default function PollsTab(props) {
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [pageSize, setPageSize] = useState(200);
+    //The amount of polls that are loaded. If this value is at 1000, then this is only for demo. Please change to something lower when the backend is fixed to allow searching for polls in the database
+    const [pageSize, setPageSize] = useState(1000);
 
     const getHomePolls = (first_page) => {
         let data = {
@@ -256,13 +257,19 @@ export default function PollsTab(props) {
         console.log("polls", polls);
     }, [polls])
 
-    let loadMoree = (ev) => {
+    // useEffect(() => {
+    //     //Scuffed solution, for when one filters polls, there's some polls missing and they're not being automatically loaded.
+    //     //i.e one has to click the "load more..." button. 
+    //     setInterval(getPolls(false), 500)
+
+    // }, [pollFilter])
+
+    let loadMore = (ev) => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            getPolls(false)
+            // getPolls(false)
         }
     };
-    window.onscroll = loadMoree;
-    //Loke Hagberg added the above code
+    window.onscroll = loadMore;
 
     return (
         <div className="tab-pane fade show active" id="PollsTab">
@@ -290,8 +297,7 @@ export default function PollsTab(props) {
                         likeComment={(comment) => likeComment(comment)}
                         readOnlyComments={true}
                         //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                        maxComments={-1}
-                    >
+                        maxComments={-1}>
                         <>
                             <div className="poll-title" >{poll.title}</div>
                             <p className="post-text">
