@@ -113,12 +113,8 @@ function ProposalBox(props) {
                 <div className="counter-proposal-title">
                     <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
                         <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
-                        <LinesEllipsis
-                            text={counterProposal?.title}
-                            maxLine='2'
-                            ellipsis='...'
-                            trimRight
-                            basedOn='letters' /></h4>
+                        {counterProposal?.title}
+                    </h4>
                 </div>
             </div>
             <div className="proposal-top-part">
@@ -145,7 +141,11 @@ function ProposalBox(props) {
                 {props.votingType === "cardinal" && <input type="number" min="0" max="1000000" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
-                        newInput[props.task.id] = parseInt(e.target.value);
+                        if (e.target.value === "") {
+                            newInput[props.task.id] = 0;
+                        } else {
+                            newInput[props.task.id] = parseInt(e.target.value);
+                        }
                         props.setCardinalState([...newInput]);
                         props.saveCardinal()
                     }}>

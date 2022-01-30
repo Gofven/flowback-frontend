@@ -329,8 +329,15 @@ export default function PollDetails() {
             setError("Proposal needs title");
             return;
         }
+
         if (counterProposal.proposal_title?.includes("~")) {
             setError("Character \"~\" is not allowed");
+            return;
+        }
+
+        const maxTitleLength = 75;
+        if (counterProposal.proposal_title.length > maxTitleLength) {
+            setError(`Not allowed more than ${maxTitleLength} characters in title`);
             return;
         }
 
@@ -442,10 +449,11 @@ export default function PollDetails() {
                                                         <div
                                                             className="d-flex justify-content-between align-items-center my-1 doc-view"
                                                             key={file.id}>
-                                                            <div key={file.file} className="text-primary"
+                                                            <div key={file.file} className="text-primary poll-document"
                                                                 onClick={() => {
                                                                     viewDocument(file)
-                                                                }}>{
+                                                                }}>
+                                                                {
                                                                     file && file.file &&
                                                                     file.file.slice(file.file.lastIndexOf("/") + 1, file.file.length)
                                                                 }
@@ -684,13 +692,9 @@ const TopProposal = ({ topProposal }) => {
                 <div className="counter-proposal-title">
                     <h4>{topProposal?.date && topProposal?.title !== "Drop this mission" ? <>
                         <h4>{topProposal.date.split('T')[0]}</h4>
-                        <h4>{topProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{topProposal.date.split('T')[1].split(".")[0].split(":")[1]}</h4></> : null}
-                        <LinesEllipsis
-                            text={topProposal?.title}
-                            maxLine='3'
-                            ellipsis='...'
-                            trimRight
-                            basedOn='letters' /></h4>
+                        <h4>{topProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{topProposal.date.split('T')[1].split(".")[0].split(":")[1]}
+                        </h4></> : null}</h4>
+                    <h4>{topProposal?.title}</h4>
                 </div>
             </div>
             <div className="proposal-description">
