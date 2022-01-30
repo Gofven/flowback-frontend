@@ -1,14 +1,16 @@
-import React, {useState} from "react";
-import {faDownload} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './PollResults.css';
 import ProposalDetails from "./ProposalDetails";
-import {PieChart} from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 import ReactTooltip from "react-tooltip";
 
-const {REACT_APP_PROXY} = process.env;
+const { REACT_APP_PROXY } = process.env;
 
-export default function PollResultsCondorcet({allProposals}) {
+export default function PollResultsCondorcet({ allProposals }) {
+    if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>No winning proposal</div></div > }
+
     // sorted proposals
     const proposals = allProposals ? allProposals.sort((a, b) => b.final_score_positive - a.final_score_positive) : [];
 
@@ -19,14 +21,14 @@ export default function PollResultsCondorcet({allProposals}) {
         <h4>Results</h4>
         {allProposals &&
             <div className="m-xl-5 m-lg-4 m-md-3 m-sm-5 m-3"><ResultsPieChart allProposals={allProposals}
-                                                                              totalVotes={totalVotes}/></div>}
+                totalVotes={totalVotes} /></div>}
         {proposals ? proposals.map((proposal, index) => <RankedProposal key={proposal.id} proposal={proposal}
-                                                                        ranking={index + 1}
-                                                                        totalVotes={totalVotes}/>) : <></>}</div>
+            ranking={index + 1}
+            totalVotes={totalVotes} />) : <></>}</div>
 }
 
 // Will display max 10 options in the pie chart
-function ResultsPieChart({allProposals, totalVotes}) {
+function ResultsPieChart({ allProposals, totalVotes }) {
     const [hovered, setHovered] = useState(null);
 
     const topProposals = allProposals.slice(0, 9);
@@ -55,8 +57,8 @@ function ResultsPieChart({allProposals, totalVotes}) {
 
     return <div data-tip="" data-for="chart"><PieChart
         data={data}
-        label={({dataEntry}) => {
-            return dataEntry.value.toLocaleString(undefined, {style: 'percent'})
+        label={({ dataEntry }) => {
+            return dataEntry.value.toLocaleString(undefined, { style: 'percent' })
         }}
         labelStyle={() => ({
             fontSize: '4px', fontFamily: 'sans-serif', fill: '#FFF',
@@ -79,13 +81,13 @@ function makeTooltipContent(entry) {
     return `${entry.title}`;
 }
 
-function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
+function RankedProposal({ proposal, ranking = 0, totalVotes = 0 }) {
     const proposalNameSplit = getProposalTitleAndDescription(proposal);
     const proposalName = proposalNameSplit[0];
     const proposalDescription = proposalNameSplit[1];
 
     const votes = proposal.final_score_positive;
-    const percentOfVotes = (votes / totalVotes).toLocaleString(undefined, {style: 'percent'});
+    const percentOfVotes = (votes / totalVotes).toLocaleString(undefined, { style: 'percent' });
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
     const fileLink = proposal.file ? REACT_APP_PROXY + proposal.file.substring(1) : proposal.file;
@@ -103,7 +105,7 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
                         className="fa"
                         icon={faDownload}
                         color=''
-                        size='lg'/></a>}
+                        size='lg' /></a>}
                 <div className="d-flex flex-column fw-bold text-center">
                     <div>{percentOfVotes}</div>
                     <div className="font-small">{"Approval"}</div>
@@ -111,7 +113,7 @@ function RankedProposal({proposal, ranking = 0, totalVotes = 0}) {
             </div>
         </div>
         <div>
-            <ProposalDetails proposal={proposal} proposalDescription={proposalDescription}/>
+            <ProposalDetails proposal={proposal} proposalDescription={proposalDescription} />
             <div className="font-small mt-2 text-grey pl-3">{createdBy} · {createdAt}</div>
         </div>
     </div>

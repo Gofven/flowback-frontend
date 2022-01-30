@@ -310,7 +310,7 @@ export default function PollDetails() {
     }
 
     const existProposalWithSameTitle = () => {
-        const p = allProposals.find(proposal => proposal.proposal.split("~")[0] === counterProposal.proposal_title)
+        const p = allProposals?.find(proposal => proposal.proposal.split("~")[0] === counterProposal.proposal_title)
         if (p !== undefined) return true;
         else return false;
     }
