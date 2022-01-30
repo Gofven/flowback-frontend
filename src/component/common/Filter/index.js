@@ -8,7 +8,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
     return <div>
         <div className="filters">
             <Dropdown>
-                <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Type
+                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.pollType === null ? "Poll Type" : pollFilter.pollType}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {["condorcet", "traffic", "event"].map(filter => {
@@ -25,7 +25,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                 </Dropdown.Menu>
             </Dropdown>
             <Dropdown>
-                <Dropdown.Toggle variant="white" id="dropdown-basic">Poll Progress
+                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.discussion === null ? "Poll Progress" : pollFilter.discussion}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {["In progress", "Finished"].map(filter => {
