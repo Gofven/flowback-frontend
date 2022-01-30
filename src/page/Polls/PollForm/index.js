@@ -51,7 +51,8 @@ export default function PollForm() {
     const [pollDocs, setPollDocs] = useState([]);
     const [expandedDescription, setExpandedDescription] = useState(false);
     const [messege, setMessege] = useState({ messege: "", color: "black" })
-
+    const maxTitleLength = 100;
+    const maxDescriptionLength = 3000;
     let history = useHistory();
 
     // Set values from the inputs
@@ -100,8 +101,6 @@ export default function PollForm() {
     // Create Poll
 
     const handleSubmit = (e) => {
-        const maxTitleLength = 75;
-        const maxDescriptionLength = 400;
         if (pollDetail.title.length > maxTitleLength) {
             setMessege({ messege: `Title must be less than ${maxTitleLength} characters`, color: "red" })
         }
@@ -220,6 +219,7 @@ export default function PollForm() {
                                                 type="text"
                                                 name="title"
                                                 placeholder="Poll name"
+                                                maxLength={maxTitleLength}
                                                 required
                                                 onChange={handleOnChange}
                                                 defaultValue={pollDetail.title}
@@ -279,6 +279,7 @@ export default function PollForm() {
                                                 rows="6"
                                                 placeholder="Add Details"
                                                 required
+                                                maxLength={maxDescriptionLength}
                                                 onChange={handleOnChange}
                                                 defaultValue={pollDetail.description}
 

@@ -39,7 +39,8 @@ export default function PollsTab(props) {
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [pageSize, setPageSize] = useState(200);
+    //The amount of polls that are loaded. If this value is at 1000, then this is only for demo. Please change to something lower when the backend is fixed to allow searching for polls in the database
+    const [pageSize, setPageSize] = useState(1000);
 
     const getHomePolls = (first_page) => {
         let data = {
@@ -256,15 +257,12 @@ export default function PollsTab(props) {
         console.log("polls", polls);
     }, [polls])
 
-    useEffect(() => {
-        //Scuffed solution, for when one filters polls, there's some polls missing and they're not being automatically loaded.
-        //i.e one has to click the "load more..." button. 
-        getPolls(false)
-        getPolls(false)
-        getPolls(false)
-        getPolls(false)
-        getPolls(false)
-    }, [pollFilter])
+    // useEffect(() => {
+    //     //Scuffed solution, for when one filters polls, there's some polls missing and they're not being automatically loaded.
+    //     //i.e one has to click the "load more..." button. 
+    //     setInterval(getPolls(false), 500)
+
+    // }, [pollFilter])
 
     let loadMore = (ev) => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
