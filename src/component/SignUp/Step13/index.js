@@ -28,7 +28,6 @@ import {
   onValidation,
 } from "../../../utils/common";
 import { Textbox } from "../../common";
-import { Error } from "../../common/Error";
 import Loader from "../../common/Loader";
 import StepButton from "../StepButton";
 import Checkbox from "../../common/Checkbox";
@@ -46,18 +45,11 @@ const initialState = {
   repassword: "",
   accepted_terms_condition: false,
 };
-const initialError = {
-  email: "",
-  screenName: "",
-  loginName: "",
-  password: "",
-  accepted_terms_condition: false,
-};
 
 export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(false);
-  const [error, setError] = useState(initialError);
+  const [messege, setMessege] = useState({ messege: "", color: "red" });
   const [loading, setLoading] = useState(false);
   const { email, screenName, loginName, password, repassword,
     accepted_terms_condition } = state;
@@ -72,19 +64,19 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!(email && screenName && password && repassword)) {
-      setError({ ...error, email: "Leave no field empty" })
+      setMessege({ color: "red", messege: "Leave no field empty" })
       return;
     }
     if (password !== repassword) {
-      setError({ ...error, email: "Passwords need to match" })
+      setMessege({ color: "red", messege: "Passwords need to match" })
       return;
     }
     if (!accepted_terms_condition) {
-      setError({ ...error, email: "Need to accept terms and conditions" })
+      setMessege({ color: "red", messege: "Need to accept terms and conditions" })
       return;
     }
     if (password.length < 8) {
-      setError({ ...error, email: "Password must be longer than 7 letters" })
+      setMessege({ color: "red", messege: "Password must be longer than 7 letters" })
       return;
     }
 
@@ -100,56 +92,35 @@ export default function Step13({ stepNumber, totalStep, OnPrevious, OnNext, main
       setLoading(false)
       const { status, data } = response;
       if (status === "success") {
+
         dispatch(submitScreen1(email, screenName, loginName));
         if (OnNext) OnNext();
+
+
       } else {
-        setError({ email: "Something went wrong" });
+        setMessege({ messege: "Something went wrong", color: "red" });
       }
     }).catch((err) => {
       setLoading(false);
     });
   }
-  // const handlePasswordSubmit = () => {
-  //   postRequest("api/v1/user/sign_up_three", {
-  //     email,
-  //     password,
-  //     accepted_terms_condition,
-  //   }).then((response) => {
-  //     setLoading(false);
-  //     const { status, data } = response;
-  //     console.log("le response", response)
-  //     if (status === "success") {
-  //       //history.push("/");
-  //       //window.location.href = "/"
-  //     } else {
-  //       setError({ ...error, ...data[0] });
-  //     }
-  //     }).catch((err) => {
-  //         setLoading(false);
-  // });
-  // }
 
   const handleOnChange = (e) => {
-    console.log("eEEEEEE", inputKeyValue(e));
     setState({ ...state, ...inputKeyValue(e) });
   };
 
-  //Clicking enter makes progress
-  // document.addEventListener("keypress", function(event) {
-  //   if (event.key===13) handleSubmit()
-  // });
-
   const vailadated = (e) => {
-    setError({
-      ...error,
-      ...onValidation(e),
-    });
+    // setError({
+    //   ...error,
+    //   ...onValidation(e),
+    // })
+    // ;
   };
   return (
     <>
       <Loader loading={loading}>
-        <Error style={{ "textAlign": "center" }}>{error?.email}</Error>
         <form action="#" className="form login_form stepOne" id="loginForm">
+          <h4 style={{ "color": messege.color }}>{messege.messege}</h4>
           <div className="form-group">
             <h5>Email</h5>
             <Textbox

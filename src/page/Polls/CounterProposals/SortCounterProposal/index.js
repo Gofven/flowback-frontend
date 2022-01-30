@@ -122,7 +122,7 @@ function ProposalBox(props) {
                 </div>
             </div>
             <div className="proposal-top-part">
-                <ProposalDetails proposal={counterProposal} proposalDescription={counterProposal.description} />
+                {counterProposal.description && <ProposalDetails proposal={counterProposal} proposalDescription={counterProposal.description} />}
             </div>
 
             <div className="proposal-buttons-and-user">
@@ -282,7 +282,7 @@ function SortCounterProposal(props) {
             sendData(data)
         }
         else {
-            setMessege({ content: "Above maximum allowed votes", color: "red" })
+            setMessege({ content: "Above maximum allowed votes (one million)", color: "red" })
         }
     }
 
@@ -367,7 +367,7 @@ function SortCounterProposal(props) {
             <Loader loading={loading}>
                 {props.votingType === "cardinal" &&
                     <div>
-                        <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}/1000000</div>
+                        <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>Sort Proposals</h4>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
