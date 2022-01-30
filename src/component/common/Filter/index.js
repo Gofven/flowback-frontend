@@ -26,7 +26,7 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                                 {filter === "condorcet" ? "Ranking" : null}
                                 {filter === "traffic" ? "For/Against" : null}
                                 {filter === "event" ? "Time" : null}
-                                {filter === "cardinal" && "Cardinal"}
+                                {filter === "cardinal" ? "Cardinal" : null}
                             </div>
                             <div>{pollFilter.pollType === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>

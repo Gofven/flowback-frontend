@@ -61,7 +61,8 @@ export default function PollDetails() {
 
     // Get all proposals
     const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then((response) => {
-        setAllProposals(response);
+        if (response.detail !== "Not found.")
+            setAllProposals(response);
     });
 
     // Get Poll Details
