@@ -210,7 +210,8 @@ export default function Friends() {
                 groups?.map((item, index) => (
                   (item.title?.toUpperCase().includes(filter.search.toUpperCase()) ||
                     item.description?.toUpperCase().includes(filter.search.toUpperCase())) &&
-                  (item.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
+                  (item.user_type === filter.typeOfMember || filter.typeOfMember === null ||
+                    (item.user_type === "" && filter.typeOfMember === "Not Member")) &&
                   < div className="grupper-card" key={item.id} >
 
                     <Link to={`/groupdetails/${item.id}`}>

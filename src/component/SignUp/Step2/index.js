@@ -40,7 +40,7 @@ const initialError = {
 export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainState, setMainState }) {
   const [state, setState] = useState(initialState);
   const [formValid, setFormValid] = useState(true);
-  const [error, setError] = useState("");
+  const [messege, setMessege] = useState({ messege: "", color: "red" });
   const [loading, setLoading] = useState(false);
   const { verificationCode } = state;
 
@@ -52,7 +52,7 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
 
   const handleSubmit = (e) => {
     if (verificationCode.length < 1) {
-      setError("Can't input empty verification code")
+      setMessege({ messege: "Can't input empty verification code", color: "red" })
       return;
     }
 
@@ -66,7 +66,7 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
       handlePasswordSubmit();
       if (status === "success") {
       } else {
-        setError("Wrong verification code");
+        setMessege({ messege: "Wrong verification code", color: "red" })
       }
     }).catch((err) => {
       setLoading(false);
@@ -85,7 +85,10 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
       console.log("le response", response)
       if (status === "success") {
         //history.push("/");
-        window.location.reload(false);
+        setMessege({ messege: "Registration Succeded", color: "green" })
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 3000)
       }
     }).catch((err) => {
       setLoading(false);
@@ -121,7 +124,7 @@ export default function Step2({ stepNumber, totalStep, OnPrevious, OnNext, mainS
               onBlur={vailadated}
               required
             />
-            <Error>{error}</Error>
+            <h4 style={{ "color": messege.color }}>{messege.messege}</h4>
           </div>
         </form>
         <button

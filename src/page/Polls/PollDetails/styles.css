@@ -58,3 +58,7 @@
     left:-210px !important;
     top:-20px !important;
 }
+
+.poll-document{
+    cursor:pointer;
+}
