@@ -262,7 +262,6 @@ export default function PollsTab(props) {
         }
     };
     window.onscroll = loadMoree;
-    //Loke Hagberg added the above code
 
     return (
         <div className="tab-pane fade show active" id="PollsTab">
