@@ -29,7 +29,8 @@ import { faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid } from
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { UserTypes } from "../../../constants/constants";
 import { DropDownPollFilter, SearchFilter } from '../../common/Filter/'
-
+import ProposalDetails from "../../../page/Polls/PollResults/ProposalDetails";
+import { Link } from "react-router-dom";
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
@@ -39,7 +40,8 @@ export default function PollsTab(props) {
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [pageSize, setPageSize] = useState(4);
+    //The amount of polls that are loaded. If this value is at 1000, then this is only for demo. Please change to something lower when the backend is fixed to allow searching for polls in the database
+    const [pageSize, setPageSize] = useState(1000);
 
     const getHomePolls = (first_page) => {
         let data = {
@@ -256,13 +258,19 @@ export default function PollsTab(props) {
         console.log("polls", polls);
     }, [polls])
 
-    let loadMoree = (ev) => {
+    // useEffect(() => {
+    //     //Scuffed solution, for when one filters polls, there's some polls missing and they're not being automatically loaded.
+    //     //i.e one has to click the "load more..." button. 
+    //     setInterval(getPolls(false), 500)
+
+    // }, [pollFilter])
+
+    let loadMore = (ev) => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            getPolls(false)
+            // getPolls(false)
         }
     };
-    window.onscroll = loadMoree;
-    //Loke Hagberg added the above code
+    window.onscroll = loadMore;
 
     return (
         <div className="tab-pane fade show active" id="PollsTab">
@@ -283,23 +291,24 @@ export default function PollsTab(props) {
                         poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
                     )
                 )
-                    return <Post poll={poll} key={poll.id}
-                        addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
-                        updateComment={(comment) => updateComment(comment)}
-                        deleteComment={(commentId) => deleteComment(commentId)}
-                        likeComment={(comment) => likeComment(comment)}
-                        readOnlyComments={true}
-                        //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                        maxComments={-1}
-                    >
-                        <>
+                    return <div style={{ "borderTop": "rgb(221, 221, 221) solid 1px", "marginTop": "25px", "paddingTop": "8px" }}>
+                        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
                             <div className="poll-title" >{poll.title}</div>
-                            <p className="post-text">
-                                {poll.description}
-                            </p>
-                            <div className="post-img-wrapper"></div>
-                        </>
-                    </Post>
+                        </Link>
+                        <p className="post-text">
+                            <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
+                        </p>
+                        <div className="post-img-wrapper"></div>
+                        <Post poll={poll} key={poll.id}
+                            addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
+                            updateComment={(comment) => updateComment(comment)}
+                            deleteComment={(commentId) => deleteComment(commentId)}
+                            likeComment={(comment) => likeComment(comment)}
+                            readOnlyComments={true}
+                            //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
+                            maxComments={-1}>
+                        </Post>
+                    </div>
             })
             }
             {
