@@ -1,5 +1,4 @@
 .poll-post{
-    /* border-top:rgb(221, 221, 221) solid 1px; */
     margin-top:40px;
     padding-top:8px;
     border:lightgrey 1px solid;
@@ -10,6 +9,10 @@
 
 .poll-posts-container{
     padding:10px !important;
+}
+
+.poll-posts-container > div:nth-child(1){
+    margin-top:0;
 }
 
 .group-logo-and-title{
