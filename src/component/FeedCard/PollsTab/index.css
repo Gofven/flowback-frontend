@@ -1,3 +1,17 @@
+.poll-post{
+    /* border-top:rgb(221, 221, 221) solid 1px; */
+    margin-top:40px;
+    padding-top:8px;
+    border:lightgrey 1px solid;
+    box-shadow: 0rem 0rem 1rem rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius:10px;
+}
+
+.poll-posts-container{
+    padding:10px !important;
+}
+
 .group-logo-and-title{
     display:flex;
     align-items: center;
@@ -7,8 +21,17 @@
 }
 
 .group-logo-and-title > img{
-    width:2rem;
-    height:2rem;
+    width:1rem;
+    height:1rem;
+}
+
+.group-logo-and-title > div {
+    font-size:13px;
+}
+
+.poll-post-bottom-info{
+    display: flex;
+    justify-content: space-between;
 }
 
 /* .group-logo-and-title > *{

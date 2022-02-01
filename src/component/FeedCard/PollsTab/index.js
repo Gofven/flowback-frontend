@@ -33,6 +33,7 @@ import ProposalDetails from "../../../page/Polls/PollResults/ProposalDetails";
 import { Link } from "react-router-dom";
 import Image from "../../common/Image";
 import './index.css'
+import { formatDate } from "../../../utils/common";
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
@@ -275,51 +276,61 @@ export default function PollsTab(props) {
     window.onscroll = loadMore;
 
     return (
-        <div className="tab-pane fade show active" id="PollsTab">
+        <div className="tab-pane fade show active " id="PollsTab">
 
             <DropDownPollFilter setPollFilter={setPollFilter} pollFilter={pollFilter} />
             {/* <DropDownFilter setPollFilter={setPollFilter} pollFilter={pollFilter} filterCategories={["In progress", "Finished"]} filterTitle="Poll Progress" /> */}
             <SearchFilter setFilter={setPollFilter} filter={pollFilter} />
-
-            {polls?.map((poll, index) => {
-                if (
-                    (pollFilter.discussion === poll.discussion
-                        || pollFilter.discussion === null)
-                    && (
-                        (pollFilter.pollType === poll.voting_type && poll.type !== "event")
-                        || pollFilter.pollType === poll.type
-                        || pollFilter.pollType === null)
-                    && (
-                        poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
+            <div className="column-container poll-posts-container">
+                {polls?.map((poll, index) => {
+                    if (
+                        (pollFilter.discussion === poll.discussion
+                            || pollFilter.discussion === null)
+                        && (
+                            (pollFilter.pollType === poll.voting_type && poll.type !== "event")
+                            || pollFilter.pollType === poll.type
+                            || pollFilter.pollType === null)
+                        && (
+                            poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
+                        )
                     )
-                )
-                    return <div style={{ "borderTop": "rgb(221, 221, 221) solid 1px", "marginTop": "25px", "paddingTop": "8px" }}>
-                        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
-                            <div className="poll-title" >{poll.title}</div>
-                        </Link>
-                        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}`}>
-                            <div className="group-logo-and-title">
-                                <Image src={poll.group.image} className="group-details-dp" />
-                                <div className="poll-title" >{poll.group.title}</div>
-                            </div>
-                        </Link>
+                        return <div className="poll-post">
+                            <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
+                                <div className="poll-title" >{poll.title}</div>
+                            </Link>
 
-                        <p className="post-text">
-                            <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
-                        </p>
-                        <div className="post-img-wrapper"></div>
-                        <Post poll={poll} key={poll.id}
-                            addComment={(message, pollId, replyTo) => addComment(message, pollId, replyTo)}
-                            updateComment={(comment) => updateComment(comment)}
-                            deleteComment={(commentId) => deleteComment(commentId)}
-                            likeComment={(comment) => likeComment(comment)}
-                            readOnlyComments={true}
-                            //readOnlyComments={poll.discussion === "Finished" || !(poll.group.user_type && poll.group.user_type !== UserTypes.Delegator)}
-                            maxComments={-1}>
-                        </Post>
-                    </div>
-            })
-            }
+                            <p className="post-text">
+                                <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
+                            </p>
+
+                            <div className="poll-post-bottom-info">
+                                <div>
+                                    <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}`}>
+                                        <div className="group-logo-and-title">
+                                            <Image src={poll.group.image} className="group-details-dp" />
+                                            <div className="poll-title" >{poll.group.title}</div>
+                                        </div>
+                                    </Link>
+                                    <div className="post-share">
+                                        <div>
+                                            <i className="las la-comment"></i>
+                                            {poll?.comments_details?.total_comments} Comments
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {poll && poll.created_by &&
+                                    <div className="font-small mt-2 text-grey">
+                                        <div>Creator: {poll.created_by?.first_name}  </div>
+                                        <div>Created: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
+                                        <div>Ends: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                })
+                }
+            </div>
             {
                 (page < totalPage + 1) &&
                 <div className="d-flex justify-content-end cursor-pointer" onClick={() => { getPolls(false) }}>Load more... </div>
