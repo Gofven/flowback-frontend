@@ -1,0 +1,16 @@
+.group-logo-and-title{
+    display:flex;
+    align-items: center;
+    gap:0.4rem;
+    padding-top:0.2rem;
+    padding-bottom:0.4rem;
+}
+
+.group-logo-and-title > img{
+    width:2rem;
+    height:2rem;
+}
+
+/* .group-logo-and-title > *{
+    margin
+} */

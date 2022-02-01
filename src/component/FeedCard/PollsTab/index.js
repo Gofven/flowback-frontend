@@ -31,6 +31,8 @@ import { UserTypes } from "../../../constants/constants";
 import { DropDownPollFilter, SearchFilter } from '../../common/Filter/'
 import ProposalDetails from "../../../page/Polls/PollResults/ProposalDetails";
 import { Link } from "react-router-dom";
+import Image from "../../common/Image";
+import './index.css'
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
@@ -295,6 +297,13 @@ export default function PollsTab(props) {
                         <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
                             <div className="poll-title" >{poll.title}</div>
                         </Link>
+                        <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}`}>
+                            <div className="group-logo-and-title">
+                                <Image src={poll.group.image} className="group-details-dp" />
+                                <div className="poll-title" >{poll.group.title}</div>
+                            </div>
+                        </Link>
+
                         <p className="post-text">
                             <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
                         </p>
