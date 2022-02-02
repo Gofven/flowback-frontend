@@ -89,6 +89,16 @@ export default function GroupMembers(props) {
         );
     }
 
+    const handleOnJoinGroupAsADelegate = (item) => {
+        postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true }).then(
+            (response) => {
+                if (response) {
+                    const { status, data } = response;
+                    // getGroups();
+                }
+            });
+    }
+
     // Delagator functions
     const getAndSetDelegator = (data) => postRequest("api/v1/group_poll/get_user_delegator", data).then(
         (response) => {
@@ -124,6 +134,13 @@ export default function GroupMembers(props) {
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
     >Select</a>;
 
+    const SetBecomeDelegateButton = ({ groupId, userId, disabled }) => <a
+        href="#"
+        className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-info"
+        disabled={disabled}
+    // onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
+    >Become Delegate</a>;
+
     const getVotingRights = () => {
 
         getRequest(`api/v1/user_group/${props.groupId}/group_members_get`).then(response => {
@@ -131,7 +148,6 @@ export default function GroupMembers(props) {
             setCanMemberVote(response)
             setLoading(false);
         })
-
     }
 
     const postVotingRights = (memberId, allowVote) => {
@@ -222,30 +238,18 @@ export default function GroupMembers(props) {
                                 onChange={() => handleChangeVotingRight(member.id, index)}
                                 disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
-                        <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
-                        <div >
+                        <div>
+                            {member.user_type === "Owner" ? "YES" : "NO"}
+                        </div>
+                        <div>
                             {/* <div className="menu d-flex align-items-center"> */}
-                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
+                            {chosenDelegateId == member.id ? <DeselectDelegateButton />
+                                : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) &&
+                                <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
+                            {JSON.parse(window.localStorage.user).id === member.id && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                         </div>
-                        {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="white" id="dropdown-basic">
-                                    </Dropdown.Toggle>
-
-                                    <Dropdown.Menu>
-                                        {["Admin", "Moderator", "Member", "Delegator"].map((type) => {
-                                            return (member.user_type != type) ?
-                                                <Dropdown.Item className="cursor-pointer" onClick={() => changeMemberType(member, type)}>
-                                                    <img src={`/img/${type}.svg`} className="svg-icon mr-2" />
-                                                    Make {type}</Dropdown.Item>
-                                                : null
-                                        })}
-                                    </Dropdown.Menu>
-                                </Dropdown> :
-                                null
-                            } */}
                     </div>
                 ))
             }
