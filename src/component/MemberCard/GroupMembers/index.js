@@ -37,6 +37,10 @@ export default function GroupMembers(props) {
     const [canMemberVote, setCanMemberVote] = useState([]);
     const [status, setStatus] = useState({ text: "", color: "black" });
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const [chosenDelegateId, setChosenDelegateId] = useState(null);
     const [filter, setFilter] = useState({ search: "", typeOfMember: null })
@@ -89,16 +93,6 @@ export default function GroupMembers(props) {
         );
     }
 
-    const handleOnJoinGroupAsADelegate = (item) => {
-        postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true }).then(
-            (response) => {
-                if (response) {
-                    const { status, data } = response;
-                    // getGroups();
-                }
-            });
-    }
-
     // Delagator functions
     const getAndSetDelegator = (data) => postRequest("api/v1/group_poll/get_user_delegator", data).then(
         (response) => {
@@ -138,8 +132,51 @@ export default function GroupMembers(props) {
         href="#"
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-info"
         disabled={disabled}
-    // onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
+        onClick={handleShow}
     >Become Delegate</a>;
+
+
+    const BecomeDelegateModal = () => {
+        const [hasAccepted, setHasAccepted] = useState(true)
+
+        const handleAccept = () => setHasAccepted(!hasAccepted)
+
+        return <Modal show={show} onHide={handleClose} animation={false}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is not reversible</b>.</p>
+                <div className="delegateModalAccept"><input type="checkbox" className="acceptDelegate" onChange={handleAccept} />
+                    <div>I understand that this is irreversible and that I must ask system admin to remove my delegate role
+                    </div>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <button variant="secondary" className="btn btn-outline-active" onClick={handleClose}>
+                    Close
+                </button>
+                <button variant="primary" className="btn btn-outline-danger" disabled={hasAccepted} onClick={handleOnBecomeDelegate}>
+                    Become Delegate
+                </button>
+            </Modal.Footer>
+        </Modal >
+    }
+
+    const handleOnBecomeDelegate = () => {
+        handleClose();
+        postRequest(`api/v1/user_group/${groupId}/leave_group`).then(
+            (response) => {
+                postRequest("api/v1/user_group/join_group", { group: groupId, as_delegator: true }).then(
+                    (response) => {
+                        if (response) {
+                            setUserType("Delegator")
+                        }
+                    }).catch(e => console.error(e));
+
+            }).catch(e => console.error(e));
+    }
+
 
     const getVotingRights = () => {
 
@@ -174,10 +211,10 @@ export default function GroupMembers(props) {
     }
 
     const DeselectDelegateButton = () => {
-        const [show, setShow] = useState(false);
+        const [show1, setShow1] = useState(false);
 
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
+        const handleClose = () => setShow1(false);
+        const handleShow = () => setShow1(true);
 
         return (
             <>
@@ -185,7 +222,7 @@ export default function GroupMembers(props) {
                     Deselect
                 </a>
 
-                <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
+                <Modal show={show1} onHide={handleClose} enforceFocus={false} autoFocus={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>Delegate voting options</Modal.Title>
                     </Modal.Header>
@@ -212,6 +249,8 @@ export default function GroupMembers(props) {
 
     return (
         <Loader loading={loading}>
+            <BecomeDelegateModal />
+
             <SearchFilter setFilter={setFilter} filter={filter} />
             <DropDownFilterGroup setFilter={setFilter} filter={filter} />
 
@@ -243,12 +282,13 @@ export default function GroupMembers(props) {
                         </div>
                         <div>
                             {/* <div className="menu d-flex align-items-center"> */}
-                            {chosenDelegateId == member.id ? <DeselectDelegateButton />
-                                : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) &&
+                            {chosenDelegateId === member.id ? <DeselectDelegateButton />
+                                : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null && JSON.parse(window.localStorage.user).id !== member.id) &&
                                 <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
-                            {JSON.parse(window.localStorage.user).id === member.id && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>You are a delegator  </div>}
                         </div>
                     </div>
                 ))
