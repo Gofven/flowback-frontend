@@ -209,9 +209,7 @@ export default function Friends() {
                     <div className="grupper-content-view">
                       <div className="media">
                         <div className="pr-2">
-                          <p className="member-count">
-                            {item.total_members || 0} <p>members</p>
-                          </p>
+
 
                         </div>
                         <div className="media-body">
@@ -222,7 +220,7 @@ export default function Friends() {
                           {/* </Link> */}
                         </div>
                         <div className="grupper-btn-view">
-                          <GroupButtons user_type={item.user_type} groupId={item.id} groupJoinStatus={item.group_join_status} />
+                          <GroupButtons user_type={item.user_type} groupId={item.id} groupJoinStatus={item.group_join_status} total_members={item.total_members} />
                         </div>
                       </div>
                     </div>
