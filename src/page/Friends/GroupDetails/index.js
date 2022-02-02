@@ -171,14 +171,7 @@ export default function GroupDetails() {
                                 </div>
                             </div>
                             <div className="col-6 d-flex align-items-end justify-content-end flex-column mr-5 mb-2">
-                                <div className="mb-1">
-                                    <p className="group-details-member-count">
-                                        {group.total_members} <small>members</small>
-                                    </p>
-                                </div>
-
-                                <GroupButtons />
-
+                                <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} />
                             </div>
                             <Image src={group.cover_image} className="group-details-cover" errImg={'/img/no-banner.jpg'} />
                         </div>
