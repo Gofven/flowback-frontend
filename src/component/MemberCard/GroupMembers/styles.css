@@ -74,3 +74,18 @@
 /* .user-block{
     width:80px;
 } */
+
+.acceptDelegate{
+    width:1.5rem;
+    height:1.5rem;
+}
+
+.delegateModalAccept{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.delegateModalAccept > div{
+    width:80%;
+}
