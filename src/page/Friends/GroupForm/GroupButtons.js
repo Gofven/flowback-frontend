@@ -19,8 +19,8 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus }) {
     const handleOnLeaveGroup = () => {
         postRequest(`api/v1/user_group/${groupId}/leave_group`).then(
             (response) => {
+                setIsMember(false)
                 if (response) {
-                    setIsMember(false)
                     const { status, data } = response;
                     // getGroups();
                 }

@@ -222,7 +222,7 @@ export default function Friends() {
                           {/* </Link> */}
                         </div>
                         <div className="grupper-btn-view">
-                          <GroupButtons item={item} />
+                          <GroupButtons user_type={item.user_type} groupId={item.id} groupJoinStatus={item.group_join_status} />
                         </div>
                       </div>
                     </div>

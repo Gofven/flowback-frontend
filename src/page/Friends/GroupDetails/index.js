@@ -121,17 +121,6 @@ export default function GroupDetails() {
         );
     }
 
-    // Join group request as a member
-    const handleOnJoinGroupAsAMember = (item) => {
-        postRequest("api/v1/user_group/join_group", { group: item.id, }).then(
-            (response) => {
-                if (response) {
-                    const { status, data } = response;
-                    getGroupDetail();
-                }
-            });
-    }
-
     // Join group request as a delegate
     const handleOnJoinGroupAsADelegate = (item) => {
         postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true }).then(
@@ -187,7 +176,9 @@ export default function GroupDetails() {
                                         {group.total_members} <small>members</small>
                                     </p>
                                 </div>
+
                                 <GroupButtons />
+
                             </div>
                             <Image src={group.cover_image} className="group-details-cover" errImg={'/img/no-banner.jpg'} />
                         </div>
