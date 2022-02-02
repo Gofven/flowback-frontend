@@ -143,7 +143,7 @@ export default function GroupMembers(props) {
             if (response.detail === "You do not have permission to perform this action.") {
                 setStatus({ text: "You don't have permission to change users voting rights", color: "red" });
             }
-            setStatus({ text: "Successfully changed vote", color: "green" });
+            setStatus({ text: "Successfully changed voting rights", color: "green" });
             getVotingRights();
         })
     }
