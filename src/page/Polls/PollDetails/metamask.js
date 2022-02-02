@@ -1,30 +1,41 @@
 import { useState, useEffect } from "react";
+import Loader from "../../../component/common/Loader";
 
 export default function Metamask() {
     const [account, setAccount] = useState();
+    const [loading, setLoading] = useState(false);
 
     const connectToMetamask = () => {
-        window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
-            setAccount(accounts[0]);
-            // console.log(response)
+        setLoading(true)
+        window.ethereum?.request({ method: 'eth_requestAccounts' }).then(accounts => {
+            setLoading(false)
+            if (window.ethereum?.isMetaMask)
+                setAccount(accounts[0]);
+            else
+                console.warn("not using metamask")
+        }).catch(e => {
+            setLoading(false)
+            console.warn(e)
         });
     }
 
     useEffect(() => {
-        if (window.ethereum.selectedAddress) {
+        if (window.ethereum?.selectedAddress) {
             setAccount(window.ethereum.selectedAddress);
         }
     })
 
 
     return <div>
-        <div>
+
+        <Loader loading={loading}>
             {account ?
                 `Your account is: ${account}`
                 :
                 <button onClick={connectToMetamask}>
                     Authenticate with Metamask
                 </button>}
-        </div>
+        </Loader>
+
     </div>
 }
