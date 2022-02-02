@@ -16,9 +16,10 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
-*/
+ */
 
 import React, { useState, useEffect } from "react";
+import GroupButtons from "../GroupForm/GroupButtons";
 import {
     Link,
     useParams,
@@ -38,7 +39,7 @@ import {
     faFileAlt,
     faUser,
     faPoll,
-    faLayerGroup, 
+    faLayerGroup,
     faUsers,
     faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
@@ -133,7 +134,7 @@ export default function GroupDetails() {
 
     // Join group request as a delegate
     const handleOnJoinGroupAsADelegate = (item) => {
-        postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true}).then(
+        postRequest("api/v1/user_group/join_group", { group: item.id, as_delegator: true }).then(
             (response) => {
                 if (response) {
                     const { status, data } = response;
@@ -173,9 +174,9 @@ export default function GroupDetails() {
                                     {
                                         ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
                                         <div class="iconedit">
-                                        <Link to={`/groupdetails/${groupId}/edit`}>
-                                            <FontAwesomeIcon icon={faEdit} size="lg" color="black"/>
-                                        </Link>
+                                            <Link to={`/groupdetails/${groupId}/edit`}>
+                                                <FontAwesomeIcon icon={faEdit} size="lg" color="black" />
+                                            </Link>
                                         </div>
                                     }
                                 </div>
@@ -184,37 +185,9 @@ export default function GroupDetails() {
                                 <div className="mb-1">
                                     <p className="group-details-member-count">
                                         {group.total_members} <small>members</small>
-                                    </p>                                </div>
-                                <div className="group-details-btn-view">
-                                    {
-                                        group.user_type ?
-                                            <p>
-                                                <i className="las la-check text-success mr-1"></i>
-                                                {group.user_type === "Delegator" ? "Delegate" : "member"} 
-                                            </p> :
-                                            (
-                                                (group.group_join_status == "Requested") ?
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-sm btn-block btn-outline-light"
-                                                    >
-                                                        {group.group_join_status}
-                                                    </a> :
-                                                    <div>
-                                                        <a
-                                                        href="#"
-                                                        className="btn btn-sm btn-block btn-outline-light"
-                                                        onClick={() => { handleOnJoinGroupAsAMember(group) }}
-                                                        >Join as a member</a>
-                                                        <a
-                                                            href="#"
-                                                            className="btn btn-sm btn-block btn-outline-light"
-                                                            onClick={() => { handleOnJoinGroupAsADelegate(group) }}
-                                                        >Join as a delegate</a>
-                                                    </div>
-                                            )
-                                    }
+                                    </p>
                                 </div>
+                                <GroupButtons />
                             </div>
                             <Image src={group.cover_image} className="group-details-cover" errImg={'/img/no-banner.jpg'} />
                         </div>
@@ -256,13 +229,13 @@ export default function GroupDetails() {
                                             </Link>
                                         </div>
                                         {REACT_APP_JITSI &&
-                                        <div className="mb-1">
-                                            <a target="_blank" href={`${REACT_APP_JITSI}/${group.room_name}`}>
-                                                <FontAwesomeIcon icon={faUsers} color='#737373' />
-                                                <span className="ml-2"
-                                                >Video Conference</span>
-                                            </a>
-                                        </div>
+                                            <div className="mb-1">
+                                                <a target="_blank" href={`${REACT_APP_JITSI}/${group.room_name}`}>
+                                                    <FontAwesomeIcon icon={faUsers} color='#737373' />
+                                                    <span className="ml-2"
+                                                    >Video Conference</span>
+                                                </a>
+                                            </div>
                                         }
                                     </div>
                                 </div>
