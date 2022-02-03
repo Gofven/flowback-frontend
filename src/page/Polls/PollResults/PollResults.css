@@ -33,4 +33,5 @@
 .proposal-details-text-fix{
     word-break: break-all;
     border:solid rgb(221, 221, 221) 1px;
+    width:100%;
 }
