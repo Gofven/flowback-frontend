@@ -44,7 +44,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
             });
     }
 
-    return <div className="grupper-btn-view">
+    return <div className="">
 
         <p className="member-count">
             <p>{totalMembers || 0}</p>
@@ -53,10 +53,11 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
 
         {
             isMember ?
-                user_type !== "Owner" && <h4>
+                (user_type !== "Owner" && user_type !== "Delegator") && <h4>
                     <div className="flex-row">
                         <a
                             className="btn btn-sm btn-block btn-outline-secondary btn-outline-danger"
+                            style={{ "margin-right": "1rem", "position": "inherit" }}
                             onClick={() => { handleOnLeaveGroup() }}
                         >Leave Group</a>
                     </div>
@@ -71,7 +72,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                         </a> :
                         <div className="flex-row">
                             <a
-                                className="btn btn-sm btn-block btn-outline-secondary"
+                                className="btn btn-outline-secondary"
                                 onClick={() => { handleOnJoinGroupAsAMember() }}
                             >Join Group</a>
                         </div>
