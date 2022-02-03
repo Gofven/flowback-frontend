@@ -172,6 +172,13 @@
     text-shadow: 1px 1px 4px black;
 }
 
+.profile-title-overflow-fix{
+    max-width: 20em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .profile-content-view {
     position: relative;
     padding: 20px;

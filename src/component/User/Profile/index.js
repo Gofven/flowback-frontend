@@ -263,7 +263,7 @@ export default function Profile(props) {
                                             <div className='profile-edit-icon'>
                                                 <FontAwesomeIcon icon={faSave} onClick={() => updateUser()} />
                                             </div>
-                                            <div className='profile-edit-icon' style={{"marginLeft":"5%"}}>
+                                            <div className='profile-edit-icon' style={{ "marginLeft": "5%" }}>
                                                 <FontAwesomeIcon icon={faTimes} onClick={() => toggleEditMode()} />
                                             </div>
                                         </>
@@ -289,18 +289,18 @@ export default function Profile(props) {
                                         </label>
                                         {
                                             editMode &&
-                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange}/>
+                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange} />
                                         }
                                     </div>
                                     {/* <Image src={user.image} className="profile-dp" alt="User Profile" errImg={'/img/no-photo.jpg'} /> */}
-                                    <div className="media-body">
+                                    <div className="media-body profile-title-overflow-fix">
                                         {
                                             !editMode &&
-                                            <h3 className="profile-title text-truncate">
+                                            <h3 className="profile-title text-truncate" >
                                                 {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : ""}
                                             </h3>
                                         }
-                                        
+
                                     </div>
                                 </div>
                                 <div>

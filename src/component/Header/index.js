@@ -106,7 +106,7 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <div className="avtar-row row align-items-center mx-auto">
-                  <div className="col-3 px-0 avtrar-img-cl">
+                  <div className="col-3 px-0 avtrar-img-cl" style={{ "text-align": "center" }}>
                     <Image
                       src={user.image}
                       className="avtrar-img img-fluid"
@@ -114,14 +114,14 @@ export default function Header() {
                       errImg={'/img/no-photo.jpg'}
                     />
                   </div>
-                  <div className="col-8 px-1 avtra-name">
+                  <div className="col-8 px-1 avtra-name profile-title-overflow-fix">
                     {
                       user ?
                         <span>{user.first_name} {user.last_name}</span>
                         : 'User'
                     }
                   </div>
-                  <div className="col-1 down-arro px-0">
+                  <div className="col-1 down-arro px-0" style={{ "text-align": "center" }}>
                     <img src="/img/avtar-arrow-blue.png" />
                   </div>
                 </div>
