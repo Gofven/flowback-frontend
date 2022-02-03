@@ -27,7 +27,7 @@ import "./styles.css";
 
 export default function Login() {
   const { tab, activeTab, bind: handleOnClick } = useTab(["Login", "Register"]);
-  
+
   //If user is already logged in, then make it impossible to access the login page
   if (localStorage.getItem('user')) {
     window.location.href = "/"
@@ -48,6 +48,7 @@ export default function Login() {
       <div className="logo-section">
         <a href="/">
           <img src="/img/Logo.png" className="img-fluid main-logo" alt="logo" />
+          <span className="main-logo-text">Flowback</span>
         </a>
       </div>
       <div className="login_form_container">
@@ -65,7 +66,7 @@ export default function Login() {
                       <span
                         className={`nav-link${item === activeTab ? " active" : ""
                           }`}
-                        style={{"color":"#575757"}}
+                        style={{ "color": "#575757" }}
                         data-id={index}
                         {...handleOnClick}
                       >

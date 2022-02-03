@@ -2,7 +2,7 @@ import { postRequest } from "../../../utils/API";
 import React, { useState, useEffect } from "react";
 import './styles.css'
 
-export default function GroupButtons({ user_type, groupId, groupJoinStatus, total_members }) {
+export default function GroupButtons({ user_type, groupId, groupJoinStatus, total_members, reload }) {
     const [isMember, setIsMember] = useState(user_type)
     const [totalMembers, setTotalMember] = useState(total_members)
 
@@ -16,6 +16,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                     const { status, data } = response;
                     // getGroups();
                 }
+                if (reload) window.location.reload();
             });
     }
 
@@ -28,6 +29,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                     const { status, data } = response;
                     // getGroups();
                 }
+                if (reload) window.location.reload();
             });
     }
 
@@ -51,7 +53,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
 
         {
             isMember ?
-                <h4>
+                user_type !== "Owner" && <h4>
                     <div className="flex-row">
                         <a
                             className="btn btn-sm btn-block btn-outline-secondary btn-outline-danger"
