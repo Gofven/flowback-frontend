@@ -57,6 +57,7 @@ export default function GroupDetails() {
 
     let { groupId } = useParams();
     const [group, setGroup] = useState({});
+    const [groupLoaded, setGroupLoaded] = useState(false);
 
     //List Names
     const { tab, activeTab, bind: handleOnClick } = useTab([
@@ -115,6 +116,7 @@ export default function GroupDetails() {
                     const { status, data } = response;
                     setGroup(data);
                     console.log("Group", group);
+                    setGroupLoaded(true);
                 }
 
             }
@@ -171,8 +173,8 @@ export default function GroupDetails() {
                                 </div>
                             </div>
                             <div className="col-6 d-flex align-items-end justify-content-end flex-column mr-5 mb-2">
-                                {/* <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} /> */}
-                                {group.total_members} Members
+                                {groupLoaded && <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} />}
+                                {/* {group.total_members} Members */}
                             </div>
                             <Image src={group.cover_image} className="group-details-cover" errImg={'/img/no-banner.jpg'} />
                         </div>

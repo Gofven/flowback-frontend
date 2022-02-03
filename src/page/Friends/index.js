@@ -209,8 +209,6 @@ export default function Friends() {
                     <div className="grupper-content-view">
                       <div className="media">
                         <div className="pr-2">
-
-
                         </div>
                         <div className="media-body">
                           {/* <Link to={`/groupdetails/${item.id}`}> */}
