@@ -56,7 +56,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                 (user_type !== "Owner" && user_type !== "Delegator") && <h4>
                     <div className="flex-row">
                         <a
-                            className="btn btn-sm btn-block btn-outline-secondary btn-outline-danger"
+                            className="btn  btn-outline-danger"
                             style={{ "margin-right": "1rem", "position": "inherit" }}
                             onClick={() => { handleOnLeaveGroup() }}
                         >Leave Group</a>
@@ -66,7 +66,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                     (groupJoinStatus == "Requested") ?
                         <a
                             href="#"
-                            className="btn btn-sm btn-block btn-outline-secondary"
+                            className="btn  btn-outline-secondary"
                         >
                             {groupJoinStatus}
                         </a> :
