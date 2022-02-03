@@ -46,7 +46,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
 
     return <div className="grupper-btn-view">
 
-        <p className="member-count">
+        <p className="member-count" style = {{filter: "drop-shadow(1px 1px 1px #ffffff)"}}> 
             <p>{totalMembers || 0}</p>
             <p>members</p>
         </p>
@@ -58,6 +58,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                         <a
                             className="btn btn-sm btn-block btn-outline-secondary btn-outline-danger"
                             onClick={() => { handleOnLeaveGroup() }}
+                            style = {{filter: "drop-shadow(1px 1px 1px #ffffff)"}}
                         >Leave Group</a>
                     </div>
                 </h4> :
