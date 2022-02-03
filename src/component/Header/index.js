@@ -114,7 +114,7 @@ export default function Header() {
                       errImg={'/img/no-photo.jpg'}
                     />
                   </div>
-                  <div className="col-8 px-1 avtra-name profile-title-overflow-fix">
+                  <div className="col-8 px-1 avtra-name title-overflow-fix">
                     {
                       user ?
                         <span>{user.first_name} {user.last_name}</span>

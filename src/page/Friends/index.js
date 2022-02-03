@@ -197,8 +197,8 @@ export default function Friends() {
                       <div className="grupper-img-view">
                         <div className="media grupper-img-content">
                           <Image src={group.image} className="grupper-dp" />
-                          <div className="media-body">
-                            <h3 className="grupper-title text-truncate">
+                          <div className="media-body title-overflow-fix">
+                            <h3 className="grupper-title text-truncate ">
                               {group.title}
                             </h3>
                           </div>
