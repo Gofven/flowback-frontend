@@ -186,24 +186,24 @@ export default function Friends() {
               <DropDownFilterGroup setFilter={setFilter} filter={filter} />
 
               {
-                groups?.map((item, index) => (
-                  (item.title?.toUpperCase().includes(filter.search.toUpperCase()) ||
-                    item.description?.toUpperCase().includes(filter.search.toUpperCase())) &&
-                  (item.user_type === filter.typeOfMember || filter.typeOfMember === null ||
-                    (item.user_type === "" && filter.typeOfMember === "Not Member")) &&
-                  < div className="grupper-card" key={item.id} >
+                groups?.map((group, index) => (
+                  (group.title?.toUpperCase().includes(filter.search.toUpperCase()) ||
+                    group.description?.toUpperCase().includes(filter.search.toUpperCase())) &&
+                  (group.user_type === filter.typeOfMember || filter.typeOfMember === null ||
+                    (group.user_type === "" && filter.typeOfMember === "Not Member")) &&
+                  < div className="grupper-card" key={group.id} >
 
-                    <Link to={`/groupdetails/${item.id}`}>
+                    <Link to={`/groupdetails/${group.id}`}>
                       <div className="grupper-img-view">
                         <div className="media grupper-img-content">
-                          <Image src={item.image} className="grupper-dp" />
+                          <Image src={group.image} className="grupper-dp" />
                           <div className="media-body">
                             <h3 className="grupper-title text-truncate">
-                              {item.title}
+                              {group.title}
                             </h3>
                           </div>
                         </div>
-                        <Image src={item.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
+                        <Image src={group.cover_image} className="grupper-cover" errImg={'/img/no-banner.jpg'} />
                       </div>
                     </Link>
                     <div className="grupper-content-view">
@@ -215,12 +215,12 @@ export default function Friends() {
                         <div className="media-body">
                           {/* <Link to={`/groupdetails/${item.id}`}> */}
                           <p className="grupper-description line-4">
-                            {item.description}
+                            {group.description}
                           </p>
                           {/* </Link> */}
                         </div>
                         <div className="grupper-btn-view">
-                          <GroupButtons user_type={item.user_type} groupId={item.id} groupJoinStatus={item.group_join_status} total_members={item.total_members} />
+                          <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} />
                         </div>
                       </div>
                     </div>
