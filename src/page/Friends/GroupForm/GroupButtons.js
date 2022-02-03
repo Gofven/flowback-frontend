@@ -51,7 +51,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
 
         {
             isMember ?
-                <h4>
+                user_type !== "Owner" && <h4>
                     <div className="flex-row">
                         <a
                             className="btn btn-sm btn-block btn-outline-secondary btn-outline-danger"

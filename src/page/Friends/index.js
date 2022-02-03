@@ -221,6 +221,7 @@ export default function Friends() {
                         </div>
                         <div className="grupper-btn-view">
                           <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} />
+                          {group.user_type === "Owner" && <div>You are Owner</div>}
                         </div>
                       </div>
                     </div>

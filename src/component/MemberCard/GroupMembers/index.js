@@ -143,10 +143,11 @@ export default function GroupMembers(props) {
 
         return <Modal show={show} onHide={handleClose} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Varning</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is not reversible</b>.</p>
+                <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
+                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is irreversible</b>.</p>
                 <div className="delegateModalAccept"><input type="checkbox" className="acceptDelegate" onChange={handleAccept} />
                     <div>I understand that this is irreversible and that I must ask system admin to remove my delegate role
                     </div>
@@ -287,8 +288,9 @@ export default function GroupMembers(props) {
                                 <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
-                            {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && member.user_type !== "Owner" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>You are a delegator  </div>}
+                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>Admin can't be delegator</div>}
                         </div>
                     </div>
                 ))
