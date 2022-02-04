@@ -276,11 +276,11 @@ select::selected{
 /*-480px-*/
 @media (max-width: 480px){
     .grupper-content-view .media {
-        display: block;
+        /* display: block; */
         position: relative;
     }
     .grupper-btn-view {
-        position: absolute;
+        /* position: absolute; */
         top: 0;
         right: 0;
     }

@@ -149,9 +149,9 @@ export default function GroupMembers(props) {
             </Modal.Header>
             <Modal.Body>
                 <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
-                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is irreversible</b>.</p>
+                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is not reversible</b>.</p>
                 <div className="delegateModalAccept"><input type="checkbox" className="acceptDelegate" onChange={handleAccept} />
-                    <div>I understand that this is irreversible and that I must ask system admin to remove my delegate role
+                    <div>I understand that this is not reversible and that I must ask system admin to remove my delegate role
                     </div>
                 </div>
             </Modal.Body>
