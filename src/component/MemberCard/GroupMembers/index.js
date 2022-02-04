@@ -174,6 +174,7 @@ export default function GroupMembers(props) {
                     (response) => {
                         if (response) {
                             setUserType("Delegator")
+                            window.location.reload();
                         }
                     }).catch(e => console.error(e));
 
@@ -248,7 +249,11 @@ export default function GroupMembers(props) {
         );
     }
 
-    console.log(members)
+    const kickLokeMUHAHAHAHAHA = () => {
+        postRequest(`api/v1/user_group/${props.groupId}/kick_group_user`, { id: 1 }).then(() => {
+
+        })
+    }
 
     return (
         <Loader loading={loading}>
@@ -256,6 +261,8 @@ export default function GroupMembers(props) {
 
             <SearchFilter setFilter={setFilter} filter={filter} />
             <DropDownFilterGroup setFilter={setFilter} filter={filter} />
+
+            <button onClick={kickLokeMUHAHAHAHAHA}>Kick Loke MUHAHAHAHAHAHA</button>
 
             <div style={{ "color": status.color }}>{status.text}</div>
             <div className="mb-2 titles">
