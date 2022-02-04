@@ -46,9 +46,8 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
 
     return <div className="">
 
-        <p className="member-count">
-            <p>{totalMembers || 0}</p>
-            <p>members</p>
+        <p className="">
+            <p>{totalMembers || 0} members</p>
         </p>
 
         {
