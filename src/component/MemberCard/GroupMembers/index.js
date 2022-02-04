@@ -249,9 +249,10 @@ export default function GroupMembers(props) {
         );
     }
 
-    const kickLokeMUHAHAHAHAHA = () => {
-        postRequest(`api/v1/user_group/${props.groupId}/kick_group_user`, { id: 1 }).then(() => {
-
+    const kickMember = (memberId) => {
+        setLoading(true);
+        postRequest(`api/v1/user_group/${props.groupId}/kick_group_user`, { target: memberId }).then(() => {
+            getGroupMembers();
         })
     }
 
@@ -261,8 +262,6 @@ export default function GroupMembers(props) {
 
             <SearchFilter setFilter={setFilter} filter={filter} />
             <DropDownFilterGroup setFilter={setFilter} filter={filter} />
-
-            <button onClick={kickLokeMUHAHAHAHAHA}>Kick Loke MUHAHAHAHAHAHA</button>
 
             <div style={{ "color": status.color }}>{status.text}</div>
             <div className="mb-2 titles">
@@ -276,6 +275,7 @@ export default function GroupMembers(props) {
                     member.first_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
                     (member.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                     < div className="titles media member-block" key={index} >
+                        <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick {member?.first_name}</button>
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
                             <div>
