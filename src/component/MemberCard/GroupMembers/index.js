@@ -145,7 +145,7 @@ export default function GroupMembers(props) {
 
         return <Modal show={show} onHide={handleClose} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Varning</Modal.Title>
+                <Modal.Title>Warning</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
@@ -174,6 +174,7 @@ export default function GroupMembers(props) {
                     (response) => {
                         if (response) {
                             setUserType("Delegator")
+                            window.location.reload();
                         }
                     }).catch(e => console.error(e));
 
@@ -248,7 +249,12 @@ export default function GroupMembers(props) {
         );
     }
 
-    console.log(members)
+    const kickMember = (memberId) => {
+        setLoading(true);
+        postRequest(`api/v1/user_group/${props.groupId}/kick_group_user`, { target: memberId }).then(() => {
+            getGroupMembers();
+        })
+    }
 
     return (
         <Loader loading={loading}>
@@ -269,6 +275,7 @@ export default function GroupMembers(props) {
                     member.first_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
                     (member.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                     < div className="titles media member-block" key={index} >
+                        <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick {member?.first_name}</button>
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
                             <div>
