@@ -145,7 +145,7 @@ export default function GroupMembers(props) {
 
         return <Modal show={show} onHide={handleClose} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Varning</Modal.Title>
+                <Modal.Title>Warning</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
