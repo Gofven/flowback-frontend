@@ -351,7 +351,7 @@ export default function PollForm() {
 
                                                     {expandedDescription ? <div className="votingExplanationTexts">
                                                         <div>
-                                                            <b>Ranking</b> is the method is preferential voting known as the borda count. The top proposal in Added always gets the number of points as there are proposals (it does not depend on there being proposals below it), and the one below that gets that number minus one, the one below that gets that number minus two and so on. Each proposal that are in abstain each get zero points. This is added over all voters and is divided by the total number of votes to get the result.
+                                                            <b>Ranking</b> is the method of preferential voting known as the borda count. The top proposal in Added always gets the number of points as there are proposals (it does not depend on there being proposals below it), and the one below that gets that number minus one, the one below that gets that number minus two and so on. Each proposal that are in abstain each get zero points. This is added over all voters and is divided by the total number of votes to get the result.
                                                         </div>
                                                         <div>
                                                             <b>For/Against</b> is the method where each proposal that is voted for gets one point and each voted against gets minus one independently of order, all other proposals get zero points. The points are then added over all voters and is divided by the total number of votes to get the result.
