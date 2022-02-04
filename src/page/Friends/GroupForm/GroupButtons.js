@@ -58,6 +58,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                             className="btn  btn-outline-danger"
                             style={{ "margin-right": "1rem", "position": "inherit" }}
                             onClick={() => { handleOnLeaveGroup() }}
+                            style={{ filter: "drop-shadow(1px 1px 1px #ffffff)" }}
                         >Leave Group</a>
                     </div>
                 </h4> :

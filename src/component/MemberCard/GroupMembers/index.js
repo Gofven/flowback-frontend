@@ -299,7 +299,7 @@ export default function GroupMembers(props) {
                             {/* </div> */}
                             {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && member.user_type !== "Owner" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>You are a delegator  </div>}
-                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>Admins can't be delegator</div>}
+                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>Admin can't be a delegate</div>}
                         </div>
                     </div>
                 ))
