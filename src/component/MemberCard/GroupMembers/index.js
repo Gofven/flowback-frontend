@@ -256,6 +256,11 @@ export default function GroupMembers(props) {
         })
     }
 
+    const isKickable = (memberUserType) => {
+        return (userType === "Owner" || userType === "Admin")
+            && !(memberUserType === "Delegator" || memberUserType === "Admin" || memberUserType === "Owner")
+    }
+
     return (
         <Loader loading={loading}>
             <BecomeDelegateModal />
@@ -275,12 +280,14 @@ export default function GroupMembers(props) {
                     member.first_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
                     (member.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                     < div className="titles media member-block" key={index} >
-                        <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick {member?.first_name}</button>
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
                             <div>
                                 <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                             </div>
+
+                            {isKickable(member.user_type) && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
+
                         </div>
                         <div>
                             <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false}
