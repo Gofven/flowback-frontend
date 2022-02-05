@@ -256,6 +256,11 @@ export default function GroupMembers(props) {
         })
     }
 
+    const isKickable = (memberUserType) => {
+        return (userType === "Owner" || userType === "Admin")
+            && !(memberUserType === "Delegator" || memberUserType === "Admin" || memberUserType === "Owner")
+    }
+
     return (
         <Loader loading={loading}>
             <BecomeDelegateModal />
@@ -281,7 +286,8 @@ export default function GroupMembers(props) {
                                 <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                             </div>
 
-                            {(userType === "Owner" || userType === "Admin") && member.user_type !== "Delegator" && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
+                            {isKickable(member.user_type) && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
+
                         </div>
                         <div>
                             <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false}
