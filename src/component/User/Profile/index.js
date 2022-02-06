@@ -376,7 +376,7 @@ export default function Profile(props) {
                                     </div>
                             }
 
-                            {loggedInUser && <div className="profile-content-view">{isSignedIn() ? "You are signed into Metamask" : "You are not signed into Metamask"}</div>}
+                            {/* {loggedInUser && <div className="profile-content-view">{isSignedIn() ? "You are signed into Metamask" : "You are not signed into Metamask"}</div>} */}
 
                             {editMode && <div className="profile-content-view">
                                 <ConnectToMetamask />
