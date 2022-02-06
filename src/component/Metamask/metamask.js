@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Loader from "../../../component/common/Loader";
+import Loader from "../common/Loader";
 
-export default function Metamask() {
+export function ConnectToMetamask() {
     const [account, setAccount] = useState();
     const [loading, setLoading] = useState(false);
 
@@ -38,4 +38,10 @@ export default function Metamask() {
         </Loader>
 
     </div>
+}
+
+export function isSignedIn() {
+    window.ethereum.request({ method: 'eth_requestAccounts' }).then(response => {
+        console.log(response)
+    });
 }
