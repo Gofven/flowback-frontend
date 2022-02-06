@@ -183,9 +183,7 @@ export default function GroupMembers(props) {
 
 
     const getVotingRights = () => {
-
         getRequest(`api/v1/user_group/${props.groupId}/group_members_get`).then(response => {
-            console.log(response, "REPONSE VOTING RIGHTS");
             setCanMemberVote(response)
             setLoading(false);
         })
@@ -193,10 +191,7 @@ export default function GroupMembers(props) {
 
     const postVotingRights = (memberId, allowVote) => {
         setLoading(true)
-        console.log(canMemberVote)
         postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: memberId, allow_vote: allowVote }).then(response => {
-            console.log(response, "REPONSE");
-            console.log(canMemberVote)
             if (response.detail === "You do not have permission to perform this action.") {
                 setStatus({ text: "You don't have permission to change users voting rights", color: "red" });
             }
