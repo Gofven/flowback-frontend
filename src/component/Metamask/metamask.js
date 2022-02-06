@@ -41,7 +41,10 @@ export function ConnectToMetamask() {
 }
 
 export function isSignedIn() {
-    window.ethereum.request({ method: 'eth_requestAccounts' }).then(response => {
-        console.log(response)
-    });
+    // if (window.ethereunm)
+    // window.ethereum.request({ method: 'eth_requestAccounts' }).then(response => {
+    //     if (response[0]) return true;
+    // }).catch(() => {
+    //     return false;
+    // });
 }
