@@ -46,8 +46,8 @@ import Image from '../../../component/common/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
 import Profile from '../../../component/User/Profile';
 import PollResults from "../PollResults/PollResults";
+// import Metamask from "../../../component/Metamask/metamask";
 import './styles.css'
-import Metamask from "./metamask";
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -419,9 +419,9 @@ export default function PollDetails() {
                                 <div className="card-body overflow-hidden">
                                     <p>{poll.description}</p>
                                 </div>
-                                <div className="card-body overflow-hidden">
+                                {/* <div className="card-body overflow-hidden">
                                     <Metamask />
-                                </div>
+                                </div> */}
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-5">Created at</div>

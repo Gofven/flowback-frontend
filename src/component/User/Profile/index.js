@@ -31,6 +31,7 @@ import { Textarea, Textbox } from '../../common';
 import Image from '../../common/Image';
 import Loader from '../../common/Loader';
 import './styles.css';
+import { ConnectToMetamask, isSignedIn } from '../../Metamask/metamask';
 
 
 export default function Profile(props) {
@@ -374,6 +375,12 @@ export default function Profile(props) {
                                         </div> */}
                                     </div>
                             }
+
+                            {loggedInUser && <div className="profile-content-view">{isSignedIn() ? "You are signed into Metamask" : "You are not signed into Metamask"}</div>}
+
+                            {editMode && <div className="profile-content-view">
+                                <ConnectToMetamask />
+                            </div>}
                         </div>
                     }
                 </Loader>
