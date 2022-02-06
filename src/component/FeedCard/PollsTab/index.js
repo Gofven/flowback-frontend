@@ -299,7 +299,9 @@ export default function PollsTab(props) {
                                 <div className="poll-title" >{poll.title}</div>
                             </Link>
 
-                            <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
+                            <div className="post-text">
+                                <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
+                            </div>
 
                             <div className="poll-post-bottom-info">
                                 <div>
