@@ -294,14 +294,14 @@ export default function PollsTab(props) {
                             poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
                         )
                     )
-                        return <div className="poll-post">
+                        return <div className="poll-post" key={poll.id}>
                             <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
                                 <div className="poll-title" >{poll.title}</div>
                             </Link>
 
-                            <p className="post-text">
+                            <div className="post-text">
                                 <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
-                            </p>
+                            </div>
 
                             <div className="poll-post-bottom-info">
                                 <div>
