@@ -33,6 +33,7 @@
 }
 
 .poll-post-bottom-info{
+    margin-top:1rem;
     display: flex;
     justify-content: space-between;
 }
