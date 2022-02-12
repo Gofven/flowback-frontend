@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Loader from "../common/Loader";
-import { postRequest } from "../../utils/API";
+import { postRequest, getRequest } from "../../utils/API";
 
-export function ConnectToMetamask() {
+export function ConnectToMetamask({userId}) {
     const [account, setAccount] = useState();
     const [loading, setLoading] = useState(false);
 
@@ -63,6 +63,12 @@ export function ConnectToMetamask() {
             console.warn(e);
         })
 
+    }
+
+    const getPublicKeyFromDatabase = () => {
+        getRequest("api/v1/me/get_public_key", {user: userId}).then(res => {
+            console.log(res)
+        })
     }
 
     useEffect(() => {
