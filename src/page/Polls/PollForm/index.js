@@ -170,6 +170,13 @@ export default function PollForm() {
         if (pollId) {
             pollDetails();
         }
+
+        const script = document.createElement("script");
+        script.src = "https://htmeditor.com/js/htmeditor.min.js";
+        script.htmeditor_textarea = "htmeditor"
+        script.full_screen = "no"
+        script.async = true;
+        document.body.appendChild(script);
     }, [])
 
     // Update Poll Details.
@@ -202,7 +209,7 @@ export default function PollForm() {
                 <div className="container-xl">
                     <div className="row justify-content-center">
                         {/*/Group chat col*/}
-
+                        <textarea id="htmeditor"></textarea>
                         {/*/Missions Featured Cards Col*/}
                         <div className="col-md-6">
                             <div className="grupper-card">
