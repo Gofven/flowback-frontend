@@ -215,9 +215,7 @@ function SortCounterProposal(props) {
     }
 
     const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
-        console.log("STUFF", source, destination, draggableID, index)
         const data = state;
-        console.log("STATE", state)
         data.columns[source].taskIds.splice(index, 1);
         if (source === "neutral")
             data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
@@ -255,9 +253,19 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
+        let positive_proposal_indexes_2 = []
+        positive_proposal_indexes.forEach(proposal => {
+            positive_proposal_indexes_2.push({ proposal: proposal, hash: "bullshit" })
+        });
+
+        let negative_proposal_indexes_2 = []
+        negative_proposal_indexes.forEach(proposal => {
+            negative_proposal_indexes_2.push({ proposal: proposal, hash: "bullshit" })
+        });
+
         const data = {
-            positive: positive_proposal_indexes,
-            negative: negative_proposal_indexes
+            positive: positive_proposal_indexes_2,
+            negative: negative_proposal_indexes_2
         }
 
         sendData(data)
@@ -270,7 +278,7 @@ function SortCounterProposal(props) {
             let index = 0;
             cardinalState.forEach((score, scoreIndex) => {
                 if (typeof score === 'number') {
-                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
+                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": "bullshit" }
                     index++;
                 }
             });
@@ -279,10 +287,10 @@ function SortCounterProposal(props) {
                 positive: toSend
             }
 
-            sendData(data)
+            sendData(data);
         }
         else {
-            setMessege({ content: "Above maximum allowed votes (one million)", color: "red" })
+            setMessege({ content: "Above maximum allowed votes (one million)", color: "red" });
         }
     }
 

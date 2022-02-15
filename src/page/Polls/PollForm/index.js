@@ -53,6 +53,7 @@ export default function PollForm() {
     const [messege, setMessege] = useState({ messege: "", color: "black" })
     const maxTitleLength = 100;
     const maxDescriptionLength = 3000;
+    const [textEditorLoaded, setTextEditorLoaded] = useState(false)
     let history = useHistory();
 
     // Set values from the inputs
@@ -171,13 +172,46 @@ export default function PollForm() {
             pollDetails();
         }
 
-        const script = document.createElement("script");
-        script.src = "https://htmeditor.com/js/htmeditor.min.js";
-        script.htmeditor_textarea = "htmeditor"
-        script.full_screen = "no"
-        script.async = true;
-        document.body.appendChild(script);
+        loadTextEditor();
+
+
     }, [])
+
+    const loadTextEditor = () => {
+
+        if (!textEditorLoaded) {
+            const script = document.createElement("script");
+            script.src = "https://htmeditor.com/js/htmeditor.min.js";
+            script.setAttribute("htmeditor_textarea", "htmeditor");
+            script.setAttribute("full_screen", "no");
+            script.setAttribute("async", true);
+            document.body.appendChild(script);
+            setTextEditorLoaded(true)
+        }
+
+        const editor = document.getElementById("htmeditor_ifr");
+        if (textEditorLoaded && editor !== null) {
+            const child = editor.childNodes[0]
+            console.log(child)
+        }
+
+        const targetNode = document.body;
+        const config = { childList: true, subtree: true };
+
+        const callback = function (mutationsList, observer) {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    console.log("hi")
+                }
+            }
+        };
+
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    }
+
+
+
 
     // Update Poll Details.
     const updatePollDetails = () => {
@@ -209,7 +243,6 @@ export default function PollForm() {
                 <div className="container-xl">
                     <div className="row justify-content-center">
                         {/*/Group chat col*/}
-                        <textarea id="htmeditor"></textarea>
                         {/*/Missions Featured Cards Col*/}
                         <div className="col-md-6">
                             <div className="grupper-card">
@@ -281,7 +314,13 @@ export default function PollForm() {
                                         </div>*/}
 
                                         <div className="form-group mx-2">
-                                            <Textarea
+                                            <h4>Add Details</h4>
+                                            <textarea id="htmeditor" required
+                                                maxLength={maxDescriptionLength}
+                                                onChange={handleOnChange}
+                                                defaultValue={pollDetail.description}
+                                                name="description"></textarea>
+                                            {/* <Textarea
                                                 name="description"
                                                 rows="6"
                                                 placeholder="Add Details"
@@ -290,7 +329,7 @@ export default function PollForm() {
                                                 onChange={handleOnChange}
                                                 defaultValue={pollDetail.description}
 
-                                            />
+                                            /> */}
                                         </div>
                                         {pollId ? null :
                                             <>
