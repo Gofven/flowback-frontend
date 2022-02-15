@@ -378,7 +378,7 @@ export default function PollDetails() {
                     getCounterProposal();
                 }
                 setCounterProposalLoading(false);
-                window.location.reload();
+                // window.location.reload();
             }).catch((err) => {
                 setCounterProposalLoading(false);
             });
