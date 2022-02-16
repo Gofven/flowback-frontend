@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
+import { encryptWithPublicKey, getPublicKeyFromDatabase } from '../../../../component/Metamask/metamask.js'
 
 const div = styled.div`
   margin: 12px 0;
@@ -253,22 +254,29 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
-        let positive_proposal_indexes_2 = []
-        positive_proposal_indexes.forEach(proposal => {
-            positive_proposal_indexes_2.push({ proposal: proposal, hash: "bullshit" })
-        });
+        const userId = JSON.parse(window.localStorage.user).id
+        getPublicKeyFromDatabase(userId).then(publicKey => {
 
-        let negative_proposal_indexes_2 = []
-        negative_proposal_indexes.forEach(proposal => {
-            negative_proposal_indexes_2.push({ proposal: proposal, hash: "bullshit" })
-        });
+            let positive_proposal_indexes_2 = []
+            positive_proposal_indexes.forEach(proposal => {
+                const encryptedProposal = encryptWithPublicKey(proposal, publicKey)
+                positive_proposal_indexes_2.push({ proposal: proposal, hash: encryptedProposal })
+            });
 
-        const data = {
-            positive: positive_proposal_indexes_2,
-            negative: negative_proposal_indexes_2
-        }
+            let negative_proposal_indexes_2 = []
+            negative_proposal_indexes.forEach(proposal => {
+                const encryptedProposal = encryptWithPublicKey(proposal, publicKey)
+                negative_proposal_indexes_2.push({ proposal: proposal, hash: encryptedProposal })
 
-        sendData(data)
+            });
+
+            const data = {
+                positive: positive_proposal_indexes_2,
+                negative: negative_proposal_indexes_2
+            }
+
+            sendData(data)
+        })
     }
 
     const saveCardinal = () => {
