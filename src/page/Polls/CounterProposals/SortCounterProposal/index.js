@@ -254,19 +254,19 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
-        const userId = JSON.parse(window.localStorage.user).id
+        const userId = JSON.parse(window.localStorage.user).id;
         getPublicKeyFromDatabase(userId).then(publicKey => {
 
             let positive_proposal_indexes_2 = []
-            positive_proposal_indexes.forEach(proposal => {
-                const encryptedProposal = encryptWithPublicKey(proposal, publicKey)
-                positive_proposal_indexes_2.push({ proposal: proposal, hash: encryptedProposal })
+            positive_proposal_indexes.forEach((proposal, index) => {
+                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index }, publicKey)
+                positive_proposal_indexes_2.push({ proposal, hash: encryptedProposal || "" })
             });
 
             let negative_proposal_indexes_2 = []
-            negative_proposal_indexes.forEach(proposal => {
-                const encryptedProposal = encryptWithPublicKey(proposal, publicKey)
-                negative_proposal_indexes_2.push({ proposal: proposal, hash: encryptedProposal })
+            negative_proposal_indexes.forEach((proposal, index) => {
+                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index }, publicKey)
+                negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal || "" })
 
             });
 
@@ -284,18 +284,23 @@ function SortCounterProposal(props) {
         if (totalCardinalVotes() <= 1000000) {
             let toSend = [];
             let index = 0;
-            cardinalState.forEach((score, scoreIndex) => {
-                if (typeof score === 'number') {
-                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": "bullshit" }
-                    index++;
+
+            const userId = JSON.parse(window.localStorage.user).id;
+            getPublicKeyFromDatabase(userId).then(publicKey => {
+                cardinalState.forEach((score, scoreIndex) => {
+                    if (typeof score === 'number') {
+                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex }, publicKey)
+                        toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": encryptedProposal || "" }
+                        index++;
+                    }
+                });
+
+                const data = {
+                    positive: toSend
                 }
+
+                sendData(data);
             });
-
-            const data = {
-                positive: toSend
-            }
-
-            sendData(data);
         }
         else {
             setMessege({ content: "Above maximum allowed votes (one million)", color: "red" });
