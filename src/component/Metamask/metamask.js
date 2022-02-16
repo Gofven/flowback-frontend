@@ -6,13 +6,13 @@ import { encryptSafely } from '@metamask/eth-sig-util'
 
 
 export function ConnectToMetamask() {
-    const [account, setAccount] = useState();
+    const [account, setAccount] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const connectToMetamask = () => {
         const userId = JSON.parse(window.localStorage.user).id;
         setLoading(true)
-        getMetamaskAdress(userId).then(address => {
+        getMetamaskAddress(userId).then(address => {
             if (address === null) {
                 authenticateAccount()
                     .then(metaMaskAccount => {
@@ -81,13 +81,11 @@ export function ConnectToMetamask() {
         setAccount();
     }
 
-    let onMount = false
     useEffect(() => {
-        if (!onMount) {
+        if (account === null) {
             const userId = JSON.parse(window.localStorage.user).id;
-            getMetamaskAdress(userId).then(address => {
+            getMetamaskAddress(userId).then(address => {
                 setAccount(address);
-                onMount = true;
             })
         }
     })
@@ -134,7 +132,7 @@ export function getPublicKeyFromDatabase(userId) {
     })
 }
 
-function getMetamaskAdress(userId) {
+function getMetamaskAddress(userId) {
     return new Promise((resolve, reject) => {
         getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
             resolve(res.address);
