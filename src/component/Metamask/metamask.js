@@ -1,95 +1,147 @@
 import { useState, useEffect } from "react";
 import Loader from "../common/Loader";
 import { postRequest, getRequest } from "../../utils/API";
+// import { ethUtil } from 'ethereumjs-util'
+import { encryptSafely } from '@metamask/eth-sig-util'
 
-export function ConnectToMetamask({userId}) {
-    const [account, setAccount] = useState();
+
+export function ConnectToMetamask() {
+    const [account, setAccount] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const connectToMetamask = () => {
-        authenticateAccount()
-        .then(account=>{
-            getPublicKey(account).then(key => {
-                storePublicKey(key)   
-            })
-        });
+        const userId = JSON.parse(window.localStorage.user).id;
+        setLoading(true)
+        getMetamaskAddress(userId).then(address => {
+            if (address === null) {
+                authenticateAccount()
+                    .then(metaMaskAccount => {
+                        setAccount(metaMaskAccount);
+                        getPublicKey(metaMaskAccount).then(key => {
+                            storePublicKey(key, metaMaskAccount)
+                            setLoading(false)
+                        })
+                    });
+            }
+            else {
+                setLoading(false)
+                console.warn("ALREADY SIGNED UP!!!!")
+            }
+        })
     }
 
     const authenticateAccount = () => {
-        setLoading(true)
-        return new Promise((resolve, reject) => window.ethereum?.request({ method: 'eth_requestAccounts' }).then(accounts => {
-            setLoading(false)
-            if (window.ethereum?.isMetaMask) setAccount(accounts[0]);
-            else console.warn("not using metamask")
-            resolve(accounts[0]);
+        return new Promise((resolve, reject) =>
+            (window.ethereum?.isMetaMask) ?
+                window.ethereum?.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                    resolve(accounts[0]);
+                }).catch(e => {
+                    setLoading(false)
+                    console.warn(e)
+                    reject();
+                }) : console.warn("not using metamask"))
 
-        }).catch(e => {
-            setLoading(false)
-            console.warn(e)
-            reject();
-        }));
     }
-    
-    const getPublicKey = (account) => {
-        let encryptionPublicKey;
-        
-        return new Promise((resolve, reject) => window.ethereum
-        .request({
-            method: 'eth_getEncryptionPublicKey',
-            params: [account], // you must have access to the specified account
-        })
-        .then((result) => {
-            encryptionPublicKey = result;
-            resolve(encryptionPublicKey);
-            // return encryptionPublicKey;
-        })
-        .catch((error) => {
-            if (error.code === 4001) {
-                // EIP-1193 userRejectedRequest error
-                console.log("We can't encrypt anything without the key.");
-            } else {
-                console.error(error);
-            }
-            reject();
-        }));
-    }   
 
-    const storePublicKey = (publicKey) => {
-        console.log(publicKey);
+    const getPublicKey = (address) => {
+        let encryptionPublicKey;
+
+        return new Promise((resolve, reject) => window.ethereum
+            .request({
+                method: 'eth_getEncryptionPublicKey',
+                params: [address], // you must have access to the specified account
+            })
+            .then((result) => {
+                encryptionPublicKey = result;
+                resolve(encryptionPublicKey);
+            })
+            .catch((error) => {
+                if (error.code === 4001) {
+                    // EIP-1193 userRejectedRequest error
+                    console.log("We can't encrypt anything without the key.");
+                } else {
+                    console.error(error);
+                }
+                reject();
+            }));
+    }
+
+    const storePublicKey = (publicKey, address) => {
         if (!publicKey) publicKey = "";
-        postRequest("api/v1/me/update_public_key", {public_key: publicKey}).then(response =>{
+
+        postRequest("api/v1/me/update_public_key", { public_key: publicKey, address }).then(response => {
             console.log(response);
         }).catch(e => {
             console.warn(e);
         })
-
     }
 
-    const getPublicKeyFromDatabase = () => {
-        getRequest("api/v1/me/get_public_key", {user: userId}).then(res => {
-            console.log(res)
-        })
+    const disconnectMetamask = () => {
+        postRequest("api/v1/me/update_public_key", { public_key: null, address: null });
+        setAccount();
     }
 
     useEffect(() => {
-        if (window.ethereum?.selectedAddress) {
-            setAccount(window.ethereum.selectedAddress);
+        if (account === null) {
+            const userId = JSON.parse(window.localStorage.user).id;
+            getMetamaskAddress(userId).then(address => {
+                setAccount(address);
+            })
         }
     })
-    
-    
+
     return <div>
         <Loader loading={loading}>
             {account ?
-                `Your account is: ${account}`
+                <div><span>Your MetaMask account is: ${account}</span>
+                    <button className="btn btn-outline-warning" onClick={disconnectMetamask}>
+                        Disconnect from Metamask
+                    </button></div>
                 :
                 <button className="btn btn-outline-primary" onClick={connectToMetamask}>
-                    Authenticate with Metamask
+                    Connect to MetaMask
                 </button>}
         </Loader>
 
     </div>
 }
+
+export function encrypt(data) {
+    return new Promise((resolve, reject) => {
+        getPublicKeyFromDatabase().then(publicKey => {
+            if (publicKey) {
+                const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
+                resolve(encryptedMessage.ciphertext);
+            }
+        })
+    })
+}
+
+export function encryptWithPublicKey(data, publicKey) {
+    const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
+    return encryptedMessage.ciphertext;
+}
+
+export function getPublicKeyFromDatabase(userId) {
+    return new Promise((resolve, reject) => {
+        getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
+            resolve(res.public_key);
+        }).catch(() => {
+            reject(null);
+        })
+    })
+}
+
+function getMetamaskAddress(userId) {
+    return new Promise((resolve, reject) => {
+        getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
+            resolve(res.address);
+        }).catch(() => {
+            reject(null);
+        })
+    })
+}
+
 
 
 export function isSignedIn() {
