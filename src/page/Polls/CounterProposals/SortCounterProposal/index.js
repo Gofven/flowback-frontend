@@ -259,13 +259,13 @@ function SortCounterProposal(props) {
 
             let positive_proposal_indexes_2 = []
             positive_proposal_indexes.forEach((proposal, index) => {
-                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index }, publicKey)
+                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
                 positive_proposal_indexes_2.push({ proposal, hash: encryptedProposal || "" })
             });
 
             let negative_proposal_indexes_2 = []
             negative_proposal_indexes.forEach((proposal, index) => {
-                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index }, publicKey)
+                const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
                 negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal || "" })
 
             });
@@ -289,7 +289,7 @@ function SortCounterProposal(props) {
             getPublicKeyFromDatabase(userId).then(publicKey => {
                 cardinalState.forEach((score, scoreIndex) => {
                     if (typeof score === 'number') {
-                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex }, publicKey)
+                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex, userId }, publicKey)
                         toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": encryptedProposal || "" }
                         index++;
                     }
