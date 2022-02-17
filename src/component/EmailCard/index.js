@@ -4,6 +4,7 @@ import { Textarea } from "../../component/common/Textarea";
 import { inputKeyValue } from '../../utils/common';
 import { postRequest } from "../../utils/API";
 import Loader from "../../component/common/Loader";
+import HTMEditor from "../HTMEditor";
 
 export default function SendEmail({ groupId, userType }) {
     const [state, setState] = useState({ subject: "", message: "" });
@@ -44,21 +45,16 @@ export default function SendEmail({ groupId, userType }) {
                         <form className="form login_form" id="loginForm">
                             <div className="form-group">
                                 <h5>Title</h5>
-                                <Textbox
-                                    name="subject"
-                                    value={subject}
-                                    onChange={handleOnChange}
-                                    required
-                                />
+                                <HTMEditor/>
                             </div>
                             <div className="form-group" style={{ "margin-top": "3%" }}>
                                 <h5>Email</h5>
-                                <Textarea
-                                    name="message"
-                                    value={message}
-                                    onChange={handleOnChange}
+                                <textarea id="htmeditor" 
                                     required
-                                />
+                                    onChange={handleOnChange}
+                                    defaultValue={message}
+                                    maxLength={10000}
+                                    name="description"></textarea>
                             </div>
                             <button
                                 type="button"
