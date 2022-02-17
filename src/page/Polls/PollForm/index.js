@@ -33,6 +33,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
 import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
+import {HTMEditor, getHTML} from '../../../component/HTMEditor'
 
 export default function PollForm() {
 
@@ -53,7 +54,6 @@ export default function PollForm() {
     const [messege, setMessege] = useState({ messege: "", color: "black" })
     const maxTitleLength = 100;
     const maxDescriptionLength = 3000;
-    const [textEditorLoaded, setTextEditorLoaded] = useState(false)
     let history = useHistory();
 
     // Set values from the inputs
@@ -112,6 +112,7 @@ export default function PollForm() {
 
         pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
+        pollDetails.description = getHTML();
         pollDetails.tags = tag.join(" ");
         if (pollDetails.voting_type === "time") {
             pollDetails.voting_type = "condorcet";
@@ -122,6 +123,7 @@ export default function PollForm() {
             poll_details: JSON.stringify(pollDetails)
         }
         Object.keys(obj).forEach((key) => {
+            if (key!=="description")
             data.append(key, obj[key]);
         })
         pollDocs.forEach((doc) => {
@@ -171,47 +173,7 @@ export default function PollForm() {
         if (pollId) {
             pollDetails();
         }
-
-        loadTextEditor();
-
-
     }, [])
-
-    const loadTextEditor = () => {
-
-        if (!textEditorLoaded) {
-            const script = document.createElement("script");
-            script.src = "https://htmeditor.com/js/htmeditor.min.js";
-            script.setAttribute("htmeditor_textarea", "htmeditor");
-            script.setAttribute("full_screen", "no");
-            script.setAttribute("async", true);
-            document.body.appendChild(script);
-            setTextEditorLoaded(true)
-        }
-
-        const editor = document.getElementById("htmeditor_ifr");
-        if (textEditorLoaded && editor !== null) {
-            const child = editor.childNodes[0]
-            console.log(child)
-        }
-
-        const targetNode = document.body;
-        const config = { childList: true, subtree: true };
-
-        const callback = function (mutationsList, observer) {
-            for (let mutation of mutationsList) {
-                if (mutation.type === 'childList') {
-                    console.log("hi")
-                }
-            }
-        };
-
-        const observer = new MutationObserver(callback);
-        observer.observe(targetNode, config);
-    }
-
-
-
 
     // Update Poll Details.
     const updatePollDetails = () => {
@@ -315,21 +277,7 @@ export default function PollForm() {
 
                                         <div className="form-group mx-2">
                                             <h4>Add Details</h4>
-                                            <textarea id="htmeditor" required
-                                                maxLength={maxDescriptionLength}
-                                                onChange={handleOnChange}
-                                                defaultValue={pollDetail.description}
-                                                name="description"></textarea>
-                                            {/* <Textarea
-                                                name="description"
-                                                rows="6"
-                                                placeholder="Add Details"
-                                                required
-                                                maxLength={maxDescriptionLength}
-                                                onChange={handleOnChange}
-                                                defaultValue={pollDetail.description}
-
-                                            /> */}
+                                            <HTMEditor/>
                                         </div>
                                         {pollId ? null :
                                             <>

@@ -4,7 +4,7 @@ import { Textarea } from "../../component/common/Textarea";
 import { inputKeyValue } from '../../utils/common';
 import { postRequest } from "../../utils/API";
 import Loader from "../../component/common/Loader";
-import HTMEditor from "../HTMEditor";
+import {HTMEditor} from "../HTMEditor";
 
 export default function SendEmail({ groupId, userType }) {
     const [state, setState] = useState({ subject: "", message: "" });
@@ -18,11 +18,13 @@ export default function SendEmail({ groupId, userType }) {
     };
 
     const handleSendMail = () => {
-        // console.log(groupId)
+
+        const draft = `<html><body>${window.localStorage.getItem("/groupdetails/1-htmeditor-draft")}</body></html>`;
+
         setLoading(true)
         var data = new FormData();
         data.append("subject", state.subject);
-        data.append("message", state.message);
+        data.append("message", draft);
 
         postRequest(`api/v1/user_group/${groupId}/mail_all_group_members`, data).then(response => {
             setLoading(false)
@@ -44,17 +46,17 @@ export default function SendEmail({ groupId, userType }) {
                         <h4 style={{ "color": status.color }}>{status.text}</h4>
                         <form className="form login_form" id="loginForm">
                             <div className="form-group">
-                                <h5>Title</h5>
-                                <HTMEditor/>
+                                <h5>Subject</h5>
+                                <Textbox
+                                    name="subject"
+                                    value={subject}
+                                    onChange={handleOnChange}
+                                    required
+                                />
                             </div>
                             <div className="form-group" style={{ "margin-top": "3%" }}>
-                                <h5>Email</h5>
-                                <textarea id="htmeditor" 
-                                    required
-                                    onChange={handleOnChange}
-                                    defaultValue={message}
-                                    maxLength={10000}
-                                    name="description"></textarea>
+                                <h5>Content</h5>
+                                <HTMEditor/>
                             </div>
                             <button
                                 type="button"

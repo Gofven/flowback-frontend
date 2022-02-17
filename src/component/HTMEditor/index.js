@@ -1,7 +1,8 @@
-import {useEffect} from 'react'
+import {useState, useEffect} from 'react'
 
-export default function HTMEditor(){
-    
+export function HTMEditor(){
+    const [textEditorLoaded, setTextEditorLoaded] = useState(false)
+
     const loadTextEditor = () => {
     
         if (!textEditorLoaded) {
@@ -40,8 +41,10 @@ export default function HTMEditor(){
     })
 
     return <textarea id="htmeditor" required
-    maxLength={maxDescriptionLength}
-    onChange={handleOnChange}
-    defaultValue={pollDetail.description}
+    maxLength={100000}
     name="description"></textarea>
+}
+
+export function getHTML(){
+    return window.localStorage.getItem("/groupdetails/1-htmeditor-draft");
 }
