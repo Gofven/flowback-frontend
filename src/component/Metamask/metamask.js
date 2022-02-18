@@ -93,14 +93,16 @@ export function ConnectToMetamask() {
     return <div>
         <Loader loading={loading}>
             {account ?
-                <div><span>Your MetaMask account is: ${account}</span>
+                <div className="metamask-connection"><span>Your are connected to MetaMask</span>
                     <button className="btn btn-outline-warning" onClick={disconnectMetamask}>
                         Disconnect from Metamask
                     </button></div>
                 :
+                <div className="metamask-connection"><span>Your are not connected to MetaMask</span>
                 <button className="btn btn-outline-primary" onClick={connectToMetamask}>
                     Connect to MetaMask
-                </button>}
+                </button>
+                </div>}
         </Loader>
 
     </div>

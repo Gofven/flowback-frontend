@@ -267,7 +267,6 @@ function SortCounterProposal(props) {
             negative_proposal_indexes.forEach((proposal, index) => {
                 const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
                 negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal || "" })
-
             });
 
             const data = {
