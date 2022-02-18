@@ -43,12 +43,16 @@ export function HTMEditor(){
     }
     
     useEffect(() => {
+        const interval = setInterval(function() {
+            setdraftTime(getDraftTime())
+            console.log("hiii")
+          }, 5000);
+
+
         loadTextEditor();
         setdraftTime(getDraftTime())
 
-        window.addEventListener("storage",(e) => {
-            setdraftTime(getDraftTime());
-         });
+        return (clearInterval(interval))
     })
 
     return <div>
