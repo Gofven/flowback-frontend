@@ -33,7 +33,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
 import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
-import {HTMEditor, getHTML} from '../../../component/HTMEditor'
+import {HTMEditor, getHTML, getDraftTime} from '../../../component/HTMEditor'
 
 export default function PollForm() {
 
@@ -360,6 +360,8 @@ export default function PollForm() {
                                                         <div >
                                                             Click here to get information about the different voting types
                                                         </div>}
+
+                                                        
                                                     <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
                                                         icon={faArrowCircleDown}
                                                         color=''

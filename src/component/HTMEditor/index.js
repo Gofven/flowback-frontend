@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react'
+import { formatDate } from '../../utils/common';
 
 export function HTMEditor(){
     const [textEditorLoaded, setTextEditorLoaded] = useState(false)
+    const [draftTime, setdraftTime] = useState(0)
 
     const loadTextEditor = () => {
     
@@ -27,7 +29,7 @@ export function HTMEditor(){
         const callback = function (mutationsList, observer) {
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
-                    console.log("hi")
+                    //If edited
                 }
             }
         };
@@ -36,15 +38,26 @@ export function HTMEditor(){
         observer.observe(targetNode, config);
     }
 
+    const getDraftTime = () => {
+        return formatDate(parseInt(window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-time")), 'kk:mm:ss');
+    }
+    
     useEffect(() => {
         loadTextEditor();
+        setdraftTime(getDraftTime())
+
+        window.addEventListener("storage",(e) => {
+            setdraftTime(getDraftTime());
+         });
     })
 
-    return <textarea id="htmeditor" required
+    return <div>
+        {draftTime}
+        <textarea id="htmeditor" required
     maxLength={100000}
-    name="description"></textarea>
+    name="description"></textarea></div>
 }
 
 export function getHTML(){
-    return window.localStorage.getItem("/groupdetails/1-htmeditor-draft");
+    return window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-draft");
 }
