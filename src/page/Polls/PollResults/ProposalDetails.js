@@ -4,8 +4,12 @@ import { useEffect } from "react";
 export default function ProposalDetails({ proposal, proposalDescription }) {
     const descriptionMaxChars = 45;
     const isLongDescription = proposalDescription.length > 45;
-    const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
+    // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
     
+    const regex = new RegExp("(?<=(<.*?>))(\w|\d|\n|[().,\-:;@#$%^&*\[\]'+–/\/®°⁰!?{}|`~]| )+?(?=(</.*?>))");
+    const shortDescription = proposalDescription.match(regex)?.join().substring(0, descriptionMaxChars - 1) + "...";
+    console.log(proposalDescription, "REGEX");
+
     useEffect(() => {
         const descriptions = document.getElementsByClassName(`description${proposal.id}`)
         for (let i = 0; i < descriptions.length; i++) {
