@@ -6,9 +6,8 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
     const isLongDescription = proposalDescription.length > 45;
     // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
     
-    const regex = new RegExp("(?<=(<.*?>))(\w|\d|\n|[().,\-:;@#$%^&*\[\]'+–/\/®°⁰!?{}|`~]| )+?(?=(</.*?>))");
-    const shortDescription = proposalDescription.match(regex)?.join().substring(0, descriptionMaxChars - 1) + "...";
-    console.log(proposalDescription, "REGEX");
+    const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/
+    const shortDescription = proposalDescription.match(regexBetweenHTMLTags)?.join(" ").substring(0, descriptionMaxChars - 1) + "...";
 
     useEffect(() => {
         const descriptions = document.getElementsByClassName(`description${proposal.id}`)
