@@ -107,6 +107,10 @@ export default function PollDetails() {
         console.log(poll, "DAS POLL")
     }, [])
 
+    useEffect(() => {
+        document.getElementById("description").innerHTML = poll.description
+    }, [poll])
+
     // Verify poll request
     const verifyPoll = () => {
         postRequest("api/v1/group_poll/verify_poll", { poll: pollId }).then(
@@ -378,7 +382,7 @@ export default function PollDetails() {
                     getCounterProposal();
                 }
                 setCounterProposalLoading(false);
-                window.location.reload();
+                // window.location.reload();
             }).catch((err) => {
                 setCounterProposalLoading(false);
             });
@@ -415,7 +419,7 @@ export default function PollDetails() {
                                 </div>
 
                                 <div className="card-body overflow-hidden">
-                                    <p>{poll.description}</p>
+                                    <p id="description"></p>
                                 </div>
                                 {/* <div className="card-body overflow-hidden">
                                     <Metamask />
