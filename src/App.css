@@ -90,6 +90,7 @@ a:active {
 .dropdown-item:active {
     color: #1e2125;
     background-color: #f8f9fa;
+    border-radius:10px;
 }
 
 /* Tooltip */

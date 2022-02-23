@@ -37,6 +37,10 @@ export default function GroupMembers(props) {
     const [canMemberVote, setCanMemberVote] = useState([]);
     const [status, setStatus] = useState({ text: "", color: "black" });
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const [chosenDelegateId, setChosenDelegateId] = useState(null);
     const [filter, setFilter] = useState({ search: "", typeOfMember: null })
@@ -103,6 +107,7 @@ export default function GroupMembers(props) {
         (response) => {
             if (response.status === "success") {
                 getAndSetDelegator({ group_id: groupId });
+                setStatus({ color: "green", text: "Succesfully selected delegate" })
             }
             return response;
         }
@@ -112,6 +117,7 @@ export default function GroupMembers(props) {
         (response) => {
             if (response.status === "success") {
                 setChosenDelegateId(null);
+                setStatus({ color: "green", text: "Succesfully removed delegate" })
             }
             return response;
         }
@@ -124,26 +130,72 @@ export default function GroupMembers(props) {
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
     >Select</a>;
 
-    const getVotingRights = () => {
+    const SetBecomeDelegateButton = ({ groupId, userId, disabled }) => <a
+        href="#"
+        className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-info"
+        disabled={disabled}
+        onClick={handleShow}
+    >Become Delegate</a>;
 
+
+    const BecomeDelegateModal = () => {
+        const [hasAccepted, setHasAccepted] = useState(true)
+
+        const handleAccept = () => setHasAccepted(!hasAccepted)
+
+        return <Modal show={show} onHide={handleClose} animation={false}>
+            <Modal.Header closeButton>
+                <Modal.Title>Warning</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
+                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is not reversible</b>.</p>
+                <div className="delegateModalAccept"><input type="checkbox" className="acceptDelegate" onChange={handleAccept} />
+                    <div>I understand that this is not reversible and that I must ask system admin to remove my delegate role
+                    </div>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <button variant="secondary" className="btn btn-outline-active" onClick={handleClose}>
+                    Close
+                </button>
+                <button variant="primary" className="btn btn-outline-danger" disabled={hasAccepted} onClick={handleOnBecomeDelegate}>
+                    Become Delegate
+                </button>
+            </Modal.Footer>
+        </Modal >
+    }
+
+    const handleOnBecomeDelegate = () => {
+        handleClose();
+        postRequest(`api/v1/user_group/${groupId}/leave_group`).then(
+            (response) => {
+                postRequest("api/v1/user_group/join_group", { group: groupId, as_delegator: true }).then(
+                    (response) => {
+                        if (response) {
+                            setUserType("Delegator")
+                            window.location.reload();
+                        }
+                    }).catch(e => console.error(e));
+
+            }).catch(e => console.error(e));
+    }
+
+
+    const getVotingRights = () => {
         getRequest(`api/v1/user_group/${props.groupId}/group_members_get`).then(response => {
-            console.log(response, "REPONSE VOTING RIGHTS");
             setCanMemberVote(response)
             setLoading(false);
         })
-
     }
 
     const postVotingRights = (memberId, allowVote) => {
         setLoading(true)
-        console.log(canMemberVote)
         postRequest(`api/v1/user_group/${props.groupId}/group_member_update`, { target: memberId, allow_vote: allowVote }).then(response => {
-            console.log(response, "REPONSE");
-            console.log(canMemberVote)
             if (response.detail === "You do not have permission to perform this action.") {
                 setStatus({ text: "You don't have permission to change users voting rights", color: "red" });
             }
-            setStatus({ text: "Successfully changed vote", color: "green" });
+            setStatus({ text: "Successfully changed voting rights", color: "green" });
             getVotingRights();
         })
     }
@@ -158,10 +210,10 @@ export default function GroupMembers(props) {
     }
 
     const DeselectDelegateButton = () => {
-        const [show, setShow] = useState(false);
+        const [show1, setShow1] = useState(false);
 
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
+        const handleClose = () => setShow1(false);
+        const handleShow = () => setShow1(true);
 
         return (
             <>
@@ -169,7 +221,7 @@ export default function GroupMembers(props) {
                     Deselect
                 </a>
 
-                <Modal show={show} onHide={handleClose} enforceFocus={false} autoFocus={true}>
+                <Modal show={show1} onHide={handleClose} enforceFocus={false} autoFocus={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>Delegate voting options</Modal.Title>
                     </Modal.Header>
@@ -192,10 +244,22 @@ export default function GroupMembers(props) {
         );
     }
 
-    console.log(members)
+    const kickMember = (memberId) => {
+        setLoading(true);
+        postRequest(`api/v1/user_group/${props.groupId}/kick_group_user`, { target: memberId }).then(() => {
+            getGroupMembers();
+        })
+    }
+
+    const isKickable = (memberUserType) => {
+        return (userType === "Owner" || userType === "Admin")
+            && !(memberUserType === "Delegator" || memberUserType === "Admin" || memberUserType === "Owner")
+    }
 
     return (
         <Loader loading={loading}>
+            <BecomeDelegateModal />
+
             <SearchFilter setFilter={setFilter} filter={filter} />
             <DropDownFilterGroup setFilter={setFilter} filter={filter} />
 
@@ -216,36 +280,29 @@ export default function GroupMembers(props) {
                             <div>
                                 <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                             </div>
+
+                            {isKickable(member.user_type) && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
+
                         </div>
                         <div>
                             <input type="checkbox" checked={canMemberVote.find(m => m.user === member.id)?.allow_vote || false}
                                 onChange={() => handleChangeVotingRight(member.id, index)}
                                 disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
-                        <div>{member.user_type === "Owner" ? "YES" : "NO"}</div>
-                        <div >
+                        <div>
+                            {member.user_type === "Owner" ? "YES" : "NO"}
+                        </div>
+                        <div>
                             {/* <div className="menu d-flex align-items-center"> */}
-                            {chosenDelegateId == member.id ? <DeselectDelegateButton /> : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null) ? <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} /> : null}
+                            {chosenDelegateId === member.id ? <DeselectDelegateButton />
+                                : (userType != "Delegator" && member.user_type === "Delegator" && chosenDelegateId === null && JSON.parse(window.localStorage.user).id !== member.id) &&
+                                <SetDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
                             {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && member.user_type !== "Owner" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>You are a delegate  </div>}
+                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>Admin can't be a delegate</div>}
                         </div>
-                        {/* {(["Owner", "Admin"].includes(props.userType) && member.user_type != "Owner") ?
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="white" id="dropdown-basic">
-                                    </Dropdown.Toggle>
-
-                                    <Dropdown.Menu>
-                                        {["Admin", "Moderator", "Member", "Delegator"].map((type) => {
-                                            return (member.user_type != type) ?
-                                                <Dropdown.Item className="cursor-pointer" onClick={() => changeMemberType(member, type)}>
-                                                    <img src={`/img/${type}.svg`} className="svg-icon mr-2" />
-                                                    Make {type}</Dropdown.Item>
-                                                : null
-                                        })}
-                                    </Dropdown.Menu>
-                                </Dropdown> :
-                                null
-                            } */}
                     </div>
                 ))
             }

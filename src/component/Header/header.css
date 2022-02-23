@@ -48,7 +48,11 @@
 }
 
 .main-logo {
-    max-width: 160px;
+    max-width: 4rem;
+}
+
+.main-logo-text{
+    color:grey;
 }
 
 .main-nav .nav-link {

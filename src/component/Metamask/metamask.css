@@ -1,0 +1,4 @@
+.metamask-connection{
+    display: flex;
+    flex-direction: column;
+}

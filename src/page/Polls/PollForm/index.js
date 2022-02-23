@@ -33,6 +33,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
 import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
+import {HTMEditor, getHTML, getDraftTime} from '../../../component/HTMEditor'
 
 export default function PollForm() {
 
@@ -111,6 +112,7 @@ export default function PollForm() {
 
         pollDetail['end_time'].setTime(pollDetail['end_time'].getTime() + 60 * 60 * 1000); // Bodge to Stockholm Timezone
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
+        pollDetails.description = getHTML();
         pollDetails.tags = tag.join(" ");
         if (pollDetails.voting_type === "time") {
             pollDetails.voting_type = "condorcet";
@@ -121,6 +123,7 @@ export default function PollForm() {
             poll_details: JSON.stringify(pollDetails)
         }
         Object.keys(obj).forEach((key) => {
+            if (key!=="description")
             data.append(key, obj[key]);
         })
         pollDocs.forEach((doc) => {
@@ -202,7 +205,6 @@ export default function PollForm() {
                 <div className="container-xl">
                     <div className="row justify-content-center">
                         {/*/Group chat col*/}
-
                         {/*/Missions Featured Cards Col*/}
                         <div className="col-md-6">
                             <div className="grupper-card">
@@ -274,16 +276,8 @@ export default function PollForm() {
                                         </div>*/}
 
                                         <div className="form-group mx-2">
-                                            <Textarea
-                                                name="description"
-                                                rows="6"
-                                                placeholder="Add Details"
-                                                required
-                                                maxLength={maxDescriptionLength}
-                                                onChange={handleOnChange}
-                                                defaultValue={pollDetail.description}
-
-                                            />
+                                            <h4>Add Details</h4>
+                                            <HTMEditor/>
                                         </div>
                                         {pollId ? null :
                                             <>
@@ -366,6 +360,8 @@ export default function PollForm() {
                                                         <div >
                                                             Click here to get information about the different voting types
                                                         </div>}
+
+                                                        
                                                     <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
                                                         icon={faArrowCircleDown}
                                                         color=''

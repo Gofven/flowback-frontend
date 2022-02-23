@@ -86,3 +86,17 @@ input[type=file] {
 .create_group_form .form-group .delete {
     filter: drop-shadow(1px 1px 1px #000000);
 }
+
+.member-count {
+    font-size: 15px;
+    color: #8C8C8C;
+    font-weight: 600;
+    display:flex;
+    justify-content: space-evenly
+}
+
+.group-buttons-in-group{
+    background-color: white;
+    padding: 10px;
+    /* margin-top:0.5rem; */
+}

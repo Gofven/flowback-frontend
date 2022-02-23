@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
+import { encryptWithPublicKey, getPublicKeyFromDatabase } from '../../../../component/Metamask/metamask.js'
 
 const div = styled.div`
   margin: 12px 0;
@@ -215,9 +216,7 @@ function SortCounterProposal(props) {
     }
 
     const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
-        console.log("STUFF", source, destination, draggableID, index)
         const data = state;
-        console.log("STATE", state)
         data.columns[source].taskIds.splice(index, 1);
         if (source === "neutral")
             data.columns[destination].taskIds.splice(data.columns.positive.taskIds.length, 0, draggableID);
@@ -255,12 +254,55 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
-        const data = {
-            positive: positive_proposal_indexes,
-            negative: negative_proposal_indexes
-        }
+        const userId = JSON.parse(window.localStorage.user).id;
+        getPublicKeyFromDatabase(userId).then(publicKey => {
 
-        sendData(data)
+            //TODO: More elegant code
+            if (publicKey) {
+
+                // signData(userId);
+                let positive_proposal_indexes_2 = []
+                positive_proposal_indexes.forEach((proposal, index) => {
+                    const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+                    positive_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
+                });
+
+                let negative_proposal_indexes_2 = []
+                negative_proposal_indexes.forEach((proposal, index) => {
+                    const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+                    negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
+                });
+
+                const data = {
+                    positive: positive_proposal_indexes_2,
+                    negative: negative_proposal_indexes_2
+                }
+
+                sendData(data)
+
+            }
+            else {
+                // signData(userId);
+                let positive_proposal_indexes_2 = []
+                positive_proposal_indexes.forEach((proposal, index) => {
+
+                    positive_proposal_indexes_2.push({ proposal })
+                });
+
+                let negative_proposal_indexes_2 = []
+                negative_proposal_indexes.forEach((proposal, index) => {
+
+                    negative_proposal_indexes_2.push({ proposal })
+                });
+
+                const data = {
+                    positive: positive_proposal_indexes_2,
+                    negative: negative_proposal_indexes_2
+                }
+
+                sendData(data)
+            }
+        })
     }
 
     const saveCardinal = () => {
@@ -268,21 +310,26 @@ function SortCounterProposal(props) {
         if (totalCardinalVotes() <= 1000000) {
             let toSend = [];
             let index = 0;
-            cardinalState.forEach((score, scoreIndex) => {
-                if (typeof score === 'number') {
-                    toSend[index] = { "proposal": scoreIndex, "score": parseInt(score) }
-                    index++;
+
+            const userId = JSON.parse(window.localStorage.user).id;
+            getPublicKeyFromDatabase(userId).then(publicKey => {
+                cardinalState.forEach((score, scoreIndex) => {
+                    if (typeof score === 'number') {
+                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex, userId }, publicKey)
+                        toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": encryptedProposal || "" }
+                        index++;
+                    }
+                });
+
+                const data = {
+                    positive: toSend
                 }
+
+                sendData(data);
             });
-
-            const data = {
-                positive: toSend
-            }
-
-            sendData(data)
         }
         else {
-            setMessege({ content: "Above maximum allowed votes (one million)", color: "red" })
+            setMessege({ content: "Above maximum allowed votes (one million)", color: "red" });
         }
     }
 
@@ -370,6 +417,7 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>Sort Proposals</h4>
+                {/* <button className="btn btn-outline-primary">En rolig knapp</button> */}
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>

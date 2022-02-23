@@ -401,7 +401,7 @@ a, a:hover, a:focus, a:active {
 
 @media (max-width: 480px) {
     .main-logo {
-        width: 160px;
+        width: 4rem;
         height: auto;
     }
     .login_card .nav-pills .nav-link {

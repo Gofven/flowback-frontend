@@ -68,6 +68,7 @@
 .group-details-img-content {
     align-items: flex-end;
     z-index: 564;
+    width:100%;
 }
 
 .group-details-img-content .group-details-dp {

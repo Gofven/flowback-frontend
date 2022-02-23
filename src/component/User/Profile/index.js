@@ -31,6 +31,7 @@ import { Textarea, Textbox } from '../../common';
 import Image from '../../common/Image';
 import Loader from '../../common/Loader';
 import './styles.css';
+import { ConnectToMetamask, isSignedIn } from '../../Metamask/metamask';
 
 
 export default function Profile(props) {
@@ -161,12 +162,11 @@ export default function Profile(props) {
                 console.log('response', response);
                 if (response) {
                     const { status, data } = response;
-                    console.log("uesr data", data);
                     setUser(data);
                     setEditMode(false);
-                    console.log("USER!!", data)
                     setLocalStorage('user', data);
                     setLoading(false);
+                    window.location.reload();
                 }
             }
         ).catch(() => {
@@ -263,7 +263,7 @@ export default function Profile(props) {
                                             <div className='profile-edit-icon'>
                                                 <FontAwesomeIcon icon={faSave} onClick={() => updateUser()} />
                                             </div>
-                                            <div className='profile-edit-icon' style={{"marginLeft":"5%"}}>
+                                            <div className='profile-edit-icon' style={{ "marginLeft": "5%" }}>
                                                 <FontAwesomeIcon icon={faTimes} onClick={() => toggleEditMode()} />
                                             </div>
                                         </>
@@ -289,18 +289,18 @@ export default function Profile(props) {
                                         </label>
                                         {
                                             editMode &&
-                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange}/>
+                                            <input type='file' accept='image/*' name="profile-dp" id='profileDp' value='' className='profile-dp-input' ref={userImageFileRef} onChange={onUserImageChange} />
                                         }
                                     </div>
                                     {/* <Image src={user.image} className="profile-dp" alt="User Profile" errImg={'/img/no-photo.jpg'} /> */}
-                                    <div className="media-body">
+                                    <div className="media-body title-overflow-fix">
                                         {
                                             !editMode &&
-                                            <h3 className="profile-title text-truncate">
+                                            <h3 className="profile-title text-truncate" >
                                                 {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : ""}
                                             </h3>
                                         }
-                                        
+
                                     </div>
                                 </div>
                                 <div>
@@ -331,6 +331,7 @@ export default function Profile(props) {
                                                         name="first_name"
                                                         placeholder="Name"
                                                         required
+                                                        maxLength="40"
                                                         value={userForm.first_name}
                                                         onChange={handleOnChange}
                                                     />
@@ -342,7 +343,8 @@ export default function Profile(props) {
                                                     name="bio"
                                                     placeholder="User Bio"
                                                     required
-                                                    value={userForm.bio}
+                                                    value={userForm.bio || ""}
+                                                    maxLength="500"
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
@@ -373,6 +375,12 @@ export default function Profile(props) {
                                         </div> */}
                                     </div>
                             }
+
+                            {/* {loggedInUser && <div className="profile-content-view">{isSignedIn() ? "You are signed into Metamask" : "You are not signed into Metamask"}</div>} */}
+
+                            {loggedInUser && <div className="profile-content-view">
+                                <ConnectToMetamask userId={user.id} />
+                            </div>}
                         </div>
                     }
                 </Loader>
