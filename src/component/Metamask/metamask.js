@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Loader from "../common/Loader";
 import { postRequest, getRequest } from "../../utils/API";
-// import { ethUtil } from 'ethereumjs-util'
-import { encryptSafely } from '@metamask/eth-sig-util'
-
+import { encryptSafely } from '@metamask/eth-sig-util';
+import Web3 from 'web3';
 
 export function ConnectToMetamask() {
     const [account, setAccount] = useState(null);
@@ -99,13 +98,25 @@ export function ConnectToMetamask() {
                     </button></div>
                 :
                 <div className="metamask-connection"><span>Your are not connected to MetaMask</span>
-                <button className="btn btn-outline-primary" onClick={connectToMetamask}>
-                    Connect to MetaMask
-                </button>
+                    <button className="btn btn-outline-primary" onClick={connectToMetamask}>
+                        Connect to MetaMask
+                    </button>
                 </div>}
         </Loader>
 
     </div>
+}
+
+export function signData(data, userId) {
+    const msgParams = JSON.stringify(data)
+    const web3 = new Web3(window.ethereum);
+
+    getMetamaskAddress(userId).then(userAccount => {
+        web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
+            function (err, result) {
+                console.log(result);
+            })
+    })
 }
 
 export function encrypt(data) {
