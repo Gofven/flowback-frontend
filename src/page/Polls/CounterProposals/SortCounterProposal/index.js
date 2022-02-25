@@ -76,7 +76,6 @@ const initialData = {
 };
 
 function Column(props) {
-    console.log('columns', props);
     return <div className="column-container">
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
@@ -276,7 +275,7 @@ function SortCounterProposal(props) {
                     negative: negative_proposal_indexes_2
                 }
 
-                signData(data);
+                signData(data, userId, props.pollId);
 
                 sendData(data)
 

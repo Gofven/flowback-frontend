@@ -107,8 +107,17 @@ export function ConnectToMetamask() {
     </div>
 }
 
-export function signData(data, userId) {
+export function signData(data, userId, pollId) {
     getMetamaskAddress(userId).then(userAccount => {
+        getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then(proposals => {
+            if (proposals.detail !== "Not found.") {
+
+                proposals.forEach(proposal => {
+                    console.log(proposal);
+                })
+            }
+        })
+
         const msgParams = JSON.stringify({
             domain: {
                 // Defining the chain aka Rinkeby testnet or Ethereum Main Net
