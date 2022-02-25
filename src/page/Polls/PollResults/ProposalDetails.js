@@ -3,9 +3,10 @@ import { useEffect } from "react";
 
 export default function ProposalDetails({ proposal, proposalDescription }) {
     const descriptionMaxChars = 45;
+    if (proposalDescription === null || proposalDescription === undefined) proposalDescription = "";
     const isLongDescription = proposalDescription.length > 45;
     // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
-    
+
     const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/
     const shortDescription = proposalDescription.match(regexBetweenHTMLTags)?.join(" ").substring(0, descriptionMaxChars - 1) + "...";
 
@@ -13,7 +14,7 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
         const descriptions = document.getElementsByClassName(`description${proposal.id}`)
         for (let i = 0; i < descriptions.length; i++) {
             descriptions[i].innerHTML = proposalDescription;
-            
+
         }
     })
 
