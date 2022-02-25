@@ -31,7 +31,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
-import { encryptWithPublicKey, getPublicKeyFromDatabase } from '../../../../component/Metamask/metamask.js'
+import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
 
 const div = styled.div`
   margin: 12px 0;
@@ -260,7 +260,7 @@ function SortCounterProposal(props) {
             //TODO: More elegant code
             if (publicKey) {
 
-                // signData(userId);
+                signData(userId);
                 let positive_proposal_indexes_2 = []
                 positive_proposal_indexes.forEach((proposal, index) => {
                     const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
