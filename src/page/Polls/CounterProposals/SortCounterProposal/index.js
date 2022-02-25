@@ -259,8 +259,6 @@ function SortCounterProposal(props) {
 
             //TODO: More elegant code
             if (publicKey) {
-
-                signData(userId);
                 let positive_proposal_indexes_2 = []
                 positive_proposal_indexes.forEach((proposal, index) => {
                     const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
@@ -277,6 +275,8 @@ function SortCounterProposal(props) {
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
                 }
+
+                signData(data);
 
                 sendData(data)
 
