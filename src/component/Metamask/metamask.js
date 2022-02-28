@@ -107,23 +107,18 @@ export function ConnectToMetamask() {
     </div>
 }
 
-export function signData(data, userId, pollId) {
+export function signData(data, userId, counterProposals, proposalIndexes, proposal) {
     getMetamaskAddress(userId).then(userAccount => {
-        getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then(proposals => {
-            if (proposals.detail !== "Not found.") {
+        const user = JSON.parse(window.localStorage.user)
 
-                proposals.forEach(proposal => {
-                    console.log(proposal);
-                })
-            }
-        })
+
 
         const msgParams = JSON.stringify({
             domain: {
                 // Defining the chain aka Rinkeby testnet or Ethereum Main Net
                 chainId: 1,
                 // Give a user friendly name to the specific contract you are signing for.
-                name: 'Encrypting Voting Data',
+                name: `Hello, ${user.first_name}. Confirm encrypting your voting data`,
                 // If name isn't enough add verifying contract to make sure you are establishing contracts with the proper entity
                 verifyingContract: userAccount,
                 // Just let's you know the latest version. Definitely make sure the field name is correct.

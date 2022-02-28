@@ -136,8 +136,8 @@ function ProposalBox(props) {
                     </div>
                 }
                 {/* </div> */}
-                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
+                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"4x"} />}
+                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"4x"} />}
                 {props.votingType === "cardinal" && <input type="number" min="0" max="1000000" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
@@ -275,7 +275,7 @@ function SortCounterProposal(props) {
                     negative: negative_proposal_indexes_2
                 }
 
-                signData(data, userId, props.pollId);
+                signData(data, userId, props.counterProposals, props.proposalIndexes, props.proposal);
 
                 sendData(data)
 
