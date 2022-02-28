@@ -405,6 +405,7 @@ export default function PollDetails() {
                                     <h4 className="card-title fw-bolder">{poll.title}
                                         {
                                             ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
+                                            poll.discussion !== "Finished" &&
                                             <Link to={`/groupdetails/${groupId}/poll/${pollId}/edit`}>
                                                 <FontAwesomeIcon className="ml-2" icon={faEdit} size="lg"
                                                     color="black" />

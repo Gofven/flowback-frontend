@@ -76,7 +76,6 @@ const initialData = {
 };
 
 function Column(props) {
-    console.log('columns', props);
     return <div className="column-container">
         {props.votingType === "traffic" ?
             (props.column.id === "positive" && <Title>For</Title>) ||
@@ -137,8 +136,8 @@ function ProposalBox(props) {
                     </div>
                 }
                 {/* </div> */}
-                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"fa-4x"} />}
-                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"fa-4x"} />}
+                {props.votingType === "traffic" && <TrafficLight {...props} iconSize={"4x"} />}
+                {props.votingType === "condorcet" && <Condorcet {...props} iconSize={"4x"} />}
                 {props.votingType === "cardinal" && <input type="number" min="0" max="1000000" placeholder="0" value={props.cardinalState[props.task.id]}
                     onChange={e => {
                         const newInput = props.cardinalState;
@@ -259,8 +258,6 @@ function SortCounterProposal(props) {
 
             //TODO: More elegant code
             if (publicKey) {
-
-                signData(userId);
                 let positive_proposal_indexes_2 = []
                 positive_proposal_indexes.forEach((proposal, index) => {
                     const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
@@ -277,6 +274,8 @@ function SortCounterProposal(props) {
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
                 }
+
+                signData(data, userId, props.counterProposals, props.proposalIndexes, props.proposal);
 
                 sendData(data)
 

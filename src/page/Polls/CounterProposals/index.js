@@ -52,22 +52,11 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                         if (proposal.user?.id === JSON.parse(localStorage.getItem("user")).id) {
                             setAlreadyPosted(true);
                             //TODO: User should be able to get feedback
-                            console.log("POSTED ALREADY")
+                            console.warn("POSTED ALREADY");
                             return null;
                         }
                     });
-                    console.log('response', response);
-                    //const { status, data } = response;
-                    //if (response === "success") {
-                    console.log("the counter proposasls", response)
-                    setCounterProposals(response)
-                    // if (response && response.counter_proposals) {
-                    //     response.forEach((counterProposal) => {
-                    //         counterProposal.comments_details.comments = FormatComments(counterProposal.comments_details.comments);
-                    //         setCounterProposals(response);
-                    //     })
-                    // }
-                    //}
+                    setCounterProposals(response);
                 }
                 else {
                     console.log("No proposals");
