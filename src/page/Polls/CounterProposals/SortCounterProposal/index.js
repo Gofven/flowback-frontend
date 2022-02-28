@@ -275,13 +275,14 @@ function SortCounterProposal(props) {
                     negative: negative_proposal_indexes_2
                 }
 
-                signData(data, userId, props.counterProposals, props.proposalIndexes, props.proposal);
+                signData(data, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
+                    const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                });
 
-                sendData(data)
+                sendData(data);
 
             }
             else {
-                // signData(userId);
                 let positive_proposal_indexes_2 = []
                 positive_proposal_indexes.forEach((proposal, index) => {
 
@@ -416,7 +417,7 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>Sort Proposals</h4>
-                {/* <button className="btn btn-outline-primary">En rolig knapp</button> */}
+                <button className="btn btn-outline-primary">En rolig knapp</button>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
