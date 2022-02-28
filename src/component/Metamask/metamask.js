@@ -112,11 +112,11 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
         getMetamaskAddress(userId).then(userAccount => {
             const user = JSON.parse(window.localStorage.user)
 
-            // const presentableData = data.positive.foreach(data => {
-            //     counterProposals.find(counterProposal => {
-            //         data === counterProposal.id
-            //     })
-            // })
+            const presentableData = data.positive.foreach(data =>
+                counterProposals.find(counterProposal =>
+                    data === counterProposal.id
+                )
+            )
 
             const msgParams = JSON.stringify({
                 domain: {
