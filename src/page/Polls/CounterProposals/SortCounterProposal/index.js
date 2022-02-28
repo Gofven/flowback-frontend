@@ -273,16 +273,21 @@ function SortCounterProposal(props) {
                     negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
                 });
 
-                const data = {
+
+                signData({
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
-                }
+                },
+                    userId, props.counterProposals, props.proposalIndexes).then(signedData => {
+                        const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                        const data = {
+                            positive: positive_proposal_indexes_2,
+                            negative: negative_proposal_indexes_2,
+                            hash: encryptedSignedData
+                        }
+                        sendData(data);
+                    });
 
-                signData(data, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
-                    const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
-                });
-
-                sendData(data);
 
             }
             else {

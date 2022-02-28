@@ -1,12 +1,12 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { formatDate } from '../../utils/common';
 
-export function HTMEditor(){
+export function HTMEditor() {
     const [textEditorLoaded, setTextEditorLoaded] = useState(false)
     const [draftTime, setdraftTime] = useState(0)
 
     const loadTextEditor = () => {
-    
+
         if (!textEditorLoaded) {
             const script = document.createElement("script");
             script.src = "https://htmeditor.com/js/htmeditor.min.js";
@@ -16,16 +16,16 @@ export function HTMEditor(){
             document.body.appendChild(script);
             setTextEditorLoaded(true)
         }
-    
+
         const editor = document.getElementById("htmeditor_ifr");
         if (textEditorLoaded && editor !== null) {
             const child = editor.childNodes[0]
             console.log(child)
         }
-        
+
         const targetNode = document.body;
         const config = { childList: true, subtree: true };
-        
+
         const callback = function (mutationsList, observer) {
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
@@ -33,7 +33,7 @@ export function HTMEditor(){
                 }
             }
         };
-        
+
         const observer = new MutationObserver(callback);
         observer.observe(targetNode, config);
     }
@@ -41,12 +41,12 @@ export function HTMEditor(){
     const getDraftTime = () => {
         return formatDate(parseInt(window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-time")), 'kk:mm:ss');
     }
-    
+
     useEffect(() => {
-        const interval = setInterval(function() {
+        const interval = setInterval(function () {
             setdraftTime(getDraftTime())
             console.log("hiii")
-          }, 5000);
+        }, 5000);
 
 
         loadTextEditor();
@@ -58,10 +58,18 @@ export function HTMEditor(){
     return <div>
         {draftTime}
         <textarea id="htmeditor" required
-    maxLength={100000}
-    name="description"></textarea></div>
+            maxLength={100000}
+            fillEmptyBlocks={false}
+            name="description"></textarea></div>
 }
 
-export function getHTML(){
+export function getHTML() {
     return window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-draft");
+}
+
+export function getTextBetweenHTMLTags(html) {
+    const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/g
+    const s = html?.match(regexBetweenHTMLTags)
+    const h = s?.join("")
+    return h
 }
