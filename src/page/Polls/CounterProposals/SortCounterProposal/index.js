@@ -211,7 +211,8 @@ function SortCounterProposal(props) {
             data.columns[destination].taskIds.splice(0, 0, draggableID);
             setState({ ...data });
         }
-        saveIndexies()
+        //Uncomment for live updates
+        // saveIndexies()
     }
 
     const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
@@ -223,7 +224,9 @@ function SortCounterProposal(props) {
             data.columns[destination].taskIds.splice(index - destinationIndex, 0, draggableID);
 
         setState({ ...data });
-        saveIndexies()
+        //Uncomment for live updates
+        // saveIndexies()
+
     }
     /**
      * To save proposal positions provided by a user
@@ -417,7 +420,7 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>Sort Proposals</h4>
-                <button className="btn btn-outline-primary">En rolig knapp</button>
+                <button className="btn btn-outline-primary" onClick={saveIndexies}>Save Votings</button>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
