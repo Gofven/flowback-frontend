@@ -33,7 +33,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
 import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
-import {HTMEditor, getHTML, getDraftTime} from '../../../component/HTMEditor'
+import { HTMEditor, getHTML, getDraftTime } from '../../../component/HTMEditor'
 
 export default function PollForm() {
 
@@ -123,8 +123,8 @@ export default function PollForm() {
             poll_details: JSON.stringify(pollDetails)
         }
         Object.keys(obj).forEach((key) => {
-            if (key!=="description")
-            data.append(key, obj[key]);
+            if (key !== "description")
+                data.append(key, obj[key]);
         })
         pollDocs.forEach((doc) => {
             data.append('poll_docs', doc, doc.file);
@@ -138,7 +138,7 @@ export default function PollForm() {
                 if (status === "success") {
                     history.push(`/groupdetails/${groupId}/pollDetails/${data.poll}`);
                 } else {
-                    // setError();
+                    setMessege({ messege: data?.title[0], color: "red" })
                 }
             }
         );
@@ -277,7 +277,7 @@ export default function PollForm() {
 
                                         <div className="form-group mx-2">
                                             <h4>Add Details</h4>
-                                            <HTMEditor/>
+                                            <HTMEditor />
                                         </div>
                                         {pollId ? null :
                                             <>
@@ -361,7 +361,7 @@ export default function PollForm() {
                                                             Click here to get information about the different voting types
                                                         </div>}
 
-                                                        
+
                                                     <FontAwesomeIcon className={`fa expand-description-circle ${expandedDescription ? "clicked" : null}`}
                                                         icon={faArrowCircleDown}
                                                         color=''

@@ -211,7 +211,8 @@ function SortCounterProposal(props) {
             data.columns[destination].taskIds.splice(0, 0, draggableID);
             setState({ ...data });
         }
-        saveIndexies()
+        //Uncomment for live updates
+        // saveIndexies()
     }
 
     const onClickCondorcet = ({ source, destination, draggableID, index, destinationIndex }) => {
@@ -223,7 +224,9 @@ function SortCounterProposal(props) {
             data.columns[destination].taskIds.splice(index - destinationIndex, 0, draggableID);
 
         setState({ ...data });
-        saveIndexies()
+        //Uncomment for live updates
+        // saveIndexies()
+
     }
     /**
      * To save proposal positions provided by a user
@@ -270,18 +273,24 @@ function SortCounterProposal(props) {
                     negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
                 });
 
-                const data = {
+
+                signData({
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
-                }
+                },
+                    userId, props.counterProposals, props.proposalIndexes).then(signedData => {
+                        const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                        const data = {
+                            positive: positive_proposal_indexes_2,
+                            negative: negative_proposal_indexes_2,
+                            hash: encryptedSignedData
+                        }
+                        sendData(data);
+                    });
 
-                signData(data, userId, props.counterProposals, props.proposalIndexes, props.proposal);
-
-                sendData(data)
 
             }
             else {
-                // signData(userId);
                 let positive_proposal_indexes_2 = []
                 positive_proposal_indexes.forEach((proposal, index) => {
 
@@ -416,7 +425,7 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>Sort Proposals</h4>
-                {/* <button className="btn btn-outline-primary">En rolig knapp</button> */}
+                <button className="btn btn-outline-primary" onClick={saveIndexies}>Save Votings</button>
                 <h4 style={{ "color": messege.color }}>{messege.content}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>

@@ -284,6 +284,7 @@ export default function PollsTab(props) {
             <div className="column-container poll-posts-container">
                 {polls?.map((poll, index) => {
                     if (
+                        //TODO: Make these types of checks a function in the filter component
                         (pollFilter.discussion === poll.discussion
                             || pollFilter.discussion === null)
                         && (
@@ -294,7 +295,7 @@ export default function PollsTab(props) {
                             poll.title?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.description?.toUpperCase().includes(pollFilter.search.toUpperCase()) || poll.group.title.toUpperCase().includes(pollFilter.search.toUpperCase())
                         )
                     )
-                        return <div className="poll-post" key={poll.id}>
+                        return <div className="poll-post" key={poll.id + poll.type + poll.discussion}>
                             <Link to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}/polldetails/${poll.id}`}>
                                 <div className="poll-title" >{poll.title}</div>
                             </Link>
@@ -335,6 +336,6 @@ export default function PollsTab(props) {
                 (page < totalPage + 1) &&
                 <div className="d-flex justify-content-end cursor-pointer" onClick={() => { getPolls(false) }}>Load more... </div>
             }
-        </div>
+        </div >
     );
 }

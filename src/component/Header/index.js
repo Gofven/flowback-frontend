@@ -106,7 +106,7 @@ export default function Header() {
                 aria-expanded="false"
               >
                 <div className="avtar-row row align-items-center mx-auto">
-                  <div className="col-3 px-0 avtrar-img-cl" style={{ "text-align": "center" }}>
+                  <div className="col-3 px-0 avtrar-img-cl" style={{ "textAlign": "center" }}>
                     <Image
                       src={user.image}
                       className="avtrar-img img-fluid"
@@ -121,7 +121,7 @@ export default function Header() {
                         : 'User'
                     }
                   </div>
-                  <div className="col-1 down-arro px-0" style={{ "text-align": "center" }}>
+                  <div className="col-1 down-arro px-0" style={{ "textAlign": "center" }}>
                     <img src="/img/avtar-arrow-blue.png" />
                   </div>
                 </div>

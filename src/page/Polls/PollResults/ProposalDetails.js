@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { getTextBetweenHTMLTags } from "../../../component/HTMEditor";
 
 export default function ProposalDetails({ proposal, proposalDescription }) {
     const descriptionMaxChars = 45;
@@ -7,8 +8,8 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
     const isLongDescription = proposalDescription.length > 45;
     // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
 
-    const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/
-    const shortDescription = proposalDescription.match(regexBetweenHTMLTags)?.join(" ").substring(0, descriptionMaxChars - 1) + "...";
+    const plainTextDescription = getTextBetweenHTMLTags(proposalDescription);
+    const shortDescription = plainTextDescription?.length > descriptionMaxChars ? plainTextDescription?.substring(0, descriptionMaxChars - 1) + "..." : plainTextDescription;
 
     useEffect(() => {
         const descriptions = document.getElementsByClassName(`description${proposal.id}`)
@@ -32,13 +33,13 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
             <div id={"collapse" + proposal.id} className={`accordion-collapse collapse accordion-body description${proposal.id}`}
                 aria-labelledby={"heading" + proposal.id}
             >
-                {proposalDescription}
+                {shortDescription}
             </div>
         </div> : <div className="" id={"heading" + proposal.id}>
             <div className="accordion-button accordion collapsed rm-accordion-icon"
             >
                 <div className="accordion-collapse accordion collapse show">
-                    {proposalDescription}
+                    {shortDescription}
                 </div>
             </div>
         </div>}

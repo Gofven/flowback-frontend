@@ -108,69 +108,76 @@ export function ConnectToMetamask() {
 }
 
 export function signData(data, userId, counterProposals, proposalIndexes, proposal) {
-    getMetamaskAddress(userId).then(userAccount => {
-        const user = JSON.parse(window.localStorage.user)
+    return new Promise((resolve, reject) => {
+        getMetamaskAddress(userId).then(userAccount => {
+            const user = JSON.parse(window.localStorage.user)
 
+            // const presentableData = data.positive.foreach(data =>
+            //     counterProposals.find(counterProposal =>
+            //         data === counterProposal.id
+            //     )
+            // )
 
+            const msgParams = JSON.stringify({
+                domain: {
+                    // Defining the chain aka Rinkeby testnet or Ethereum Main Net
+                    chainId: 1,
+                    // Give a user friendly name to the specific contract you are signing for.
+                    name: `Hello, ${user.first_name}. Confirm encrypting your voting data`,
+                    // If name isn't enough add verifying contract to make sure you are establishing contracts with the proper entity
+                    verifyingContract: userAccount,
+                    // Just let's you know the latest version. Definitely make sure the field name is correct.
+                    version: '1',
+                },
 
-        const msgParams = JSON.stringify({
-            domain: {
-                // Defining the chain aka Rinkeby testnet or Ethereum Main Net
-                chainId: 1,
-                // Give a user friendly name to the specific contract you are signing for.
-                name: `Hello, ${user.first_name}. Confirm encrypting your voting data`,
-                // If name isn't enough add verifying contract to make sure you are establishing contracts with the proper entity
-                verifyingContract: userAccount,
-                // Just let's you know the latest version. Definitely make sure the field name is correct.
-                version: '1',
-            },
+                // Defining the message signing data content.
+                message: {
+                    /*
+                     - Anything you want. Just a JSON Blob that encodes the data you want to send
+                     - No required fields
+                     - This is DApp Specific
+                     - Be as explicit as possible when building out the message schema.
+                    */
+                    contents: data,
 
-            // Defining the message signing data content.
-            message: {
-                /*
-                 - Anything you want. Just a JSON Blob that encodes the data you want to send
-                 - No required fields
-                 - This is DApp Specific
-                 - Be as explicit as possible when building out the message schema.
-                */
-                contents: data,
+                },
+                // Refers to the keys of the *types* object below.
+                primaryType: 'Mail',
+                types: {
+                    // TODO: Clarify if EIP712Domain refers to the domain the contract is hosted on
+                    EIP712Domain: [
+                        { name: 'name', type: 'string' },
+                        { name: 'version', type: 'string' },
+                        { name: 'chainId', type: 'uint256' },
+                        { name: 'verifyingContract', type: 'address' },
+                    ],
+                    // Not an EIP712Domain definition
+                    Group: [
+                        { name: 'name', type: 'string' },
+                    ],
+                    // Refer to PrimaryType
+                    Mail: [
+                        { name: 'contents', type: 'Polls' },
+                    ],
+                    Polls: [
+                        { name: "positive", type: "Poll[]" },
+                        { name: "negative", type: "Poll[]" }
+                    ],
+                    Poll: [
+                        { name: 'proposal', type: "uint256" },
 
-            },
-            // Refers to the keys of the *types* object below.
-            primaryType: 'Mail',
-            types: {
-                // TODO: Clarify if EIP712Domain refers to the domain the contract is hosted on
-                EIP712Domain: [
-                    { name: 'name', type: 'string' },
-                    { name: 'version', type: 'string' },
-                    { name: 'chainId', type: 'uint256' },
-                    { name: 'verifyingContract', type: 'address' },
-                ],
-                // Not an EIP712Domain definition
-                Group: [
-                    { name: 'name', type: 'string' },
-                ],
-                // Refer to PrimaryType
-                Mail: [
-                    { name: 'contents', type: 'Polls' },
-                ],
-                Polls: [
-                    { name: "positive", type: "Poll[]" },
-                    { name: "negative", type: "Poll[]" }
-                ],
-                Poll: [
-                    { name: 'proposal', type: "uint256" },
-
-                ]
-            },
-        })
-
-        const web3 = new Web3(window.ethereum);
-
-        web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
-            function (err, results) {
-                console.log(results);
+                    ]
+                },
             })
+
+            const web3 = new Web3(window.ethereum);
+            web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
+                function (err, results) {
+                    if (err) reject(err);
+                    else resolve(results.result);
+                })
+
+        })
     })
 }
 
