@@ -53,6 +53,11 @@ export default function Header() {
       setUser(JSON.parse(localStorage.getItem('user')));
       console.log(window.location.href.split("/")[3], "HREFFFFR");
     }
+
+
+    window.scrollX = 0;
+
+
   }, []);
   return (
     <nav className="main-navbar navbar navbar-expand-lg">

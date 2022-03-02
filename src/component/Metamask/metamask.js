@@ -103,7 +103,6 @@ export function ConnectToMetamask() {
                     </button>
                 </div>}
         </Loader>
-
     </div>
 }
 

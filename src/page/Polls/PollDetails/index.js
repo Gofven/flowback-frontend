@@ -46,6 +46,7 @@ import PollResults from "../PollResults/PollResults";
 // import Metamask from "../../../component/Metamask/metamask";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
+import DisplayMessege from "../../../component/common/DisplayMessege";
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -340,7 +341,7 @@ export default function PollDetails() {
         }
 
         const maxTitleLength = 75;
-        if (poll.type !== "event" && counterProposal.proposal_title.length > maxTitleLength) {
+        if (poll.type !== "event" && counterProposal.proposal_title?.length > maxTitleLength) {
             setError(`Not allowed more than ${maxTitleLength} characters in title`);
             return;
         }
@@ -381,7 +382,9 @@ export default function PollDetails() {
                     getPollDetails();
                     getCounterProposal();
                 }
+                setCounterProposal({});
                 setCounterProposalLoading(false);
+
                 // window.location.reload();
             }).catch((err) => {
                 setCounterProposalLoading(false);
@@ -558,6 +561,7 @@ export default function PollDetails() {
                                                             required
                                                             onChange={handleOnChange}
                                                             defaultValue={counterProposal.proposal}
+                                                            value={counterProposal.proposal}
                                                         // onBlur={vailadated}
                                                         />
                                                     </div>
