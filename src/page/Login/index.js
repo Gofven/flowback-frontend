@@ -48,7 +48,7 @@ export default function Login() {
       <div className="logo-section">
         <a href="/">
           <img src="/img/Logo.png" className="img-fluid main-logo" alt="logo" />
-          <span className="main-logo-text">Flowback</span>
+          {/* <span className="main-logo-text">Flowback</span> */}
         </a>
       </div>
       <div className="login_form_container">

@@ -59,7 +59,7 @@ export default function Header() {
       <div className="container-lg">
         <a className="navbar-brand" href="/">
           <img src="/img/Logo.png" className="main-logo" alt="logo" />
-          <span className="main-logo-text">Flowback</span>
+          {/* <span className="main-logo-text">Flowback</span> */}
         </a>
         <button
           className="navbar-toggler"
