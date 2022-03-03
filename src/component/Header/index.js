@@ -53,13 +53,18 @@ export default function Header() {
       setUser(JSON.parse(localStorage.getItem('user')));
       console.log(window.location.href.split("/")[3], "HREFFFFR");
     }
+
+
+    window.scrollX = 0;
+
+
   }, []);
   return (
     <nav className="main-navbar navbar navbar-expand-lg">
       <div className="container-lg">
         <a className="navbar-brand" href="/">
           <img src="/img/Logo.png" className="main-logo" alt="logo" />
-          <span className="main-logo-text">Flowback</span>
+          {/* <span className="main-logo-text">Flowback</span> */}
         </a>
         <button
           className="navbar-toggler"
