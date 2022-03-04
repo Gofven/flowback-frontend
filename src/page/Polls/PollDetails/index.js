@@ -416,7 +416,7 @@ export default function PollDetails() {
                                         }
                                     </h4>
                                     <div>
-                                        <span className="poll-field" small>Created by: </span>
+                                        <span className="poll-field">Created by: </span>
 
                                         {poll.created_by && poll.created_by.first_name} {poll.created_by && poll.created_by.last_name}
                                     </div>
@@ -499,27 +499,7 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
-                            <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
-                                <div className="card-header flex-header">
-                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
-                                </div>
-                                <div className="card-body overflow-hidden">
-                                    <div className="row">
-                                        <div className="col-5">Hash</div>
-                                        <div>
-                                            {poll.result_hash}
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">Download</div>
-                                        <div className="col-6">
-                                            <Link>
-                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             {(poll.discussion === "Finished") &&
                                 <PollResults allProposals={allProposals} pollDetails={poll}
                                     votingType={poll.voting_type}
@@ -652,7 +632,6 @@ export default function PollDetails() {
                                 </Loader>
                             }
 
-
                             {poll.accepted && group.id && poll.discussion != "Finished" &&
                                 <div className="card chat-list-card chat-card card-rounded overflow-hidden my-2 mb-4">
                                     <div className="card-body overflow-hidden">
@@ -673,6 +652,27 @@ export default function PollDetails() {
 
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
+                            <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
+                                <div className="card-header flex-header">
+                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
+                                </div>
+                                <div className="card-body overflow-hidden">
+                                    <div className="row">
+                                        <div className="col-5">Hash</div>
+                                        <div>
+                                            {poll.result_hash}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">Download</div>
+                                        <div className="col-6">
+                                            <Link>
+                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
