@@ -3,17 +3,17 @@
  * made by Lina Forsberg. Emilio Müller helped constructing Flowback.
  * Astroneatech created the code. It was primarily financed by David
  * Madsen. It is a decision making platform.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
@@ -26,22 +26,18 @@ import {
 } from "react-router-dom";
 import "./styles.css";
 import { useTab } from "../../../hook/useTab";
-import GroupChat from "../../../component/GroupChat";
 import Layout1 from "../../../layout/Layout1";
 import { postRequest } from '../../../utils/API';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faInfoCircle,
-    faCircle,
     faRss,
-    faCalendarWeek,
-    faEllipsisH,
     faFileAlt,
     faUser,
     faPoll,
-    faLayerGroup,
     faUsers,
-    faEnvelope
+    faEnvelope,
+    faChartPie
 } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import FeedCard from "../../../component/FeedCard";
@@ -51,6 +47,7 @@ import EmailCard from "../../../component/EmailCard";
 import Image from "../../../component/common/Image";
 import UserGroup, { getGroupDetails } from "../../../apis/UserGroup";
 import AboutCard from "../../../component/AboutCard";
+import GroupStatsCard from "../../../component/GroupStatsCard";
 const { REACT_APP_JITSI } = process.env;
 
 export default function GroupDetails() {
@@ -65,11 +62,12 @@ export default function GroupDetails() {
         "About",
         "Documents",
         "Members",
-        "Send Email"
+        "Send Email",
+        "Group statistics"
     ]);
 
     // List of icon for list
-    const indexIcon = [faRss, faInfoCircle, faFileAlt, faUser, faEnvelope];
+    const indexIcon = [faRss, faInfoCircle, faFileAlt, faUser, faEnvelope, faChartPie];
 
     // List to render on the screen
     const renderTab = () => {
@@ -101,6 +99,12 @@ export default function GroupDetails() {
                     group.user_type ?
                         <EmailCard groupId={groupId} userType={group.user_type} />
                         : <NoAccessBlock message="Please join group to email." />
+                );
+            case tab[5]:
+                return (
+                    group.user_type ?
+                        <GroupStatsCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to view group statistics." />
                 );
             default:
                 return <FeedCard />;

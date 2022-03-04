@@ -70,9 +70,8 @@ export default function SendEmail({ groupId, userType }) {
                 </Loader>
             </div> : <div className="document-card card-rounded mb-4">
                 <div className="card-header flex-header tab-header">
-                    <h4 className="card-title">
-                        Only an Admin is allowed to send emails</h4>
+                    <h4 className="card-title">Send Email</h4>
                 </div>
-                <div className="card-body"></div>
+                <div className="card-body text-danger">Only an Admin is allowed to send emails.</div>
             </div>)
 }
