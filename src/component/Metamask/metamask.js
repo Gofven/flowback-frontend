@@ -3,6 +3,7 @@ import Loader from "../common/Loader";
 import { postRequest, getRequest } from "../../utils/API";
 import { encryptSafely } from '@metamask/eth-sig-util';
 import Web3 from 'web3';
+import './metamask.css'
 
 export function ConnectToMetamask() {
     const [account, setAccount] = useState(null);
@@ -90,6 +91,7 @@ export function ConnectToMetamask() {
     })
 
     return <div>
+        {loading && <div>If nothing shows up, click the MetaMask icon in your browser</div>}
         <Loader loading={loading}>
             {account ?
                 <div className="metamask-connection"><span>Your are connected to MetaMask</span>
@@ -116,6 +118,8 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
             //         data === counterProposal.id
             //     )
             // )
+
+
 
             const msgParams = JSON.stringify({
                 domain: {
