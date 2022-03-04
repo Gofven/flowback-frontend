@@ -499,6 +499,27 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
+                            <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
+                                <div className="card-header flex-header">
+                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
+                                </div>
+                                <div className="card-body overflow-hidden">
+                                    <div className="row">
+                                        <div className="col-5">Hash</div>
+                                        <div>
+                                            {poll.result_hash}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">Download</div>
+                                        <div className="col-6">
+                                            <Link>
+                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {(poll.discussion === "Finished") &&
                                 <PollResults allProposals={allProposals} pollDetails={poll}
                                     votingType={poll.voting_type}
