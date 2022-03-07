@@ -281,7 +281,7 @@ export default function PollForm() {
                                         </div>
                                         {pollId ? null :
                                             <>
-                                                <div className="form-group mx-2">
+                                                <div className="form-group mx-2" style={{"margin-top": "10px"}}>
                                                     <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
                                                         <option selected value="poll">Private</option>
                                                         <option value="mission">Public</option>

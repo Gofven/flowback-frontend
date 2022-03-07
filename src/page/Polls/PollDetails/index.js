@@ -47,7 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
-import {HTMEditor,getHTML,getHTMEditorText} from '../../../component/HTMEditor'
+import {HTMEditor,getHTML} from '../../../component/HTMEditor'
 import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
@@ -331,7 +331,8 @@ export default function PollDetails() {
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
-        counterProposal.description = window.localStorage.getItem("/groupdetails/1/polldetails/34-htmeditor-draft");
+        // counterProposal.description = window.localStorage.getItem("/groupdetails/1/polldetails/34-htmeditor-draft");
+        counterProposal.description = getHTML();
 
         if (counterProposal.proposal_title === "") {
             setError("Proposal needs title");
@@ -562,10 +563,10 @@ export default function PollDetails() {
                                                     </div>
                                                 </div> : <div>
                                                     <div className="form-group">
+                                                        <h2>Title</h2>
                                                         <Textbox
                                                             type="text"
                                                             name="proposal_title"
-                                                            placeholder="Proposal Title"
                                                             required
                                                             onChange={handleOnChange}
                                                             defaultValue={counterProposal.proposal}
@@ -575,7 +576,7 @@ export default function PollDetails() {
                                                     </div>
                                                 </div>}
                                                 <div className="form-group">
-
+                                                    <h2 style={{"margin-top":"1rem"}}>Description</h2>
                                                     <HTMEditor />
                                                 </div>
                                                 <div className="form-group">
