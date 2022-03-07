@@ -139,6 +139,17 @@ textarea{
     padding:1rem;
 }
 
+@media (max-width: 480px){
+    .proposal-buttons-and-user{
+        flex-direction: column-reverse;
+        gap:2rem;
+    }
+
+    .vote-buttons{
+        justify-content: space-between;
+    }
+}
+
 .expand-description-circle{
     cursor: pointer;
     transition: transform 1.5s;
