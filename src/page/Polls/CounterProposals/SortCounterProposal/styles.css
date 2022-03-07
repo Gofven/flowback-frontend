@@ -27,7 +27,7 @@
 }
 
 .counter-proposal-title{
-    padding:0.5rem
+    padding:1rem
 }
 
 .vote-buttons{
@@ -137,6 +137,17 @@ textarea{
     display:flex;
     justify-content: space-between;
     padding:1rem;
+}
+
+@media (max-width: 480px){
+    .proposal-buttons-and-user{
+        flex-direction: column-reverse;
+        gap:2rem;
+    }
+
+    .vote-buttons{
+        justify-content: space-between;
+    }
 }
 
 .expand-description-circle{

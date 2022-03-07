@@ -31,3 +31,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Uncomment this in production and when you want to use HTMEditor */
+/* iframe {
+  display: none !important;
+} */

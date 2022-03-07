@@ -44,7 +44,7 @@ export default function LoginCard() {
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
-  const [wrongUseOrPass, setWrongUseOrPass] = useState(false);
+  const [displayedMessege, setdisplayedMessege] = useState({messege:"", color:""});
   const [forgotPassword, setForgotPassword] = useState(false)
   const { email, password, rememberMe } = state;
   const dispatch = useDispatch();
@@ -87,13 +87,13 @@ export default function LoginCard() {
             // dispatch(addToast("Login Success."));
           } else {
             //console.log("data", data)
-            setWrongUseOrPass(true)
+            setdisplayedMessege({messege:"Wrong username or password", color:"red"})
             setError({ ...error, email: data });
           }
         }
       ).catch((err) => {
         setLoading(false);
-        setError({ ...error, email: "Something went wrong" });
+        setdisplayedMessege({messege:"A problem has occurred", color:"red"})
       });
     }
   };
@@ -115,7 +115,7 @@ export default function LoginCard() {
     return (
       <Loader loading={loading}>
         <form className="form login_form" id="loginForm">
-          <span style={{ color: "red" }}>{wrongUseOrPass ? "Wrong Username or Password" : ""}</span>
+          <span style={{ color: displayedMessege.color }}>{displayedMessege.messege}</span>
           <div className="form-group">
             <h5>Email</h5>
             <Textbox

@@ -4,18 +4,14 @@ import Profile from '../../../component/User/Profile';
 import { formatDate } from "../../../utils/common";
 
 export const TopProposal = ({ topProposal }) => {
-    return <div className="card counter-proposal-card bg-white">
+    return <div className="card counter-proposal-card bg-white my-4">
         <div className="post-header d-flex justify-content-between card-header mb-0">
             {topProposal && topProposal.user &&
                 <div className="media post-meida">
-                    <Image src={topProposal.user.image} className="post-user-img" errImg={'/img/no-photo.jpg'} />
                     <div className="media-body">
                         <h5 className="user-name">
-                            <Profile className='inline-block'
-                                id={topProposal.user.id}>{topProposal.user.first_name} {topProposal.user.last_name} </Profile>
+                            Planned Time
                         </h5>
-                        <div
-                            className="post-time">{topProposal && formatDate(topProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                     </div>
                 </div>
             }
@@ -37,6 +33,11 @@ export const TopProposal = ({ topProposal }) => {
                     ellipsis="..."
                     trimRight
                     basedOn='letters' />
+            </div>
+            <div className="font-small mt-2 text-grey top-prosal-creator">
+                <div>Creator: <Profile
+                    id={topProposal.user.id}> {topProposal.user?.first_name} </Profile>
+                </div>
             </div>
         </div>
     </div>

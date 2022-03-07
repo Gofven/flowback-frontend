@@ -46,7 +46,8 @@ import PollResults from "../PollResults/PollResults";
 // import Metamask from "../../../component/Metamask/metamask";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
-import DisplayMessege from "../../../component/common/DisplayMessege";
+// import DisplayMessege from "../../../component/common/DisplayMessege";
+import {HTMEditor,getHTML,getHTMEditorText} from '../../../component/HTMEditor'
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -329,6 +330,7 @@ export default function PollDetails() {
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
+        counterProposal.description = window.localStorage.getItem("/groupdetails/1/polldetails/34-htmeditor-draft");
 
         if (counterProposal.proposal_title === "") {
             setError("Proposal needs title");
@@ -369,7 +371,7 @@ export default function PollDetails() {
         data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
-        const combinedProposal = `${counterProposal.proposal_title || ""}~${counterProposal.proposal_details ? counterProposal.proposal_details : "No description"}`;
+        const combinedProposal = `${counterProposal.proposal_title || ""}~${counterProposal.description ? counterProposal.description : "No description"}`;
         data.append('proposal', combinedProposal);
 
         setCounterProposalLoading(true);
@@ -416,7 +418,7 @@ export default function PollDetails() {
                                         }
                                     </h4>
                                     <div>
-                                        <span className="poll-field" small>Created by: </span>
+                                        <span className="poll-field">Created by: </span>
 
                                         {poll.created_by && poll.created_by.first_name} {poll.created_by && poll.created_by.last_name}
                                     </div>
@@ -499,27 +501,7 @@ export default function PollDetails() {
                                 </div>
 
                             </div>
-                            <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
-                                <div className="card-header flex-header">
-                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
-                                </div>
-                                <div className="card-body overflow-hidden">
-                                    <div className="row">
-                                        <div className="col-5">Hash</div>
-                                        <div>
-                                            {poll.result_hash}
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">Download</div>
-                                        <div className="col-6">
-                                            <Link>
-                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             {(poll.discussion === "Finished") &&
                                 <PollResults allProposals={allProposals} pollDetails={poll}
                                     votingType={poll.voting_type}
@@ -589,16 +571,7 @@ export default function PollDetails() {
                                                 </div>}
                                                 <div className="form-group">
 
-                                                    <textarea
-                                                        className="proposal-details"
-                                                        type="text"
-                                                        name="proposal_details"
-                                                        placeholder="Proposal Details"
-                                                        required
-                                                        onChange={handleOnChange}
-                                                        defaultValue={counterProposal.proposal}
-                                                    // onBlur={vailadated}
-                                                    />
+                                                    <HTMEditor />
                                                 </div>
                                                 <div className="form-group">
                                                     <div className='field d-flex' style={{ "width": "88.5px" }}>
@@ -652,7 +625,6 @@ export default function PollDetails() {
                                 </Loader>
                             }
 
-
                             {poll.accepted && group.id && poll.discussion != "Finished" &&
                                 <div className="card chat-list-card chat-card card-rounded overflow-hidden my-2 mb-4">
                                     <div className="card-body overflow-hidden">
@@ -673,6 +645,27 @@ export default function PollDetails() {
 
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
+                            <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
+                                <div className="card-header flex-header">
+                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
+                                </div>
+                                <div className="card-body overflow-hidden">
+                                    <div className="row">
+                                        <div className="col-5">Hash</div>
+                                        <div>
+                                            {poll.result_hash}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-5">Download</div>
+                                        <div className="col-6">
+                                            <Link>
+                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 

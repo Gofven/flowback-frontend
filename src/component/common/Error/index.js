@@ -23,3 +23,12 @@ import styled from "styled-components";
 export const Error = styled.div`
   color: red;
 `;
+
+// export default function Error(props) {
+
+
+//   return <>
+//     <div></div>
+//     <div>{props.children}</div>
+//   </>
+// }

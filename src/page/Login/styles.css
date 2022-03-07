@@ -414,27 +414,10 @@ a, a:hover, a:focus, a:active {
     .login_card .card-body {
         padding: 15px;
     }
-    .login_card .form-control {
-        font-size: 14px;
-    }
-    .login_card .form-group h5 {
-        font-size: 16px;
-    }
     .login_card .form-group p {
-        font-size: 18px;
         line-height: 22px;
-    }
-    .form-group .form-check label, .form-group .form-check label a {
-        font-size: 14px;
-    }
-    .login_card .forgot-link {
-        font-size: 16px;
     }
     .login_card .login-btn {
         width: 170px;
-        font-size: 16px;
-    }
-    .login_card .register-btn {
-        font-size: 16px;
     }
 }
