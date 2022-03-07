@@ -114,11 +114,11 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
             const user = JSON.parse(window.localStorage.user)
 
             data.positive.forEach((hashAndId, i) => {
-                const matchingProposal = counterProposals.find(counterProposal => hashAndId.proposal === counterProposal.id)                
-                // data[i].title = matchingProposal.title
+                const matchingProposal = counterProposals.find(counterProposal => hashAndId.proposal === counterProposal.id);                
+                // data[i].title = matchingProposal.title;
             });
 
-
+            console.log(data)
 
             const msgParams = JSON.stringify({
                 domain: {

@@ -48,6 +48,7 @@ import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
 import {HTMEditor,getHTML,getHTMEditorText} from '../../../component/HTMEditor'
+import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -59,7 +60,7 @@ export default function PollDetails() {
     const [alreadyPosted, setAlreadyPosted] = useState(false);
     const [error, setError] = useState("");
     const [allProposals, setAllProposals] = useState(null);
-
+    const [show, setShow] = useState(false);
     // Get all proposals
     const getProposals = (pollId) => getRequest(`api/v1/group_poll/${pollId}/all_proposals`).then((response) => {
         if (response.detail !== "Not found.")
@@ -398,6 +399,10 @@ export default function PollDetails() {
         setCounterProposal({ ...counterProposal, date: e });
     }
 
+    const handleClose = () => {
+        setShow(false);
+    }
+
     return (
         <Layout1>
             <section className=" mt-4">
@@ -641,27 +646,33 @@ export default function PollDetails() {
                                     </div>
                                 </div>
                             }
-
-
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
+                            
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
-                                    <h4 className="card-title fw-bolder">Download Poll votings and hash</h4>
+                                <Modal show={show} onHide={handleClose} animation={false}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Poll Hash</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body><div className="hash-modal">
+                                        {poll.result_hash}</div>
+                                    </Modal.Body>
+                                </Modal>
+               
+                                    <h4 className="card-title fw-bolder">Download poll data and hash</h4>
                                 </div>
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
-                                        <div className="col-5">Hash</div>
-                                        <div>
-                                            {poll.result_hash}
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">Download</div>
                                         <div className="col-6">
                                             <Link>
                                                 <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
                                             </Link>
+                                        <div className="col-6">
+                                            <Link>
+                                                <div onClick={() => setShow(true)}>Reveal Hash</div>
+                                            </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
