@@ -67,9 +67,15 @@ export function getHTML() {
     return window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-draft");
 }
 
+export function getHTMEditorText(input) {
+    return window.localStorage.getItem(`/${input}-htmeditor-draft`);
+}
+
 export function getTextBetweenHTMLTags(html) {
     const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/g
     const s = html?.match(regexBetweenHTMLTags)
     const h = s?.join("")
     return h
 }
+
+//<p>ffff ff</p>
