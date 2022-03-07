@@ -32,6 +32,7 @@ import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
+import {getTextBetweenHTMLTags} from '../../../../component/HTMEditor'
 
 const div = styled.div`
   margin: 12px 0;
@@ -99,6 +100,12 @@ function ProposalBox(props) {
     counterProposal.title = counterProposal?.proposal.split("~")[0];
     counterProposal.description = counterProposal?.proposal.split("~")[1];
 
+    useEffect(() => {
+        // const proposalDescription = document.getElementById(`description${proposal.id}`)
+        // proposalDescription.innerHTML = coun
+
+    })
+
     return <div>
         {/* {props.task.id} - {props.task.content.proposal} */}
         <div className="card counter-proposal-card bg-white">
@@ -117,7 +124,7 @@ function ProposalBox(props) {
                     </h4>
                 </div>
             </div>
-            <div className="proposal-top-part">
+            <div className="proposal-top-part" id={`${counterProposal?.title}`}>
                 {counterProposal.description && <ProposalDetails proposal={counterProposal} proposalDescription={counterProposal.description} />}
             </div>
 

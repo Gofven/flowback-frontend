@@ -47,6 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
+import {HTMEditor,getHTML,getHTMEditorText} from '../../../component/HTMEditor'
 
 export default function PollDetails() {
     let { groupId } = useParams();
@@ -329,6 +330,7 @@ export default function PollDetails() {
 
     // Save Counter Proposal
     const saveCounterProposal = () => {
+        counterProposal.description = window.localStorage.getItem("/groupdetails/1/polldetails/34-htmeditor-draft");
 
         if (counterProposal.proposal_title === "") {
             setError("Proposal needs title");
@@ -369,7 +371,7 @@ export default function PollDetails() {
         data.append('date', newDate)
 
         //The backend only supports one text field at the moment so this is a workaround for having two text fields
-        const combinedProposal = `${counterProposal.proposal_title || ""}~${counterProposal.proposal_details ? counterProposal.proposal_details : "No description"}`;
+        const combinedProposal = `${counterProposal.proposal_title || ""}~${counterProposal.description ? counterProposal.description : "No description"}`;
         data.append('proposal', combinedProposal);
 
         setCounterProposalLoading(true);
@@ -569,16 +571,7 @@ export default function PollDetails() {
                                                 </div>}
                                                 <div className="form-group">
 
-                                                    <textarea
-                                                        className="proposal-details"
-                                                        type="text"
-                                                        name="proposal_details"
-                                                        placeholder="Proposal Details"
-                                                        required
-                                                        onChange={handleOnChange}
-                                                        defaultValue={counterProposal.proposal}
-                                                    // onBlur={vailadated}
-                                                    />
+                                                    <HTMEditor />
                                                 </div>
                                                 <div className="form-group">
                                                     <div className='field d-flex' style={{ "width": "88.5px" }}>
