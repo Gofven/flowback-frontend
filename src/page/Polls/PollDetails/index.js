@@ -46,7 +46,7 @@ import PollResults from "../PollResults/PollResults";
 // import Metamask from "../../../component/Metamask/metamask";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
-import DisplayMessege from "../../../component/common/DisplayMessege";
+// import DisplayMessege from "../../../component/common/DisplayMessege";
 
 export default function PollDetails() {
     let { groupId } = useParams();
