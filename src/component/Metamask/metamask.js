@@ -113,11 +113,10 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
         getMetamaskAddress(userId).then(userAccount => {
             const user = JSON.parse(window.localStorage.user)
 
-            // const presentableData = data.positive.foreach(data =>
-            //     counterProposals.find(counterProposal =>
-            //         data === counterProposal.id
-            //     )
-            // )
+            data.positive.forEach((hashAndId, i) => {
+                const matchingProposal = counterProposals.find(counterProposal => hashAndId.proposal === counterProposal.id)                
+                // data[i].title = matchingProposal.title
+            });
 
 
 
