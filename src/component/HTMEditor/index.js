@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { formatDate } from '../../utils/common';
 
-export function HTMEditor() {
+export function HTMEditor(id) {
     const [textEditorLoaded, setTextEditorLoaded] = useState(false)
     const [draftTime, setdraftTime] = useState(0)
 
@@ -12,7 +12,7 @@ export function HTMEditor() {
             script.src = "https://htmeditor.com/js/htmeditor.min.js";
             script.setAttribute("htmeditor_textarea", "htmeditor");
             script.setAttribute("full_screen", "no");
-            script.setAttribute("async", true);
+            script.setAttribute("async", false);
             document.body.appendChild(script);
             setTextEditorLoaded(true)
         }
@@ -45,7 +45,6 @@ export function HTMEditor() {
     useEffect(() => {
         const interval = setInterval(function () {
             setdraftTime(getDraftTime())
-            console.log("hiii")
         }, 5000);
 
 
@@ -55,20 +54,15 @@ export function HTMEditor() {
         return (clearInterval(interval))
     })
 
-    return <div>
-        {draftTime}
-        <textarea id="htmeditor" required
+    return <div style={{"margin-top":"1rem"}}>
+        <textarea id={`htmeditor`} required
             maxLength={100000}
             fillEmptyBlocks={false}
             name="description"></textarea></div>
 }
 
 export function getHTML() {
-    return window.localStorage.getItem("/groupdetails/1/pollcreate-htmeditor-draft");
-}
-
-export function getHTMEditorText(input) {
-    return window.localStorage.getItem(`/${input}-htmeditor-draft`);
+    return document.getElementById("htmeditor_ifr").contentDocument.children[0].children[1].innerHTML;
 }
 
 export function getTextBetweenHTMLTags(html) {
