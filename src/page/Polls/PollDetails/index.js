@@ -47,7 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
-import {HTMEditor,getHTML} from '../../../component/HTMEditor'
+import {HTMEditor,getHTML,clearHTML} from '../../../component/HTMEditor'
 import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
@@ -58,7 +58,7 @@ export default function PollDetails() {
     const [counterProposal, setCounterProposal] = useState({});
     const [counterProposalLoading, setCounterProposalLoading] = useState(false);
     const [alreadyPosted, setAlreadyPosted] = useState(false);
-    const [error, setError] = useState("");
+    const [displayedMessege, setDisplayedMessege] = useState({messege:"", color:"black"});
     const [allProposals, setAllProposals] = useState(null);
     const [show, setShow] = useState(false);
     // Get all proposals
@@ -335,28 +335,28 @@ export default function PollDetails() {
         counterProposal.description = getHTML();
 
         if (counterProposal.proposal_title === "") {
-            setError("Proposal needs title");
+            setDisplayedMessege({messege:"Proposal needs title", color:"red"});
             return;
         }
 
         if (counterProposal.proposal_title?.includes("~")) {
-            setError("Character \"~\" is not allowed");
+            setDisplayedMessege({messege:"Character \"~\" is not allowed", color:"red"});
             return;
         }
 
         const maxTitleLength = 75;
         if (poll.type !== "event" && counterProposal.proposal_title?.length > maxTitleLength) {
-            setError(`Not allowed more than ${maxTitleLength} characters in title`);
+            setDisplayedMessege({messege:`Not allowed more than ${maxTitleLength} characters in title`, color:"red"});
             return;
         }
 
         if (existProposalWithSameTitle()) {
-            setError("Proposal with same title already exists");
+            setDisplayedMessege({messege:"Proposal with same title already exists", color:"red"});
             return;
         }
 
         if (poll.type === "event" && existProposalWithSameDate()) {
-            setError("Proposal with same date already exists");
+            setDisplayedMessege({messege:"Proposal with same date already exists", color:"red"});
             return;
         }
 
@@ -388,6 +388,10 @@ export default function PollDetails() {
                 }
                 setCounterProposal({});
                 setCounterProposalLoading(false);
+                setCounterProposal({proposal_title:"", description:"", proposal:""})
+                clearHTML();
+                setDisplayedMessege({messege:"Successfully sent proposal", color:"green"})
+                
 
                 // window.location.reload();
             }).catch((err) => {
@@ -545,7 +549,7 @@ export default function PollDetails() {
                                         </div>
                                         <div className="card-body overflow-hidden">
                                             <form className="form create_poll_form" id="createPollForm">
-                                                <h5 style={{ "color": "red" }}>{error}</h5>
+                                                <h5 style={{ "color": displayedMessege.color }}>{displayedMessege.messege}</h5>
                                                 {poll.type === "event" ? <div className="form-group field">
                                                     <div>
                                                         Meeting Time

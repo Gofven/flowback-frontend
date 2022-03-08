@@ -65,6 +65,10 @@ export function getHTML() {
     return document.getElementById("htmeditor_ifr").contentDocument.children[0].children[1].innerHTML;
 }
 
+export function clearHTML() {
+    return document.getElementById("htmeditor_ifr").contentDocument.children[0].children[1].innerHTML = "";
+}
+
 export function getTextBetweenHTMLTags(html) {
     const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/g
     const s = html?.match(regexBetweenHTMLTags)
