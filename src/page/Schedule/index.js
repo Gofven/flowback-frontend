@@ -89,7 +89,7 @@ export default function Schedule() {
       d.innerHTML = tmp;
 
       polls.forEach((poll) => {
-        const pollDate = new Date(poll.top_proposal.date);
+        const pollDate = new Date(poll.top_proposal?.date);
         if (
           pollDate.getDate() === tmp &&
           pollDate.getMonth() === month &&
@@ -171,7 +171,7 @@ export default function Schedule() {
               pollInList.classList.add("poll-in-list")
               const minutes =
                 pollDate.getMinutes() < 10
-                  ? `${pollDate.getMinutes()}0`
+                  ? `0${pollDate.getMinutes()}`
                   : pollDate.getMinutes();
               pollInList.innerHTML = `
               <div class="poll-titles"><a href=${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title}</a> 
