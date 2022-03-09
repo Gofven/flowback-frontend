@@ -3,6 +3,7 @@ import "./index.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
 import Loader from "../../component/common/Loader";
+import DayPolls from "./DayPolls.js";
 
 export default function Schedule() {
   var months = [
@@ -19,10 +20,10 @@ export default function Schedule() {
     "Nov",
     "Dec",
   ];
-  var startYear = 2020;
-  var endYear = 2030;
+  var startYear = new Date().getFullYear() - 2;
+  var endYear = new Date().getFullYear() + 5;
   const [month, setMonth] = useState(0);
-  var year = 0;
+  const [year, setYear] = useState(0);
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +37,6 @@ export default function Schedule() {
         var selectedMonth = i;
         return function () {
           setMonth(selectedMonth);
-          // document.getElementById("curMonth").innerHTML = months[month];
           loadCalendarDays();
           return month;
         };
@@ -57,8 +57,7 @@ export default function Schedule() {
       doc.onclick = (function () {
         var selectedYear = i;
         return function () {
-          year = selectedYear;
-          document.getElementById("curYear").innerHTML = year;
+          setYear(selectedYear);
           loadCalendarDays();
           return year;
         };
@@ -91,7 +90,11 @@ export default function Schedule() {
 
       polls.forEach((poll) => {
         const pollDate = new Date(poll.top_proposal.date);
-        if (pollDate.getDate() === tmp && pollDate.getMonth() === month) {
+        if (
+          pollDate.getDate() === tmp &&
+          pollDate.getMonth() === month &&
+          pollDate.getFullYear() === year
+        ) {
           d.classList.add("poll");
           const pollTime = document.createElement("div");
           const minutes =
@@ -116,35 +119,30 @@ export default function Schedule() {
   }
 
   useEffect(() => {
-    var date = new Date();
-    setMonth(date.getMonth());
-    year = date.getFullYear();
-    // document.getElementById("curMonth").innerHTML = months[month];
-    document.getElementById("curYear").innerHTML = year;
-
     if (document.getElementById("months").children.length === 0)
       loadCalendarMonths();
     loadCalendarYears();
-    loadCalendarDays();
 
-    // if ((polls.length === 0)) {
-      setLoading(true)
-      getHomePolls().then((homePolls) => {
-        setPolls(homePolls);
-        setLoading(false)
-    });
-    // }
-  }, []);
-
-  useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     getHomePolls().then((homePolls) => {
       setPolls(homePolls);
       loadCalendarDays();
-      setLoading(false)
+      setLoading(false);
+
+      var date = new Date();
+      setMonth(date.getMonth());
+      setYear(date.getFullYear());
     });
-    console.log("HI");
-  }, [month]);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getHomePolls().then((homePolls) => {
+      setPolls(homePolls);
+      loadCalendarDays();
+      setLoading(false);
+    });
+  }, [month, year]);
 
   const handleSelectMonth = () => {
     const months = document.getElementById("months");
@@ -154,10 +152,10 @@ export default function Schedule() {
   };
 
   const handleSelectYear = () => {
-    const months = document.getElementById("years");
-    months.style.display === "none"
-      ? (months.style.display = "inherit")
-      : (months.style.display = "none");
+    const years = document.getElementById("years");
+    years.style.display === "none"
+      ? (years.style.display = "inherit")
+      : (years.style.display = "none");
   };
 
   return (
@@ -174,7 +172,7 @@ export default function Schedule() {
           </div>
 
           <div class="calendar-btn year-btn " onClick={handleSelectYear}>
-            <span id="curYear"></span>
+            <div id="curYear">{year}</div>
             <div
               id="years"
               class="years dropdown"
