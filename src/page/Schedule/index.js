@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./index.css";
 import Layout1 from "../../layout/Layout1";
+import getHomePolls from "./getPolls";
 
 export default function Schedule() {
   var months = [
@@ -64,7 +65,7 @@ export default function Schedule() {
     }
   }
 
-  function loadCalendarDays() {
+  function loadCalendarDays(polls) {
     document.getElementById("calendarDays").innerHTML = "";
 
     var tmpDate = new Date(year, month, 0);
@@ -85,7 +86,19 @@ export default function Schedule() {
       d.className = "day";
       d.innerHTML = tmp;
 
+      polls.forEach(poll => {
+        const pollDate = new Date(poll.top_proposal.date);
+        if (pollDate.getDate() === tmp && pollDate.getMonth() === month ){
+            d.classList.add("poll");
+            const pollTime = document.createElement("div");
+            const minutes = pollDate.getMinutes()<10?`${pollDate.getMinutes()}0` : pollDate.getMinutes() //Otherwise we get single digits such as 23:0 instead of 23:00
+            pollTime.innerHTML = `${pollDate.getHours()}:${minutes}`
+            d.appendChild(pollTime)
+        }
+
+    });
       document.getElementById("calendarDays").appendChild(d);
+
     }
 
     var clear = document.createElement("div");
@@ -106,7 +119,11 @@ export default function Schedule() {
     document.getElementById("curYear").innerHTML = year;
     loadCalendarMonths();
     loadCalendarYears();
-    loadCalendarDays();
+    
+    getHomePolls().then(homePolls => {
+        console.log(homePolls)
+        loadCalendarDays(homePolls);
+    });
   });
 
   const handleSelectMonth = () => {
