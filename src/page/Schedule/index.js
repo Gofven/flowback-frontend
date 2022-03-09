@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
@@ -22,6 +22,7 @@ export default function Schedule() {
   var endYear = 2030;
   var month = 0;
   var year = 0;
+  const [polls, setPolls] = useState([]);
 
   function loadCalendarMonths() {
     for (var i = 0; i < months.length; i++) {
@@ -65,7 +66,7 @@ export default function Schedule() {
     }
   }
 
-  function loadCalendarDays(polls) {
+  function loadCalendarDays() {
     document.getElementById("calendarDays").innerHTML = "";
 
     var tmpDate = new Date(year, month, 0);
@@ -86,19 +87,20 @@ export default function Schedule() {
       d.className = "day";
       d.innerHTML = tmp;
 
-      polls.forEach(poll => {
+      polls.forEach((poll) => {
         const pollDate = new Date(poll.top_proposal.date);
-        if (pollDate.getDate() === tmp && pollDate.getMonth() === month ){
-            d.classList.add("poll");
-            const pollTime = document.createElement("div");
-            const minutes = pollDate.getMinutes()<10?`${pollDate.getMinutes()}0` : pollDate.getMinutes() //Otherwise we get single digits such as 23:0 instead of 23:00
-            pollTime.innerHTML = `${pollDate.getHours()}:${minutes}`
-            d.appendChild(pollTime)
+        if (pollDate.getDate() === tmp && pollDate.getMonth() === month) {
+          d.classList.add("poll");
+          const pollTime = document.createElement("div");
+          const minutes =
+            pollDate.getMinutes() < 10
+              ? `${pollDate.getMinutes()}0`
+              : pollDate.getMinutes(); //Otherwise we get single digits such as 23:0 instead of 23:00
+          pollTime.innerHTML = `${poll.title}${pollDate.getHours()}:${minutes}`;
+          d.appendChild(pollTime);
         }
-
-    });
+      });
       document.getElementById("calendarDays").appendChild(d);
-
     }
 
     var clear = document.createElement("div");
@@ -119,30 +121,33 @@ export default function Schedule() {
     document.getElementById("curYear").innerHTML = year;
     loadCalendarMonths();
     loadCalendarYears();
-    
-    getHomePolls().then(homePolls => {
-        console.log(homePolls)
-        loadCalendarDays(homePolls);
-    });
+    loadCalendarDays();
+
+    if ((polls.length === 0)) {
+      getHomePolls().then((homePolls) => {
+        setPolls(homePolls);
+      });
+    }
   });
 
   const handleSelectMonth = () => {
-      const months = document.getElementById('months');
-    months.style.display === "none" ? months.style.display = "inherit" : months.style.display = "none";
-  }
+    const months = document.getElementById("months");
+    months.style.display === "none"
+      ? (months.style.display = "inherit")
+      : (months.style.display = "none");
+  };
 
   const handleSelectYear = () => {
-      const months = document.getElementById('years');
-    months.style.display === "none" ? months.style.display = "inherit" : months.style.display = "none";
-  }
+    const months = document.getElementById("years");
+    months.style.display === "none"
+      ? (months.style.display = "inherit")
+      : (months.style.display = "none");
+  };
 
   return (
     <Layout1>
       <div class="calendar" id="calendar">
-        <div
-          class="calendar-btn month-btn"
-          onClick={handleSelectMonth}
-        >
+        <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
           <span id="curMonth"></span>
           <div id="months" class="months dropdown"></div>
         </div>
