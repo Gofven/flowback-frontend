@@ -25,7 +25,7 @@ export function ConnectToMetamask() {
             }
             else {
                 setLoading(false)
-                console.warn("ALREADY SIGNED UP!!!!")
+                console.warn("Already Signed Up")
             }
         })
     }
@@ -39,7 +39,7 @@ export function ConnectToMetamask() {
                     setLoading(false)
                     console.warn(e)
                     reject();
-                }) : console.warn("not using metamask"))
+                }) : console.warn("Not using metamask"))
 
     }
 
@@ -58,7 +58,7 @@ export function ConnectToMetamask() {
             .catch((error) => {
                 if (error.code === 4001) {
                     // EIP-1193 userRejectedRequest error
-                    console.log("We can't encrypt anything without the key.");
+                    console.warn("We can't encrypt anything without the key.");
                 } else {
                     console.error(error);
                 }

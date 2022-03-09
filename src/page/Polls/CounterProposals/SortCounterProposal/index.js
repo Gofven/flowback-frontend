@@ -33,6 +33,7 @@ import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
 import {getTextBetweenHTMLTags} from '../../../../component/HTMEditor'
+import { recoverTypedSignature } from '@metamask/eth-sig-util';
 
 const div = styled.div`
   margin: 12px 0;
@@ -292,6 +293,18 @@ function SortCounterProposal(props) {
                             negative: negative_proposal_indexes_2,
                             hash: encryptedSignedData
                         }
+
+
+                        // const recovered = recoverTypedSignature({
+                        //     data:{
+                        //         positive: positive_proposal_indexes_2,
+                        //         negative: negative_proposal_indexes_2
+                        //     },
+                        //     signature:signedData,
+                        //     version:"V4"
+                        // })
+
+
                         sendData(data);
                     });
 

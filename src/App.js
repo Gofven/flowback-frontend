@@ -34,6 +34,7 @@ import GroupForm from "./page/Friends/GroupForm";
 import GroupDetails from "./page/Friends/GroupDetails";
 import PollForm from "./page/Polls/PollForm";
 import PollDetails from "./page/Polls/PollDetails";
+import Validator from "./page/Validator";
 import "react-datepicker/dist/react-datepicker.css";
 // import { io } from "socket.io-client";
 import socketIOClient, { io } from "socket.io-client";
@@ -61,6 +62,7 @@ function App() {
           <PrivateRoute exact path="/groupdetails/:groupId/polldetails/:pollId" component={PollDetails} />
 
           <PublicRoute path="/login" component={Login} />
+          <PublicRoute path="/validator" component={Validator} />
         </Switch>
       </BrowserRouter>
       {  localStorage.getItem('user') &&
