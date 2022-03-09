@@ -128,3 +128,49 @@
 .poll{
     background-color: #1caff6;
 }
+
+.noSelect {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.noSelect:focus {
+    outline: none !important;
+}
+
+.day-poll-list{
+    position:absolute;
+    background-color:white;
+    border-radius:10px;
+    box-shadow: 0rem 0rem 0.6rem rgb(0, 0, 0, 0.1);
+    padding:1rem;
+}
+
+.day-poll-list > div {
+    margin-top:10px;
+}
+
+.day-poll-list > div:first-child {
+    margin-top:0px;
+}
+
+.poll-titles{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.poll-in-list{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.time{
+    font-size:larger;
+
+}

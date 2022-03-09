@@ -672,7 +672,7 @@ export default function PollDetails() {
                                             <Link>
                                                 <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
                                             </Link>
-                                        <div className="col-6">
+                                        <div className="col-6" style={{"width":"100%"}}>
                                             <Link>
                                                 <div onClick={() => setShow(true)}>Reveal Hash</div>
                                             </Link>

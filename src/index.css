@@ -32,7 +32,7 @@ code {
     monospace;
 }
 
-/* Uncomment this in production and when you want to use HTMEditor */
-iframe {
+/* Uncomment this in development and uncomment when you want to use HTMEditor */
+/* iframe {
   display: none !important;
-}
+} */

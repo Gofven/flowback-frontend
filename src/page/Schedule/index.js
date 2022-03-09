@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
+import Loader from "../../component/common/Loader";
+import DayPolls from "./DayPolls.js";
 
 export default function Schedule() {
   var months = [
@@ -18,11 +20,12 @@ export default function Schedule() {
     "Nov",
     "Dec",
   ];
-  var startYear = 2020;
-  var endYear = 2030;
-  var month = 0;
-  var year = 0;
+  var startYear = new Date().getFullYear() - 2;
+  var endYear = new Date().getFullYear() + 5;
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
   const [polls, setPolls] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function loadCalendarMonths() {
     for (var i = 0; i < months.length; i++) {
@@ -33,8 +36,7 @@ export default function Schedule() {
       doc.onclick = (function () {
         var selectedMonth = i;
         return function () {
-          month = selectedMonth;
-          document.getElementById("curMonth").innerHTML = months[month];
+          setMonth(selectedMonth);
           loadCalendarDays();
           return month;
         };
@@ -55,8 +57,7 @@ export default function Schedule() {
       doc.onclick = (function () {
         var selectedYear = i;
         return function () {
-          year = selectedYear;
-          document.getElementById("curYear").innerHTML = year;
+          setYear(selectedYear);
           loadCalendarDays();
           return year;
         };
@@ -88,15 +89,19 @@ export default function Schedule() {
       d.innerHTML = tmp;
 
       polls.forEach((poll) => {
-        const pollDate = new Date(poll.top_proposal.date);
-        if (pollDate.getDate() === tmp && pollDate.getMonth() === month) {
+        const pollDate = new Date(poll.top_proposal?.date);
+        if (
+          pollDate.getDate() === tmp &&
+          pollDate.getMonth() === month &&
+          pollDate.getFullYear() === year
+        ) {
           d.classList.add("poll");
           const pollTime = document.createElement("div");
           const minutes =
             pollDate.getMinutes() < 10
               ? `${pollDate.getMinutes()}0`
               : pollDate.getMinutes(); //Otherwise we get single digits such as 23:0 instead of 23:00
-          pollTime.innerHTML = `${poll.title}${pollDate.getHours()}:${minutes}`;
+          // pollTime.innerHTML = `${poll.title}${pollDate.getHours()}:${minutes}`;
           d.appendChild(pollTime);
         }
       });
@@ -114,21 +119,72 @@ export default function Schedule() {
   }
 
   useEffect(() => {
-    var date = new Date();
-    month = date.getMonth();
-    year = date.getFullYear();
-    document.getElementById("curMonth").innerHTML = months[month];
-    document.getElementById("curYear").innerHTML = year;
-    loadCalendarMonths();
+    if (document.getElementById("months").children.length === 0)
+      loadCalendarMonths();
     loadCalendarYears();
-    loadCalendarDays();
 
-    if ((polls.length === 0)) {
-      getHomePolls().then((homePolls) => {
-        setPolls(homePolls);
-      });
-    }
-  });
+    setLoading(true);
+    getHomePolls().then((homePolls) => {
+      setPolls(homePolls);
+      loadCalendarDays();
+
+      var date = new Date();
+      setMonth(date.getMonth());
+      setYear(date.getFullYear());
+    });
+  }, []);
+
+  //I'm sorry for this mess
+  useEffect(() => {
+    setLoading(true);
+    getHomePolls().then((homePolls) => {
+      setPolls(homePolls);
+      loadCalendarDays();
+      setLoading(false);
+      for (let index = 0; index < 32; index++) {
+        const day = document.getElementById("calendarday_" + index);
+        day?.addEventListener("click", () => {
+          document.getElementById("day-poll-list")?.remove();
+          const dayPollList = document.createElement("div");
+          dayPollList.classList.add("day-poll-list");
+          dayPollList.id = "day-poll-list";
+
+          //Sorts the polls based on which hour they occurr on
+          const sortedByTimePolls = polls.sort(
+            (poll2, poll1) =>
+              new Date(poll2.top_proposal.date).getMinutes() -
+              new Date(poll1.top_proposal.date).getMinutes()
+          ).sort(
+            (poll2, poll1) =>
+              new Date(poll2.top_proposal.date).getHours() -
+              new Date(poll1.top_proposal.date).getHours()
+          );
+
+          sortedByTimePolls.forEach((poll) => {
+            const pollDate = new Date(poll.top_proposal.date);
+            if (
+              pollDate.getDate() === index + 1 &&
+              pollDate.getMonth() === month &&
+              pollDate.getFullYear() === year
+            ) {
+              const pollInList = document.createElement("div");
+              pollInList.classList.add("poll-in-list")
+              const minutes =
+                pollDate.getMinutes() < 10
+                  ? `0${pollDate.getMinutes()}`
+                  : pollDate.getMinutes();
+              pollInList.innerHTML = `
+              <div class="poll-titles"><a href=${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title}</a> 
+              <div><a href=${window.location.origin}/groupdetails/${poll.group.id}>${poll.group.title}</a></div></div>
+              <div class="time">${pollDate.getHours()}:${minutes}</div>`;
+              dayPollList.append(pollInList);
+            }
+          });
+          if (dayPollList.children.length > 0) day.append(dayPollList);
+        });
+      }
+    });
+  }, [month, year]);
 
   const handleSelectMonth = () => {
     const months = document.getElementById("months");
@@ -138,43 +194,53 @@ export default function Schedule() {
   };
 
   const handleSelectYear = () => {
-    const months = document.getElementById("years");
-    months.style.display === "none"
-      ? (months.style.display = "inherit")
-      : (months.style.display = "none");
+    const years = document.getElementById("years");
+    years.style.display === "none"
+      ? (years.style.display = "inherit")
+      : (years.style.display = "none");
   };
 
   return (
     <Layout1>
-      <div class="calendar" id="calendar">
-        <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
-          <span id="curMonth"></span>
-          <div id="months" class="months dropdown"></div>
-        </div>
-
-        <div class="calendar-btn year-btn" onClick={handleSelectYear}>
-          <span id="curYear"></span>
-          <div id="years" class="years dropdown"></div>
-        </div>
-
-        <div class="clear"></div>
-
-        <div class="calendar-dates">
-          <div class="days">
-            <div class="day label">SUN</div>
-            <div class="day label">MON</div>
-            <div class="day label">TUE</div>
-            <div class="day label">WED</div>
-            <div class="day label">THUR</div>
-            <div class="day label">FRI</div>
-            <div class="day label">SAT</div>
-
-            <div class="clear"></div>
+      <Loader loading={loading}>
+        <div class="calendar noSelect" id="calendar">
+          <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
+            <div id="curMonth">{months[month]}</div>
+            <div
+              id="months"
+              class="months dropdown"
+              style={{ display: "none" }}
+            ></div>
           </div>
 
-          <div id="calendarDays" class="days"></div>
+          <div class="calendar-btn year-btn " onClick={handleSelectYear}>
+            <div id="curYear">{year}</div>
+            <div
+              id="years"
+              class="years dropdown"
+              style={{ display: "none" }}
+            ></div>
+          </div>
+
+          <div class="clear"></div>
+
+          <div class="calendar-dates">
+            <div class="days">
+              <div class="day label">SUN</div>
+              <div class="day label">MON</div>
+              <div class="day label">TUE</div>
+              <div class="day label">WED</div>
+              <div class="day label">THUR</div>
+              <div class="day label">FRI</div>
+              <div class="day label">SAT</div>
+
+              <div class="clear"></div>
+            </div>
+
+            <div id="calendarDays" class="days"></div>
+          </div>
         </div>
-      </div>
+      </Loader>
     </Layout1>
   );
 }
