@@ -300,7 +300,6 @@ export default function PollDetails() {
 
     // Set Counter Proposal
     const handleOnChange = (e) => {
-        console.log("Value", e.target.value);
         setCounterProposal({ ...counterProposal, ...inputKeyValue(e) });
     };
 
@@ -391,7 +390,7 @@ export default function PollDetails() {
                 setCounterProposal({proposal_title:"", description:"", proposal:""})
                 clearHTML();
                 setDisplayedMessege({messege:"Successfully sent proposal", color:"green"})
-                
+                window.scrollBy(0,);
 
                 // window.location.reload();
             }).catch((err) => {
@@ -573,15 +572,15 @@ export default function PollDetails() {
                                                             name="proposal_title"
                                                             required
                                                             onChange={handleOnChange}
-                                                            defaultValue={counterProposal.proposal}
-                                                            value={counterProposal.proposal}
+                                                            defaultValue={counterProposal.proposal_title}
+                                                            value={counterProposal.proposal_title}
                                                         // onBlur={vailadated}
                                                         />
                                                     </div>
                                                 </div>}
                                                 <div className="form-group">
                                                     <h2 style={{"margin-top":"1rem"}}>Description</h2>
-                                                    <HTMEditor />
+                                                    {!counterProposalLoading && <HTMEditor />}
                                                 </div>
                                                 <div className="form-group">
                                                     <div className='field d-flex' style={{ "width": "88.5px" }}>
