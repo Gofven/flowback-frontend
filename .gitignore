@@ -126,3 +126,5 @@ package-lock.json
 # webstorm
 .idea
 
+validator-react-app/
+Validator-old/
