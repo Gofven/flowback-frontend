@@ -149,7 +149,12 @@ export default function Schedule() {
           dayPollList.classList.add("day-poll-list");
           dayPollList.id = "day-poll-list";
 
+          //Sorts the polls based on which hour they occurr on
           const sortedByTimePolls = polls.sort(
+            (poll2, poll1) =>
+              new Date(poll2.top_proposal.date).getMinutes() -
+              new Date(poll1.top_proposal.date).getMinutes()
+          ).sort(
             (poll2, poll1) =>
               new Date(poll2.top_proposal.date).getHours() -
               new Date(poll1.top_proposal.date).getHours()
