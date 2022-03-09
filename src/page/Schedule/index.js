@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
+import Loader from "../../component/common/Loader";
 
 export default function Schedule() {
   var months = [
@@ -20,9 +21,10 @@ export default function Schedule() {
   ];
   var startYear = 2020;
   var endYear = 2030;
-  var month = 0;
+  const [month, setMonth] = useState(0);
   var year = 0;
   const [polls, setPolls] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function loadCalendarMonths() {
     for (var i = 0; i < months.length; i++) {
@@ -33,8 +35,8 @@ export default function Schedule() {
       doc.onclick = (function () {
         var selectedMonth = i;
         return function () {
-          month = selectedMonth;
-          document.getElementById("curMonth").innerHTML = months[month];
+          setMonth(selectedMonth);
+          // document.getElementById("curMonth").innerHTML = months[month];
           loadCalendarDays();
           return month;
         };
@@ -115,20 +117,34 @@ export default function Schedule() {
 
   useEffect(() => {
     var date = new Date();
-    month = date.getMonth();
+    setMonth(date.getMonth());
     year = date.getFullYear();
-    document.getElementById("curMonth").innerHTML = months[month];
+    // document.getElementById("curMonth").innerHTML = months[month];
     document.getElementById("curYear").innerHTML = year;
-    loadCalendarMonths();
+
+    if (document.getElementById("months").children.length === 0)
+      loadCalendarMonths();
     loadCalendarYears();
     loadCalendarDays();
 
-    if ((polls.length === 0)) {
+    // if ((polls.length === 0)) {
+      setLoading(true)
       getHomePolls().then((homePolls) => {
         setPolls(homePolls);
-      });
-    }
-  });
+        setLoading(false)
+    });
+    // }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true)
+    getHomePolls().then((homePolls) => {
+      setPolls(homePolls);
+      loadCalendarDays();
+      setLoading(false)
+    });
+    console.log("HI");
+  }, [month]);
 
   const handleSelectMonth = () => {
     const months = document.getElementById("months");
@@ -146,35 +162,45 @@ export default function Schedule() {
 
   return (
     <Layout1>
-      <div class="calendar" id="calendar">
-        <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
-          <span id="curMonth"></span>
-          <div id="months" class="months dropdown"></div>
-        </div>
-
-        <div class="calendar-btn year-btn" onClick={handleSelectYear}>
-          <span id="curYear"></span>
-          <div id="years" class="years dropdown"></div>
-        </div>
-
-        <div class="clear"></div>
-
-        <div class="calendar-dates">
-          <div class="days">
-            <div class="day label">SUN</div>
-            <div class="day label">MON</div>
-            <div class="day label">TUE</div>
-            <div class="day label">WED</div>
-            <div class="day label">THUR</div>
-            <div class="day label">FRI</div>
-            <div class="day label">SAT</div>
-
-            <div class="clear"></div>
+      <Loader loading={loading}>
+        <div class="calendar noSelect" id="calendar">
+          <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
+            <div id="curMonth">{months[month]}</div>
+            <div
+              id="months"
+              class="months dropdown"
+              style={{ display: "none" }}
+            ></div>
           </div>
 
-          <div id="calendarDays" class="days"></div>
+          <div class="calendar-btn year-btn " onClick={handleSelectYear}>
+            <span id="curYear"></span>
+            <div
+              id="years"
+              class="years dropdown"
+              style={{ display: "none" }}
+            ></div>
+          </div>
+
+          <div class="clear"></div>
+
+          <div class="calendar-dates">
+            <div class="days">
+              <div class="day label">SUN</div>
+              <div class="day label">MON</div>
+              <div class="day label">TUE</div>
+              <div class="day label">WED</div>
+              <div class="day label">THUR</div>
+              <div class="day label">FRI</div>
+              <div class="day label">SAT</div>
+
+              <div class="clear"></div>
+            </div>
+
+            <div id="calendarDays" class="days"></div>
+          </div>
         </div>
-      </div>
+      </Loader>
     </Layout1>
   );
 }
