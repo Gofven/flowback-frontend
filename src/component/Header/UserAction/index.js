@@ -24,6 +24,7 @@ import Bookmarks from "../../User/Bookmarks";
 import Profile from "../../User/Profile";
 import Requests from "../../User/Requests";
 import ActionRow from "./ActionRow";
+import Support from "../../Support"
 
 const loggedInData = [
   {
@@ -57,6 +58,11 @@ const loggedInData = [
   //   title: "Settings",
   //   url: "#",
   // },
+  {
+    title: "Support",
+    url: "#",
+    component: (<Support><span>User Profile</span></Support>)
+  },
   {
     title: "Log Out",
     url: "#",
