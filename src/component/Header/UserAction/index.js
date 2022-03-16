@@ -20,7 +20,6 @@
 
 import React from "react";
 import { logOut } from "../../../utils/common";
-import Bookmarks from "../../User/Bookmarks";
 import Profile from "../../User/Profile";
 import Requests from "../../User/Requests";
 import ActionRow from "./ActionRow";
@@ -33,30 +32,9 @@ const loggedInData = [
     component: (<Profile><span>User Profile</span></Profile>)
   },
   // {
-  //   title: "Contacts",
-  //   url: "#",
-  // },
-  // {
-  //   title: "Bookmarks",
-  //   url: "#",
-  //   component: (<Bookmarks><span>Bookmarks</span></Bookmarks>)
-  // },
-  // {
   //   title: "Requests",
   //   url: "#",
   //   component: (<Requests><span>Requests</span></Requests>)
-  // },
-  // {
-  //   title: "Flowback Premium",
-  //   url: "#",
-  // },
-  // {
-  //   title: "Activity Log",
-  //   url: "#",
-  // },
-  // {
-  //   title: "Settings",
-  //   url: "#",
   // },
   {
     title: "Support",
