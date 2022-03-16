@@ -18,7 +18,7 @@ export default function Support() {
             <Modal.Body>
             <div>Support between 12:00 and 17:00 CET</div>
             <div>Number: +46737482562</div>
-            <div>Mail: flowbacksupport@gmail.com</div>
+            <div>Mail: flowbacktask@gmail.com</div>
             </Modal.Body>
             </Modal>
         </>
