@@ -33,6 +33,6 @@ code {
 }
 
 /* Uncomment this in development and uncomment when you want to use HTMEditor */
-/* iframe {
+iframe {
   display: none !important;
-} */
+}

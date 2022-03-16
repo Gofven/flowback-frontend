@@ -137,54 +137,61 @@ export default function Schedule() {
   //I'm sorry for this mess
   useEffect(() => {
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+
     getHomePolls().then((homePolls) => {
       setPolls(homePolls);
       loadCalendarDays();
-      setLoading(false);
-      for (let index = 0; index < 32; index++) {
-        const day = document.getElementById("calendarday_" + index);
-        day?.addEventListener("click", () => {
-          document.getElementById("day-poll-list")?.remove();
-          const dayPollList = document.createElement("div");
-          dayPollList.classList.add("day-poll-list");
-          dayPollList.id = "day-poll-list";
-
-          //Sorts the polls based on which hour they occurr on
-          const sortedByTimePolls = polls.sort(
-            (poll2, poll1) =>
-              new Date(poll2.top_proposal.date).getMinutes() -
-              new Date(poll1.top_proposal.date).getMinutes()
-          ).sort(
-            (poll2, poll1) =>
-              new Date(poll2.top_proposal.date).getHours() -
-              new Date(poll1.top_proposal.date).getHours()
-          );
-
-          sortedByTimePolls.forEach((poll) => {
-            const pollDate = new Date(poll.top_proposal.date);
-            if (
-              pollDate.getDate() === index + 1 &&
-              pollDate.getMonth() === month &&
-              pollDate.getFullYear() === year
-            ) {
-              const pollInList = document.createElement("div");
-              pollInList.classList.add("poll-in-list")
-              const minutes =
-                pollDate.getMinutes() < 10
-                  ? `0${pollDate.getMinutes()}`
-                  : pollDate.getMinutes();
-              pollInList.innerHTML = `
-              <div class="poll-titles"><a href=${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title}</a> 
-              <div><a href=${window.location.origin}/groupdetails/${poll.group.id}>${poll.group.title}</a></div></div>
-              <div class="time">${pollDate.getHours()}:${minutes}</div>`;
-              dayPollList.append(pollInList);
-            }
-          });
-          if (dayPollList.children.length > 0) day.append(dayPollList);
-        });
-      }
+      displayDailyPoll();
     });
   }, [month, year]);
+
+  const displayDailyPoll = () =>{
+    for (let index = 0; index < 32; index++) {
+      const day = document.getElementById("calendarday_" + index);
+      day?.addEventListener("click", () => {
+        document.getElementById("day-poll-list")?.remove();
+        const dayPollList = document.createElement("div");
+        dayPollList.classList.add("day-poll-list");
+        dayPollList.id = "day-poll-list";
+
+        //Sorts the polls based on which hour they occurr on
+        const sortedByTimePolls = polls.sort(
+          (poll2, poll1) =>
+            new Date(poll2.top_proposal.date).getMinutes() -
+            new Date(poll1.top_proposal.date).getMinutes()
+        ).sort(
+          (poll2, poll1) =>
+            new Date(poll2.top_proposal.date).getHours() -
+            new Date(poll1.top_proposal.date).getHours()
+        );
+
+        sortedByTimePolls.forEach((poll) => {
+          const pollDate = new Date(poll.top_proposal.date);
+          if (
+            pollDate.getDate() === index + 1 &&
+            pollDate.getMonth() === month &&
+            pollDate.getFullYear() === year
+          ) {
+            const pollInList = document.createElement("div");
+            pollInList.classList.add("poll-in-list")
+            const minutes =
+              pollDate.getMinutes() < 10
+                ? `0${pollDate.getMinutes()}`
+                : pollDate.getMinutes();
+            pollInList.innerHTML = `
+            <div class="poll-titles"><a href=${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title}</a> 
+            <div><a href=${window.location.origin}/groupdetails/${poll.group.id}>${poll.group.title}</a></div></div>
+            <div class="time">${pollDate.getHours()}:${minutes}</div>`;
+            dayPollList.append(pollInList);
+          }
+        });
+        if (dayPollList.children.length > 0) day.append(dayPollList);
+      });
+    }
+  }
 
   const handleSelectMonth = () => {
     const months = document.getElementById("months");
