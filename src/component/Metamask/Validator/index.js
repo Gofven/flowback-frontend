@@ -1,6 +1,6 @@
 import { recoverTypedSignature} from '@metamask/eth-sig-util'
 import { useState } from 'react';
-import { inputKeyValue } from '../../utils/common';
+import { inputKeyValue } from '../../../utils/common';
 
 export default function Validator () {
     const [validator, setValidator] = useState({data:"", signedData:""})
@@ -14,7 +14,7 @@ export default function Validator () {
         const recovered = recoverTypedSignature({
             data: JSON.stringify({test: validator.data}),
             signature: validator.signedData,
-            version:"V3"
+            version:"V4"
           });
 
           return recovered;

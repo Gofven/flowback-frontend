@@ -34,7 +34,7 @@ import GroupForm from "./page/Friends/GroupForm";
 import GroupDetails from "./page/Friends/GroupDetails";
 import PollForm from "./page/Polls/PollForm";
 import PollDetails from "./page/Polls/PollDetails";
-import Validator from "./page/Validator";
+import Validator from './component/Metamask/Validator'
 import Schedule from "./page/Schedule"
 import "react-datepicker/dist/react-datepicker.css";
 // import { io } from "socket.io-client";

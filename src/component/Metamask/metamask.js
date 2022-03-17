@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Loader from "../common/Loader";
 import { postRequest, getRequest } from "../../utils/API";
-import { encryptSafely } from '@metamask/eth-sig-util';
+import { encryptSafely, recoverTypedSignature } from '@metamask/eth-sig-util';
 import Web3 from 'web3';
 import './metamask.css'
 
@@ -144,21 +144,19 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
 
                 },
                 // Refers to the keys of the *types* object below.
-                primaryType: 'Mail',
+                primaryType: 'Data',
                 types: {
-                    // TODO: Clarify if EIP712Domain refers to the domain the contract is hosted on
                     EIP712Domain: [
                         { name: 'name', type: 'string' },
                         { name: 'version', type: 'string' },
                         { name: 'chainId', type: 'uint256' },
                         { name: 'verifyingContract', type: 'address' },
                     ],
-                    // Not an EIP712Domain definition
                     Group: [
                         { name: 'name', type: 'string' },
                     ],
                     // Refer to PrimaryType
-                    Mail: [
+                    Data: [
                         { name: 'contents', type: 'Polls' },
                     ],
                     Polls: [
@@ -172,13 +170,30 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                 },
             })
 
-            const web3 = new Web3(window.ethereum);
-            web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
-                function (err, results) {
-                    if (err) reject(err);
-                    else resolve(results.result);
-                })
+        const web3 = new Web3(window.ethereum);
+        web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
+            function (err, results) {
+                if (err) reject(err);
+                else {
 
+                const types = {
+                    EIP712Domain: [],
+                    Message: [{ name: 'Data', type: 'Polls' },
+                   ],
+                    };
+
+                const primaryType = 'Data';
+
+                const recovered = recoverTypedSignature({
+                    data: {types, primaryType, domain:{}, message:data},
+                    signature: results.result,
+                    version:"V4"
+                    });
+    
+                console.log(recovered);
+                resolve(results.result);
+                }
+            })
         })
     })
 }
