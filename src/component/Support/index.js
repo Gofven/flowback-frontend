@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Modal } from "react-bootstrap"
 
 export default function Support() {
@@ -6,10 +6,6 @@ export default function Support() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    useEffect(() => {
-        console.log("hi")
-    })
 
     return <>
         <div onClick={handleShow}>Support</div>
@@ -20,6 +16,7 @@ export default function Support() {
             <div>Number: +46737482562</div>
             <div>Mail: flowbacktask@gmail.com</div>
             </Modal.Body>
+            <Modal.Footer><button className="btn btn-danger" onClick={handleClose}>Close</button></Modal.Footer>
             </Modal>
         </>
 }

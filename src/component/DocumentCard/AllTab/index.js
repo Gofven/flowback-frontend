@@ -127,6 +127,10 @@ export default function AllTab(props) {
         );
     }
 
+    const handleCoDocumentCreation = () => {
+        location.href = `https://pad.flowback.org/p/${props.groupId}-${Math.floor(Math.random()*100000000000)}`
+    }
+
     useEffect(() => {
         getDocuments()
         console.log("I'm down here")
@@ -137,15 +141,14 @@ export default function AllTab(props) {
             <SearchFilter setFilter={setFilter} filter={filter} />
             {(!document.doc) ?
                 (
-                    <div className="grupper-card">
-                        < div className=" text-center my-2"  >
+                    <div className="grupper-card row g-2">
+                        < div className=" text-center my-2 noSelect"  >
                             <label htmlFor='document'>
                                 <div>
                                     + Add Document
                                 </div>
                             </label>
                             <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document' onChange={OnDocumentSelect} />
-
                         </div>
                     </div>) :
                 <div className='field d-flex justify-content-between'>
@@ -161,16 +164,23 @@ export default function AllTab(props) {
                     </div>
                 </div>
             }
+            <div className="grupper-card row g-2">
+                < div className="text-center my-2 noSelect">
+                    <div onClick={handleCoDocumentCreation}>
+                        + Create Co-Document
+                    </div>
+                </div>
+            </div>
 
             {
                 documents.map((document, key) => (
                     document.doc_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
-                    <div className="media mb-2" key={key}>
-                        <div class="cursor-pointer">
-                            <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' onClick={() => { viewDocument(document) }} />
+                    <div className="media mb-2" key={key} >
+                        <div class="cursor-pointer" onClick={() => { viewDocument(document) }}>
+                            <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x'  />
                         </div>
-                        <div className="media-body">
-                            <div class="cursor-pointer">
+                        <div className="media-body" >
+                            <div class="cursor-pointer" onClick={() => { viewDocument(document) }}>
                                 <p className="text-turncate mb-0">{document.doc_name}</p>
                             </div>
                             <p className="text-turncate small">Created {formatDate(document.created_at, 'DD/MM/YYYY')}</p>
