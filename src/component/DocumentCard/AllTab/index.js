@@ -128,7 +128,7 @@ export default function AllTab(props) {
     }
 
     const handleCoDocumentCreation = () => {
-        location.href = `https://pad.flowback.org/p/${props.groupId}-${Math.floor(Math.random()*100000000000)}`
+        window.open(`https://pad.flowback.org/p/${props.groupId}-${Math.floor(Math.random()*100000000000)}-${Math.floor(Math.random()*100000000000)}`, "_blank")
     }
 
     useEffect(() => {
