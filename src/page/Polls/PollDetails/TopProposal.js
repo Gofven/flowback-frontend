@@ -21,8 +21,8 @@ export const TopProposal = ({ topProposal }) => {
             <div className="counter-proposal-top">
                 <div className="counter-proposal-title">
                     <h4>{topProposal?.date && topProposal?.title !== "Drop this mission" ? <>
-                        <h4>{topProposal.date.split('T')[0]}</h4>
-                        <h4>{topProposal.date.split('T')[1].split(".")[0].split(":")[0]}:{topProposal.date.split('T')[1].split(".")[0].split(":")[1]}
+                        <h4>{topProposal?.date.split('T')[0]}</h4>
+                        <h4>{topProposal?.date.split('T')[1].split(".")[0].split(":")[0]}:{topProposal?.date.split('T')[1].split(".")[0].split(":")[1]}
                         </h4></> : null}</h4>
                     <h4>{topProposal?.title}</h4>
                 </div>
@@ -36,7 +36,7 @@ export const TopProposal = ({ topProposal }) => {
             </div>
             <div className="font-small mt-2 text-grey top-prosal-creator">
                 <div>Creator: <Profile
-                    id={topProposal.user.id}> {topProposal.user?.first_name} </Profile>
+                    id={topProposal?.user.id}> {topProposal.user?.first_name} </Profile>
                 </div>
             </div>
         </div>

@@ -120,10 +120,10 @@ export default function Schedule() {
 
   useEffect(() => {
     if (document.getElementById("months").children.length === 0)
-      loadCalendarMonths();
+      // loadCalendarMonths();
     loadCalendarYears();
 
-    setLoading(true);
+    // setLoading(true);
     getHomePolls().then((homePolls) => {
       setPolls(homePolls);
       loadCalendarDays();
@@ -136,10 +136,10 @@ export default function Schedule() {
 
   //I'm sorry for this mess
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 4000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 4000);
 
     getHomePolls().then((homePolls) => {
       setPolls(homePolls);
@@ -207,44 +207,56 @@ export default function Schedule() {
       : (years.style.display = "none");
   };
 
+  const handleMonthChange = () => {
+    // setMonth(selectedMonth);
+    // loadCalendarDays();
+  }
+
   return (
     <Layout1>
       <Loader loading={loading}>
-        <div class="calendar noSelect" id="calendar">
-          <div class="calendar-btn month-btn" onClick={handleSelectMonth}>
+        <div className="calendar noSelect" id="calendar">
+          <div className="calendar-btn month-btn" onClick={handleSelectMonth}>
             <div id="curMonth">{months[month]}</div>
             <div
               id="months"
-              class="months dropdown"
-              style={{ display: "none" }}
-            ></div>
+              className="months dropdown"
+              // style={{ display: "none" }}
+            >
+              {months.map((month, i) => {
+                return <div className="dropdown-item" key={month} onClick={() => handleMonthChange}>
+                  {months[i]}
+                </div>
+              })}
+  
+            </div>
           </div>
 
-          <div class="calendar-btn year-btn " onClick={handleSelectYear}>
+          <div className="calendar-btn year-btn " onClick={handleSelectYear}>
             <div id="curYear">{year}</div>
             <div
               id="years"
-              class="years dropdown"
+              className="years dropdown"
               style={{ display: "none" }}
             ></div>
           </div>
 
-          <div class="clear"></div>
+          <div className="clear"></div>
 
-          <div class="calendar-dates">
-            <div class="days">
-              <div class="day label">SUN</div>
-              <div class="day label">MON</div>
-              <div class="day label">TUE</div>
-              <div class="day label">WED</div>
-              <div class="day label">THUR</div>
-              <div class="day label">FRI</div>
-              <div class="day label">SAT</div>
+          <div className="calendar-dates">
+            <div className="days">
+              <div className="day label">SUN</div>
+              <div className="day label">MON</div>
+              <div className="day label">TUE</div>
+              <div className="day label">WED</div>
+              <div className="day label">THUR</div>
+              <div className="day label">FRI</div>
+              <div className="day label">SAT</div>
 
-              <div class="clear"></div>
+              <div className="clear"></div>
             </div>
 
-            <div id="calendarDays" class="days"></div>
+            <div id="calendarDays" className="days"></div>
           </div>
         </div>
       </Loader>
