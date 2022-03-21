@@ -19,14 +19,22 @@
  */
 
 import { MessageBox, ChatItem } from 'react-chat-elements';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTab } from '../../hook/useTab';
 import DirectMessage from './DirectMessage';
 import '../MemberCard/styles.css';
 import GroupChannels from './GroupChannels';
 import './index.css'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Chat(props) {
+
+  const [chatOpen, setChatOpen] = useState(false)
+
+  const handleOpen = () => setChatOpen(true)
+  const handleClose = () => setChatOpen(false)
+
   let {
     tab,
     activeTab,
@@ -59,9 +67,14 @@ export default function Chat(props) {
     }
   };
   return (
-    <div className="feed-card card-rounded mb-4 chat">
+    <div className={`feed-card card-rounded mb-4 chat ${chatOpen ? "" : "chat-closed"}`}>
         <div className='card-header flex-header'>
             <h4 className="card-title">Chat</h4>
+            {chatOpen ? 
+          <FontAwesomeIcon icon={faMinus} className="clickable" onClick={handleClose}/> : 
+          <FontAwesomeIcon icon={faPlus} className="clickable" onClick={handleOpen}/>   
+          }
+            
         </div>
       <div className="card-header flex-header tab-header">
         <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
@@ -85,6 +98,7 @@ export default function Chat(props) {
           {renderTab()}
         </div>
       </div>
-    </div>
+    </div> 
+    
   );
 }
