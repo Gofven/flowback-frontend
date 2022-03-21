@@ -18,7 +18,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-import { MessageBox, ChatItem } from 'react-chat-elements';
+// import { MessageBox, ChatItem } from 'react-chat-elements';
 import React, { useEffect, useState } from 'react';
 import { useTab } from '../../hook/useTab';
 import DirectMessage from './DirectMessage';
