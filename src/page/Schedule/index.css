@@ -127,6 +127,7 @@
             
 .poll{
     background-color: #1caff6;
+    cursor:pointer;
 }
 
 .day-poll-list{

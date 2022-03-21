@@ -155,7 +155,7 @@ function ProposalBox(props) {
                             newInput[props.task.id] = parseInt(e.target.value);
                         }
                         props.setCardinalState([...newInput]);
-                        props.saveCardinal()
+                        
                     }}>
                 </input>
                 }
@@ -240,6 +240,12 @@ function SortCounterProposal(props) {
      * To save proposal positions provided by a user
      */
     const saveIndexies = () => {
+
+        if (props.votingType === "cardinal") {
+            saveCardinal();
+            return;
+        }
+
         const newPoints = calculatePoints();
         console.log('points on save', newPoints);
         const ppi = {};
