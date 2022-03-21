@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Loader from "../common/Loader";
 import { postRequest, getRequest } from "../../utils/API";
 import { encryptSafely, recoverTypedSignature } from '@metamask/eth-sig-util';
+import ethUtil from 'ethereumjs-util'
 import Web3 from 'web3';
 import './metamask.css'
 
@@ -113,10 +114,10 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
         getMetamaskAddress(userId).then(userAccount => {
             const user = JSON.parse(window.localStorage.user)
 
-            data.positive.forEach((hashAndId, i) => {
-                const matchingProposal = counterProposals.find(counterProposal => hashAndId.proposal === counterProposal.id);                
-                // data[i].title = matchingProposal.title;
-            });
+            // data.positive.forEach((hashAndId, i) => {
+            //     const matchingProposal = counterProposals.find(counterProposal => hashAndId.proposal === counterProposal.id);                
+            //     // data[i].title = matchingProposal.title;
+            // });
 
             console.log(data)
 
@@ -165,7 +166,7 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                     ],
                     Poll: [
                         { name: 'proposal', type: "uint256" },
-
+                        {name: "hash", type: "string"}
                     ]
                 },
             })
@@ -182,15 +183,15 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                    ],
                     };
 
-                const primaryType = 'Data';
+                // const primaryType = 'Data';
 
-                const recovered = recoverTypedSignature({
-                    data: {types, primaryType, domain:{}, message:data},
-                    signature: results.result,
-                    version:"V4"
-                    });
+                // const recovered = recoverTypedSignature({
+                //     data: {types, primaryType, domain:{}, message:data},
+                //     signature: results.result,
+                //     version:"V4"
+                //     });
     
-                console.log(recovered);
+                // console.log(recovered);
                 resolve(results.result);
                 }
             })

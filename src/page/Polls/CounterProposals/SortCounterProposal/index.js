@@ -282,6 +282,8 @@ function SortCounterProposal(props) {
                 });
 
 
+                
+                
                 signData({
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
@@ -292,7 +294,8 @@ function SortCounterProposal(props) {
                             negative: negative_proposal_indexes_2,
                             hash: encryptedSignedData
                         }
-
+                        
+                        sendData(data);
 
                         // const recovered = recoverTypedSignature({
                         //     data:{
@@ -304,7 +307,6 @@ function SortCounterProposal(props) {
                         // })
 
 
-                        sendData(data);
                     });
 
 

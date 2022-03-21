@@ -662,6 +662,9 @@ export default function PollDetails() {
                                     <Modal.Body><div className="hash-modal">
                                         {poll.result_hash}</div>
                                     </Modal.Body>
+                                    <Modal.Footer>
+                                        <button className="btn btn-danger" onClick={handleClose}>Close</button>
+                                    </Modal.Footer>
                                 </Modal>
                
                                     <h4 className="card-title fw-bolder">Download poll data and hash</h4>
@@ -670,11 +673,11 @@ export default function PollDetails() {
                                     <div className="row">
                                         <div className="col-6">
                                             <Link>
-                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Download file</div>
+                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Reveal Results JSON object</div>
                                             </Link>
                                         <div className="col-6" style={{"width":"100%"}}>
                                             <Link>
-                                                <div onClick={() => setShow(true)}>Reveal Hash</div>
+                                                <div onClick={() => setShow(true)}>Reveal Result Hash</div>
                                             </Link>
                                             </div>
                                         </div>
