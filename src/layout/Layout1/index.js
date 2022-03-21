@@ -20,10 +20,13 @@
 
 import React from "react";
 import Header from "../../component/Header";
+import Chat from '../../component/Chat'
+
 export default function Layout1({ children }) {
   return (
     <div>
       <Header />
+      <Chat/>
       {children}
     </div>
   );

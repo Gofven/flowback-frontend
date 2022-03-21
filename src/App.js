@@ -67,9 +67,9 @@ function App() {
           <PublicRoute path="/validator" component={Validator} />
         </Switch>
       </BrowserRouter>
-      {  localStorage.getItem('user') &&
+      {/* {  localStorage.getItem('user') &&
         <Chat />
-      }
+      } */}
     </>
   );
 }
