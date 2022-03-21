@@ -39,7 +39,7 @@ export default function Chat(props) {
     tab,
     activeTab,
     bind: handleOnClick,
-  } = useTab(['Private Messages', 'Group Channels']);
+  } = useTab(['Private Messages', 'Group Chats']);
 
   const userType = props.userType;
 
