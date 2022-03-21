@@ -51,7 +51,6 @@ export default function AllTab(props) {
      * To add document
      */
     const AddDocument = () => {
-        console.log("I am sure")
         setLoading(true)
         var data = new FormData();
         Object.keys(document).forEach((key) => {

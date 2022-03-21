@@ -48,6 +48,7 @@ import Image from "../../../component/common/Image";
 import UserGroup, { getGroupDetails } from "../../../apis/UserGroup";
 import AboutCard from "../../../component/AboutCard";
 import GroupStatsCard from "../../../component/GroupStatsCard";
+import Chat from "../../../component/Chat";
 const { REACT_APP_JITSI } = process.env;
 
 export default function GroupDetails() {
@@ -187,6 +188,7 @@ export default function GroupDetails() {
             <section className="home-dashboard">
                 <div className="container-xl">
                     <div className="row justify-content-end">
+                        {/* <div className="col-md-3"><Chat/></div> */}
                         <div className="col-md-6">
                             {renderTab()}
                         </div>

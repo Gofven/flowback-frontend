@@ -1,0 +1,17 @@
+.chat{
+    position:fixed;
+    bottom:50%;
+    left:0;
+    z-index:999999999 !important;
+    margin-bottom: 0 !important;
+    transition:left 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    width:80%;
+}
+
+.chat-closed{
+    left:-70%;
+}
+
+.clickable{
+    cursor: pointer;
+}

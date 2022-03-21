@@ -155,7 +155,7 @@ function ProposalBox(props) {
                             newInput[props.task.id] = parseInt(e.target.value);
                         }
                         props.setCardinalState([...newInput]);
-                        props.saveCardinal()
+                        
                     }}>
                 </input>
                 }
@@ -240,6 +240,12 @@ function SortCounterProposal(props) {
      * To save proposal positions provided by a user
      */
     const saveIndexies = () => {
+
+        if (props.votingType === "cardinal") {
+            saveCardinal();
+            return;
+        }
+
         const newPoints = calculatePoints();
         console.log('points on save', newPoints);
         const ppi = {};
@@ -282,6 +288,8 @@ function SortCounterProposal(props) {
                 });
 
 
+                
+                
                 signData({
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
@@ -292,7 +300,8 @@ function SortCounterProposal(props) {
                             negative: negative_proposal_indexes_2,
                             hash: encryptedSignedData
                         }
-
+                        
+                        sendData(data);
 
                         // const recovered = recoverTypedSignature({
                         //     data:{
@@ -304,7 +313,6 @@ function SortCounterProposal(props) {
                         // })
 
 
-                        sendData(data);
                     });
 
 
