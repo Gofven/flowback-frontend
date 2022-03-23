@@ -178,6 +178,7 @@ export default function PollForm() {
     // Update Poll Details.
     const updatePollDetails = () => {
         const pollDetails = JSON.parse(JSON.stringify(pollDetail));
+        pollDetails.description = getHTML();
         pollDetails.tags = tag.join(" ");
         var data = {
             poll: pollId,

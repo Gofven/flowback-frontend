@@ -28,6 +28,14 @@ export default function Validator() {
         privateKey: validator.privateKey
       })
       
+    // const decryptedMessege = decryptSafely({ 
+    //   encryptedData: validator.data, 
+    //   privateKey: validator.privateKey, 
+    //   version:"x25519-xsalsa20-poly1305"
+    // }); 
+    
+    // expect(decryptedMessege).toBe(validator.data); 
+     
     console.log('The decrypted message is:', decryptedMessege)
 
 
