@@ -20,54 +20,36 @@ export default function Schedule() {
     "Nov",
     "Dec",
   ];
-  var startYear = new Date().getFullYear() - 2;
-  var endYear = new Date().getFullYear() + 5;
+  const startYear = new Date().getFullYear() - 2;
+  const endYear = new Date().getFullYear() + 5;
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState(0);
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  function loadCalendarMonths() {
-    for (var i = 0; i < months.length; i++) {
-      var doc = document.createElement("div");
-      doc.innerHTML = months[i];
-      doc.classList.add("dropdown-item");
-
-      doc.onclick = (function () {
-        var selectedMonth = i;
-        return function () {
-          setMonth(selectedMonth);
-          loadCalendarDays();
-          return month;
-        };
-      })();
-
-      document.getElementById("months").appendChild(doc);
+  const YearList = () => {
+    let years = []
+    for (let i = 0; i < endYear - startYear; i++) {
+      years[i] = <div className="dropdown-item" key={i} id={i} onClick={handleYearChange}>
+      {startYear + i}
+    </div>
     }
+    return years;
   }
 
-  function loadCalendarYears() {
-    document.getElementById("years").innerHTML = "";
+  function LoadCalendarDays() {
 
-    for (var i = startYear; i <= endYear; i++) {
-      var doc = document.createElement("div");
-      doc.innerHTML = i;
-      doc.classList.add("dropdown-item");
+    const tmpDate = new Date(year, month, 0);
+    const num = daysInMonth(month, year);
+    const dayofweek = tmpDate.getDay()
 
-      doc.onclick = (function () {
-        var selectedYear = i;
-        return function () {
-          setYear(selectedYear);
-          loadCalendarDays();
-          return year;
-        };
-      })();
+    return <div>
+        {}
+      </div>
 
-      document.getElementById("years").appendChild(doc);
-    }
   }
-
-  function loadCalendarDays() {
+  function loadCalendarDays() {}
+  function loadCalendarDays2() {
     document.getElementById("calendarDays").innerHTML = "";
 
     var tmpDate = new Date(year, month, 0);
@@ -120,9 +102,7 @@ export default function Schedule() {
 
   useEffect(() => {
     if (document.getElementById("months").children.length === 0)
-      // loadCalendarMonths();
-    loadCalendarYears();
-
+    
     // setLoading(true);
     getHomePolls().then((homePolls) => {
       setPolls(homePolls);
@@ -134,7 +114,6 @@ export default function Schedule() {
     });
   }, []);
 
-  //I'm sorry for this mess
   useEffect(() => {
     // setLoading(true);
     // setTimeout(() => {
@@ -147,7 +126,8 @@ export default function Schedule() {
       displayDailyPoll();
     });
   }, [month, year]);
-
+  
+  //I'm sorry for this mess
   const displayDailyPoll = () =>{
     for (let index = 0; index < 32; index++) {
       const day = document.getElementById("calendarday_" + index);
@@ -207,9 +187,14 @@ export default function Schedule() {
       : (years.style.display = "none");
   };
 
-  const handleMonthChange = () => {
-    // setMonth(selectedMonth);
-    // loadCalendarDays();
+  const handleMonthChange = (e) => {
+    setMonth(e.target.id);
+    loadCalendarDays();
+  }
+
+  const handleYearChange = (e) => {
+    setYear(startYear + parseInt(e.target.id));
+    loadCalendarDays();
   }
 
   return (
@@ -224,7 +209,7 @@ export default function Schedule() {
               // style={{ display: "none" }}
             >
               {months.map((month, i) => {
-                return <div className="dropdown-item" key={month} onClick={() => handleMonthChange}>
+                return <div className="dropdown-item" key={month} id={i} onClick={handleMonthChange}>
                   {months[i]}
                 </div>
               })}
@@ -238,7 +223,10 @@ export default function Schedule() {
               id="years"
               className="years dropdown"
               style={{ display: "none" }}
-            ></div>
+            >
+              {YearList().map(year => year)}
+
+            </div>
           </div>
 
           <div className="clear"></div>
@@ -256,7 +244,9 @@ export default function Schedule() {
               <div className="clear"></div>
             </div>
 
-            <div id="calendarDays" className="days"></div>
+            <div id="calendarDays" className="days">
+              <LoadCalendarDays/>
+            </div>
           </div>
         </div>
       </Loader>
