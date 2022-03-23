@@ -19,20 +19,20 @@
 */
 
 import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import GroupsRow from "./GroupsRow";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
+const groupList = [
+  { img: "", title: "A", status: "-", url: "#" },
+  { img: "", title: "B", status: "-", url: "#" },
+  { img: "", title: "C", status: "-", url: "#" },
+];
 
+export default function MyGroupsTab() {
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
+    <div className="tab-pane fade show active" id="myGroupsTab">
+      {groupList?.map((item, index) => (
+        <GroupsRow key={index} {...item} />
+      ))}
+    </div>
   );
 }

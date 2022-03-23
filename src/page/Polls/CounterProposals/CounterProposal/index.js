@@ -19,10 +19,10 @@
 */
 
 import React, { useState } from "react";
-import Image from '../../../../component/common/Image';
+import Image from '../../../../component/common/Image/Image';
 import CommentBox from '../../../../component/FeedCard/AllTab/CommentBox';
 import PostComment from '../../../../component/FeedCard/AllTab/Post/PostComment';
-import Profile from '../../../../component/User/Profile';
+import Profile from '../../../../component/User/Profile/Profile';
 import { formatDate } from '../../../../utils/common';
 import './styles.css';
 

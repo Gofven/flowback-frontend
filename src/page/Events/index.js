@@ -21,7 +21,7 @@
 import React from "react";
 import "./events.css";
 import Layout1 from "../../layout/Layout1";
-import GroupChat from "../../component/GroupChat";
+import GroupChat from "../../component/GroupChat/GroupChat";
 
 export default function Events() {
   return (

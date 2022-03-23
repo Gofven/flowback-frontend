@@ -19,8 +19,8 @@
 */
 
 import React from "react";
-import Header from "../../component/Header";
-import Chat from '../../component/Chat'
+import Header from "../../component/Header/Header";
+import Chat from '../../component/Chat/Chat'
 
 export default function Layout1({ children }) {
   return (

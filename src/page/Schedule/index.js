@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
-import Loader from "../../component/common/Loader";
+import Loader from "../../component/common/Loader/Loader";
 import DayPolls from "./DayPolls.js";
 
 export default function Schedule() {

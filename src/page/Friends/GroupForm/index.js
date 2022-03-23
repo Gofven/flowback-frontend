@@ -22,16 +22,16 @@ import React, { useEffect, useState } from 'react';
 import "./styles.css";
 import TagsInput from 'react-tagsinput';
 import { useHistory, useParams } from "react-router-dom";
-import GroupChat from '../../../component/GroupChat';
+import GroupChat from '../../../component/GroupChat/GroupChat';
 import Layout1 from '../../../layout/Layout1';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { Textbox, Textarea, Radiobox, Button, Label } from "../../../component/common";
 import { inputKeyValue } from "../../../utils/common";
 import { postRequest } from '../../../utils/API';
-import Image from '../../../component/common/Image';
+import Image from '../../../component/common/Image/Image';
 import { Form } from 'react-bootstrap';
-import Loader from '../../../component/common/Loader';
+import Loader from '../../../component/common/Loader/Loader';
 
 
 export default function GroupForm(props) {

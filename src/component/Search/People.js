@@ -18,21 +18,34 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import React from 'react'
+import Image from "../common/Image/Image";
+import Profile from "../User/Profile/Profile";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
+export default function People(props) {
+  const people = props.people;
 
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
-  );
+    <>
+      {people?.map((person, index) => (
+        <div className="media contact-view" key={person.id}>
+          <Image src={person.image} />
+          <div className="media-body">
+
+            <h6 className="contact-name">
+
+            <Profile id={person.id} className='cursor-pointer'>{person.first_name || "Test"} {person.last_name}</Profile>
+
+            </h6>
+            <p className="contact-location">
+              
+              {person.city && person.city.city_name} {person.country && person.country.country_name}
+            </p>
+          </div>
+        </div>
+
+      ))
+      }
+    </>
+  )
 }

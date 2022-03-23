@@ -21,9 +21,9 @@
 import React from "react";
 import "./search.css";
 import Layout1 from "../../layout/Layout1";
-import GroupChat from "../../component/GroupChat";
-import Footer from "../../component/Footer";
-import Search from "../../component/Search";
+import GroupChat from "../../component/GroupChat/GroupChat";
+import Footer from "../../component/Footer/Footer";
+import Search from "../../component/Search/Search";
 
 export default function SearchPage() {
   return (

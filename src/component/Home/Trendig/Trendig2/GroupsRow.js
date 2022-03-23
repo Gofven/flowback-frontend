@@ -19,20 +19,16 @@
 */
 
 import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import Image from "../../../common/Image/Image";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
-
+export default function GroupsRow({ url, img, title, status }) {
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
+    <a href={url} className="media groups-row">
+      <Image src={img} className="groups-img" errImg={'/img/no-photo.jpg'} />
+      <div className="media-body">
+        <h6 className="groups-title text-truncate">{title}</h6>
+        <p className="groups-status text-truncate">{status}</p>
+      </div>
+    </a>
   );
 }

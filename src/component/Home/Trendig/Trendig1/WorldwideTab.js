@@ -19,20 +19,22 @@
 */
 
 import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import HashtagRow from "../HashtagRow/HashtagRow";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
+const hashtagList = [
+  { rank: 1, name: "#Flowback" },
+  { rank: 1, name: "#Liquiddemocrcy" },
+  { rank: 1, name: "#Globalwarming" },
+  { rank: 1, name: "#Blacklivesmatter" },
+  { rank: 5, name: "#Plantmoretrees" },
+];
 
+export default function WorldwideTab() {
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
+    <div className="tab-pane fade show active" id="WorldwideTab">
+      {hashtagList?.map((hashtag, index) => (
+        <HashtagRow key={index} {...hashtag} />
+      ))}
+    </div>
   );
 }

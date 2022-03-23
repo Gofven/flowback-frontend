@@ -19,8 +19,8 @@
 */
 
 import React, { useState } from "react";
-import LoginCard from "../../component/LoginCard";
-import SignUp from "../../component/SignUp";
+import LoginCard from "../../component/LoginCard/LoginCard";
+import SignUp from "../../component/SignUp/SignUp";
 import ResetPassword from "../../component/LoginCard/ResetPassword";
 import { useTab } from "../../hook/useTab";
 import "./styles.css";

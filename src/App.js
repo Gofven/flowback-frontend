@@ -34,13 +34,13 @@ import GroupForm from "./page/Friends/GroupForm";
 import GroupDetails from "./page/Friends/GroupDetails";
 import PollForm from "./page/Polls/PollForm";
 import PollDetails from "./page/Polls/PollDetails";
-import Validator from './component/Metamask/Validator'
+import Validator from './component/Metamask/Validator/Validator'
 import Schedule from "./page/Schedule"
 import "react-datepicker/dist/react-datepicker.css";
 // import { io } from "socket.io-client";
 import socketIOClient, { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import Chat from "./component/Chat";
+import Chat from "./component/Chat/Chat";
 const { REACT_APP_PROXY } = process.env;
 
 function App() {

@@ -18,21 +18,32 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import React from 'react'
+import Image from '../common/Image/Image'
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
+export default function Groups(props) {
+    return (
+        <>
+            {props.groups?.map((group) => (
+                <div key={group.id}>
+                    <a href={`/groupdetails/${group.id}`} className="media groups-row">
+                        <Image src={group.image} className="groups-img" />
+                        <div className="media-body">
+                        
+                            <h6 className="groups-title text-truncate">{group.title}</h6>
+                            
+                            {
+                                group.user_type &&
+                                <h6 className="groups-title text-truncate">{group.user_type}</h6>
+                            }
+                        </div>
+                    </a>
 
-  return (
-    <Layout1>
-      <Home />
-    </Layout1>
-  );
+                </div>
+
+            ))
+            }
+        </>
+
+    )
 }

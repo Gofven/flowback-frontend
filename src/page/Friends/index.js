@@ -21,12 +21,12 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import Layout1 from "../../layout/Layout1";
-import GroupChat from "../../component/GroupChat";
+import GroupChat from "../../component/GroupChat/GroupChat";
 import { Link } from "react-router-dom";
 import { postRequest } from "../../utils/API";
-import Image from "../../component/common/Image";
+import Image from "../../component/common/Image/Image";
 import { Form } from "react-bootstrap";
-import { SearchFilter, DropDownFilterGroup } from '../../component/common/Filter/'
+import { SearchFilter, DropDownFilterGroup } from '../../component/common/Filter/Filter'
 import GroupButtons from "./GroupForm/GroupButtons";
 
 export default function Friends() {

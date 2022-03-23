@@ -19,20 +19,20 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import Loader from '../../../../component/common/Loader';
+import Loader from '../../../../component/common/Loader/Loader';
 import './styles.css';
 import styled from 'styled-components';
 import { postRequest } from '../../../../utils/API';
-import Image from '../../../../component/common/Image';
+import Image from '../../../../component/common/Image/Image';
 import { formatDate } from '../../../../utils/common';
-import Profile from '../../../../component/User/Profile';
+import Profile from '../../../../component/User/Profile/Profile';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
-import {getTextBetweenHTMLTags} from '../../../../component/HTMEditor'
+import {getTextBetweenHTMLTags} from '../../../../component/HTMEditor/HTMEditor'
 import { recoverTypedSignature } from '@metamask/eth-sig-util';
 
 const div = styled.div`

@@ -40,15 +40,15 @@ import {
     faChartPie
 } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
-import FeedCard from "../../../component/FeedCard";
-import DocumentCard from "../../../component/DocumentCard";
-import MemberCard from "../../../component/MemberCard";
-import EmailCard from "../../../component/EmailCard";
-import Image from "../../../component/common/Image";
+import FeedCard from "../../../component/FeedCard/FeedCard";
+import DocumentCard from "../../../component/DocumentCard/DocumentCard";
+import MemberCard from "../../../component/MemberCard/MemberCard";
+import EmailCard from "../../../component/EmailCard/EmailCard";
+import Image from "../../../component/common/Image/Image";
 import UserGroup, { getGroupDetails } from "../../../apis/UserGroup";
-import AboutCard from "../../../component/AboutCard";
-import GroupStatsCard from "../../../component/GroupStatsCard";
-import Chat from "../../../component/Chat";
+import AboutCard from "../../../component/AboutCard/AboutCard";
+import GroupStatsCard from "../../../component/GroupStatsCard/GroupStatsCard";
+import Chat from "../../../component/Chat/Chat";
 const { REACT_APP_JITSI } = process.env;
 
 export default function GroupDetails() {

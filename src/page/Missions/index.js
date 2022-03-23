@@ -19,10 +19,10 @@
 */
 
 import React from "react";
-import FeedCard from "../../component/FeedCard";
+import FeedCard from "../../component/FeedCard/FeedCard";
 import Layout1 from "../../layout/Layout1";
-import GroupChat from "../../component/GroupChat";
-import Trendig1 from "../../component/Home/Trendig/Trendig1";
+import GroupChat from "../../component/GroupChat/GroupChat";
+import Trendig1 from "../../component/Home/Trendig/Trendig1/Trending1";
 import Trendig2 from "../../component/Home/Trendig/Trendig2";
 
 export default function Missions() {

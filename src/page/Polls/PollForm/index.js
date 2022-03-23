@@ -22,7 +22,7 @@ import React, { useState, useEffect } from 'react';
 import "./styles.css";
 import TagsInput from 'react-tagsinput';
 import { useHistory, useParams } from "react-router-dom";
-import GroupChat from '../../../component/GroupChat';
+import GroupChat from '../../../component/GroupChat/GroupChat';
 import Layout1 from '../../../layout/Layout1';
 import { Textbox, Textarea, Button, Label } from "../../../component/common";
 import { formatDate, inputKeyValue } from "../../../utils/common";
@@ -33,7 +33,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from "react-datepicker";
 import { Form } from 'react-bootstrap';
 import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { HTMEditor, getHTML, getDraftTime } from '../../../component/HTMEditor'
+import { HTMEditor, getHTML, getDraftTime } from '../../../component/HTMEditor/HTMEditor'
 
 export default function PollForm() {
 

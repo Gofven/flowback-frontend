@@ -19,20 +19,41 @@
 */
 
 import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import NotifiactionRow from "./NotificationRow";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
+const data = [
+  {
+    img: "/img/no-photo.jpg",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+  {
+    img: "/img/avtar1.png",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+  {
+    img: "/img/avtar1.png",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+];
 
+export default function Notifiaction() {
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
+    <ul
+      className="dropdown-menu"
+      id="notificationDropdown"
+      aria-labelledby="notificationDrop"
+    >
+      <li className="dropdown-item">
+        {data?.map((item, index) => (
+          <NotifiactionRow {...item} key={index} />
+        ))}
+      </li>
+    </ul>
   );
 }

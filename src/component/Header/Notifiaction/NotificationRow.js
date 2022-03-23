@@ -19,20 +19,32 @@
 */
 
 import React from "react";
-import ChatPopup from "../../component/ChatPopup/ChatPopup";
-import Home from "../../component/Home/Home";
-import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
-import Layout1 from "../../layout/Layout1";
+import Image from "../../common/Image/Image";
 
-export default function HomePage() {
-  
-  document.addEventListener('scroll', () => {
-    document.documentElement.dataset.scroll = window.scrollY;
-  });
-
+export default function NotifiactionRow({
+  img = "/img/no-photo.jpg",
+  username = "Lorem ipsum",
+  message = "dolor sit amet, consectetur adipisicing elit",
+  duration = "1d ago",
+}) {
   return (
-    <Layout1>
-      <Home />
-    </Layout1>
+
+    <div className="notification-list-row row mx-auto">
+      <div className="col-2 px-0">
+        <Image src={img} className="notification-list-img img-fluid" errImg={'/img/no-photo.jpg'} />
+      </div>
+      <div className="col-10 px-2 notification-list-content">
+        <p>
+          <b>{username}</b> {message}.
+        </p>
+        <div className="notification-time">{duration}</div>
+        <a href="#" className="accept-btn">
+          Accepted <i className="las la-check"></i>
+        </a>
+        <a href="#" className="decline-btn">
+          Decline <i className="las la-times"></i>
+        </a>
+      </div>
+    </div>
   );
 }

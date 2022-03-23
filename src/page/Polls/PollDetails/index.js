@@ -21,7 +21,7 @@
 import React, { useState, useEffect, useRef, createRef } from "react";
 import "./styles.css";
 import Layout1 from "../../../layout/Layout1";
-import GroupChat from "../../../component/GroupChat";
+import GroupChat from "../../../component/GroupChat/GroupChat";
 import { Link, useParams } from "react-router-dom";
 import { getRequest, postRequest } from "../../../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,11 +35,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { FormatComments, formatDate, inputKeyValue } from "../../../utils/common";
-import Post from "../../../component/FeedCard/AllTab/Post";
+import Post from "../../../component/FeedCard/AllTab/Post/Post";
 import UserGroup from "../../../apis/UserGroup";
 import { Button, Textbox } from "../../../component/common";
 import Counterproposals from "../CounterProposals";
-import Loader from "../../../component/common/Loader";
+import Loader from "../../../component/common/Loader/Loader";
 import { UserTypes } from "../../../constants/constants";
 import DatePicker from "react-datepicker";
 import PollResults from "../PollResults/PollResults";
@@ -47,7 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
-import {HTMEditor,getHTML,clearHTML} from '../../../component/HTMEditor'
+import {HTMEditor,getHTML,clearHTML} from '../../../component/HTMEditor/HTMEditor'
 import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
