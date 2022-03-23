@@ -9,7 +9,8 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
     // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
 
     const plainTextDescription = getTextBetweenHTMLTags(proposalDescription);
-    const shortDescription = plainTextDescription?.length > descriptionMaxChars ? plainTextDescription?.substring(0, descriptionMaxChars - 1) + "..." : plainTextDescription;
+    // const shortDescription = plainTextDescription?.length > descriptionMaxChars ? plainTextDescription?.substring(0, descriptionMaxChars - 1) + "..." : plainTextDescription;
+    const shortDescription = plainTextDescription?.length > descriptionMaxChars ? "..." : ""
 
     useEffect(() => {
         const descriptions = document.getElementsByClassName(`description${proposal.id}`)
