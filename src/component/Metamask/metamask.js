@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Loader from "../common/Loader";
+import Loader from "../common/Loader/Loader";
 import { postRequest, getRequest } from "../../utils/API";
 import { encryptSafely, recoverTypedSignature } from '@metamask/eth-sig-util';
 import ethUtil from 'ethereumjs-util'

@@ -18,10 +18,32 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from 'react'
+import Image from '../common/Image/Image'
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function Groups(props) {
+    return (
+        <>
+            {props.groups?.map((group) => (
+                <div key={group.id}>
+                    <a href={`/groupdetails/${group.id}`} className="media groups-row">
+                        <Image src={group.image} className="groups-img" />
+                        <div className="media-body">
+                        
+                            <h6 className="groups-title text-truncate">{group.title}</h6>
+                            
+                            {
+                                group.user_type &&
+                                <h6 className="groups-title text-truncate">{group.user_type}</h6>
+                            }
+                        </div>
+                    </a>
+
+                </div>
+
+            ))
+            }
+        </>
+
+    )
+}

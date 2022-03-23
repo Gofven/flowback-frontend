@@ -18,10 +18,42 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import NotifiactionRow from "./NotificationRow";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+const data = [
+  {
+    img: "/img/no-photo.jpg",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+  {
+    img: "/img/avtar1.png",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+  {
+    img: "/img/avtar1.png",
+    username: "Lorem ipsum",
+    message: "dolor sit amet, consectetur adipisicing elit",
+    duration: "1d ago",
+  },
+];
+
+export default function Notifiaction() {
+  return (
+    <ul
+      className="dropdown-menu"
+      id="notificationDropdown"
+      aria-labelledby="notificationDrop"
+    >
+      <li className="dropdown-item">
+        {data?.map((item, index) => (
+          <NotifiactionRow {...item} key={index} />
+        ))}
+      </li>
+    </ul>
+  );
+}
