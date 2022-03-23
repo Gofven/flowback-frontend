@@ -37,7 +37,19 @@ export default function Schedule() {
     return years;
   }
 
-  function loadCalendarDays() {
+  function LoadCalendarDays() {
+
+    const tmpDate = new Date(year, month, 0);
+    const num = daysInMonth(month, year);
+    const dayofweek = tmpDate.getDay()
+
+    return <div>
+        {}
+      </div>
+
+  }
+  function loadCalendarDays() {}
+  function loadCalendarDays2() {
     document.getElementById("calendarDays").innerHTML = "";
 
     var tmpDate = new Date(year, month, 0);
@@ -102,7 +114,6 @@ export default function Schedule() {
     });
   }, []);
 
-  //I'm sorry for this mess
   useEffect(() => {
     // setLoading(true);
     // setTimeout(() => {
@@ -115,7 +126,8 @@ export default function Schedule() {
       displayDailyPoll();
     });
   }, [month, year]);
-
+  
+  //I'm sorry for this mess
   const displayDailyPoll = () =>{
     for (let index = 0; index < 32; index++) {
       const day = document.getElementById("calendarday_" + index);
@@ -232,7 +244,9 @@ export default function Schedule() {
               <div className="clear"></div>
             </div>
 
-            <div id="calendarDays" className="days"></div>
+            <div id="calendarDays" className="days">
+              <LoadCalendarDays/>
+            </div>
           </div>
         </div>
       </Loader>

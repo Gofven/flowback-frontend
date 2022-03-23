@@ -80,7 +80,7 @@ export function clearHTML() {
 }
 
 export function getTextBetweenHTMLTags(html) {
-  const regexBetweenHTMLTags = /(?<=>)([\w\s]+)(?=<)/g;
+  const regexBetweenHTMLTags = new RegExp("(?<=>)([\w\s]+)(?=<)/g");
   const s = html?.match(regexBetweenHTMLTags);
   const h = s?.join("");
   return h;
