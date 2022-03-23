@@ -1,3 +1,8 @@
 .htm-fix{
     z-index: 0 !important;
 }
+
+/* Uncomment this in development and comment when you want to use HTMEditor */
+/* iframe {
+  display: none !important;
+} */

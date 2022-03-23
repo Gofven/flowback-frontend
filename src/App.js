@@ -20,7 +20,6 @@
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import "./HTMFix.css"
 import PrivateRoute from "./component/PrivateRoute";
 import PublicRoute from "./component/PublicRoute";
 import Home from "./page/HomePage";

@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { getTextBetweenHTMLTags } from "../../../component/HTMEditor";
 
 export default function ProposalDetails({ proposal, proposalDescription }) {
-    const descriptionMaxChars = 45;
+    const descriptionMaxChars = 0;
     if (proposalDescription === null || proposalDescription === undefined) proposalDescription = "";
-    const isLongDescription = proposalDescription.length > 45;
+    const isLongDescription = proposalDescription.length > descriptionMaxChars;
     // const shortDescription = proposalDescription.substring(0, descriptionMaxChars - 1) + "...";
 
     const plainTextDescription = getTextBetweenHTMLTags(proposalDescription);
@@ -37,8 +37,7 @@ export default function ProposalDetails({ proposal, proposalDescription }) {
                 {shortDescription}
             </div>
         </div> : <div className="" id={"heading" + proposal.id}>
-            <div className="accordion-button accordion collapsed rm-accordion-icon"
-            >
+            <div className="accordion-button accordion collapsed rm-accordion-icon">
                 <div className="accordion-collapse accordion collapse show">
                     {shortDescription}
                 </div>
