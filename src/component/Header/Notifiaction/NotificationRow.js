@@ -18,10 +18,33 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import Image from "../../common/Image/Image";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function NotifiactionRow({
+  img = "/img/no-photo.jpg",
+  username = "Lorem ipsum",
+  message = "dolor sit amet, consectetur adipisicing elit",
+  duration = "1d ago",
+}) {
+  return (
+
+    <div className="notification-list-row row mx-auto">
+      <div className="col-2 px-0">
+        <Image src={img} className="notification-list-img img-fluid" errImg={'/img/no-photo.jpg'} />
+      </div>
+      <div className="col-10 px-2 notification-list-content">
+        <p>
+          <b>{username}</b> {message}.
+        </p>
+        <div className="notification-time">{duration}</div>
+        <a href="#" className="accept-btn">
+          Accepted <i className="las la-check"></i>
+        </a>
+        <a href="#" className="decline-btn">
+          Decline <i className="las la-times"></i>
+        </a>
+      </div>
+    </div>
+  );
+}

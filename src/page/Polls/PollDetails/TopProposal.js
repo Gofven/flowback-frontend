@@ -1,6 +1,6 @@
-import Image from '../../../component/common/Image';
+import Image from '../../../component/common/Image/Image';
 import LinesEllipsis from 'react-lines-ellipsis';
-import Profile from '../../../component/User/Profile';
+import Profile from '../../../component/User/Profile/Profile';
 import { formatDate } from "../../../utils/common";
 
 export const TopProposal = ({ topProposal }) => {

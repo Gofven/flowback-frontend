@@ -18,10 +18,21 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import ChatPopup from "../../component/ChatPopup/ChatPopup";
+import Home from "../../component/Home/Home";
+import MessageListPopup from "../../component/MessageListPopup/MessageListRow/MessageListRow";
+import Layout1 from "../../layout/Layout1";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function HomePage() {
+  
+  document.addEventListener('scroll', () => {
+    document.documentElement.dataset.scroll = window.scrollY;
+  });
+
+  return (
+    <Layout1>
+      <Home />
+    </Layout1>
+  );
+}

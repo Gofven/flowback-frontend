@@ -18,10 +18,34 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from 'react'
+import Image from "../common/Image/Image";
+import Profile from "../User/Profile/Profile";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function People(props) {
+  const people = props.people;
+
+  return (
+    <>
+      {people?.map((person, index) => (
+        <div className="media contact-view" key={person.id}>
+          <Image src={person.image} />
+          <div className="media-body">
+
+            <h6 className="contact-name">
+
+            <Profile id={person.id} className='cursor-pointer'>{person.first_name || "Test"} {person.last_name}</Profile>
+
+            </h6>
+            <p className="contact-location">
+              
+              {person.city && person.city.city_name} {person.country && person.country.country_name}
+            </p>
+          </div>
+        </div>
+
+      ))
+      }
+    </>
+  )
+}
