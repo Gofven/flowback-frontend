@@ -38,7 +38,7 @@ import { FormatComments, formatDate, inputKeyValue } from "../../../utils/common
 import Post from "../../../component/FeedCard/AllTab/Post/Post";
 import UserGroup from "../../../apis/UserGroup";
 import { Button, Textbox } from "../../../component/common";
-import Counterproposals from "../CounterProposals";
+import Counterproposals from "../CounterProposals/CounterProposals";
 import Loader from "../../../component/common/Loader/Loader";
 import { UserTypes } from "../../../constants/constants";
 import DatePicker from "react-datepicker";

@@ -21,10 +21,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { postRequest, getRequest, getJsonRequest } from '../../../utils/API';
-import CounterProposal from './CounterProposal';
+import CounterProposal from './CounterProposal/CounterProposal';
 import { faSort, faArrowsAltV, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FormatComments } from '../../../utils/common';
-import SortCounterProposal from './SortCounterProposal';
+import SortCounterProposal from './SortCounterProposal/SortCounterProposal';
 import './styles.css';
 import { UserTypes } from '../../../constants/constants';
 

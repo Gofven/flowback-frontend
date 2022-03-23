@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./index.css";
+import "./Schedule.css";
 import Layout1 from "../../layout/Layout1";
 import getHomePolls from "./getPolls";
 import Loader from "../../component/common/Loader/Loader";

@@ -24,7 +24,7 @@ import {
     Link,
     useParams,
 } from "react-router-dom";
-import "./styles.css";
+import "./GroupDetailsStyles.css";
 import { useTab } from "../../../hook/useTab";
 import Layout1 from "../../../layout/Layout1";
 import { postRequest } from '../../../utils/API';
