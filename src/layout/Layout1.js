@@ -18,10 +18,16 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import Header from "../component/Header/Header";
+import Chat from '../component/Chat/Chat'
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function Layout1({ children }) {
+  return (
+    <div>
+      <Header />
+      <Chat/>
+      {children}
+    </div>
+  );
+}

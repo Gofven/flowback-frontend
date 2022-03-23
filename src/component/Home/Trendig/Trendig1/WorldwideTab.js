@@ -18,10 +18,23 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import HashtagRow from "../HashtagRow/HashtagRow";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+const hashtagList = [
+  { rank: 1, name: "#Flowback" },
+  { rank: 1, name: "#Liquiddemocrcy" },
+  { rank: 1, name: "#Globalwarming" },
+  { rank: 1, name: "#Blacklivesmatter" },
+  { rank: 5, name: "#Plantmoretrees" },
+];
+
+export default function WorldwideTab() {
+  return (
+    <div className="tab-pane fade show active" id="WorldwideTab">
+      {hashtagList?.map((hashtag, index) => (
+        <HashtagRow key={index} {...hashtag} />
+      ))}
+    </div>
+  );
+}

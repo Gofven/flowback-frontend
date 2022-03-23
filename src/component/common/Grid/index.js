@@ -19,8 +19,8 @@
 */
 
 import Grid from "./Grid";
-import Row from ".//Row";
-import Col from "./Col";
+import Row from "./Row/Row";
+import Col from "./Col/Col";
 import config, { BASE_CONF } from "./config";
 
 export { Grid, Row, Col, config, BASE_CONF };

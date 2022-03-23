@@ -18,10 +18,17 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import Image from "../../../common/Image/Image";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function GroupsRow({ url, img, title, status }) {
+  return (
+    <a href={url} className="media groups-row">
+      <Image src={img} className="groups-img" errImg={'/img/no-photo.jpg'} />
+      <div className="media-body">
+        <h6 className="groups-title text-truncate">{title}</h6>
+        <p className="groups-status text-truncate">{status}</p>
+      </div>
+    </a>
+  );
+}

@@ -18,10 +18,23 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import { Textbox } from "./Textbox/Textbox";
-import { Button } from "./Button/Button";
-import { Textarea } from "./Textarea/Textarea";
-import { Radiobox } from "./Radiobox/Radiobox";
-import { Label } from "./Label/Label";
+import React from "react";
+import FeedCard from "../../component/FeedCard/FeedCard";
+import Layout1 from "../../layout/Layout1";
+import GroupChat from "../../component/GroupChat/GroupChat";
+import Trendig1 from "../../component/Home/Trendig/Trendig1/Trending1";
+import Trendig2 from "../../component/Home/Trendig/Trendig2";
 
-export { Textbox, Button, Textarea, Radiobox, Label };
+export default function Missions() {
+  return <Layout1>
+    <section className="home-dashboard">
+        <div className="container-xl mt-4">
+          <div className="row">
+            <div className="col-md-6 offset-md-3">
+              <FeedCard pollType={'mission'}/>
+            </div>
+          </div>
+        </div>
+      </section>
+  </Layout1>;
+}

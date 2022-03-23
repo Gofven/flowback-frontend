@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { getTextBetweenHTMLTags } from "../../../component/HTMEditor";
+import { getTextBetweenHTMLTags } from "../../../component/HTMEditor/HTMEditor";
 
 export default function ProposalDetails({ proposal, proposalDescription }) {
     const descriptionMaxChars = 0;
