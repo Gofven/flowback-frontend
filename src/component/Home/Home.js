@@ -22,8 +22,6 @@ import React from "react";
 import FeedCard from "../FeedCard/FeedCard";
 import GroupChat from "../GroupChat/GroupChat";
 import "./home.css";
-import Trendig1 from "./Trendig/Trendig1/Trending1";
-import Trendig2 from "./Trendig/Trendig2";
 
 export default function Home() {
   return (
@@ -59,7 +57,6 @@ export default function Home() {
       <section className="home-dashboard">
         <div className="container-xl mt-4">
           <div className="row justify-content-center">
-
             <div className="col-md-6">
               <FeedCard />
             </div>
