@@ -18,7 +18,7 @@ export default function GroupChannels() {
       console.log(`[message] Data received from server: ${JSON.parse(event.data).message.message}`);
       const messageDisplayed = document.createElement("div")
       const data = JSON.parse(event.data);
-      messageDisplayed.innerHTML = `<img src="http://demo.flowback.org${data.user.image}" alt="User Profile" class="pfp"/> <div>${data.user.username}</div> <div>${data.message.message}</div>`
+      messageDisplayed.innerHTML = `<img src="${data.user.image ? `http://demo.flowback.org${data.user.image}` : "/img/no-photo.jpg"}" alt="Profile picture" class="pfp"/> <div>${data.user.username}</div> <div>${data.message.message}</div>`
       document.getElementById("groupchat-messages").append(messageDisplayed)
     };
   
