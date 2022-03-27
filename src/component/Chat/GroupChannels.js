@@ -44,7 +44,10 @@ export default function GroupChannels() {
   const submitMessage = (e) => {
     e.preventDefault();
     // socket.send("hii");
+    const messageBox = document.getElementById('groupchat-message')
     const message = document.getElementById('groupchat-message').value;
+    messageBox.value = ""
+    
     socket.send(JSON.stringify({ message }));
   };
 
