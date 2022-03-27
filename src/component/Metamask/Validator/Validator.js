@@ -1,4 +1,4 @@
-import { decryptSafely } from '@metamask/eth-sig-util';
+import { decryptSafely, getEncryptionPublicKey } from '@metamask/eth-sig-util';
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
@@ -21,11 +21,15 @@ export default function Validator() {
     //     data: JSON.stringify({test: validator.data}),
     //     signature: validator.signedData,
     //     version:"V4"
-    //   });
+    //   });f
 
+    const publicKey = getEncryptionPublicKey(validator.privateKey)
     const decryptedMessege = decryptSafely({
-        encryptedData: {ciphertext: validator.data, version:"x25519-xsalsa20-poly1305", ephemPublicKey:validator.publicKey, nonce:"XUYgP2Bgtr4CPZVxTCPzKdSaTyMV7JzUkH7a5msSXxs="},
-        privateKey: validator.privateKey
+        encryptedData: {ciphertext: validator.data, 
+          version:"x25519-xsalsa20-poly1305", 
+          ephemPublicKey:publicKey, 
+          nonce:validator.publicKey},
+          privateKey: validator.privateKey
       })
       
     // const decryptedMessege = decryptSafely({ 
