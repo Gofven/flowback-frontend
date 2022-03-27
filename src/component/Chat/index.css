@@ -15,3 +15,8 @@
 .clickable{
     cursor: pointer;
 }
+
+.pfp{
+    width:2rem;
+    height:2rem;
+}

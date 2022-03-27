@@ -1,6 +1,6 @@
 export default function DirectMessage() {
     
 
-return <div>HEY THIS IS PRIVATE DON'T LOOKS</div>
+return <div>Work in progress</div>
 
 }
