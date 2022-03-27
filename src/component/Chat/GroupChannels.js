@@ -1,5 +1,6 @@
 import { useEffect, useState, createContext, useContext } from 'react';
 
+
 export default function GroupChannels() {
   let socket;
   useEffect(() => {
@@ -15,8 +16,9 @@ export default function GroupChannels() {
   
     socket.onmessage = function (event) {
       console.log(`[message] Data received from server: ${JSON.parse(event.data).message.message}`);
-      const messageDisplayed = document.createElement("li")
-      messageDisplayed.innerHTML = JSON.parse(event.data).message.message
+      const messageDisplayed = document.createElement("div")
+      const data = JSON.parse(event.data);
+      messageDisplayed.innerHTML = `<img src="http://demo.flowback.org${data.user.image}" alt="User Profile" class="pfp"/> <div>${data.user.username}</div> <div>${data.message.message}</div>`
       document.getElementById("groupchat-messages").append(messageDisplayed)
     };
   
@@ -60,7 +62,7 @@ export default function GroupChannels() {
         </form>
       </div>
       <div>
-        <ul id="groupchat-messages"></ul>
+        <div id="groupchat-messages"></div>
       </div>
     </div>
   );
