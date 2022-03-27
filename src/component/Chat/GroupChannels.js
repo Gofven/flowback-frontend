@@ -3,19 +3,19 @@ import { useEffect, useState } from 'react';
 export default function GroupChannels() {
   const token = JSON.parse(localStorage.getItem('jwtToken'));
   const socket = new WebSocket(
-    `wss://demo.flowback.org/ws/group_chat/test/?token=${token}`
+    `wss://demo.flowback.org/ws/group_chat/1/?token=${token}`
   );
 
   const [message, setMessage] = useState('');
 
   socket.onopen = function (event) {
-    alert('[open] Connection established');
-    alert('Seknding to server');
-    socket.send('My name is John');
-  };
-
-  socket.onmessage = function (event) {
-    alert(`[message] Data received from server: ${event.data}`);
+    // alert('[open] Connection established');
+    // alert('Seknding to server');
+    socket.send(JSON.stringify({message:'My name is John'}));
+    setTimeout(() => {
+      socket.send(JSON.stringify({message:"HIIIIIII"}))
+    }, 5000)
+    // socket.send("HIIIIIII")
   };
 
   socket.onclose = function (event) {
@@ -35,7 +35,7 @@ export default function GroupChannels() {
   };
 
   socket.onmessage = (event) => {
-    setMessage(event.data);
+    // setMessage(event.data);
   };
 
   const submitMessage = (e) => {
@@ -61,7 +61,7 @@ export default function GroupChannels() {
         <div>Grupp 2</div>
       </div>
       <div>
-        <div>Message:{message}</div>
+        {/* <div>Message:{message}</div> */}
         <div>---kanal 1</div>
         <div>---kanal 2</div>
         <div>---kanal 3</div>
