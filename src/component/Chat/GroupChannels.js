@@ -1,69 +1,47 @@
-import { useEffect, useState, createContext, useContext } from 'react';
-
+import GroupChannel from './GroupChannel';
+import { useState, useEffect } from 'react';
+import './index.css';
+import { postRequest } from '../../utils/API';
 
 export default function GroupChannels() {
-  let socket;
-  useEffect(() => {
-  
-    const token = JSON.parse(localStorage.getItem('jwtToken'));
-    socket = new WebSocket(
-      `wss://demo.flowback.org/ws/group_chat/1/?token=${token}`
-    );
-  
-    socket.onopen = function (event) {
-      console.log('[open] Connection established');
-    };
-  
-    socket.onmessage = function (event) {
-      console.log(`[message] Data received from server: ${JSON.parse(event.data).message.message}`);
-      const messageDisplayed = document.createElement("div")
-      const data = JSON.parse(event.data);
-      messageDisplayed.innerHTML = `<img src="${data.user.image ? `http://demo.flowback.org${data.user.image}` : "/img/no-photo.jpg"}" alt="Profile picture" class="pfp"/> <div>${data.user.username}</div> <div>${data.message.message}</div>`
-      document.getElementById("groupchat-messages").append(messageDisplayed)
-    };
-  
-    socket.onclose = function (event) {
-      if (event.wasClean) {
-        console.log(
-          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-        );
-      } else {
-        // e.g. server process killed or network down
-        // event.code is usually 1006 in this case
-        console.warn('[close] Connection died');
-      }
-    };
-  
-    socket.onerror = function (error) {
-      console.error(`[error] ${error.message}`);
-    };
-  
-    return(() => {
-      socket.close();
-    })
-  })
-  
-  const submitMessage = (e) => {
-    e.preventDefault();
-    // socket.send("hii");
-    const messageBox = document.getElementById('groupchat-message')
-    const message = document.getElementById('groupchat-message').value;
-    messageBox.value = ""
-    
-    socket.send(JSON.stringify({ message }));
+  const [groupId, setgroupId] = useState(null);
+  const [groupList, setGroupList] = useState([]);
+
+  const changeChat = (e) => {
+    setgroupId(e);
   };
 
+  const getGroups = () => {
+    postRequest('api/v1/user_group/all_group').then((response) => {
+      console.log('response', response);
+      if (response) {
+        const { status, data } = response;
+        setGroupList(data.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getGroups();
+  }, []);
+
   return (
-    <div>
-      <div>
-        <form name="publish" onSubmit={submitMessage}>
-          <input type="text" id="groupchat-message"  />
-          <input type="submit" />
-        </form>
+    <div className="group-chats">
+      <div className="group-chat-buttons">
+        {groupList.map((group) => {
+          <button
+            onClick={() => changeChat(group.id)}
+            className="btn btn-secondary"
+          >
+            {group.title}
+          </button>;
+        })}
+        <button onClick={() => changeChat(1)} className="btn btn-secondary">
+          Chat 1
+        </button>
+        <button onClick={() => changeChat(2)}>Chat 2</button>
       </div>
-      <div>
-        <div id="groupchat-messages"></div>
-      </div>
+      {groupId && <GroupChannel groupId={groupId} />}
     </div>
   );
 }

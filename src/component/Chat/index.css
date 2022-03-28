@@ -20,3 +20,20 @@
     width:2rem;
     height:2rem;
 }
+
+.chat-message-box{
+    display: flex;
+    justify-content: center;
+}
+
+.chat-message-input-box{
+    width:90%;
+}
+
+.group-chats{
+    display: flex;
+}
+
+.group-chat-buttons{
+    writing-mode: vertical-lr;
+}
