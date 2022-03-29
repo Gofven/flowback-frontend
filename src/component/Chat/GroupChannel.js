@@ -27,21 +27,8 @@ export default function GroupChannel({ groupId }) {
           JSON.parse(event.data).message.message
         }`
       );
-
       const data = JSON.parse(event.data);
-      //   const newMessageList = messageList;
-      //   newMessageList.push(data);
-      setMessageList(...messageList, data);
-
-      //   const messageDisplayed = document.createElement('div');
-      //   messageDisplayed.innerHTML = `<img src="${
-      //     data.user.image
-      //       ? `http://demo.flowback.org${data.user.image}`
-      //       : '/img/no-photo.jpg'
-      //   }" alt="Profile picture" class="pfp"/> <div>${
-      //     data.user.username
-      //   }</div> <div>${data.message.message}</div>`;
-      // document.getElementById("groupchat-messages").append(messageDisplayed)
+      setMessageList([...messageList, data]);
     };
 
     socket.onclose = function (event) {
@@ -78,8 +65,8 @@ export default function GroupChannel({ groupId }) {
   return (
     <div>
       <div id="groupchat-messages">
-        {messageList?.map((message) => (
-          <div>
+        {messageList?.map((message) => 
+          <div key={Math.random()*1000000}>
             <div>{message.user.username}</div>
             <Image
               className="pfp"
@@ -91,7 +78,7 @@ export default function GroupChannel({ groupId }) {
             />
             <div>{message.message.message}</div>
           </div>
-        ))}
+        )}
       </div>
 
       <form

@@ -2,6 +2,7 @@ import GroupChannel from './GroupChannel';
 import { useState, useEffect } from 'react';
 import './index.css';
 import { postRequest } from '../../utils/API';
+import { Image } from 'react-bootstrap';
 
 export default function GroupChannels() {
   const [groupId, setgroupId] = useState(null);
@@ -29,12 +30,13 @@ export default function GroupChannels() {
     <div className="group-chats">
       <div className="group-chat-buttons">
         {groupList.map((group) => (
-          <button
+          <img key={group.id}
+            src={group.image}
             onClick={() => changeChat(group.id)}
-            className="btn btn-secondary"
+            // className="btn btn-secondary"
           >
             {group.title}
-          </button>
+          </img>
         ))}
       
       </div>
