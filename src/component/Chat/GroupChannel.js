@@ -50,6 +50,10 @@ export default function GroupChannel({ groupId }) {
     };
   });
 
+  useEffect(() => {
+    document.getElementById("groupchat-messages").scrollBy(100000,100000)
+  }, [messageList])
+
   const submitMessage = (e) => {
     e.preventDefault();
     // socket.send("hii");
@@ -62,7 +66,7 @@ export default function GroupChannel({ groupId }) {
 
   return (
     <div className="group-chat">
-      <div id="groupchat-messages">
+      <div className="groupchat-messages" id="groupchat-messages">
         {messageList?.map((message) => (
           <div key={Math.random() * 1000000} className="chat-message">
             <Image

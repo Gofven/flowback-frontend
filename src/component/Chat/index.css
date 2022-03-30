@@ -86,3 +86,8 @@
     padding:0.2rem;
     width:100%;
 }
+
+.groupchat-messages{
+    overflow-y: auto;
+    height:10rem;
+}
