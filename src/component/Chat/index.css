@@ -24,6 +24,7 @@
 .chat-message-box{
     display: flex;
     justify-content: center;
+    gap:0.5rem;
 }
 
 .chat-message-input-box{
@@ -36,4 +37,38 @@
 
 .group-chat-buttons{
     writing-mode: vertical-lr;
+}
+
+.group-chat-image{
+    width:3rem;
+    height:3rem;
+    border-radius:10px;
+    cursor:pointer;
+    transition: border-radius 0.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+    
+}
+
+.group-chat-image:hover{
+    border-radius:15px;
+}
+
+.group-chat{
+    padding: 1rem;
+    padding-top:0;
+    margin-left: 1.5rem;
+    width: 100%;
+}
+
+.chat-message{
+    padding:0.2rem;
+    margin-top:0.3rem;
+}
+
+.chat-message-profile{
+    display:flex;
+}
+
+.groupchat-message{
+    padding:1rem;
+
 }

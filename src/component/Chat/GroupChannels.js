@@ -30,15 +30,17 @@ export default function GroupChannels() {
     <div className="group-chats">
       <div className="group-chat-buttons">
         {groupList.map((group) => (
-          <img key={group.id}
-            src={group.image}
-            onClick={() => changeChat(group.id)}
-            // className="btn btn-secondary"
-          >
-            {group.title}
-          </img>
+          <>
+            <img
+              className='group-chat-image'
+              key={group.id}
+              src={group.image}
+              onClick={() => changeChat(group.id)}
+              // className="btn btn-secondary"
+            />
+            {/* {group.title} */}
+          </>
         ))}
-      
       </div>
       {groupId && <GroupChannel groupId={groupId} />}
     </div>
