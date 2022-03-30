@@ -20,7 +20,7 @@ export default function DirectMessage({ groupId }) {
     socket.onmessage = function (event) {
       console.log(
         `[message] Data received from server: ${
-          JSON.parse(event.data).message.message
+          JSON.parse(event.data).message
         }`
       );
       const data = JSON.parse(event.data);
@@ -59,7 +59,7 @@ export default function DirectMessage({ groupId }) {
     const message = document.getElementById('groupchat-message').value;
     messageBox.value = '';
 
-    if (message !== '') socket.send(JSON.stringify({ message }));
+    if (message !== '') socket.send(JSON.stringify({ message, target: 2 }));
   };
 
   return (
