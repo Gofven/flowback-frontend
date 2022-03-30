@@ -65,18 +65,18 @@ export default function GroupChannel({ groupId }) {
       <div id="groupchat-messages">
         {messageList?.map((message) => (
           <div key={Math.random() * 1000000} className="chat-message">
-            <div className="chat-message-profile">
-              <Image
-                className="pfp"
-                src={`${
-                  message.user.image
-                    ? `http://demo.flowback.org${message.user.image}`
-                    : '/img/no-photo.jpg'
-                }`}
-              />
+            <Image
+              className="pfp"
+              src={`${
+                message.user.image
+                  ? `http://demo.flowback.org${message.user.image}`
+                  : '/img/no-photo.jpg'
+              }`}
+            />
+            <div className="chat-message-name-and-message">
               <div>{message.user.username}</div>
+              <div>{message.message}</div>
             </div>
-            <div>{message.message}</div>
           </div>
         ))}
       </div>
@@ -91,7 +91,9 @@ export default function GroupChannel({ groupId }) {
           id="groupchat-message"
           className="chat-message-input-box"
         />
-        <button type="submit" className="btn btn-primary">Send</button>
+        <button type="submit" className="btn btn-secondary">
+          Send
+        </button>
       </form>
     </div>
   );
