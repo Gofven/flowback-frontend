@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
+import { postRequest } from '../../utils/API';
 const { REACT_APP_PROXY } = process.env;
 
 export default function GroupChannel({ groupId }) {
@@ -51,17 +52,26 @@ export default function GroupChannel({ groupId }) {
   });
 
   useEffect(() => {
-    document.getElementById("groupchat-messages").scrollBy(100000,100000)
-  }, [messageList])
+    document.getElementById('groupchat-messages').scrollBy(100000, 100000);
+  }, [messageList]);
 
   const submitMessage = (e) => {
     e.preventDefault();
     // socket.send("hii");
-    const messageBox = document.getElementById('groupchat-message');
     const message = document.getElementById('groupchat-message').value;
-    messageBox.value = '';
+    
+    if (message !== '') {
+      const messageBox = document.getElementById('groupchat-message');
+      messageBox.value = '';
+      socket.send(JSON.stringify({ message }));
+      postToChatHistory(message);
+    }
+  };
 
-    if (message !== '') socket.send(JSON.stringify({ message }));
+  const postToChatHistory = (message) => {
+    postRequest(`api/v1/chat/group/${groupId}`, { message }).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
