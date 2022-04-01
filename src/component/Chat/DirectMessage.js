@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
 const { REACT_APP_PROXY } = process.env;
 
-export default function DirectMessage({ groupId }) {
+export default function DirectMessage() {
   const [messageList, setMessageList] = useState([]);
 
   const token = JSON.parse(localStorage.getItem('jwtToken'));
@@ -59,7 +59,9 @@ export default function DirectMessage({ groupId }) {
     const message = document.getElementById('groupchat-message').value;
     messageBox.value = '';
 
-    if (message !== '') socket.send(JSON.stringify({ message, target: 2 }));
+
+    if (message !== '') socket.send(JSON.stringify({ message, target: 2 }))
+    
   };
 
   return (

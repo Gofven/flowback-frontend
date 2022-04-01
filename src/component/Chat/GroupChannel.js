@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { postRequest } from '../../utils/API';
+import { getRequest } from '../../utils/API';
 const { REACT_APP_PROXY } = process.env;
 
 export default function GroupChannel({ groupId }) {
@@ -69,7 +69,7 @@ export default function GroupChannel({ groupId }) {
   };
 
   const postToChatHistory = (message) => {
-    postRequest(`api/v1/chat/group/${groupId}`, { message }).then((res) => {
+    getRequest(`api/v1/chat/group/${groupId}`, { message }).then((res) => {
       console.log(res);
     });
   };
