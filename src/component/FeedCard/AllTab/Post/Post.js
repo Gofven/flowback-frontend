@@ -119,7 +119,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
           </Link> */}
 
           <div className="post-comment-view">
-            <div className="post-share"><div> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} Comments
+            <div className="post-share"><div> <i className="las la-comment"></i>{poll?.comments_details?.total_comments} {window.t("Comments")}
 
             </div>
             </div>
@@ -153,7 +153,7 @@ export default function Post({ poll, addComment, updateComment, deleteComment, l
             <div className="comment-reply">{renderComments(poll && poll.comments_details && poll.comments_details.comments)}</div>
           </div>
           {(poll.top_proposal && poll.type === "event") ?
-            <div><h5>Meeting date:</h5>
+            <div><h5>{window.t("Meeting date")}:</h5>
               {poll.top_proposal?.proposal === "Drop this mission"
                 ? "No Meeting"
                 : <><h4>{poll.top_proposal?.date?.split('T')[0]}</h4><h4>{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[0]}:{poll.top_proposal?.date?.split('T')[1].split(".")[0].split(":")[1]}</h4></>

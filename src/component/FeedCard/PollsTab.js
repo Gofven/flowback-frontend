@@ -18,28 +18,28 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-import React, {useEffect, useState} from "react";
-import {postRequest} from "../../utils/API";
-import {FormatComments} from "../../utils/common";
+import React, { useEffect, useState } from "react";
+import { postRequest } from "../../utils/API";
+import { FormatComments } from "../../utils/common";
 import CommentBox from "./AllTab/CommentBox";
 import Post from "./AllTab/Post/Post";
 import PostComment from "./AllTab/Post/PostComment";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid} from '@fortawesome/free-solid-svg-icons'
-import {faThumbsUp, faThumbsDown} from '@fortawesome/free-regular-svg-icons'
-import {UserTypes} from "../../constants/constants";
-import {DropDownPollFilter, SearchFilter} from '../common/Filter/Filter'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp as faThumbsUpSolid, faThumbsDown as faThumbsDownSolid } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
+import { UserTypes } from "../../constants/constants";
+import { DropDownPollFilter, SearchFilter } from '../common/Filter/Filter'
 import ProposalDetails from "../../page/Polls/PollResults/ProposalDetails";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Image from "../common/Image/Image";
 import './pollTabStyles.css'
-import {formatDate} from "../../utils/common";
+import { formatDate } from "../../utils/common";
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
     let pollType = props.pollType;
     const [polls, setPolls] = useState([]);
-    const [pollFilter, setPollFilter] = useState({pollType: null, discussion: null, search: ""});
+    const [pollFilter, setPollFilter] = useState({ pollType: null, discussion: null, search: "" });
     const [lastPollCreatedDate, setLastPollCreatedDate] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
@@ -58,7 +58,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data: res} = response;
+                    const { status, data: res } = response;
                     if (res != undefined) {
                         const data = res.data;
                         if (status == "success") {
@@ -93,7 +93,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data: res} = response;
+                    const { status, data: res } = response;
                     if (res != undefined) {
                         const data = res.data;
                         if (status == "success") {
@@ -142,7 +142,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data} = response;
+                    const { status, data } = response;
                     if (status == "success") {
                         console.log('polls data', data);
                         let pollsDup = polls.slice();
@@ -171,7 +171,7 @@ export default function PollsTab(props) {
         postRequest("api/v1/group_poll/poll_voting", data).then(
             (response) => {
                 console.log('response', response);
-                const {status, data} = response;
+                const { status, data } = response;
                 if (status === "success") {
                     let pollsDup = polls.slice();
                     const index = pollsDup.findIndex((poll) => poll.id === data.id);
@@ -192,7 +192,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data} = response;
+                    const { status, data } = response;
                     if (status == "success") {
                         console.log('polls data', data);
                         let pollsDup = polls.slice();
@@ -217,7 +217,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data} = response;
+                    const { status, data } = response;
                     if (status == "success") {
                         console.log('polls data', data);
                         let pollsDup = polls.slice();
@@ -241,7 +241,7 @@ export default function PollsTab(props) {
             (response) => {
                 console.log('response', response);
                 if (response) {
-                    const {status, data} = response;
+                    const { status, data } = response;
                     if (status == "success") {
                         console.log('polls data', data);
                         let pollsDup = polls.slice();
@@ -277,9 +277,9 @@ export default function PollsTab(props) {
     return (
         <div className="tab-pane fade show active " id="PollsTab">
 
-            <DropDownPollFilter setPollFilter={setPollFilter} pollFilter={pollFilter}/>
+            <DropDownPollFilter setPollFilter={setPollFilter} pollFilter={pollFilter} />
             {/* <DropDownFilter setPollFilter={setPollFilter} pollFilter={pollFilter} filterCategories={["In progress", "Finished"]} filterTitle="Poll Progress" /> */}
-            <SearchFilter setFilter={setPollFilter} filter={pollFilter}/>
+            <SearchFilter setFilter={setPollFilter} filter={pollFilter} />
             <div className="column-container poll-posts-container">
                 {polls?.map((poll, index) => {
                     if (
@@ -301,7 +301,7 @@ export default function PollsTab(props) {
                             </Link>
 
                             <div className="post-text">
-                                <ProposalDetails proposalDescription={poll.description} proposal={{id: poll.id}}/>
+                                <ProposalDetails proposalDescription={poll.description} proposal={{ id: poll.id }} />
                             </div>
 
                             <div className="poll-post-bottom-info">
@@ -309,23 +309,23 @@ export default function PollsTab(props) {
                                     <Link
                                         to={`/groupdetails/${(poll && poll.group && poll.group.id) ? poll.group.id : groupId}`}>
                                         <div className="group-logo-and-title">
-                                            <Image src={poll.group.image} className="group-details-dp"/>
+                                            <Image src={poll.group.image} className="group-details-dp" />
                                             <div className="poll-title">{poll.group.title}</div>
                                         </div>
                                     </Link>
                                     <div className="post-share">
                                         <div>
                                             <i className="las la-comment"></i>
-                                            {poll?.comments_details?.total_comments} Comments
+                                            {poll?.comments_details?.total_comments} {window.t("Comments")}
                                         </div>
                                     </div>
                                 </div>
 
                                 {poll && poll.created_by &&
                                     <div className="font-small mt-2 text-grey">
-                                        <div>Creator: {poll.created_by?.first_name}  </div>
-                                        <div>Created: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
-                                        <div>Ends: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
+                                        <div>{window.t("Creator")}: {poll.created_by?.first_name}  </div>
+                                        <div>{window.t("Created")}: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
+                                        <div>{window.t("Ends")}: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
                                 }
                             </div>

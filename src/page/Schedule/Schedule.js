@@ -61,16 +61,16 @@ export default function Schedule() {
 
     return (
       <div className="all-calendar-days">
-          {monthDays.map((day, i) => (
-            <div key={i} className={`calendar-day-${i%7+1}`} >
-              {day}
-            </div>
-          ))}
-        </div>
+        {monthDays.map((day, i) => (
+          <div key={i} className={`calendar-day-${i % 7 + 1}`} >
+            {day}
+          </div>
+        ))}
+      </div>
     );
   }//style={{"order": (i % 7) + 1}}
 
-  function loadCalendarDays() {}
+  function loadCalendarDays() { }
   function loadCalendarDays2() {
     document.getElementById('calendarDays').innerHTML = '';
 
@@ -185,14 +185,11 @@ export default function Schedule() {
                 ? `0${pollDate.getMinutes()}`
                 : pollDate.getMinutes();
             pollInList.innerHTML = `
-            <div class="poll-titles"><a href=${
-              window.location.origin
-            }/groupdetails/${poll.group.id}/polldetails/${poll.id}>${
-              poll.title
-            }</a> 
-            <div><a href=${window.location.origin}/groupdetails/${
-              poll.group.id
-            }>${poll.group.title}</a></div></div>
+            <div class="poll-titles"><a href=${window.location.origin
+              }/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title
+              }</a> 
+            <div><a href=${window.location.origin}/groupdetails/${poll.group.id
+              }>${poll.group.title}</a></div></div>
             <div class="time">${pollDate.getHours()}:${minutes}</div>`;
             dayPollList.append(pollInList);
           }
@@ -235,7 +232,7 @@ export default function Schedule() {
             <div
               id="months"
               className="months dropdown"
-              // style={{ display: "none" }}
+            // style={{ display: "none" }}
             >
               {months.map((month, i) => {
                 return (
@@ -245,7 +242,7 @@ export default function Schedule() {
                     id={i}
                     onClick={handleMonthChange}
                   >
-                    {months[i]}
+                    {window.t(months[i])}
                   </div>
                 );
               })}
@@ -267,13 +264,13 @@ export default function Schedule() {
 
           <div className="calendar-dates">
             <div className="all-calendar-days ">
-              <div className="calendar-day-1">MON</div>
-              <div className="calendar-day-2">TUE</div>
-              <div className="calendar-day-3">WED</div>
-              <div className="calendar-day-4">THU</div>
-              <div className="calendar-day-5">FRI</div>
-              <div className="calendar-day-6">SAT</div>
-              <div className="calendar-day-7">SUN</div>
+              <div className="calendar-day-1">{window.t("Mon")}</div>
+              <div className="calendar-day-2">{window.t("Tue")}</div>
+              <div className="calendar-day-3">{window.t("Wed")}</div>
+              <div className="calendar-day-4">{window.t("Thu")}</div>
+              <div className="calendar-day-5">{window.t("Fri")}</div>
+              <div className="calendar-day-6">{window.t("Sat")}</div>
+              <div className="calendar-day-7">{window.t("Sun")}</div>
 
               {/* <div className="clear"></div> */}
             </div>

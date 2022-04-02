@@ -297,7 +297,7 @@ export default function Profile(props) {
                                         {
                                             !editMode &&
                                             <h3 className="profile-title text-truncate" >
-                                                {`${user.first_name} ${user.last_name}`} {loggedInUser ? '(You)' : ""}
+                                                {`${user.first_name} ${user.last_name}`} {loggedInUser ? `(${window.t("You")})` : ""}
                                             </h3>
                                         }
 
@@ -362,7 +362,7 @@ export default function Profile(props) {
                                     </div>
                                     :
                                     <div className="profile-content-view">
-                                        <h5>About User</h5>
+                                        <h5>{window.t("About User")}</h5>
                                         <p>
                                             {user.bio || 'No data added yet.'}
                                         </p>

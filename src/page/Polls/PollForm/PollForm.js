@@ -211,7 +211,7 @@ export default function PollForm() {
                             <div className="grupper-card">
                                 <div className="card  card-rounded overflow-hidden">
                                     <div className="card-header flex-header">
-                                        <h4 className="card-title">{pollId ? "Edit" : "Create"} a Poll</h4>
+                                        <h4 className="card-title">{pollId ? window.t("Edit") : window.t("Create")} {window.t("a Poll")}</h4>
                                     </div>
                                     <form className="form create_poll_form" id="createPollForm">
                                         <div className="mt-3 mx-2">
@@ -221,7 +221,7 @@ export default function PollForm() {
                                             <Textbox
                                                 type="text"
                                                 name="title"
-                                                placeholder="Poll name"
+                                                placeholder={window.t("Poll name")}
                                                 maxLength={maxTitleLength}
                                                 required
                                                 onChange={handleOnChange}
@@ -256,7 +256,7 @@ export default function PollForm() {
                                                             </div> :
                                                             <div className=''>
                                                                 <div>
-                                                                    Add File
+                                                                    {window.t("Add File")}
                                                                 </div>
                                                                 <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document'
                                                                     onChange={OnDocumentsSelect}
@@ -277,22 +277,22 @@ export default function PollForm() {
                                         </div>*/}
 
                                         <div className="form-group mx-2">
-                                            <h4>Add Details</h4>
+                                            <h4>{window.t("Add Details")}</h4>
                                             <HTMEditor />
                                         </div>
                                         {pollId ? null :
                                             <>
-                                                <div className="form-group mx-2" style={{"margin-top": "10px"}}>
+                                                <div className="form-group mx-2" style={{ "margin-top": "10px" }}>
                                                     <select name="type" id="type" onChange={handleOnTypeChange} className="form-select">
-                                                        <option selected value="poll">Private</option>
-                                                        <option value="mission">Public</option>
+                                                        <option selected value="poll">{window.t("Private")}</option>
+                                                        <option value="mission">{window.t("Public")}</option>
 
                                                     </select>
                                                 </div>
 
                                                 <div className="form-group field">
                                                     <Label>
-                                                        Voting Type
+                                                        {window.t("Voting Type")}
                                                     </Label>
                                                     <div>
                                                         <Form.Check
@@ -346,20 +346,20 @@ export default function PollForm() {
 
                                                     {expandedDescription ? <div className="votingExplanationTexts">
                                                         <div>
-                                                            <b>Ranking</b> is the method of preferential voting known as the borda count. The top proposal in Added always gets the number of points as there are proposals (it does not depend on there being proposals below it), and the one below that gets that number minus one, the one below that gets that number minus two and so on. Each proposal that are in abstain each get zero points. This is added over all voters and is divided by the total number of votes to get the result.
+                                                            <b>{window.t("Ranking")}</b> {window.t("is the method of preferential voting known as the borda count. The top proposal in Added always gets the number of points as there are proposals (it does not depend on there being proposals below it), and the one below that gets that number minus one, the one below that gets that number minus two and so on. Each proposal that are in abstain each get zero points. This is added over all voters and is divided by the total number of votes to get the result.")}
                                                         </div>
                                                         <div>
-                                                            <b>For/Against</b> is the method where each proposal that is voted for gets one point and each voted against gets minus one independently of order, all other proposals get zero points. The points are then added over all voters and is divided by the total number of votes to get the result.
+                                                            <b>{window.t("For/Against")}</b> {window.t("is the method where each proposal that is voted for gets one point and each voted against gets minus one independently of order, all other proposals get zero points. The points are then added over all voters and is divided by the total number of votes to get the result.")}
                                                         </div>
                                                         <div>
-                                                            <b>Cardinal</b> is the method where each member can rank by writing any number for all polls, which are ranked accordingly and get the percentage compared to the total that the member gives, the percentages are added up over all members and divided by the total to get the result. This means that not only are the proposals ranked by order of preference, but the degree by which one proposal is better than another is reflected. Totals will not exceed 10^6.
+                                                            <b>{window.t("Cardinal")}</b> {window.t("is the method where each member can rank by writing any number for all polls, which are ranked accordingly and get the percentage compared to the total that the member gives, the percentages are added up over all members and divided by the total to get the result. This means that not only are the proposals ranked by order of preference, but the degree by which one proposal is better than another is reflected. Totals will not exceed 10^6.")}
                                                         </div>
                                                         <div>
-                                                            <b>Time polls</b>  is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.
+                                                            <b>{window.t("Time polls")}</b>  {window.t("is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.")}
                                                         </div>
                                                     </div> :
                                                         <div >
-                                                            Click here to get information about the different voting types
+                                                            {window.t("Click here to get information about the different voting types")}
                                                         </div>}
 
 
@@ -373,7 +373,7 @@ export default function PollForm() {
                                                 <div className="form-group field">
                                                     <div>
                                                         <Label>
-                                                            End Time
+                                                            {window.t("End Time")}
                                                         </Label>
                                                     </div>
                                                     {/* <DateTimePicker
@@ -401,7 +401,7 @@ export default function PollForm() {
                                                 // disabled={!formValid}
                                                 onClick={pollId ? updatePollDetails : handleSubmit}
                                             >
-                                                {pollId ? "Update" : "Submit"}
+                                                {pollId ? window.t("Update") : window.t("Submit")}
                                             </Button>
                                         </div>
                                     </form>

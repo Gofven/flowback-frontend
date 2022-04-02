@@ -281,14 +281,14 @@ export default function GroupForm(props) {
                                 <div className="grupper-card">
                                     <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
                                         <div className="card-header flex-header">
-                                            <h4 className="card-title">{groupId ? "Edit" : "Create"} a Group</h4>
+                                            <h4 className="card-title">{groupId ? "Edit" : "Create"} {window.t("a Group")}</h4>
                                         </div>
                                         <form className="form create_group_form" id="createGroupForm">
                                             <div className="form-group mt-3 mx-2">
                                                 <Textbox
                                                     type="text"
                                                     name="name"
-                                                    placeholder="Group name"
+                                                    placeholder={window.t("Group name")}
                                                     defaultValue={state.name}
                                                     value={name}
                                                     required
@@ -301,7 +301,7 @@ export default function GroupForm(props) {
                                                 <Textarea
                                                     name="description"
                                                     rows="2"
-                                                    placeholder="Group description"
+                                                    placeholder={window.t("Group description")}
                                                     required
                                                     onChange={handleOnChange}
                                                     defaultValue={state.description}
@@ -311,7 +311,7 @@ export default function GroupForm(props) {
                                             <div className="form-group field">
                                                 <div>
                                                     <Label>
-                                                        Profile Photo
+                                                        {window.t("Profile Photo")}
                                                     </Label>
                                                 </div>
                                                 <div className='buttons fadein'>
@@ -346,7 +346,7 @@ export default function GroupForm(props) {
                                             <div className="form-group field">
                                                 <div>
                                                     <Label>
-                                                        Cover Photo
+                                                        {window.t("Cover Photo")}
                                                     </Label>
                                                 </div>
                                                 <div className='buttons fadein'>
@@ -378,7 +378,7 @@ export default function GroupForm(props) {
 
                                             <div className="form-group field">
                                                 <Label>
-                                                    Members request
+                                                    {window.t("Members request")}
                                                 </Label>
                                                 <div>
                                                     <Form.Check
@@ -386,7 +386,7 @@ export default function GroupForm(props) {
                                                         type="radio"
                                                         id="direct"
                                                         name="request"
-                                                        label="Direct Join"
+                                                        label={window.t("Direct Join")}
                                                         value="Direct Join"
                                                         checked={request === "Direct Join"}
                                                         onClick={handleOnChange}
@@ -397,7 +397,7 @@ export default function GroupForm(props) {
                                                         type="radio"
                                                         id="moderation"
                                                         name="request"
-                                                        label="Needs Moderation"
+                                                        label={window.t("Needs Moderation")}
                                                         value="Needs Moderation"
                                                         checked={request === "Needs Moderation"}
                                                         onClick={handleOnChange}
@@ -405,17 +405,13 @@ export default function GroupForm(props) {
                                                 </div>
                                             </div>
 
-
-
-
                                             <div className="text-center my-5">
                                                 <Button
                                                     type="button"
                                                     className="btn login-btn btn-hover"
-                                                    // disabled={!formValid}
                                                     onClick={groupId ? updateGroup : handleSubmit}
                                                 >
-                                                    {groupId ? "Update" : "Submit"}
+                                                    {groupId ? "Update" : window.t("Submit")}
                                                 </Button>
                                             </div>
                                         </form>

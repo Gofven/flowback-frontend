@@ -59,11 +59,11 @@ export default function PostComment({
           {/*<a href="#">{likes_count || 0} {(likes_count === 1) ? 'Like' : 'Likes'}</a>*/}
           {
             edited &&
-            <a>Edited</a>
+            <a>{window.t("Edited")}</a>
           }
 
           <a className="cursor-pointer"
-            onClick={() => onReplyClick(id)}>Reply</a>
+            onClick={() => onReplyClick(id)}>{window.t("Reply")}</a>
 
         </div>
         {children}
@@ -95,35 +95,6 @@ export default function PostComment({
             />
           </>
         }
-        {/* <a
-          href="#"
-          id="postAction"
-          data-bs-toggle="dropdown"
-          aria-expanded="true"
-        >
-          <i className="las la-ellipsis-h"></i>
-        </a> */}
-        {/* <ul
-          className="dropdown-menu dropdown-menu-end"
-          aria-labelledby="postAction"
-          id="postDrop"
-        >
-          <li>
-            <a className="dropdown-item" href="#">
-              Edit
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Share
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Delete
-            </a>
-          </li>
-        </ul> */}
       </div>
     </div>
   );

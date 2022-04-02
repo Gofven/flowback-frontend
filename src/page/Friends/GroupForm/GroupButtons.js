@@ -47,7 +47,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
     return <div className="">
 
         <p className="">
-            <p>{totalMembers || 0} members</p>
+            <p>{totalMembers || 0} {window.t("members")}</p>
         </p>
 
         {
@@ -59,7 +59,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                             style={{ "margin-right": "1rem", "position": "inherit" }}
                             onClick={() => { handleOnLeaveGroup() }}
                             style={{ filter: "drop-shadow(1px 1px 1px #ffffff)" }}
-                        >Leave Group</a>
+                        >{window.t("Leave Group")}</a>
                     </div>
                 </h4> :
                 (
@@ -74,7 +74,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                             <a
                                 className="btn btn-outline-secondary"
                                 onClick={() => { handleOnJoinGroupAsAMember() }}
-                            >Join Group</a>
+                            >{window.t("Join Group")}</a>
                         </div>
                 )
         }

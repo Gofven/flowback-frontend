@@ -181,7 +181,7 @@ function ChatPopup({ room, socketRef, opened, setNewMessages, setPreviousMessage
                         {message.sender?.first_name} {message.sender?.last_name} <br /> <span>{formatDate(message.created_at, "DD MMM YY, HH:mm")}</span>
                       </p>
                       <div className="lst-msg text-tuncate">
-                        {message.message}
+                        {window.t(message.message)}
                       </div>
                     </div>
                   </div>

@@ -127,7 +127,7 @@ export default function AllTab(props) {
     }
 
     const handleCoDocumentCreation = () => {
-        window.open(`https://pad.flowback.org/p/${props.groupId}-${Math.floor(Math.random()*100000000000)}-${Math.floor(Math.random()*100000000000)}`, "_blank")
+        window.open(`https://pad.flowback.org/p/${props.groupId}-${Math.floor(Math.random() * 100000000000)}-${Math.floor(Math.random() * 100000000000)}`, "_blank")
     }
 
     useEffect(() => {
@@ -144,7 +144,7 @@ export default function AllTab(props) {
                         < div className=" text-center my-2 noSelect"  >
                             <label htmlFor='document'>
                                 <div>
-                                    + Add Document
+                                    + {window.t("Add Document")}
                                 </div>
                             </label>
                             <input type='file' accept='image/*,application/pdf,application/msword' name="document" id='document' onChange={OnDocumentSelect} />
@@ -154,10 +154,10 @@ export default function AllTab(props) {
                     <label htmlFor='document'>
                         <div>{document.doc_name}</div>
                     </label>
-                    <div className='d-flex'> Upload:
+                    <div className='d-flex'> {window.t("Upload")}:
                         <FontAwesomeIcon className="cursor-pointer"
                             icon={faUpload} color='black' size='lg' onClick={AddDocument} />
-                        <div className='px-2'> Discard: </div>
+                        <div className='px-2'> {window.t("Discard")}: </div>
                         <FontAwesomeIcon className="cursor-pointer"
                             icon={faTimes} color='#DD4A4C' size='lg' onClick={removeDocument} />
                     </div>
@@ -166,7 +166,7 @@ export default function AllTab(props) {
             <div className="grupper-card row g-2">
                 < div className="text-center my-2 noSelect">
                     <div onClick={handleCoDocumentCreation}>
-                        + Create Co-Document
+                        + {window.t("Create Co-Document")}
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@ export default function AllTab(props) {
                     document.doc_name?.toUpperCase().includes(filter.search.toUpperCase()) &&
                     <div className="media mb-2" key={key} >
                         <div class="cursor-pointer" onClick={() => { viewDocument(document) }}>
-                            <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x'  />
+                            <FontAwesomeIcon icon={faFileAlt} color='#737373' size='3x' />
                         </div>
                         <div className="media-body" >
                             <div class="cursor-pointer" onClick={() => { viewDocument(document) }}>

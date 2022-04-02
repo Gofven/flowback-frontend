@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
+import { getRequest } from '../../utils/API';
 const { REACT_APP_PROXY } = process.env;
 
-export default function DirectMessage() {
+export default function GroupChannel({ groupId }) {
   const [messageList, setMessageList] = useState([]);
 
   const token = JSON.parse(localStorage.getItem('jwtToken'));
@@ -10,7 +11,8 @@ export default function DirectMessage() {
   let socket;
   useEffect(() => {
     socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]}ws/direct_chat/?token=${token}`
+      `wss://${REACT_APP_PROXY.split(':')[1]
+      }ws/group_chat/${groupId}/?token=${token}`
     );
 
     socket.onopen = function (event) {
@@ -19,7 +21,7 @@ export default function DirectMessage() {
 
     socket.onmessage = function (event) {
       console.log(
-        `[message] Data received from server: ${JSON.parse(event.data).message
+        `[message] Data received from server: ${JSON.parse(event.data).message.message
         }`
       );
       const data = JSON.parse(event.data);
@@ -54,13 +56,20 @@ export default function DirectMessage() {
   const submitMessage = (e) => {
     e.preventDefault();
     // socket.send("hii");
-    const messageBox = document.getElementById('groupchat-message');
     const message = document.getElementById('groupchat-message').value;
-    messageBox.value = '';
 
+    if (message !== '') {
+      const messageBox = document.getElementById('groupchat-message');
+      messageBox.value = '';
+      socket.send(JSON.stringify({ message }));
+      postToChatHistory(message);
+    }
+  };
 
-    if (message !== '') socket.send(JSON.stringify({ message, target: 2 }))
-
+  const postToChatHistory = (message) => {
+    getRequest(`api/v1/chat/group/${groupId}`, { message }).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -71,8 +80,8 @@ export default function DirectMessage() {
             <Image
               className="pfp"
               src={`${message.user.image
-                ? `http://demo.flowback.org${message.user.image}`
-                : '/img/no-photo.jpg'
+                  ? `http://demo.flowback.org${message.user.image}`
+                  : '/img/no-photo.jpg'
                 }`}
             />
             <div className="chat-message-name-and-message">
@@ -94,7 +103,7 @@ export default function DirectMessage() {
           className="chat-message-input-box"
         />
         <button type="submit" className="btn btn-secondary">
-          {window.t("Send")}
+          Send
         </button>
       </form>
     </div>

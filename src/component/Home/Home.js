@@ -26,34 +26,6 @@ import "./home.css";
 export default function Home() {
   return (
     <>
-      {/*<section className="story-section">*/}
-      {/*  <div className="container-xl">*/}
-      {/*    <div className="owl-carousel topStorySlider">*/}
-      {/*      <div className="story-card">*/}
-      {/*        <img*/}
-      {/*          src="/img/top-story-img.jpg"*/}
-      {/*          className="img-fluid story-bg"*/}
-      {/*          alt="story-img"*/}
-      {/*        />*/}
-      {/*        <div className="story-content">*/}
-      {/*          <h4 className="story-title">The Mission</h4>*/}
-      {/*          <div className="media">*/}
-      {/*            <div className="media-body">*/}
-      {/*              <p className="line-3">*/}
-      {/*                Lorem ipsum dolor sit amet, consectetur adipisicing elit.*/}
-      {/*                Dolorem blanditiis rerum veniam porro, repudiandae dolorum*/}
-      {/*                accusamus quaerat error, pariatur perspiciatis aliquam,*/}
-      {/*                autem, dignissimos minus nobis tempora perferendis labore*/}
-      {/*                impedit esse.*/}
-      {/*              </p>*/}
-      {/*            </div>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
-
       <section className="home-dashboard">
         <div className="container-xl mt-4">
           <div className="row justify-content-center">

@@ -1,22 +1,93 @@
-.chat{
-    position:fixed;
-    top:35%;
-    left:0;
-    z-index:1035 !important;
-    margin-bottom: 0 !important;
-    transition:left 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    width:80%;
+.chat {
+  position: fixed;
+  top: 35%;
+  left: 0;
+  z-index: 1035 !important;
+  margin-bottom: 0 !important;
+  transition: left 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  width: 80%;
 }
 
-.chat-closed{
-    left:-70%;
+.chat-closed {
+  left: -70%;
 }
 
-.clickable{
-    cursor: pointer;
+.clickable {
+  cursor: pointer;
 }
 
-.pfp{
-    width:2rem;
-    height:2rem;
+.pfp {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+}
+
+.chat-message-box {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top:1rem;
+}
+
+.chat-message-input-box {
+  width: 90%;
+  border-radius: 12px;
+  border: solid rgba(0, 0, 0, 0.4);
+}
+
+.group-chats {
+  display: flex;
+}
+
+.group-chat-buttons {
+  writing-mode: vertical-lr;
+}
+
+.group-chat-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-radius 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.group-chat-image:hover {
+  border-radius: 15px;
+}
+
+.group-chat {
+  padding: 1rem;
+  padding-top: 0;
+  margin-left: 1.5rem;
+  width: 100%;
+}
+
+.chat-message {
+  padding: 0.2rem;
+  margin-top: 0.3rem;
+  display: flex;
+  border-radius:10px;
+}
+
+.chat-message:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.chat-message-profile {
+  display: flex;
+}
+
+.groupchat-message {
+  padding: 1rem;
+}
+
+.chat-message-name-and-message {
+    margin-left:0.5rem;
+    padding:0.2rem;
+    width:100%;
+}
+
+.groupchat-messages{
+    overflow-y: auto;
+    height:10rem;
 }

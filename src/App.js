@@ -41,9 +41,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import socketIOClient, { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import Chat from "./component/Chat/Chat";
+import { useTranslation, initReactI18next } from "react-i18next";
 const { REACT_APP_PROXY } = process.env;
 
+
 function App() {
+  const { t } = useTranslation()
+  window.t = t
   return (
     <>
       <BrowserRouter>

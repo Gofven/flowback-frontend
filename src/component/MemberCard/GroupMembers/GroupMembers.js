@@ -265,10 +265,10 @@ export default function GroupMembers(props) {
 
             <div style={{ "color": status.color }}>{status.text}</div>
             <div className="mb-2 titles">
-                <div>{totalMembers} Members</div>
-                <div>Voting Rights</div>
-                <div>Admin</div>
-                <div>Select as Delegate</div>
+                <div>{totalMembers} {window.t("Members")}</div>
+                <div>{window.t("Voting Rights")}</div>
+                <div>{window.t("Admin")}</div>
+                <div>{window.t("Select as Delegate")}</div>
             </div>
             {
                 members?.map((member, index) => (
@@ -300,8 +300,8 @@ export default function GroupMembers(props) {
                             {/* <span className="mr-1"> {member.user_type === "Delegator" ? "Delegate" : "Member"} </span> */}
                             {/* </div> */}
                             {JSON.parse(window.localStorage.user).id === member.id && userType !== "Delegator" && member.user_type !== "Owner" && <SetBecomeDelegateButton groupId={groupId} userId={member.id} disabled={false} />}
-                            {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>You are a delegate  </div>}
-                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>Admin can't be a delegate</div>}
+                            {JSON.parse(window.localStorage.user).id === member.id && userType === "Delegator" && <div>{window.t("You are a delegate")}  </div>}
+                            {(member.user_type === "Owner" || member.user_type === "Admin") && <div>{window.t("Admin can't be a delegate")}</div>}
                         </div>
                     </div>
                 ))

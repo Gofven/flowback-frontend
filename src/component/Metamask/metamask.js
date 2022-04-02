@@ -92,17 +92,17 @@ export function ConnectToMetamask() {
     })
 
     return <div>
-        {loading && <div>If nothing shows up, click the MetaMask icon in your browser</div>}
+        {loading && <div>{window.t("If nothing shows up, click the MetaMask icon in your browser")}</div>}
         <Loader loading={loading}>
             {account ?
-                <div className="metamask-connection"><span>Your are connected to MetaMask</span>
+                <div className="metamask-connection"><span>{window.t("You are connected to MetaMask")}</span>
                     <button className="btn btn-outline-warning" onClick={disconnectMetamask}>
-                        Disconnect from Metamask
+                        {window.t("Disconnect from Metamask")}
                     </button></div>
                 :
-                <div className="metamask-connection"><span>Your are not connected to MetaMask</span>
+                <div className="metamask-connection"><span>{window.t("You are not connected to MetaMask")}</span>
                     <button className="btn btn-outline-primary" onClick={connectToMetamask}>
-                        Connect to MetaMask
+                        {window.t("Connect to MetaMask")}
                     </button>
                 </div>}
         </Loader>
@@ -166,35 +166,35 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                     ],
                     Poll: [
                         { name: 'proposal', type: "uint256" },
-                        {name: "hash", type: "string"}
+                        { name: "hash", type: "string" }
                     ]
                 },
             })
 
-        const web3 = new Web3(window.ethereum);
-        web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
-            function (err, results) {
-                if (err) reject(err);
-                else {
+            const web3 = new Web3(window.ethereum);
+            web3.currentProvider.send({ method: 'eth_signTypedData_v4', params: [userAccount, msgParams], from: userAccount },
+                function (err, results) {
+                    if (err) reject(err);
+                    else {
 
-                const types = {
-                    EIP712Domain: [],
-                    Message: [{ name: 'Data', type: 'Polls' },
-                   ],
-                    };
+                        const types = {
+                            EIP712Domain: [],
+                            Message: [{ name: 'Data', type: 'Polls' },
+                            ],
+                        };
 
-                // const primaryType = 'Data';
+                        // const primaryType = 'Data';
 
-                // const recovered = recoverTypedSignature({
-                //     data: {types, primaryType, domain:{}, message:data},
-                //     signature: results.result,
-                //     version:"V4"
-                //     });
-    
-                // console.log(recovered);
-                resolve(results.result);
-                }
-            })
+                        // const recovered = recoverTypedSignature({
+                        //     data: {types, primaryType, domain:{}, message:data},
+                        //     signature: results.result,
+                        //     version:"V4"
+                        //     });
+
+                        // console.log(recovered);
+                        resolve(results.result);
+                    }
+                })
         })
     })
 }

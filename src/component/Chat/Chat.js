@@ -68,14 +68,14 @@ export default function Chat(props) {
   };
   return (
     <div className={`feed-card card-rounded mb-4 chat ${chatOpen ? "" : "chat-closed"}`}>
-        <div className='card-header flex-header'>
-            <h4 className="card-title">Chat</h4>
-            {chatOpen ? 
-          <FontAwesomeIcon icon={faMinus} className="clickable" onClick={handleClose}/> : 
-          <FontAwesomeIcon icon={faPlus} className="clickable" onClick={handleOpen}/>   
-          }
-            
-        </div>
+      <div className='card-header flex-header'>
+        <h4 className="card-title">{window.t("Chat")}</h4>
+        {chatOpen ?
+          <FontAwesomeIcon icon={faMinus} className="clickable" onClick={handleClose} /> :
+          <FontAwesomeIcon icon={faPlus} className="clickable" onClick={handleOpen} />
+        }
+
+      </div>
       <div className="card-header flex-header tab-header">
         <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
           {tab?.map((item, index) =>
@@ -86,7 +86,7 @@ export default function Chat(props) {
                   data-id={index}
                   {...handleOnClick}
                 >
-                  {item}
+                  {window.t(item)}
                 </span>
               </li>
             ) : null
@@ -98,7 +98,7 @@ export default function Chat(props) {
           {renderTab()}
         </div>
       </div>
-    </div> 
-    
+    </div>
+
   );
 }

@@ -83,7 +83,7 @@ export default function Header() {
               <li className="nav-item" key={index} >
                 <Link className={`nav-link ${window.location.pathname === item.url ? 'disabled' : null}`} to={item.url}>
                   <i className={`las ${item.icon} currently-selected`}></i>
-                  <span>{item.title}</span>
+                  <span>{window.t(item.title)}</span>
                 </Link>
               </li>
             ))}
@@ -132,7 +132,7 @@ export default function Header() {
                 </div>
               </a>
               <UserAction user={user.id} />
-            </li> : <ActionRow {...loggedOutData} key={1} >Log in</ActionRow>}
+            </li> : <ActionRow {...loggedOutData} key={1} >{window.t("Log in")}</ActionRow>}
           </ul>
         </div>
       </div>

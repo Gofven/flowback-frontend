@@ -23,10 +23,10 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                         return <Dropdown.Item className="cursor-pointer filterDropdown"
                             onClick={() => setPollFilter({ ...pollFilter, pollType: filter === pollFilter.pollType ? null : filter })}>
                             <div>
-                                {filter === "condorcet" ? "Ranking" : null}
-                                {filter === "traffic" ? "For/Against" : null}
-                                {filter === "event" ? "Time" : null}
-                                {filter === "cardinal" ? "Cardinal" : null}
+                                {filter === "condorcet" ? window.t("Ranking") : null}
+                                {filter === "traffic" ? window.t("For/Against") : null}
+                                {filter === "event" ? window.t("Time") : null}
+                                {filter === "cardinal" ? window.t("Cardinal") : null}
                             </div>
                             <div>{pollFilter.pollType === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>
@@ -34,13 +34,13 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
                 </Dropdown.Menu>
             </Dropdown>
             <Dropdown>
-                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.discussion === null ? "Any Poll Progress" : pollFilter.discussion}
+                <Dropdown.Toggle variant="white" id="dropdown-basic">{pollFilter.discussion === null ? "Any Poll Progress" : window.t(pollFilter.discussion)}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {["In progress", "Finished"].map(filter => {
                         return <Dropdown.Item className="cursor-pointer filterDropdown"
                             onClick={() => setPollFilter({ ...pollFilter, discussion: filter === pollFilter.discussion ? null : filter })}>
-                            <div>{filter}</div>
+                            <div>{window.t(filter)}</div>
                             <div>{pollFilter.discussion === filter ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                         </Dropdown.Item>
                     })}
@@ -53,17 +53,17 @@ export function DropDownPollFilter({ pollFilter, setPollFilter }) {
 export function DropDownFilterGroup({ filter, setFilter }) {
     return <div className="filters">
         <Dropdown>
-            <Dropdown.Toggle variant="white" id="dropdown-basic">{filter.typeOfMember === null ? "Type of Member" : filter.typeOfMember}
+            <Dropdown.Toggle variant="white" id="dropdown-basic">{filter.typeOfMember === null ? window.t("Type of Member") : filter.typeOfMember}
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {["Not Member", "Member", "Delegator", "Owner"].map(filterCategory => {
                     return <Dropdown.Item className="cursor-pointer filterDropdown"
                         onClick={() => setFilter({ ...filter, typeOfMember: filterCategory === filter.typeOfMember ? null : filterCategory })}>
                         <div>
-                            {filterCategory === "Not Member" && "Not Member"}
-                            {filterCategory === "Delegator" && "Delegate"}
-                            {filterCategory === "Member" && "Member"}
-                            {filterCategory === "Owner" && "Admin"}
+                            {filterCategory === "Not Member" && window.t("Not Member")}
+                            {filterCategory === "Delegator" && window.t("Delegate")}
+                            {filterCategory === "Member" && window.t("Member")}
+                            {filterCategory === "Owner" && window.t("Admin")}
                         </div>
                         <div>{filter.typeOfMember === filterCategory ? <FontAwesomeIcon icon={faCheckCircle} /> : null}</div>
                     </Dropdown.Item>
