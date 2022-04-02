@@ -10,7 +10,7 @@ export default function DirectMessage() {
   let socket;
   useEffect(() => {
     socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]}ws/direct_chat/?token=${token}`
+      `wss://${REACT_APP_PROXY.split(':')[1]}/ws/direct_chat/?token=${token}`
     );
 
     socket.onopen = function (event) {
@@ -59,7 +59,7 @@ export default function DirectMessage() {
     messageBox.value = '';
 
 
-    if (message !== '') socket.send(JSON.stringify({ message, target: 2 }))
+    if (message !== '') socket.send(JSON.stringify({ message, target: 1 }))
 
   };
 

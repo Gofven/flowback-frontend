@@ -24,6 +24,7 @@ import SignUp from "../../component/SignUp/SignUp";
 import ResetPassword from "../../component/LoginCard/ResetPassword";
 import { useTab } from "../../hook/useTab";
 import "./styles.css";
+const { REACT_APP_REGISTRATION } = process.env;
 
 export default function Login() {
   const { tab, activeTab, bind: handleOnClick } = useTab(["Login", "Register"]);
@@ -31,7 +32,7 @@ export default function Login() {
   //If user is already logged in, then make it impossible to access the login page
   if (localStorage.getItem('user')) {
     window.location.href = "/"
-    return <h1>Already Loggin in, redirecting...</h1>
+    return <h1>{window.t("Already Logged in, redirecting")}...</h1>
   }
 
   // Rendor tabs of login and sign up
@@ -62,6 +63,7 @@ export default function Login() {
                   role="tablist"
                 >
                   {tab?.map((item, index) => (
+                    ((item === "Register" && parseInt(REACT_APP_REGISTRATION)) || (item !== "Register")) &&
                     <li className="nav-item" role="presentation" key={index}>
                       <span
                         className={`nav-link${item === activeTab ? " active" : ""

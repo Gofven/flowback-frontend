@@ -29,6 +29,7 @@ import { Form } from "react-bootstrap";
 import { SearchFilter, DropDownFilterGroup } from '../../component/common/Filter/Filter'
 import GroupButtons from "./GroupForm/GroupButtons";
 import { useTranslation } from "react-i18next";
+const { REACT_APP_GROUP_CREATION } = process.env
 
 export default function Friends() {
 
@@ -176,13 +177,14 @@ export default function Friends() {
 
             {/*/Missions Featured Cards Col*/}
             <div className="col-md-6">
-              <Link to='/create'>
-                <div className="grupper-card">
-                  <div className=" text-center my-2">
-                    + {window.t("Create a Group")}
+              {<div style={{ "visibility": "none" }}>parseInt(REACT_APP_GROUP_CREATION)</div> &&
+                <Link to='/create'>
+                  <div className="grupper-card">
+                    <div className=" text-center my-2">
+                      + {window.t("Create a Group")}
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>}
               <SearchFilter setFilter={setFilter} filter={filter} />
               <DropDownFilterGroup setFilter={setFilter} filter={filter} />
 

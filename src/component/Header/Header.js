@@ -26,7 +26,7 @@ import "./header.css";
 import Notifiaction from "./Notifiaction/Notification";
 import UserAction from "./UserAction/UserAction";
 import ActionRow from "./UserAction/ActionRow";
-const { REACT_APP_REFORUM } = process.env;
+const { REACT_APP_REFORUM, REACT_APP_REGISTRATION } = process.env;
 
 export default function Header() {
   const [user, setUser] = useState({})
@@ -41,7 +41,7 @@ export default function Header() {
 
   const loggedOutData =
   {
-    title: "Log In/Register",
+    title: parseInt(REACT_APP_REGISTRATION) ? "Log In/Register" : "Log In",
     url: "#",
     onClick: () => {
       window.location.href = "/Login";
@@ -66,7 +66,7 @@ export default function Header() {
       <div className="container-lg">
         <a className="navbar-brand" href="/">
           {(REACT_APP_REFORUM === "1") ? (
-            <img src="/img/REFORUM.png" className="main-logo" alt="logo"/>
+            <img src="/img/REFORUM.png" className="main-logo" alt="logo" />
           ) : (
             <img src="/img/Logo.png" className="main-logo" alt="logo" />
             /* <span className="main-logo-text">Flowback</span> */
