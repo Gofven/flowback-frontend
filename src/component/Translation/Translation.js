@@ -16,7 +16,7 @@ i18n
         },
       },
       sv : {
-          translation: translation_swedish
+          translation : translation_swedish
       }
     },
     lng: window.navigator.language.split("-")[0], 

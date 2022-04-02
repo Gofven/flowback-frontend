@@ -46,7 +46,9 @@ const { REACT_APP_PROXY } = process.env;
 
 
 function App() {
-  const {t} = useTranslation()
+  window.useTranslation = useTranslation
+  const {t} = window.useTranslation()
+  console.log(t)
   return (
     <>
     <h1>{t("hiiiii")}</h1>

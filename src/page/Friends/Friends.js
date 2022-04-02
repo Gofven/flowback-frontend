@@ -28,6 +28,7 @@ import Image from "../../component/common/Image/Image";
 import { Form } from "react-bootstrap";
 import { SearchFilter, DropDownFilterGroup } from '../../component/common/Filter/Filter'
 import GroupButtons from "./GroupForm/GroupButtons";
+import { useTranslation } from "react-i18next";
 
 export default function Friends() {
 
@@ -45,6 +46,7 @@ export default function Friends() {
   });
   let month = 1;
   let year = 2020;
+  const {t} = useTranslation()
 
   //Load list of groups
   useEffect(() => {
@@ -164,7 +166,6 @@ export default function Friends() {
     setFilters({ ...filters, filter_city: e.target.value });
 
   }
-  console.log(groups)
 
   return (
     <Layout1>
@@ -178,7 +179,7 @@ export default function Friends() {
               <Link to='/create'>
                 <div className="grupper-card">
                   <div className=" text-center my-2">
-                    + Create a Group
+                    + {t("Create a Group")}
                   </div>
                 </div>
               </Link>
@@ -219,7 +220,7 @@ export default function Friends() {
                         </div>
                         <div className="grupper-btn-view">
                           <GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} reload={false} />
-                          {(group.user_type === "Owner" || group.user_type === "Delegator") && <div>You can't leave this group</div>}
+                          {(group.user_type === "Owner" || group.user_type === "Delegator") && <div>{window.t("You can't leave this group")}</div>}
                         </div>
                       </div>
                     </div>

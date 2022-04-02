@@ -19,13 +19,15 @@
 */
 
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function AboutCard(props) {
+    const {t} = useTranslation()
     let group = props.groupDetail;
     return (
         <div className="feed-card card-rounded mb-4">
             <div className="card-header flex-header tab-header">
-                <h4 className="card-title">About</h4>
+                <h4 className="card-title">{t("About")}</h4>
 
             </div>
             <div className="card-body">
@@ -33,7 +35,7 @@ export default function AboutCard(props) {
                     <div id="PollsTab">
                         <div className="row">
                             <div className="row">
-                                <div className="col-5">Description</div>
+                                <div className="col-5">{t("Description")}</div>
                                 <div className="col-6">{group.description}</div>
                             </div>
                             {/* <div className="row">
@@ -52,7 +54,7 @@ export default function AboutCard(props) {
                                 <div className="col-6">{group.city && group.city.city_name}, {group.country && group.country.country_name}</div>
                             </div> */}
                             <div className="row">
-                                <div className="col-5">Created By</div>
+                                <div className="col-5">{t("Created By")}</div>
                                 <div className="col-6">{group.created_by && group.created_by.first_name} {group.created_by && group.created_by.last_name}</div>
                             </div>
                         </div>
