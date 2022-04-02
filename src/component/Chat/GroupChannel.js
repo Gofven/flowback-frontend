@@ -12,7 +12,7 @@ export default function GroupChannel({ groupId }) {
   useEffect(() => {
     socket = new WebSocket(
       `wss://${REACT_APP_PROXY.split(':')[1]
-      }ws/group_chat/${groupId}/?token=${token}`
+      }/ws/group_chat/${groupId}/?token=${token}`
     );
 
     socket.onopen = function (event) {
@@ -62,13 +62,15 @@ export default function GroupChannel({ groupId }) {
       const messageBox = document.getElementById('groupchat-message');
       messageBox.value = '';
       socket.send(JSON.stringify({ message }));
-      postToChatHistory(message);
     }
   };
 
-  const postToChatHistory = (message) => {
-    getRequest(`api/v1/chat/group/${groupId}`, { message }).then((res) => {
-      console.log(res);
+  const getChatHistory = () => {
+    getRequest(`api/v1/chat/group/${groupId}?limit=10`).then((res) => {
+      console.log(res, "CHAT");
+      getRequest(`${res.next.split('org/')[1]}`).then((res) => {
+        console.log(res, "CHAT 2")
+      })
     });
   };
 
@@ -80,8 +82,8 @@ export default function GroupChannel({ groupId }) {
             <Image
               className="pfp"
               src={`${message.user.image
-                  ? `http://demo.flowback.org${message.user.image}`
-                  : '/img/no-photo.jpg'
+                ? `http://demo.flowback.org${message.user.image}`
+                : '/img/no-photo.jpg'
                 }`}
             />
             <div className="chat-message-name-and-message">
@@ -103,7 +105,7 @@ export default function GroupChannel({ groupId }) {
           className="chat-message-input-box"
         />
         <button type="submit" className="btn btn-secondary">
-          Send
+          {window.t("Send")}
         </button>
       </form>
     </div>
