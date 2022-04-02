@@ -189,6 +189,7 @@
     grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
+
 .calendar-day-1{
     margin-left:0;
     grid-column-start: 1;

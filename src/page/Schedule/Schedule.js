@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Schedule.css";
 import Layout1 from "../../layout/Layout1";
-import getHomePolls from "./getPolls";
+import getPolls from "./getPolls";
 import Loader from "../../component/common/Loader/Loader";
 import DayPolls from "./DayPolls.js";
 
@@ -27,7 +27,7 @@ export default function Schedule() {
   const currentDate = new Date();
   const startYear = currentDate.getFullYear() - 2;
   const endYear = currentDate.getFullYear() + 5;
-  const [month, setMonth] = useState(0);
+  const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,25 +50,44 @@ export default function Schedule() {
   };
 
   function CalendarDays() {
-    const tmpDate = new Date(year, month, 0);
-    const num = daysInMonth(month, year);
-    const dayofweek = tmpDate.getDay();
+    const monthPolls = polls.map(poll => poll.top_proposal).filter(poll => new Date(poll.date).getMonth() === month)
+    console.log(monthPolls)
 
+    const dayofweek = new Date(year, month, 0).getDay();
     let monthDays = [];
-    for (let i = 0; i < daysInMonth(month, year); i++) {
-      monthDays[i] = <div>{i + 1}</div>;
+
+    for (let i = dayofweek; i < daysInMonth(month, year) + dayofweek; i++) {
+      monthDays[i] = i - dayofweek + 1
     }
 
     return (
       <div className="all-calendar-days">
-        {monthDays.map((day, i) => (
-          <div key={i} className={`calendar-day-${i % 7 + 1}`} >
-            {day}
+        {monthDays.map((day, i) => {
+          const dayPolls = monthPolls.filter(poll => new Date(poll.date).getDate() === day)
+          return <div key={i} className={`calendar-day-${i % 7 + 1}`} onClick={handleClickingDate}>
+            <div className="day-number">{day}</div>
+            {(dayPolls.length !== 0) && <PollDayList dayPolls={dayPolls} />}
           </div>
-        ))}
+        })}
       </div>
     );
-  }//style={{"order": (i % 7) + 1}}
+  }
+
+  const PollDayList = ({ dayPolls }) => {
+    return <div className="day-poll-list" style={{ "visibility": "hidden" }}>{dayPolls.map(poll => (
+      <div>{poll.date}</div>
+    ))}</div>
+  }
+
+  const handleClickingDate = (e) => {
+    // document.createElement("div")
+    const pollDayList = e.target.getElementsByClassName("day-poll-list")[0] || (e.target.classList.contains("day-number") && e.target.parentElement.getElementsByClassName("day-poll-list")[0])
+    console.log(pollDayList)
+    if (pollDayList) {
+      if (pollDayList.style.visibility === "visible") pollDayList.style.visibility = "hidden"
+      else pollDayList.style.visibility = "visible"
+    }
+  }
 
   function loadCalendarDays() { }
   function loadCalendarDays2() {
@@ -118,21 +137,15 @@ export default function Schedule() {
   }
 
   function daysInMonth(month, year) {
-    var d = new Date(year, month + 1, 0);
-    return d.getDate();
+    return new Date(year, month + 1, 0).getDate();
   }
 
   useEffect(() => {
-    if (document.getElementById('months').children.length === 0)
-      // setLoading(true);
-      getHomePolls().then((homePolls) => {
-        setPolls(homePolls);
-        loadCalendarDays();
-
-        var date = new Date();
-        setMonth(date.getMonth());
-        setYear(date.getFullYear());
-      });
+    setLoading(true);
+    getPolls().then((polls) => {
+      setLoading(false);
+      setPolls(polls);
+    })
   }, []);
 
   useEffect(() => {
@@ -141,11 +154,7 @@ export default function Schedule() {
     //   setLoading(false);
     // }, 4000);
 
-    getHomePolls().then((homePolls) => {
-      setPolls(homePolls);
-      loadCalendarDays();
-      displayDailyPoll();
-    });
+
   }, [month, year]);
 
   //I'm sorry for this mess
@@ -214,7 +223,7 @@ export default function Schedule() {
   };
 
   const handleMonthChange = (e) => {
-    setMonth(e.target.id);
+    setMonth(parseInt(e.target.id));
     loadCalendarDays();
   };
 
