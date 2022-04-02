@@ -26,6 +26,7 @@ import "./header.css";
 import Notifiaction from "./Notifiaction/Notification";
 import UserAction from "./UserAction/UserAction";
 import ActionRow from "./UserAction/ActionRow";
+const { REACT_APP_REFORUM } = process.env;
 
 export default function Header() {
   const [user, setUser] = useState({})
@@ -59,12 +60,17 @@ export default function Header() {
 
 
   }, []);
+
   return (
     <nav className="main-navbar navbar navbar-expand-lg">
       <div className="container-lg">
         <a className="navbar-brand" href="/">
-          <img src="/img/Logo.png" className="main-logo" alt="logo" />
-          {/* <span className="main-logo-text">Flowback</span> */}
+          {(REACT_APP_REFORUM === "1") ? (
+            <img src="/img/REFORUM.png" className="main-logo" alt="logo"/>
+          ) : (
+            <img src="/img/Logo.png" className="main-logo" alt="logo" />
+            /* <span className="main-logo-text">Flowback</span> */
+          )}
         </a>
         <button
           className="navbar-toggler"
@@ -138,4 +144,7 @@ export default function Header() {
       </div>
     </nav >
   );
+
+
+
 }
