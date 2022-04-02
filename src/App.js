@@ -46,12 +46,10 @@ const { REACT_APP_PROXY } = process.env;
 
 
 function App() {
-  window.useTranslation = useTranslation
-  const {t} = window.useTranslation()
-  console.log(t)
+  const { t } = useTranslation()
+  window.t = t
   return (
     <>
-    <h1>{t("hiiiii")}</h1>
       <BrowserRouter>
         <Switch>
           <PublicRoute exact path="/" component={Home} />

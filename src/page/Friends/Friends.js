@@ -46,7 +46,7 @@ export default function Friends() {
   });
   let month = 1;
   let year = 2020;
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   //Load list of groups
   useEffect(() => {
@@ -179,7 +179,7 @@ export default function Friends() {
               <Link to='/create'>
                 <div className="grupper-card">
                   <div className=" text-center my-2">
-                    + {t("Create a Group")}
+                    + {window.t("Create a Group")}
                   </div>
                 </div>
               </Link>

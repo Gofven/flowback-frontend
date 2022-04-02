@@ -11,8 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
     socket = new WebSocket(
-      `wss://${
-        REACT_APP_PROXY.split(':')[1]
+      `wss://${REACT_APP_PROXY.split(':')[1]
       }ws/group_chat/${groupId}/?token=${token}`
     );
 
@@ -22,8 +21,7 @@ export default function GroupChannel({ groupId }) {
 
     socket.onmessage = function (event) {
       console.log(
-        `[message] Data received from server: ${
-          JSON.parse(event.data).message.message
+        `[message] Data received from server: ${JSON.parse(event.data).message.message
         }`
       );
       const data = JSON.parse(event.data);
@@ -59,7 +57,7 @@ export default function GroupChannel({ groupId }) {
     e.preventDefault();
     // socket.send("hii");
     const message = document.getElementById('groupchat-message').value;
-    
+
     if (message !== '') {
       const messageBox = document.getElementById('groupchat-message');
       messageBox.value = '';
@@ -81,15 +79,14 @@ export default function GroupChannel({ groupId }) {
           <div key={Math.random() * 1000000} className="chat-message">
             <Image
               className="pfp"
-              src={`${
-                message.user.image
+              src={`${message.user.image
                   ? `http://demo.flowback.org${message.user.image}`
                   : '/img/no-photo.jpg'
-              }`}
+                }`}
             />
             <div className="chat-message-name-and-message">
               <div>{message.user.username}</div>
-              <div>{message.message}</div>
+              <div>{window.t(message.message)}</div>
             </div>
           </div>
         ))}

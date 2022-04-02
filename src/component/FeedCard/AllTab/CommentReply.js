@@ -161,7 +161,7 @@ export default function CommentReply() {
         role="button"
         aria-expanded="false"
       >
-        Show more comments
+        {window.t("Show more comments")}
       </a>
     </div>
   );

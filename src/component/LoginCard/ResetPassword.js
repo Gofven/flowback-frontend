@@ -69,9 +69,9 @@ export default function ResetPassword({ loading, setLoading }) {
   if (stage === 1) {
     return <Loader loading={loading}>
       <form action="#" className="form login_form">
-        <div className="form-group"><h4>Reset password by typing your account email below to receive verification code</h4></div>
+        <div className="form-group"><h4>{window.t("Reset password by typing your account email below to receive verification code")}</h4></div>
         <div className="form-group">
-          <h5>Mail</h5>
+          <h5>{window.t("Mail")}</h5>
           <Textbox
             type="email"
             name="email"
@@ -86,7 +86,7 @@ export default function ResetPassword({ loading, setLoading }) {
             className="btn login-btn btn-hover"
             //disabled={!formVaxlid}
             onClick={handleSendCodeToEmail}>
-            Send
+            {window.t("Send")}
           </button>
         </div>
         {/* </form> */}
@@ -97,7 +97,7 @@ export default function ResetPassword({ loading, setLoading }) {
     return <Loader loading={loading}>
       <form action="#">
         <div className="form login_form">
-          <div className="form-group"><h4 style={{ "color": "green" }}>A verification code has been sent to the email adress</h4></div>
+          <div className="form-group"><h4 style={{ "color": "green" }}>{window.t("A verification code has been sent to the email adress")}</h4></div>
           {/* <div className="form-group">
           <h5>Email</h5>
         <Textbox
@@ -110,7 +110,7 @@ export default function ResetPassword({ loading, setLoading }) {
             /></div> */}
           <div className="form-group">
             <h5 style={{ "color": "red", "fontSize": "14px" }}>{status}</h5>
-            <h5>Password</h5>
+            <h5>{window.t("Password")}</h5>
             <Textbox
               type="password"
               name="password"
@@ -119,7 +119,7 @@ export default function ResetPassword({ loading, setLoading }) {
             //onBlur={validated}
             //required
             /></div><div className="form-group">
-            <h5>Retype Password</h5>
+            <h5>{window.t("Retype Password")}</h5>
             <Textbox
               type="password"
               name="repassword"
@@ -128,7 +128,7 @@ export default function ResetPassword({ loading, setLoading }) {
             //onBlur={validated}
             //required
             /></div><div className="form-group">
-            <h5>Verification Code</h5>
+            <h5>{window.t("Verification Code")}</h5>
             <Textbox
               type="integers"
               name="verification_code"
@@ -142,7 +142,7 @@ export default function ResetPassword({ loading, setLoading }) {
               className="btn login-btn btn-hover"
               //disabled={!formVaxlid}
               onClick={handlePasswordReset}>
-              Set password
+              {window.t("Set password")}
             </button></div>
         </div>
       </form>

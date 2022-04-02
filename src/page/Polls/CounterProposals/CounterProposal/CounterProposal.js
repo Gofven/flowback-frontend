@@ -70,7 +70,7 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
 
     return (
         <div className="card counter-proposal-card">
-            {counterProposal.final_score !== null? <div className='points'>{counterProposal?.final_score || 0}</div> : null}
+            {counterProposal.final_score !== null ? <div className='points'>{counterProposal?.final_score || 0}</div> : null}
             <div className="post-header d-flex justify-content-between card-header mb-0">
                 {counterProposal && counterProposal.user &&
                     <div className="media post-meida">
@@ -82,7 +82,7 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
                             <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
-                    
+
                 }
             </div>
             <div className="counterproposal-body card-body">
@@ -91,8 +91,8 @@ export default function CounterProposal({ counterProposal, addComment, updateCom
                     <div className="counterproposal-share">
                         <div>
                             <a href="#">
-                                <i className="las la-comment"></i>{counterProposal?.comments_details?.total_comments} Comments
-              </a>
+                                <i className="las la-comment"></i>{counterProposal?.comments_details?.total_comments} {window.t("Comments")}
+                            </a>
                         </div>
                         {counterProposal.date ? counterProposal.date : null}
                     </div>

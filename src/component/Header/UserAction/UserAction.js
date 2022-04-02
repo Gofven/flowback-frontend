@@ -59,12 +59,12 @@ const loggedOutData = [
       logOut();
       window.location.href = "/Login";
     }
-  }, 
+  },
 ]
 
 export default function UserAction(user) {
 
-  const data = typeof user.user === "undefined" ? loggedOutData : loggedInData 
+  const data = typeof user.user === "undefined" ? loggedOutData : loggedInData
 
   return (
     <ul

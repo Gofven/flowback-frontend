@@ -18,16 +18,13 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
-import React, { useEffect, useRef, useState } from "react";
-import { postRequest } from "../../../utils/API";
+import React, { useEffect, useRef } from "react";
 
-export default function CommentBox({ border = true, onAddComment, replyTo, onInputBlur, updateComment, poll }) {
+export default function CommentBox({ onAddComment, replyTo, onInputBlur, updateComment, poll }) {
 
   const inputRef = useRef();
   const commentBeingRepliedTo = poll.comments_details.comments.find(comment => comment.id === replyTo);
   const handleKeypress = (e) => {
-    console.log("e", e);
-    console.log("e", e.target.value);
     if (e.key === "Enter") {
       if (onAddComment && typeof onAddComment == 'function') {
         try {
@@ -77,7 +74,7 @@ export default function CommentBox({ border = true, onAddComment, replyTo, onInp
         type="text"
         className="form-control"
         maxLength="1000"
-        placeholder={commentBeingRepliedTo ? `Replying to ${commentBeingRepliedTo.created_by.first_name}` : "Write a comment"}
+        placeholder={commentBeingRepliedTo ? `Replying to ${commentBeingRepliedTo.created_by.first_name}` : window.t("Write a comment")}
         onKeyPress={handleKeypress}
         ref={inputRef}
         onBlur={onInputBlur}

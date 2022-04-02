@@ -47,7 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
-import {HTMEditor,getHTML,clearHTML} from '../../../component/HTMEditor/HTMEditor'
+import { HTMEditor, getHTML, clearHTML } from '../../../component/HTMEditor/HTMEditor'
 import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
@@ -58,7 +58,7 @@ export default function PollDetails() {
     const [counterProposal, setCounterProposal] = useState({});
     const [counterProposalLoading, setCounterProposalLoading] = useState(false);
     const [alreadyPosted, setAlreadyPosted] = useState(false);
-    const [displayedMessege, setDisplayedMessege] = useState({messege:"", color:"black"});
+    const [displayedMessege, setDisplayedMessege] = useState({ messege: "", color: "black" });
     const [allProposals, setAllProposals] = useState(null);
     const [show, setShow] = useState(false);
     // Get all proposals
@@ -334,28 +334,28 @@ export default function PollDetails() {
         counterProposal.description = getHTML();
 
         if (counterProposal.proposal_title === "") {
-            setDisplayedMessege({messege:"Proposal needs title", color:"red"});
+            setDisplayedMessege({ messege: "Proposal needs title", color: "red" });
             return;
         }
 
         if (counterProposal.proposal_title?.includes("~")) {
-            setDisplayedMessege({messege:"Character \"~\" is not allowed", color:"red"});
+            setDisplayedMessege({ messege: "Character \"~\" is not allowed", color: "red" });
             return;
         }
 
         const maxTitleLength = 75;
         if (poll.type !== "event" && counterProposal.proposal_title?.length > maxTitleLength) {
-            setDisplayedMessege({messege:`Not allowed more than ${maxTitleLength} characters in title`, color:"red"});
+            setDisplayedMessege({ messege: `Not allowed more than ${maxTitleLength} characters in title`, color: "red" });
             return;
         }
 
         if (existProposalWithSameTitle()) {
-            setDisplayedMessege({messege:"Proposal with same title already exists", color:"red"});
+            setDisplayedMessege({ messege: "Proposal with same title already exists", color: "red" });
             return;
         }
 
         if (poll.type === "event" && existProposalWithSameDate()) {
-            setDisplayedMessege({messege:"Proposal with same date already exists", color:"red"});
+            setDisplayedMessege({ messege: "Proposal with same date already exists", color: "red" });
             return;
         }
 
@@ -387,9 +387,9 @@ export default function PollDetails() {
                 }
                 setCounterProposal({});
                 setCounterProposalLoading(false);
-                setCounterProposal({proposal_title:"", description:"", proposal:""})
+                setCounterProposal({ proposal_title: "", description: "", proposal: "" })
                 clearHTML();
-                setDisplayedMessege({messege:"Successfully sent proposal", color:"green"})
+                setDisplayedMessege({ messege: "Successfully sent proposal", color: "green" })
                 window.scrollBy(0,);
 
                 // window.location.reload();
@@ -427,7 +427,7 @@ export default function PollDetails() {
                                         }
                                     </h4>
                                     <div>
-                                        <span className="poll-field">Created by: </span>
+                                        <span className="poll-field">{window.t("Created by")}: </span>
 
                                         {poll.created_by && poll.created_by.first_name} {poll.created_by && poll.created_by.last_name}
                                     </div>
@@ -441,21 +441,21 @@ export default function PollDetails() {
                                 </div> */}
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
-                                        <div className="col-5">Created at</div>
+                                        <div className="col-5">{window.t("Created at")}</div>
                                         <div className="col-6">{formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">Accepted at</div>
+                                        <div className="col-5">{("Accepted at")}</div>
                                         <div
                                             className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">End Time</div>
+                                        <div className="col-5">{("End Time")}</div>
                                         <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
 
                                     <div className="row">
-                                        <div className="col-5">Group Name</div>
+                                        <div className="col-5">{window.t("Group name")}</div>
                                         <div className="col-6">
                                             <Link to={`/groupdetails/${group.id}`}>
                                                 <div>{group.title}</div>
@@ -463,7 +463,7 @@ export default function PollDetails() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">Documents</div>
+                                        <div className="col-5">{("Documents")}</div>
                                         <div className="col-6">
                                             {
                                                 poll && poll.files && poll.files.length ?
@@ -490,7 +490,7 @@ export default function PollDetails() {
                                                             />
                                                         </div>
                                                     )) :
-                                                    <div>NA</div>
+                                                    <div>{window.t("NA")}</div>
                                             }
 
                                             <div className='d-flex'>
@@ -543,7 +543,7 @@ export default function PollDetails() {
                                     <div className="card poll-details-card card-rounded overflow-hidden my-4">
                                         <div className="card-header flex-header">
                                             <h4 className="card-title fw-bolder">
-                                                Proposal
+                                                {window.t("Proposal")}
                                             </h4>
                                         </div>
                                         <div className="card-body overflow-hidden">
@@ -551,7 +551,7 @@ export default function PollDetails() {
                                                 <h5 style={{ "color": displayedMessege.color }}>{displayedMessege.messege}</h5>
                                                 {poll.type === "event" ? <div className="form-group field">
                                                     <div>
-                                                        Meeting Time
+                                                        {("Meeting Time")}
                                                     </div>
                                                     <div className="date-picker">
                                                         <DatePicker
@@ -566,7 +566,7 @@ export default function PollDetails() {
                                                     </div>
                                                 </div> : <div>
                                                     <div className="form-group">
-                                                        <h2>Title</h2>
+                                                        <h2>{window.t("Title")}</h2>
                                                         <Textbox
                                                             type="text"
                                                             name="proposal_title"
@@ -579,7 +579,7 @@ export default function PollDetails() {
                                                     </div>
                                                 </div>}
                                                 <div className="form-group">
-                                                    <h2 style={{"margin-top":"1rem"}}>Description</h2>
+                                                    <h2 style={{ "margin-top": "1rem" }}>{window.t("Description")}</h2>
                                                     {!counterProposalLoading && <HTMEditor />}
                                                 </div>
                                                 <div className="form-group">
@@ -599,7 +599,7 @@ export default function PollDetails() {
                                                             <div className=''>
                                                                 <label htmlFor='document'>
                                                                     <div>
-                                                                        Add File
+                                                                        {window.t("Add File")}
                                                                     </div>
                                                                 </label>
                                                                 <input type='file'
@@ -620,20 +620,15 @@ export default function PollDetails() {
                                                         onClick={() => {
                                                             saveCounterProposal();
                                                             //Reload can not be set here
-
                                                         }}>
-                                                        Add
+                                                        {window.t("Add")}
                                                     </Button>
                                                 </div>
                                             </form>
-                                            {/* } */}
-
                                         </div>
-
                                     </div>
                                 </Loader>
                             }
-
                             {poll.accepted && group.id && poll.discussion != "Finished" &&
                                 <div className="card chat-list-card chat-card card-rounded overflow-hidden my-2 mb-4">
                                     <div className="card-body overflow-hidden">
@@ -652,33 +647,33 @@ export default function PollDetails() {
                             }
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
-                            
+
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
-                                <Modal show={show} onHide={handleClose} animation={false}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Poll Hash</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body><div className="hash-modal">
-                                        {poll.result_hash}</div>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <button className="btn btn-danger" onClick={handleClose}>Close</button>
-                                    </Modal.Footer>
-                                </Modal>
-               
-                                    <h4 className="card-title fw-bolder">Download poll data and hash</h4>
+                                    <Modal show={show} onHide={handleClose} animation={false}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>{window.t("Poll Hash")}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body><div className="hash-modal">
+                                            {poll.result_hash}</div>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <button className="btn btn-danger" onClick={handleClose}>Close</button>
+                                        </Modal.Footer>
+                                    </Modal>
+
+                                    <h4 className="card-title fw-bolder">{window.t("Download poll data and hash")}</h4>
                                 </div>
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-6">
                                             <Link>
-                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>Reveal Results JSON object</div>
+                                                <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>{window.t("Reveal Results JSON object")}</div>
                                             </Link>
-                                        <div className="col-6" style={{"width":"100%"}}>
-                                            <Link>
-                                                <div onClick={() => setShow(true)}>Reveal Result Hash</div>
-                                            </Link>
+                                            <div className="col-6" style={{ "width": "100%" }}>
+                                                <Link>
+                                                    <div onClick={() => setShow(true)}>{window.t("Reveal Result Hash")}</div>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -690,18 +685,18 @@ export default function PollDetails() {
                         <div className="col-md-3">
                             <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">
-                                    <h4 className="card-title">Poll Status</h4>
+                                    <h4 className="card-title">{window.t("Poll Status")}</h4>
                                 </div>
 
                                 <div className="card-body overflow-hidden">
                                     <div>
                                         <FontAwesomeIcon icon={faCheck} color='#737373' />
-                                        <p className="text-turncate small mb-0 d-inline poll-field ml-1">Discussion</p>
+                                        <p className="text-turncate small mb-0 d-inline poll-field ml-1">{window.t("Discussion")}</p>
                                         <p className="text-turncate ml-4">{poll.discussion}</p>
                                     </div>
                                     <div>
                                         <FontAwesomeIcon icon={faCheck} color='#737373' />
-                                        <p className="text-turncate small mb-0 d-inline poll-field ml-1">Voting</p>
+                                        <p className="text-turncate small mb-0 d-inline poll-field ml-1">{window.t("Voting")}</p>
                                         <p className="text-turncate ml-4">{poll.discussion}</p>
                                     </div>
                                 </div>

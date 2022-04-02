@@ -15,11 +15,11 @@ i18n
           'hiiiii': "hello world"
         },
       },
-      sv : {
-          translation : translation_swedish
+      sv: {
+        translation: translation_swedish
       }
     },
-    lng: window.navigator.language.split("-")[0], 
+    lng: window.navigator.language.split("-")[0],
     fallbackLng: 'en',
 
     interpolation: {

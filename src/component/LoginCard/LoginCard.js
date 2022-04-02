@@ -44,7 +44,7 @@ export default function LoginCard() {
   const [formValid, setFormValid] = useState(true);
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
-  const [displayedMessege, setdisplayedMessege] = useState({messege:"", color:""});
+  const [displayedMessege, setdisplayedMessege] = useState({ messege: "", color: "" });
   const [forgotPassword, setForgotPassword] = useState(false)
   const { email, password, rememberMe } = state;
   const dispatch = useDispatch();
@@ -87,13 +87,13 @@ export default function LoginCard() {
             // dispatch(addToast("Login Success."));
           } else {
             //console.log("data", data)
-            setdisplayedMessege({messege:"Wrong username or password", color:"red"})
+            setdisplayedMessege({ messege: "Wrong username or password", color: "red" })
             setError({ ...error, email: data });
           }
         }
       ).catch((err) => {
         setLoading(false);
-        setdisplayedMessege({messege:"A problem has occurred", color:"red"})
+        setdisplayedMessege({ messege: "A problem has occurred", color: "red" })
       });
     }
   };
@@ -117,7 +117,7 @@ export default function LoginCard() {
         <form className="form login_form" id="loginForm">
           <span style={{ color: displayedMessege.color }}>{displayedMessege.messege}</span>
           <div className="form-group">
-            <h5>Email</h5>
+            <h5>{window.t("Email")}</h5>
             <Textbox
               type="email"
               name="email"
@@ -128,7 +128,7 @@ export default function LoginCard() {
             />
           </div>
           <div className="form-group">
-            <h5>Password</h5>
+            <h5>{window.t("Password")}</h5>
             <Textbox
               type="password"
               name="password"
@@ -140,7 +140,7 @@ export default function LoginCard() {
           </div>
           <div className="form-group text-center">
             <a href="#" className="forgot-link" onClick={() => { setForgotPassword(true) }}>
-              Forgot Password?
+              {window.t("Forgot Password?")}
             </a>
           </div>
           <div className="text-center">
@@ -150,13 +150,13 @@ export default function LoginCard() {
               //disabled={!formValid}
               onClick={handleSubmit}
             >
-              Login
+              {window.t("Login")}
             </button>
             {/* <Button>Login</Button> */}
           </div>
         </form>
         <div className="text-center pt-2">
-          <a href="/">Or enter as Guest</a>
+          <a href="/">{window.t("Or enter as Guest")}</a>
         </div>
       </Loader>
     );

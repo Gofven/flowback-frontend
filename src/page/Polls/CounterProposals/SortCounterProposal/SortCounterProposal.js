@@ -32,7 +32,7 @@ import { faDownload, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons
 import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
-import {getTextBetweenHTMLTags} from '../../../../component/HTMEditor/HTMEditor'
+import { getTextBetweenHTMLTags } from '../../../../component/HTMEditor/HTMEditor'
 import { recoverTypedSignature } from '@metamask/eth-sig-util';
 
 const div = styled.div`
@@ -80,13 +80,13 @@ const initialData = {
 function Column(props) {
     return <div className="column-container">
         {props.votingType === "traffic" ?
-            (props.column.id === "positive" && <Title>For</Title>) ||
-            (props.column.id === "neutral" && <Title>Abstain</Title>) ||
-            (props.column.id === "negative" && <Title>Against</Title>)
+            (props.column.id === "positive" && <Title>{window.t("For")}</Title>) ||
+            (props.column.id === "neutral" && <Title>{window.t("Abstain")}</Title>) ||
+            (props.column.id === "negative" && <Title>{window.t("Against")}</Title>)
             : null}
         {props.votingType === "condorcet" ?
-            (props.column.id === "positive" && <Title>Added</Title>) ||
-            (props.column.id === "neutral" && <Title>Abstain</Title>)
+            (props.column.id === "positive" && <Title>{window.t("Added")}</Title>) ||
+            (props.column.id === "neutral" && <Title>{window.t("Abstain")}</Title>)
             : null}
         <div className="column-style">
             {props.tasks.map((task, index) => {
@@ -114,7 +114,7 @@ function ProposalBox(props) {
             {props.task.content.file ? <a className='points' onClick={() => window.open(props.task.content.file, '_blank')} href="">
                 <FontAwesomeIcon className="fa"
                     icon={faDownload} color='' size='lg' />
-                DOWNLOAD FILE
+                {window.t("DOWNLOAD FILE")}
             </a>
                 : null}
             <div className="post-header d-flex justify-content-between card-header mb-0">
@@ -155,7 +155,7 @@ function ProposalBox(props) {
                             newInput[props.task.id] = parseInt(e.target.value);
                         }
                         props.setCardinalState([...newInput]);
-                        
+
                     }}>
                 </input>
                 }
@@ -288,32 +288,32 @@ function SortCounterProposal(props) {
                 });
 
 
-                
-                
+
+
                 signData({
                     positive: positive_proposal_indexes_2,
                     negative: negative_proposal_indexes_2
-                },userId, props.counterProposals, props.proposalIndexes).then(signedData => {
-                        const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
-                        const data = {
-                            positive: positive_proposal_indexes_2,
-                            negative: negative_proposal_indexes_2,
-                            hash: encryptedSignedData
-                        }
-                        
-                        sendData(data);
+                }, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
+                    const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                    const data = {
+                        positive: positive_proposal_indexes_2,
+                        negative: negative_proposal_indexes_2,
+                        hash: encryptedSignedData
+                    }
 
-                        // const recovered = recoverTypedSignature({
-                        //     data:{
-                        //         positive: positive_proposal_indexes_2,
-                        //         negative: negative_proposal_indexes_2
-                        //     },
-                        //     signature:signedData,
-                        //     version:"V4"
-                        // })
+                    sendData(data);
+
+                    // const recovered = recoverTypedSignature({
+                    //     data:{
+                    //         positive: positive_proposal_indexes_2,
+                    //         negative: negative_proposal_indexes_2
+                    //     },
+                    //     signature:signedData,
+                    //     version:"V4"
+                    // })
 
 
-                    });
+                });
 
 
             }
@@ -449,11 +449,11 @@ function SortCounterProposal(props) {
             <Loader loading={loading}>
                 {props.votingType === "cardinal" &&
                     <div>
-                        <div className="total-cardinal">Total number of votes: {totalCardinalVotes()}</div>
+                        <div className="total-cardinal">{window.t("Total number of votes")}: {totalCardinalVotes()}</div>
                     </div>}
-                <h4>Sort Proposals</h4>
-                <button className="btn btn-outline-primary" onClick={saveIndexies}>Save Votings</button>
-                <h4 style={{ "color": messege.color }}>{messege.content}</h4>
+                <h4>{window.t("Sort Proposals")}</h4>
+                <button className="btn btn-outline-primary" onClick={saveIndexies}>{window.t("Save Votings")}</button>
+                <h4 style={{ "color": messege.color }}>{window.t(messege.content)}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
                 <div>
                     {/* {props.votingType !== "traffic" ? */}

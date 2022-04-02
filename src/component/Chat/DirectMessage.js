@@ -19,8 +19,7 @@ export default function DirectMessage() {
 
     socket.onmessage = function (event) {
       console.log(
-        `[message] Data received from server: ${
-          JSON.parse(event.data).message
+        `[message] Data received from server: ${JSON.parse(event.data).message
         }`
       );
       const data = JSON.parse(event.data);
@@ -61,7 +60,7 @@ export default function DirectMessage() {
 
 
     if (message !== '') socket.send(JSON.stringify({ message, target: 2 }))
-    
+
   };
 
   return (
@@ -71,15 +70,14 @@ export default function DirectMessage() {
           <div key={Math.random() * 1000000} className="chat-message">
             <Image
               className="pfp"
-              src={`${
-                message.user.image
-                  ? `http://demo.flowback.org${message.user.image}`
-                  : '/img/no-photo.jpg'
-              }`}
+              src={`${message.user.image
+                ? `http://demo.flowback.org${message.user.image}`
+                : '/img/no-photo.jpg'
+                }`}
             />
             <div className="chat-message-name-and-message">
               <div>{message.user.username}</div>
-              <div>{message.message}</div>
+              <div>{window.t(message.message)}</div>
             </div>
           </div>
         ))}
@@ -96,7 +94,7 @@ export default function DirectMessage() {
           className="chat-message-input-box"
         />
         <button type="submit" className="btn btn-secondary">
-          Send
+          {window.t("Send")}
         </button>
       </form>
     </div>

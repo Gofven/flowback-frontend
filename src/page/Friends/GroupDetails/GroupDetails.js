@@ -203,7 +203,7 @@ export default function GroupDetails() {
                                             <FontAwesomeIcon icon={indexIcon[index]} color='#737373' />
                                             <span className={`ml-2 ${item === activeTab ? "activeIndex" : ""}`}
                                                 data-id={index}
-                                                {...handleOnClick}> {item}</span>
+                                                {...handleOnClick}> {window.t(item)}</span>
                                         </div>
                                         // : null
                                     ))}
@@ -217,7 +217,7 @@ export default function GroupDetails() {
                                             <Link to={`/groupdetails/${groupId}/pollcreate`}>
                                                 <FontAwesomeIcon icon={faPoll} color='#737373' />
                                                 <span className="ml-2"
-                                                >Create Poll</span>
+                                                >{window.t("Create Poll")}</span>
                                             </Link>
                                         </div>
                                         {REACT_APP_JITSI &&
@@ -225,7 +225,7 @@ export default function GroupDetails() {
                                                 <a target="_blank" href={`${REACT_APP_JITSI}/${group.room_name}`}>
                                                     <FontAwesomeIcon icon={faUsers} color='#737373' />
                                                     <span className="ml-2"
-                                                    >Video Conference</span>
+                                                    >{window.t("Video Conference")}</span>
                                                 </a>
                                             </div>
                                         }
