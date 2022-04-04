@@ -50,12 +50,16 @@ export default function GroupChannel({ groupId }) {
       console.error(`[error] ${error.message}`);
     };
 
-    // getChatHistory()
+
 
     return () => {
       socket.close();
     };
   });
+
+  useEffect(() => {
+    getChatHistory()
+  }, [])
 
   useEffect(() => {
     document.getElementById('groupchat-messages').scrollBy(100000, 100000);
@@ -74,8 +78,8 @@ export default function GroupChannel({ groupId }) {
   };
 
   const getChatHistory = () => {
-    getRequest(`api/v1/chat/group/${groupId}?limit=10`).then((res) => {
-      setMessageList(res)
+    getRequest(`api/v1/chat/group/${groupId}?limit=500`).then((res) => {
+      setMessageList(res.results)
     });
   };
 
@@ -86,13 +90,13 @@ export default function GroupChannel({ groupId }) {
           <div key={Math.random() * 1000000} className="chat-message">
             <Image
               className="pfp"
-              src={`${message.user.image
-                ? `http://demo.flowback.org${message.user.image}`
+              src={`${message.image
+                ? `http://demo.flowback.org${message.image}`
                 : '/img/no-photo.jpg'
                 }`}
             />
             <div className="chat-message-name-and-message">
-              <div>{message.user.username}</div>
+              <div>{message.username}</div>
               <div>{window.t(message.message)}</div>
             </div>
           </div>

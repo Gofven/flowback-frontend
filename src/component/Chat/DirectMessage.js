@@ -2,80 +2,19 @@ import { useEffect, useState } from 'react';
 import { Image, Modal } from 'react-bootstrap';
 import { getRequest, postRequest } from "../../utils/API";
 import { inputKeyValue } from "../../utils/common";
-const { REACT_APP_PROXY } = process.env;
+import ChatScreen from './ChatScreen';
 
 export default function DirectMessage() {
   const [messageList, setMessageList] = useState([]);
-  const [chatList, setChatList] = useState([{ person: "", messageList: [] }]);
+
   const [searchValue, setSearchValue] = useState("")
   const [peopleList, setPeopleList] = useState([])
   const [messaging, setMessaging] = useState(0)
   const [show, setShow] = useState(false)
 
-  const token = JSON.parse(localStorage.getItem('jwtToken'));
-
-  let socket;
-  useEffect(() => {
-    socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]}/ws/direct_chat/?token=${token}`
-    );
-
-    socket.onopen = function (event) {
-      console.log('[open] Connection established');
-    };
-
-    socket.onmessage = function (event) {
-      console.log(
-        `[message] Data received from server: ${JSON.parse(event.data).message
-        }`
-      );
-      const data = JSON.parse(event.data);
-      setMessageList([...messageList, data]);
-    };
-
-    socket.onclose = function (event) {
-      if (event.wasClean) {
-        console.log(
-          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-        );
-      } else {
-        // e.g. server process killed or network down
-        // event.code is usually 1006 in this case
-        console.warn('[close] Connection died');
-      }
-    };
-
-    socket.onerror = function (error) {
-      console.error(`[error] ${error.message}`);
-    };
-
-    // getRequest("api/v1/chat/dm/preview").then(res => {
-    //   console.log(res)
-    // })
-
-
-
-
-    return () => {
-      socket.close();
-    };
-  }, []);
-
   useEffect(() => {
     document.getElementById('groupchat-messages').scrollBy(100000, 100000);
   }, [messageList]);
-
-  const submitMessage = (e) => {
-    e.preventDefault();
-    // socket.send("hii");
-    const messageBox = document.getElementById('groupchat-message');
-    const message = document.getElementById('groupchat-message').value;
-    messageBox.value = '';
-
-
-    if (message !== '') socket.send(JSON.stringify({ message, target: messaging }))
-
-  };
 
   const searchList = (value) => {
     const data = {
@@ -102,11 +41,10 @@ export default function DirectMessage() {
   };
 
   const handleSelectPersonToChatWith = (person) => {
-    setMessaging(person);
-    setShow(false)
-
     getRequest(`api/v1/chat/dm/${person.id}`).then(res => {
       console.log(res, "REPNOSE")
+      setMessaging(person);
+      setShow(false)
     })
   }
 
@@ -131,20 +69,7 @@ export default function DirectMessage() {
         ))}
       </div>
 
-      <form
-        name="publish"
-        className="chat-message-box"
-        onSubmit={submitMessage}
-      >
-        <input
-          type="text"
-          id="groupchat-message"
-          className="chat-message-input-box"
-        />
-        <button type="submit" className="btn btn-secondary">
-          {window.t("Send")}
-        </button>
-      </form>
+      <ChatScreen messageList={messageList} setMessageList={setMessageList} messaging={messaging} />
 
       <div className='search-for-users-btn'>
         <button className='btn btn-secondary' onClick={() => setShow(true)}>Search for users</button>
