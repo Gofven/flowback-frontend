@@ -1,12 +1,10 @@
-.calendar
-{
+.calendar {
     background-color: white;
     padding: 20px;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-.calendar .dropdown
-{
+.calendar .dropdown {
     display: none;
     position: absolute;
     background-color: #fff;
@@ -22,31 +20,26 @@
     z-index: 2000;
 }
 
-.calendar .dropdown .dropdown-item
-{
-    cursor:pointer;
+.calendar .dropdown .dropdown-item {
+    cursor: pointer;
     opacity: .7;
     transition: .5s opacity;
 }
 
-.calendar .dropdown .dropdown-item:hover
-{
+.calendar .dropdown .dropdown-item:hover {
     opacity: 1;
 }
 
-.calendar .years
-{
-    display:none;
+.calendar .years {
+    display: none;
 }
 
-.calendar .title
-{
-    text-align:center;
-    font-size:20pt;
+.calendar .title {
+    text-align: center;
+    font-size: 20pt;
 }
 
-.calendar .calendar-btn
-{
+.calendar .calendar-btn {
     float: left;
     background-color: #24aeff;
     color: white;
@@ -60,62 +53,56 @@
     transition: .5s background-color;
 }
 
-.calendar .calendar-btn:hover{
-    background-color:#1f71a1;
+.calendar .calendar-btn:hover {
+    background-color: #1f71a1;
 }
 
-.calendar .year-btn
-{
-    float:right;
+.calendar .year-btn {
+    float: right;
 }
 
-.calendar .calendar-dates .days .day
-{
-    float:left;
+.calendar .calendar-dates .days .day {
+    float: left;
     width: 12%;
     margin: 1%;
     padding: 1%;
-    font-size:13pt;
-    text-align:center;
+    font-size: 13pt;
+    text-align: center;
     border-radius: 10px;
     border: solid 1px #ddd;
 }
 
-.calendar .calendar-dates .days .day.blank
-{
+.calendar .calendar-dates .days .day.blank {
     background-color: white;
-    border:none;
+    border: none;
 }
 
-.calendar .calendar-dates .days .day.selected
-{
+.calendar .calendar-dates .days .day.selected {
     background-color: #1caff6;
     color: white;
-    cursor:pointer;
+    cursor: pointer;
     opacity: .5;
     transition: .5s opacity;
 }
 
-.calendar .calendar-dates .days .day.selected:hover
-{
+.calendar .calendar-dates .days .day.selected:hover {
     opacity: 1;
 }
 
-.calendar .calendar-dates .days .day.label
-{
+.calendar .calendar-dates .days .day.label {
     height: 40px;
     background-color: white;
     color: black;
-    border:none;
-    font-weight:bold;
+    border: none;
+    font-weight: bold;
 }
 
-.clear{
-    clear:both;
+.clear {
+    clear: both;
 }
 
 @media only screen and (max-width: 960px) {
-    .calendar{
+    .calendar {
         width: 100%;
         margin: 0px;
         margin: 0px;
@@ -124,100 +111,105 @@
         left: 0px;
     }
 }
-            
-.poll{
+
+.poll {
     background-color: #1caff6;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.day-poll-list{
-    position:absolute;
-    background-color:white;
-    border-radius:10px;
+.day-poll-list {
+    position: fixed;
+    background-color: white;
+    border-radius: 10px;
     box-shadow: 0rem 0rem 0.6rem rgb(0, 0, 0, 0.1);
-    padding:1rem;
+    padding: 1rem;
 }
 
-.day-poll-list > div {
-    margin-top:10px;
+.day-poll-list>div {
+    margin-top: 10px;
 }
 
-.day-poll-list > div:first-child {
-    margin-top:0px;
+.day-poll-list>div:first-child {
+    margin-top: 0px;
 }
 
-.poll-titles{
+.poll-titles {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.poll-in-list{
-    display:flex;
+.poll-in-list {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.time{
-    font-size:larger;
+.time {
+    font-size: larger;
 
 }
 
-.calendar-day-labels{
-    display:grid;
+.calendar-day-labels {
+    display: grid;
 }
 
-.calendar-day-labels > * {
-    width:100% !important;
+.calendar-day-labels>* {
+    width: 100% !important;
     text-align: center;
     display: grid;
     grid-auto-columns: 1fr;
     grid-auto-flow: column;
-    
+
 }
 
-.all-calendar-days{
-    display:grid;
+.all-calendar-days {
+    display: grid;
 }
 
 
-.all-calendar-days > *{
+.all-calendar-days>* {
     text-align: center;
-    padding:20px;
-    margin:5px;
-    border:rgba(0,0,0,0.2) solid;
+    padding: 20px;
+    margin: 5px;
+    border: rgba(0, 0, 0, 0.2) solid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 
-.calendar-day-1{
-    margin-left:0;
+.calendar-day-1 {
+    margin-left: 0;
     grid-column-start: 1;
     grid-column-end: 2;
 }
 
-.calendar-day-2{
+.calendar-day-2 {
     grid-column-start: 2;
     grid-column-end: 3;
 }
-.calendar-day-3{
+
+.calendar-day-3 {
     grid-column-start: 3;
     grid-column-end: 4;
 }
-.calendar-day-4{
+
+.calendar-day-4 {
     grid-column-start: 4;
     grid-column-end: 5;
 }
-.calendar-day-5{
+
+.calendar-day-5 {
     grid-column-start: 5;
     grid-column-end: 6;
 }
-.calendar-day-6{
+
+.calendar-day-6 {
     grid-column-start: 6;
     grid-column-end: 7;
 }
-.calendar-day-7{
+
+.calendar-day-7 {
     grid-column-start: 7;
     grid-column-end: 8;
-    margin-right:0;
+    margin-right: 0;
 }

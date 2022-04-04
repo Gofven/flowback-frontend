@@ -29,8 +29,10 @@ export default function Schedule() {
   const endYear = currentDate.getFullYear() + 5;
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
+  const [day, setDay] = useState(currentDate.getDate());
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [pollList, setPollList] = useState([]);
 
   const YearList = () => {
     let years = [];
@@ -50,7 +52,7 @@ export default function Schedule() {
   };
 
   function CalendarDays() {
-    const monthPolls = polls.map(poll => poll.top_proposal).filter(poll => new Date(poll.date).getMonth() === month)
+    const monthPolls = polls.filter(poll => new Date(poll.top_proposal.date).getMonth() === month)
     console.log(monthPolls)
 
     const dayofweek = new Date(year, month, 0).getDay();
@@ -61,10 +63,10 @@ export default function Schedule() {
     }
 
     return (
-      <div className="all-calendar-days">
+      <div className={`all-calendar-days`}>
         {monthDays.map((day, i) => {
-          const dayPolls = monthPolls.filter(poll => new Date(poll.date).getDate() === day)
-          return <div key={i} className={`calendar-day-${i % 7 + 1}`} onClick={handleClickingDate}>
+          const dayPolls = monthPolls.filter(poll => new Date(poll.top_proposal.date).getDate() === day)
+          return <div key={i} className={`calendar-day-${i % 7 + 1} ${(dayPolls.length !== 0) && "poll"}`} onClick={() => handleClickingDate(dayPolls, day)}>
             <div className="day-number">{day}</div>
             {(dayPolls.length !== 0) && <PollDayList dayPolls={dayPolls} />}
           </div>
@@ -75,18 +77,20 @@ export default function Schedule() {
 
   const PollDayList = ({ dayPolls }) => {
     return <div className="day-poll-list" style={{ "visibility": "hidden" }}>{dayPolls.map(poll => (
-      <div>{poll.date}</div>
+      <div>{poll.top_proposaldate}</div>
     ))}</div>
   }
 
-  const handleClickingDate = (e) => {
+  const handleClickingDate = (dayPolls, day) => {
+    setDay(day)
+    setPollList(dayPolls)
     // document.createElement("div")
-    const pollDayList = e.target.getElementsByClassName("day-poll-list")[0] || (e.target.classList.contains("day-number") && e.target.parentElement.getElementsByClassName("day-poll-list")[0])
-    console.log(pollDayList)
-    if (pollDayList) {
-      if (pollDayList.style.visibility === "visible") pollDayList.style.visibility = "hidden"
-      else pollDayList.style.visibility = "visible"
-    }
+    // const pollDayList = e.target.getElementsByClassName("day-poll-list")[0] || (e.target.classList.contains("day-number") && e.target.parentElement.getElementsByClassName("day-poll-list")[0])
+    // console.log(pollDayList)
+    // if (pollDayList) {
+    //   if (pollDayList.style.visibility === "visible") pollDayList.style.visibility = "hidden"
+    //   else pollDayList.style.visibility = "visible"
+    // }
   }
 
   function loadCalendarDays() { }
@@ -208,18 +212,11 @@ export default function Schedule() {
     }
   };
 
-  const handleSelectMonth = () => {
-    const months = document.getElementById('months');
+  const handleSelect = (time) => {
+    const months = document.getElementById(time);
     months.style.display === 'none'
       ? (months.style.display = 'inherit')
       : (months.style.display = 'none');
-  };
-
-  const handleSelectYear = () => {
-    const years = document.getElementById('years');
-    years.style.display === 'none'
-      ? (years.style.display = 'inherit')
-      : (years.style.display = 'none');
   };
 
   const handleMonthChange = (e) => {
@@ -236,7 +233,7 @@ export default function Schedule() {
     <Layout1>
       <Loader loading={loading}>
         <div className="calendar noSelect" id="calendar">
-          <div className="calendar-btn month-btn" onClick={handleSelectMonth}>
+          <div className="calendar-btn month-btn" onClick={() => handleSelect("months")}>
             <div id="curMonth">{months[month]}</div>
             <div
               id="months"
@@ -258,7 +255,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          <div className="calendar-btn year-btn " onClick={handleSelectYear}>
+          <div className="calendar-btn year-btn " onClick={() => handleSelect("years")}>
             <div id="curYear">{year}</div>
             <div
               id="years"
@@ -286,6 +283,24 @@ export default function Schedule() {
 
             <div id="calendarDays" className="days">
               <CalendarDays />
+            </div>
+
+            <div classList="day-poll-list">
+              <h1>Polls for {day}/{month}/{year}</h1>
+              {pollList.length > 0 && pollList.map(poll => {
+                const pollDate = new Date(Date.parse(poll.top_proposal.date))
+                const minutes =
+                  pollDate.getMinutes() < 10
+                    ? `0${pollDate.getMinutes()}`
+                    : pollDate.getMinutes();
+
+                return <div>
+                  <a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
+                    {poll.title || "No title"}</a>
+                  <div>{`${pollDate.getHours()}:${minutes}`}</div>
+                  <div></div>
+                </div>
+              })}
             </div>
           </div>
         </div>
