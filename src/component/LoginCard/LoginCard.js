@@ -115,7 +115,7 @@ export default function LoginCard() {
     return (
       <Loader loading={loading}>
         <form className="form login_form" id="loginForm">
-          <span style={{ color: displayedMessege.color }}>{displayedMessege.messege}</span>
+          <span style={{ color: displayedMessege.color }}>{window.t(displayedMessege.messege)}</span>
           <div className="form-group">
             <h5>{window.t("Email")}</h5>
             <Textbox
