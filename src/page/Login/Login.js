@@ -72,7 +72,7 @@ export default function Login() {
                         data-id={index}
                         {...handleOnClick}
                       >
-                        {item}
+                        {window.t(item)}
                       </span>
                     </li>
                   ))}

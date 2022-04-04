@@ -41,7 +41,7 @@ export default function Header() {
 
   const loggedOutData =
   {
-    title: parseInt(REACT_APP_REGISTRATION) ? "Log In/Register" : "Log In",
+    title: parseInt(REACT_APP_REGISTRATION) ? "Login/Register" : "Log In",
     url: "#",
     onClick: () => {
       window.location.href = "/Login";
@@ -138,7 +138,7 @@ export default function Header() {
                 </div>
               </a>
               <UserAction user={user.id} />
-            </li> : <ActionRow {...loggedOutData} key={1} >{window.t("Log in")}</ActionRow>}
+            </li> : <ActionRow {...loggedOutData} key={1} >{window.t("Login")}</ActionRow>}
           </ul>
         </div>
       </div>

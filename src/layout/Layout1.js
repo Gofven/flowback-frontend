@@ -26,7 +26,7 @@ export default function Layout1({ children }) {
   return (
     <div>
       <Header />
-      {/* <Chat/> */}
+      <Chat />
       {children}
     </div>
   );
