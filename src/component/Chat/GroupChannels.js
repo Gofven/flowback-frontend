@@ -36,14 +36,12 @@ export default function GroupChannels() {
         <div className="group-chat-buttons">
           {groupList.map((group) => (
             <>
-              <img
+              {group.user_type !== "" && <img
                 className="group-chat-image"
                 key={group.id}
                 src={group.image}
                 onClick={() => changeChat(group.id)}
-                // className="btn btn-secondary"
-              />
-              {/* {group.title} */}
+              />}
             </>
           ))}
         </div>

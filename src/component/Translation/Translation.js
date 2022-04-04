@@ -13,7 +13,8 @@ i18n
         translation: translation_swedish
       }
     },
-    lng: window.navigator.language.split("-")[0],
+    // lng: window.navigator.language.split("-")[0],
+    lng: "en",
     fallbackLng: 'en',
 
     interpolation: {
