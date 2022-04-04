@@ -9,7 +9,7 @@
 }
 
 .chat-closed {
-  left: -70%;
+  left: -75%;
 }
 
 .clickable {
@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
 .chat-message-input-box {
@@ -66,11 +66,11 @@
   padding: 0.2rem;
   margin-top: 0.3rem;
   display: flex;
-  border-radius:10px;
+  border-radius: 10px;
 }
 
-.chat-message:hover{
-    background-color: rgba(0, 0, 0, 0.1);
+.chat-message:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .chat-message-profile {
@@ -82,12 +82,12 @@
 }
 
 .chat-message-name-and-message {
-    margin-left:0.5rem;
-    padding:0.2rem;
-    width:100%;
+  margin-left: 0.5rem;
+  padding: 0.2rem;
+  width: 100%;
 }
 
-.groupchat-messages{
-    overflow-y: auto;
-    height:10rem;
+.groupchat-messages {
+  overflow-y: auto;
+  height: 10rem;
 }
