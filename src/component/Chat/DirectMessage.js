@@ -53,9 +53,7 @@ export default function DirectMessage() {
     //   console.log(res)
     // })
 
-    getRequest(`api/v1/chat/dm/${1}`).then(res => {
-      console.log(res)
-    })
+
 
 
     return () => {
@@ -102,6 +100,15 @@ export default function DirectMessage() {
     setSearchValue({ ...searchValue, ...inputKeyValue(e) });
     searchList(e.target.value)
   };
+
+  const handleSelectPersonToChatWith = (person) => {
+    setMessaging(person);
+    setShow(false)
+
+    getRequest(`api/v1/chat/dm/${person.id}`).then(res => {
+      console.log(res, "REPNOSE")
+    })
+  }
 
   return (
     <div className="group-chat">
@@ -151,7 +158,7 @@ export default function DirectMessage() {
           {peopleList.map(person =>
             <div key={person.id} className="flex">
               <div className="profile-content-view">
-                <button className="btn btn-secondary" onClick={() => { setMessaging(person.id); setShow(false) }}> Start Chat </button>
+                <button className="btn btn-secondary" onClick={() => handleSelectPersonToChatWith(person)}> Start Chat </button>
               </div>
               <div className="name-list-search">{person.first_name}
               </div>
@@ -164,10 +171,6 @@ export default function DirectMessage() {
           <button className='btn btn-danger' onClick={() => setShow(false)}> Close</button>
         </Modal.Footer>
       </Modal>
-
-
-
-
     </div>
   );
 }

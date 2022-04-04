@@ -118,11 +118,15 @@
 }
 
 .day-poll-list {
-    position: fixed;
-    background-color: white;
+    /* position: absolute; */
+    width: 70%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
     border-radius: 10px;
     box-shadow: 0rem 0rem 0.6rem rgb(0, 0, 0, 0.1);
     padding: 1rem;
+    margin-top: 2rem;
 }
 
 .day-poll-list>div {
@@ -172,8 +176,9 @@
     text-align: center;
     padding: 20px;
     margin: 5px;
-    border: rgba(0, 0, 0, 0.2) solid;
+    border: rgba(0, 0, 0, 0.05) solid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-radius: 15px;
 }
 
 

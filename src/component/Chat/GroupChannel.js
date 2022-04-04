@@ -11,7 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
 
-    postRequest(`api/v1/chat/group/${groupId}`).then(res => {
+    getRequest(`api/v1/chat/group/${groupId}?limit=2&created_at__gt=${new Date()}`,).then(res => {
       console.log(res)
     })
 

@@ -159,7 +159,7 @@ export default function Schedule() {
               <CalendarDays />
             </div>
 
-            <div classList="day-poll-list">
+            <div className="day-poll-list">
               <h1>Polls for {day}/{month}/{year}</h1>
               {pollList.length > 0 && pollList.map(poll => {
                 const pollDate = new Date(Date.parse(poll.top_proposal.date))
@@ -169,10 +169,10 @@ export default function Schedule() {
                     : pollDate.getMinutes();
 
                 return <div>
-                  <a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
-                    {poll.title}</a>
-                  <a href={`${window.location.origin}/groupdetails/${poll.group.id}`}>
-                    {poll.group.title}</a>
+                  <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
+                    {poll.title}</a></div>
+                  <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}`}>
+                    {poll.group.title === "" ? "No group name" : poll.group.title}</a></div>
                   <div>{`${pollDate.getHours()}:${minutes}`}</div>
                   <div></div>
                 </div>
@@ -181,6 +181,6 @@ export default function Schedule() {
           </div>
         </div>
       </Loader>
-    </Layout1>
+    </Layout1 >
   );
 }
