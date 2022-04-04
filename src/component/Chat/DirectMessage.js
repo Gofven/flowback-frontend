@@ -158,7 +158,7 @@ export default function DirectMessage() {
           {peopleList.map(person =>
             <div key={person.id} className="flex">
               <div className="profile-content-view">
-                <button className="btn btn-secondary" onClick={() => { }}> Start Chat </button>
+                <button className="btn btn-secondary" onClick={() => handleSelectPersonToChatWith(person)}> Start Chat </button>
               </div>
               <div className="name-list-search">{person.first_name}
               </div>
