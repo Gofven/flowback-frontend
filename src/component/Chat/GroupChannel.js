@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { getRequest } from '../../utils/API';
+import { getRequest, postRequest } from '../../utils/API';
 const { REACT_APP_PROXY } = process.env;
 
 export default function GroupChannel({ groupId }) {
@@ -10,6 +10,12 @@ export default function GroupChannel({ groupId }) {
 
   let socket;
   useEffect(() => {
+
+    postRequest(`api/v1/chat/group/${groupId}`).then(res => {
+      console.log(res)
+    })
+
+
     socket = new WebSocket(
       `wss://${REACT_APP_PROXY.split(':')[1]
       }/ws/group_chat/${groupId}/?token=${token}`
@@ -44,6 +50,8 @@ export default function GroupChannel({ groupId }) {
       console.error(`[error] ${error.message}`);
     };
 
+    // getChatHistory()
+
     return () => {
       socket.close();
     };
@@ -67,10 +75,7 @@ export default function GroupChannel({ groupId }) {
 
   const getChatHistory = () => {
     getRequest(`api/v1/chat/group/${groupId}?limit=10`).then((res) => {
-      console.log(res, "CHAT");
-      getRequest(`${res.next.split('org/')[1]}`).then((res) => {
-        console.log(res, "CHAT 2")
-      })
+      setMessageList(res)
     });
   };
 

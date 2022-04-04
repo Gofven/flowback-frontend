@@ -65,17 +65,10 @@ export default function Schedule() {
           const dayPolls = monthPolls.filter(poll => new Date(poll.top_proposal.date).getDate() === day)
           return <div key={i} className={`calendar-day-${i % 7 + 1} ${(dayPolls.length !== 0) && "poll"}`} onClick={() => handleClickingDate(dayPolls, day)}>
             <div className="day-number">{day}</div>
-            {(dayPolls.length !== 0) && <PollDayList dayPolls={dayPolls} />}
           </div>
         })}
       </div>
     );
-  }
-
-  const PollDayList = ({ dayPolls }) => {
-    return <div className="day-poll-list" style={{ "visibility": "hidden" }}>{dayPolls.map(poll => (
-      <div>{poll.top_proposaldate}</div>
-    ))}</div>
   }
 
   const handleClickingDate = (dayPolls, day) => {

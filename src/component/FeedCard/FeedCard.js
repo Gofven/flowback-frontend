@@ -37,9 +37,9 @@ export default function FeedCard(props) {
   const renderTab = () => {
     switch (activeTab) {
       case tab[0]:
-        return <PollsTab groupId={props.groupId} pollType={props.pollType}/>;
+        return <PollsTab groupId={props.groupId} pollType={props.pollType} />;
       case tab[1]:
-        return <PollsTab groupId={props.groupId} pollType={props.pollType}/>;
+        return <PollsTab groupId={props.groupId} pollType={props.pollType} />;
       // case tab[1]:
       //   return <MissionsTab />;
       // case tab[1]:
@@ -48,7 +48,7 @@ export default function FeedCard(props) {
       //   return <EventsTab />;
     }
   };
-//case: mission feedCardTitle: Missions
+  //case: mission feedCardTitle: Missions
   let feedCardTitle;
   switch (props.pollType) {
     case 'mission':
@@ -61,7 +61,7 @@ export default function FeedCard(props) {
   return (
     <div className="feed-card card-rounded mb-4">
       <div className="card-header flex-header tab-header">
-        <h4 className="card-title">{feedCardTitle}</h4>
+        <h4 className="card-title">{window.t("Flow")}</h4>
         {/* <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
           {tab?.map((item, index) => (
             <li className="nav-item" key={index}>

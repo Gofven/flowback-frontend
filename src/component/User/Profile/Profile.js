@@ -364,7 +364,7 @@ export default function Profile(props) {
                                     <div className="profile-content-view">
                                         <h5>{window.t("About User")}</h5>
                                         <p>
-                                            {user.bio || 'No data added yet.'}
+                                            {user.bio || window.t('No data added yet.')}
                                         </p>
                                         <div className='my-2'>
                                             {/* <span><FontAwesomeIcon icon={faLink} size='sm' /> {' '} user?.website || 'no website added.'</span> */}
@@ -381,6 +381,8 @@ export default function Profile(props) {
                             {loggedInUser && <div className="profile-content-view">
                                 <ConnectToMetamask userId={user.id} />
                             </div>}
+
+
                         </div>
                     }
                 </Loader>

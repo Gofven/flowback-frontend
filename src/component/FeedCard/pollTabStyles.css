@@ -1,39 +1,48 @@
-.poll-post{
-    margin-top:40px;
-    padding-top:8px;
-    border:lightgrey 1px solid;
-    box-shadow: 0rem 0rem 1rem rgba(0,0,0,0.1);
+.poll-post {
+    margin-top: 40px;
+    padding-top: 8px;
+    border: lightgrey 1px solid;
+    box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
-.poll-posts-container{
-    padding:10px !important;
+.clickable {
+    color: blue;
+    cursor: pointer;
 }
 
-.poll-posts-container > div:nth-child(1){
-    margin-top:0;
+.flex {
+    display: flex;
 }
 
-.group-logo-and-title{
-    display:flex;
+.poll-posts-container {
+    padding: 10px !important;
+}
+
+.poll-posts-container>div:nth-child(1) {
+    margin-top: 0;
+}
+
+.group-logo-and-title {
+    display: flex;
     align-items: center;
-    gap:0.4rem;
-    padding-top:0.2rem;
-    padding-bottom:0.4rem;
+    gap: 0.4rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.4rem;
 }
 
-.group-logo-and-title > img{
-    width:1rem;
-    height:1rem;
+.group-logo-and-title>img {
+    width: 1rem;
+    height: 1rem;
 }
 
-.group-logo-and-title > div {
-    font-size:13px;
+.group-logo-and-title>div {
+    font-size: 13px;
 }
 
-.poll-post-bottom-info{
-    margin-top:1rem;
+.poll-post-bottom-info {
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
 }

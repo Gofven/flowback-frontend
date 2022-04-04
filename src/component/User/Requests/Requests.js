@@ -78,7 +78,7 @@ export default function Requests(props) {
             <Modal show={show} onHide={handleClose} className='profile-modal' centered>
                 <div className="feed-card card-rounded mb-4">
                     <div className="card-header flex-header tab-header">
-                        <h4 className="card-title">Requests</h4>
+                        <h4 className="card-title">{window.t("Requests")}</h4>
                         <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
                             {tab?.map((item, index) => (
                                 <li className="nav-item" key={index}>

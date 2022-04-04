@@ -658,7 +658,7 @@ export default function PollDetails() {
                                             {poll.result_hash}</div>
                                         </Modal.Body>
                                         <Modal.Footer>
-                                            <button className="btn btn-danger" onClick={handleClose}>Close</button>
+                                            <button className="btn btn-danger" onClick={handleClose}>{window.t("Close")}</button>
                                         </Modal.Footer>
                                     </Modal>
 
