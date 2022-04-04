@@ -58,7 +58,7 @@ export default function MemberCard(props) {
     return (
         <div className="feed-card card-rounded mb-4">
             <div className="card-header flex-header tab-header">
-                <h4 className="card-title">Members</h4>
+                <h4 className="card-title">{window.t("Members")}</h4>
                 <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
                     {tab?.map((item, index) => (
                         showTab(item) ?
@@ -68,7 +68,7 @@ export default function MemberCard(props) {
                                     data-id={index}
                                     {...handleOnClick}
                                 >
-                                    {item}
+                                    {window.t(item)}
                                 </span>
                             </li> : null
                     ))}

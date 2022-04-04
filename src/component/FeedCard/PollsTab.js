@@ -34,6 +34,7 @@ import { Link } from "react-router-dom";
 import Image from "../common/Image/Image";
 import './pollTabStyles.css'
 import { formatDate } from "../../utils/common";
+import Profile from "../User/Profile/Profile";
 
 export default function PollsTab(props) {
     let groupId = props.groupId;
@@ -323,7 +324,7 @@ export default function PollsTab(props) {
 
                                 {poll && poll.created_by &&
                                     <div className="font-small mt-2 text-grey">
-                                        <div>{window.t("Creator")}: {poll.created_by?.first_name}  </div>
+                                        <div className="flex"><div>{window.t("Creator")}: </div> <Profile id={poll.created_by?.id} className={"clickable"}>{poll.created_by?.first_name}</Profile></div>
                                         <div>{window.t("Created")}: {formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')} </div>
                                         <div>{window.t("Ends")}: {formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>

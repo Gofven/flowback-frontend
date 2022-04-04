@@ -42,7 +42,7 @@ export default function DocumentCard(props) {
     return (
         <div className="document-card card-rounded mb-4">
             <div className="card-header flex-header tab-header">
-                <h4 className="card-title">Documents</h4>
+                <h4 className="card-title">{window.t("Documents")}</h4>
                 <ul className="bottom-line-tab nav nav-pills" id="pills-tab">
                     {/* {tab?.map((item, index) => (
                         <li className="nav-item" key={index}>

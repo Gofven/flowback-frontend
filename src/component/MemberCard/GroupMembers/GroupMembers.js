@@ -27,6 +27,7 @@ import a from 'react-bootstrap/Button';
 import './styles.css';
 import Loader from '../../common/Loader/Loader';
 import { SearchFilter, DropDownFilterGroup } from "../../common/Filter/Filter";
+import Profile from "../../User/Profile/Profile";
 
 
 export default function GroupMembers(props) {
@@ -128,14 +129,14 @@ export default function GroupMembers(props) {
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightgreen"
         disabled={disabled}
         onClick={() => setDelegator({ group_id: groupId * 1, delegator_id: userId * 1 })}
-    >Select</a>;
+    >{window.t("Select")}</a>;
 
     const SetBecomeDelegateButton = ({ groupId, userId, disabled }) => <a
         href="#"
         className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-info"
         disabled={disabled}
         onClick={handleShow}
-    >Become Delegate</a>;
+    >{window.t("Become delegate")}</a>;
 
 
     const BecomeDelegateModal = () => {
@@ -145,22 +146,22 @@ export default function GroupMembers(props) {
 
         return <Modal show={show} onHide={handleClose} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Warning</Modal.Title>
+                <Modal.Title>{window.t("Warning")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.</p>
-                <p>If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member. <b>This decision is not reversible</b>.</p>
+                <p>{window.t("Being a delegate means that members can select you as a delegate and copy your voting in every poll of the group, unless they alter the proposals in that particular poll.")}</p>
+                <p>{window.t("If you agree to becoming a delegate everyone will be able to see what you vote in every poll of this group, and you can no longer leave the group or become a regular member.")} <b>{window.t("This decision is not reversible")}</b>.</p>
                 <div className="delegateModalAccept"><input type="checkbox" className="acceptDelegate" onChange={handleAccept} />
-                    <div>I understand that this is not reversible and that I must ask system admin to remove my delegate role
+                    <div>{window.t("I understand that this is not reversible and that I must ask system admin to remove my delegate role")}
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Footer>
                 <button variant="secondary" className="btn btn-outline-active" onClick={handleClose}>
-                    Close
+                    {window.t("Close")}
                 </button>
                 <button variant="primary" className="btn btn-outline-danger" disabled={hasAccepted} onClick={handleOnBecomeDelegate}>
-                    Become Delegate
+                    {window.t("Become delegate")}
                 </button>
             </Modal.Footer>
         </Modal >
@@ -218,25 +219,25 @@ export default function GroupMembers(props) {
         return (
             <>
                 <a variant="primary" onClick={handleShow} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white deselect-btn">
-                    Deselect
+                    {window.t("Deselect")}
                 </a>
 
                 <Modal show={show1} onHide={handleClose} enforceFocus={false} autoFocus={true}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Delegate voting options</Modal.Title>
+                        <Modal.Title>{window.t("Delegate voting options")}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: true });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                            Keep delegate votes
+                            {window.t("Keep delegate votes")}
                         </a>
                         <a variant="primary" onClick={() => {
                             removeDelegator({ group_id: groupId * 1, keep_delegator_votes: false });
                             handleClose();
                         }} className="btn btn-sm btn-block btn-outline-secondary temp-spacing temp-btn-color-lightcoral temp-btn-bg-white">
-                            Remove delegate votes
+                            {window.t("Remove delegate votes")}
                         </a>
                     </Modal.Body>
                 </Modal>
@@ -277,9 +278,9 @@ export default function GroupMembers(props) {
                     < div className="titles media member-block" key={index} >
                         <div className="user-block">
                             <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
-                            <div>
-                                <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
-                            </div>
+                            <Profile id={member.id}>
+                                <p className="text-turncate mb-0 clickable">{member.first_name} {member.last_name}</p>
+                            </Profile>
 
                             {isKickable(member.user_type) && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
 
@@ -290,7 +291,7 @@ export default function GroupMembers(props) {
                                 disabled={(["Owner", "Admin"].includes(props.userType)) ? false : true}></input>
                         </div>
                         <div>
-                            {member.user_type === "Owner" ? "YES" : "NO"}
+                            {window.t(member.user_type === "Owner" ? "YES" : "NO")}
                         </div>
                         <div>
                             {/* <div className="menu d-flex align-items-center"> */}

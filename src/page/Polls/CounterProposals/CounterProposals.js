@@ -226,7 +226,7 @@ function Counterproposals({ poll, group, setAlreadyPosted }) {
                 <div className="card-body overflow-hidden">
                     {
                         !counterProposals?.length || counterProposals.detail === "Not found." ?
-                            <div className='text-center'>No proposals are available.</div>
+                            <div className='text-center'>{window.t("No proposals are available.")}</div>
                             : null
                     }
                     {typeof (counterProposals) === Array && counterProposals.detail !== "Not found." ? counterProposals?.map((counterProposal, index) => (

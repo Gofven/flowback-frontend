@@ -59,7 +59,7 @@ export default function GroupButtons({ user_type, groupId, groupJoinStatus, tota
                             style={{ "margin-right": "1rem", "position": "inherit" }}
                             onClick={() => { handleOnLeaveGroup() }}
                             style={{ filter: "drop-shadow(1px 1px 1px #ffffff)" }}
-                        >{window.t("Leave Group")}</a>
+                        >{`${window.t("Leave")} ${window.t("Group")}`}</a>
                     </div>
                 </h4> :
                 (
