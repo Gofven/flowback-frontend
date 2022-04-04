@@ -87,7 +87,7 @@ function RankedProposal({ proposal, ranking = 0, totalVotes = 0 }) {
     const proposalDescription = proposalNameSplit[1];
 
     const votes = proposal.final_score_positive;
-    const percentOfVotes = (votes / totalVotes).toLocaleString(undefined, { style: 'percent' });
+    const percentOfVotes = (parseFloat(votes) / (parseFloat(totalVotes) || 1)).toLocaleString(undefined, { style: 'percent' });
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
     const fileLink = proposal.file ? REACT_APP_PROXY + proposal.file.substring(1) : proposal.file;
