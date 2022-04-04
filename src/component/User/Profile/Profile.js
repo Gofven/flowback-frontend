@@ -381,6 +381,8 @@ export default function Profile(props) {
                             {loggedInUser && <div className="profile-content-view">
                                 <ConnectToMetamask userId={user.id} />
                             </div>}
+
+
                         </div>
                     }
                 </Loader>

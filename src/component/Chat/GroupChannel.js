@@ -44,6 +44,8 @@ export default function GroupChannel({ groupId }) {
       console.error(`[error] ${error.message}`);
     };
 
+    // getChatHistory()
+
     return () => {
       socket.close();
     };
@@ -67,10 +69,7 @@ export default function GroupChannel({ groupId }) {
 
   const getChatHistory = () => {
     getRequest(`api/v1/chat/group/${groupId}?limit=10`).then((res) => {
-      console.log(res, "CHAT");
-      getRequest(`${res.next.split('org/')[1]}`).then((res) => {
-        console.log(res, "CHAT 2")
-      })
+      setMessageList(res)
     });
   };
 
