@@ -178,6 +178,8 @@ export default function Schedule() {
                 return <div>
                   <a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
                     {poll.title}</a>
+                  <a href={`${window.location.origin}/groupdetails/${poll.group.id}`}>
+                    {poll.group.title}</a>
                   <div>{`${pollDate.getHours()}:${minutes}`}</div>
                   <div></div>
                 </div>
