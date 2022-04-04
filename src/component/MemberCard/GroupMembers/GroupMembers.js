@@ -68,6 +68,7 @@ export default function GroupMembers(props) {
         getGroupMembers();
 
         getVotingRights();
+
         // postVotingRights();
     }, [groupId])
 

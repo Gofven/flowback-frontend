@@ -6,6 +6,7 @@ const { REACT_APP_PROXY } = process.env;
 
 export default function DirectMessage() {
   const [messageList, setMessageList] = useState([]);
+  const [chatList, setChatList] = useState([{ person: "", messageList: [] }]);
   const [searchValue, setSearchValue] = useState("")
   const [peopleList, setPeopleList] = useState([])
   const [messaging, setMessaging] = useState(0)
@@ -48,7 +49,11 @@ export default function DirectMessage() {
       console.error(`[error] ${error.message}`);
     };
 
-    getRequest("api/v1/chat/dm/preview").then(res => {
+    // getRequest("api/v1/chat/dm/preview").then(res => {
+    //   console.log(res)
+    // })
+
+    getRequest(`api/v1/chat/dm/${1}`).then(res => {
       console.log(res)
     })
 
@@ -56,7 +61,7 @@ export default function DirectMessage() {
     return () => {
       socket.close();
     };
-  });
+  }, []);
 
   useEffect(() => {
     document.getElementById('groupchat-messages').scrollBy(100000, 100000);
