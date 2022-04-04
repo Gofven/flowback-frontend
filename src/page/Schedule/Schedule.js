@@ -20,9 +20,6 @@ export default function Schedule() {
     'Nov',
     'Dec',
   ];
-  const days = [
-    'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday',
-  ];
 
   const currentDate = new Date();
   const startYear = currentDate.getFullYear() - 2;
@@ -52,7 +49,7 @@ export default function Schedule() {
   };
 
   function CalendarDays() {
-    const monthPolls = polls.filter(poll => new Date(poll.top_proposal.date).getMonth() === month)
+    const monthPolls = polls.filter(poll => new Date(poll.top_proposal.date).getMonth() === month && new Date(poll.top_proposal.date).getFullYear() === year)
     console.log(monthPolls)
 
     const dayofweek = new Date(year, month, 0).getDay();
@@ -84,60 +81,6 @@ export default function Schedule() {
   const handleClickingDate = (dayPolls, day) => {
     setDay(day)
     setPollList(dayPolls)
-    // document.createElement("div")
-    // const pollDayList = e.target.getElementsByClassName("day-poll-list")[0] || (e.target.classList.contains("day-number") && e.target.parentElement.getElementsByClassName("day-poll-list")[0])
-    // console.log(pollDayList)
-    // if (pollDayList) {
-    //   if (pollDayList.style.visibility === "visible") pollDayList.style.visibility = "hidden"
-    //   else pollDayList.style.visibility = "visible"
-    // }
-  }
-
-  function loadCalendarDays() { }
-  function loadCalendarDays2() {
-    document.getElementById('calendarDays').innerHTML = '';
-
-    var tmpDate = new Date(year, month, 0);
-    var num = daysInMonth(month, year);
-    var dayofweek = tmpDate.getDay(); // find where to start calendar day of week
-
-    for (var i = 0; i <= dayofweek; i++) {
-      var d = document.createElement('div');
-      d.classList.add('day');
-      d.classList.add('blank');
-      document.getElementById('calendarDays').appendChild(d);
-    }
-
-    for (var i = 0; i < num; i++) {
-      var tmp = i + 1;
-      var d = document.createElement('div');
-      d.id = 'calendarday_' + i;
-      d.className = 'day';
-      d.innerHTML = tmp;
-
-      polls.forEach((poll) => {
-        const pollDate = new Date(poll.top_proposal?.date);
-        if (
-          pollDate.getDate() === tmp &&
-          pollDate.getMonth() === month &&
-          pollDate.getFullYear() === year
-        ) {
-          d.classList.add('poll');
-          const pollTime = document.createElement('div');
-          const minutes =
-            pollDate.getMinutes() < 10
-              ? `${pollDate.getMinutes()}0`
-              : pollDate.getMinutes(); //Otherwise we get single digits such as 23:0 instead of 23:00
-          // pollTime.innerHTML = `${poll.title}${pollDate.getHours()}:${minutes}`;
-          d.appendChild(pollTime);
-        }
-      });
-      document.getElementById('calendarDays').appendChild(d);
-    }
-
-    var clear = document.createElement('div');
-    clear.className = 'clear';
-    document.getElementById('calendarDays').appendChild(clear);
   }
 
   function daysInMonth(month, year) {
@@ -152,66 +95,6 @@ export default function Schedule() {
     })
   }, []);
 
-  useEffect(() => {
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 4000);
-
-
-  }, [month, year]);
-
-  //I'm sorry for this mess
-  const displayDailyPoll = () => {
-    for (let index = 0; index < 32; index++) {
-      const day = document.getElementById('calendarday_' + index);
-      day?.addEventListener('click', () => {
-        document.getElementById('day-poll-list')?.remove();
-        const dayPollList = document.createElement('div');
-        dayPollList.classList.add('day-poll-list');
-        dayPollList.id = 'day-poll-list';
-
-        //Sorts the polls based on which hour they occurr on
-        const sortedByTimePolls = polls
-          .sort(
-            (poll2, poll1) =>
-              new Date(poll2.top_proposal.date).getMinutes() -
-              new Date(poll1.top_proposal.date).getMinutes()
-          )
-          .sort(
-            (poll2, poll1) =>
-              new Date(poll2.top_proposal.date).getHours() -
-              new Date(poll1.top_proposal.date).getHours()
-          );
-
-        sortedByTimePolls.forEach((poll) => {
-          const pollDate = new Date(poll.top_proposal.date);
-          if (
-            pollDate.getDate() === index + 1 &&
-            pollDate.getMonth() === month &&
-            pollDate.getFullYear() === year
-          ) {
-            const pollInList = document.createElement('div');
-            pollInList.classList.add('poll-in-list');
-            const minutes =
-              pollDate.getMinutes() < 10
-                ? `0${pollDate.getMinutes()}`
-                : pollDate.getMinutes();
-            pollInList.innerHTML = `
-            <div class="poll-titles"><a href=${window.location.origin
-              }/groupdetails/${poll.group.id}/polldetails/${poll.id}>${poll.title
-              }</a> 
-            <div><a href=${window.location.origin}/groupdetails/${poll.group.id
-              }>${poll.group.title}</a></div></div>
-            <div class="time">${pollDate.getHours()}:${minutes}</div>`;
-            dayPollList.append(pollInList);
-          }
-        });
-        if (dayPollList.children.length > 0) day.append(dayPollList);
-      });
-    }
-  };
-
   const handleSelect = (time) => {
     const months = document.getElementById(time);
     months.style.display === 'none'
@@ -221,12 +104,10 @@ export default function Schedule() {
 
   const handleMonthChange = (e) => {
     setMonth(parseInt(e.target.id));
-    loadCalendarDays();
   };
 
   const handleYearChange = (e) => {
     setYear(startYear + parseInt(e.target.id));
-    loadCalendarDays();
   };
 
   return (
@@ -296,7 +177,7 @@ export default function Schedule() {
 
                 return <div>
                   <a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
-                    {poll.title || "No title"}</a>
+                    {poll.title}</a>
                   <div>{`${pollDate.getHours()}:${minutes}`}</div>
                   <div></div>
                 </div>
