@@ -5,6 +5,7 @@
   z-index: 1035 !important;
   margin-bottom: 0 !important;
   transition: left 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
   width: 80%;
 }
 
@@ -113,4 +114,8 @@
 
 .search-for-users-btn {
   margin-top: 1rem;
+}
+
+.no-border-fix {
+  border-bottom: 0cm !important;
 }

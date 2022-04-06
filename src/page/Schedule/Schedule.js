@@ -144,13 +144,13 @@ export default function Schedule() {
 
           <div className="calendar-dates">
             <div className="all-calendar-days ">
-              <div className="calendar-day-1">{window.t("Mon")}</div>
-              <div className="calendar-day-2">{window.t("Tue")}</div>
-              <div className="calendar-day-3">{window.t("Wed")}</div>
-              <div className="calendar-day-4">{window.t("Thu")}</div>
-              <div className="calendar-day-5">{window.t("Fri")}</div>
-              <div className="calendar-day-6">{window.t("Sat")}</div>
-              <div className="calendar-day-7">{window.t("Sun")}</div>
+              <div className="calendar-day-1"><div className="day-number">{window.t("Mon")}</div></div>
+              <div className="calendar-day-2"><div className="day-number">{window.t("Tue")}</div></div>
+              <div className="calendar-day-3"><div className="day-number">{window.t("Wed")}</div></div>
+              <div className="calendar-day-4"><div className="day-number">{window.t("Thu")}</div></div>
+              <div className="calendar-day-5"><div className="day-number">{window.t("Fri")}</div></div>
+              <div className="calendar-day-6"><div className="day-number">{window.t("Sat")}</div></div>
+              <div className="calendar-day-7"><div className="day-number">{window.t("Sun")}</div></div>
 
               {/* <div className="clear"></div> */}
             </div>
