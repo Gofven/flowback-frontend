@@ -41,7 +41,7 @@ export default function DirectMessage() {
   };
 
   const handleSelectPersonToChatWith = (person) => {
-    getRequest(`api/v1/chat/dm/${person.id}`).then(res => {
+    getRequest(`api/v1/chat/dm/${person.id}?limit=10&o=created_at_desc`).then(res => {
       console.log(res, "REPNOSE")
       setMessaging(person);
       setShow(false)

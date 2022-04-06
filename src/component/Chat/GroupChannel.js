@@ -11,15 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
 
-    getRequest(`api/v1/chat/group/${groupId}?limit=2&created_at__gt=${new Date()}`,).then(res => {
-      console.log(res)
-    })
-
-
-    socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]
-      }/ws/group_chat/${groupId}/?token=${token}`
-    );
+    socket = new WebSocket(`ws://${REACT_APP_PROXY.split(':')[1]}/ws/group_chat/${groupId}/?token=${token}`);
 
     socket.onopen = function (event) {
       console.log('[open] Connection established');
@@ -50,8 +42,6 @@ export default function GroupChannel({ groupId }) {
       console.error(`[error] ${error.message}`);
     };
 
-
-
     return () => {
       socket.close();
     };
@@ -67,7 +57,6 @@ export default function GroupChannel({ groupId }) {
 
   const submitMessage = (e) => {
     e.preventDefault();
-    // socket.send("hii");
     const message = document.getElementById('groupchat-message').value;
 
     if (message !== '') {
@@ -78,7 +67,7 @@ export default function GroupChannel({ groupId }) {
   };
 
   const getChatHistory = () => {
-    getRequest(`api/v1/chat/group/${groupId}?limit=500`).then((res) => {
+    getRequest(`api/v1/chat/group/${groupId}?limit=15`).then((res) => {
       setMessageList(res.results)
     });
   };
