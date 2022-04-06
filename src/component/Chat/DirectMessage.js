@@ -2,80 +2,21 @@ import { useEffect, useState } from 'react';
 import { Image, Modal } from 'react-bootstrap';
 import { getRequest, postRequest } from "../../utils/API";
 import { inputKeyValue } from "../../utils/common";
-const { REACT_APP_PROXY } = process.env;
+import { getLocalStorage } from '../../utils/localStorage';
+import ChatScreen from './ChatScreen';
+const { REACT_APP_PROXY } = process.env
 
 export default function DirectMessage() {
   const [messageList, setMessageList] = useState([]);
-  const [chatList, setChatList] = useState([{ person: "", messageList: [] }]);
   const [searchValue, setSearchValue] = useState("")
   const [peopleList, setPeopleList] = useState([])
+  const [recentPeopleList, setRecentPeopleList] = useState([])
   const [messaging, setMessaging] = useState(0)
   const [show, setShow] = useState(false)
-
-  const token = JSON.parse(localStorage.getItem('jwtToken'));
-
-  let socket;
-  useEffect(() => {
-    socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]}/ws/direct_chat/?token=${token}`
-    );
-
-    socket.onopen = function (event) {
-      console.log('[open] Connection established');
-    };
-
-    socket.onmessage = function (event) {
-      console.log(
-        `[message] Data received from server: ${JSON.parse(event.data).message
-        }`
-      );
-      const data = JSON.parse(event.data);
-      setMessageList([...messageList, data]);
-    };
-
-    socket.onclose = function (event) {
-      if (event.wasClean) {
-        console.log(
-          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-        );
-      } else {
-        // e.g. server process killed or network down
-        // event.code is usually 1006 in this case
-        console.warn('[close] Connection died');
-      }
-    };
-
-    socket.onerror = function (error) {
-      console.error(`[error] ${error.message}`);
-    };
-
-    // getRequest("api/v1/chat/dm/preview").then(res => {
-    //   console.log(res)
-    // })
-
-
-
-
-    return () => {
-      socket.close();
-    };
-  }, []);
 
   useEffect(() => {
     document.getElementById('groupchat-messages').scrollBy(100000, 100000);
   }, [messageList]);
-
-  const submitMessage = (e) => {
-    e.preventDefault();
-    // socket.send("hii");
-    const messageBox = document.getElementById('groupchat-message');
-    const message = document.getElementById('groupchat-message').value;
-    messageBox.value = '';
-
-
-    if (message !== '') socket.send(JSON.stringify({ message, target: messaging }))
-
-  };
 
   const searchList = (value) => {
     const data = {
@@ -102,52 +43,66 @@ export default function DirectMessage() {
   };
 
   const handleSelectPersonToChatWith = (person) => {
-    setMessaging(person);
-    setShow(false)
+    getRequest(`api/v1/chat/dm/${person.id}?limit=10&o=created_at_desc`).then(res => {
+      setMessageList(res.results.reverse());
+      setMessaging(person);
+      setShow(false)
 
-    getRequest(`api/v1/chat/dm/${person.id}`).then(res => {
-      console.log(res, "REPNOSE")
+
+      if (!recentPeopleList.includes(person))
+        setRecentPeopleList([...recentPeopleList, person])
     })
   }
 
+  useEffect(() => {
+    getRequest(`api/v1/chat/dm/preview`).then(res => {
+      let peopleList = []
+      res.forEach(message => {
+        if (message.user_id !== getLocalStorage("user").id)
+          peopleList.push({ username: message.username, image: message.image, id: message.user_id, message: message.message })
+      });
+      setRecentPeopleList(peopleList)
+    })
+
+  }, [])
+
   return (
-    <div className="group-chat">
-      You are chatting with:
-      <div className="groupchat-messages" id="groupchat-messages">
-        {messageList?.map((message) => (
-          <div key={Math.random() * 1000000} className="chat-message">
-            <Image
-              className="pfp"
-              src={`${message.user.image
-                ? `http://demo.flowback.org${message.user.image}`
-                : '/img/no-photo.jpg'
-                }`}
-            />
-            <div className="chat-message-name-and-message">
-              <div>{message.user.username}</div>
-              <div>{window.t(message.message)}</div>
-            </div>
-          </div>
+    <div className="group-chats row">
+      <div className="group-chat-buttons col-2">
+        <button className='btn btn-secondary' onClick={() => setShow(true)}>Search for users</button>
+        {recentPeopleList.map((person) => (
+          <>
+            {person.user_type !== "" && <img
+              className="group-chat-image"
+              key={person.id}
+              src={person.image ? `${REACT_APP_PROXY}${person.image}` : "/img/no-photo.jpg"}
+              onClick={() => handleSelectPersonToChatWith(person)}
+            />}
+            {person.username}
+          </>
         ))}
       </div>
+      <div className="group-chat col-9">
+        You are chatting with: {messaging.username}
+        <div className="groupchat-messages" id="groupchat-messages">
+          {messageList?.map((message) => (
+            <div key={Math.random() * 1000000} className="chat-message">
+              <Image
+                className="pfp"
+                src={`${message.image
+                  ? `${REACT_APP_PROXY}${message.image}`
+                  : '/img/no-photo.jpg'
+                  }`}
+              />
+              <div className="chat-message-name-and-message">
+                <div>{message.username}</div>
+                <div>{window.t(message.message)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-      <form
-        name="publish"
-        className="chat-message-box"
-        onSubmit={submitMessage}
-      >
-        <input
-          type="text"
-          id="groupchat-message"
-          className="chat-message-input-box"
-        />
-        <button type="submit" className="btn btn-secondary">
-          {window.t("Send")}
-        </button>
-      </form>
-
-      <div className='search-for-users-btn'>
-        <button className='btn btn-secondary' onClick={() => setShow(true)}>Search for users</button>
+        <ChatScreen messageList={messageList} setMessageList={setMessageList} messaging={messaging} />
       </div>
 
       <Modal show={show} onHide={() => setShow(false)}>

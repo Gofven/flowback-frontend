@@ -68,7 +68,7 @@ export default function Chat(props) {
   };
   return (
     <div className={`feed-card card-rounded mb-4 chat ${chatOpen ? "" : "chat-closed"}`}>
-      <div className='card-header flex-header'>
+      <div className='card-header flex-header no-border-fix'>
         <h4 className="card-title">{window.t("Chat")}</h4>
         {chatOpen ?
           <FontAwesomeIcon icon={faMinus} className="clickable" onClick={handleClose} /> :
@@ -76,29 +76,30 @@ export default function Chat(props) {
         }
 
       </div>
-      <div className="card-header flex-header tab-header">
-        <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
-          {tab?.map((item, index) =>
-            showTab(item) ? (
-              <li className="nav-item" key={index}>
-                <span
-                  className={`nav-link${item === activeTab ? ' active' : ''}`}
-                  data-id={index}
-                  {...handleOnClick}
-                >
-                  {window.t(item)}
-                </span>
-              </li>
-            ) : null
-          )}
-        </ul>
-      </div>
-      <div className="card-body">
-        <div className="tab-content" id="pills-tabContent">
-          {renderTab()}
+      {chatOpen &&
+        <><div className="card-header flex-header tab-header">
+          <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
+            {tab?.map((item, index) =>
+              showTab(item) ? (
+                <li className="nav-item" key={index}>
+                  <span
+                    className={`nav-link${item === activeTab ? ' active' : ''}`}
+                    data-id={index}
+                    {...handleOnClick}
+                  >
+                    {window.t(item)}
+                  </span>
+                </li>
+              ) : null
+            )}
+          </ul>
         </div>
-      </div>
-    </div>
+          <div className="card-body">
+            <div className="tab-content" id="pills-tabContent">
+              {renderTab()}
+            </div>
+          </div></>}
+    </div >
 
   );
 }

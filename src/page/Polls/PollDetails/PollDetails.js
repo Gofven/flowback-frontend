@@ -47,7 +47,7 @@ import PollResults from "../PollResults/PollResults";
 import './styles.css'
 import { TopProposal } from "./TopProposal";
 // import DisplayMessege from "../../../component/common/DisplayMessege";
-import { HTMEditor, getHTML, clearHTML } from '../../../component/HTMEditor/HTMEditor'
+import { HTMEditor, getHTML, clearHistory } from '../../../component/HTMEditor/HTMEditor'
 import Modal from 'react-bootstrap/Modal';
 
 export default function PollDetails() {
@@ -388,10 +388,14 @@ export default function PollDetails() {
                 setCounterProposal({});
                 setCounterProposalLoading(false);
                 setCounterProposal({ proposal_title: "", description: "", proposal: "" })
-                clearHTML();
+                // clearHTML();
                 setDisplayedMessege({ messege: "Successfully sent proposal", color: "green" })
-                window.scrollBy(0,);
+                // window.scrollBy(0,);
 
+
+                //The HTMEditor used to write the description for each poll stores text in local storage which is removed.
+                clearHistory(groupId, pollId)
+                window.onbeforeunload = null;
                 // window.location.reload();
             }).catch((err) => {
                 setCounterProposalLoading(false);
@@ -580,7 +584,7 @@ export default function PollDetails() {
                                                 </div>}
                                                 <div className="form-group">
                                                     <h2 style={{ "margin-top": "1rem" }}>{window.t("Description")}</h2>
-                                                    {!counterProposalLoading && <HTMEditor />}
+                                                    {!counterProposalLoading && <HTMEditor groupId={groupId} pollId={pollId} />}
                                                 </div>
                                                 <div className="form-group">
                                                     <div className='field d-flex' style={{ "width": "88.5px" }}>

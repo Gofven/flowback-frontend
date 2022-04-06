@@ -11,15 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
 
-    getRequest(`api/v1/chat/group/${groupId}?limit=2&created_at__gt=${new Date()}`,).then(res => {
-      console.log(res)
-    })
-
-
-    socket = new WebSocket(
-      `wss://${REACT_APP_PROXY.split(':')[1]
-      }/ws/group_chat/${groupId}/?token=${token}`
-    );
+    socket = new WebSocket(`wss://${REACT_APP_PROXY.split(':')[1]}/ws/group_chat/${groupId}/?token=${token}`);
 
     socket.onopen = function (event) {
       console.log('[open] Connection established');
@@ -50,12 +42,14 @@ export default function GroupChannel({ groupId }) {
       console.error(`[error] ${error.message}`);
     };
 
-    // getChatHistory()
-
     return () => {
       socket.close();
     };
   });
+
+  useEffect(() => {
+    getChatHistory()
+  }, [])
 
   useEffect(() => {
     document.getElementById('groupchat-messages').scrollBy(100000, 100000);
@@ -63,7 +57,6 @@ export default function GroupChannel({ groupId }) {
 
   const submitMessage = (e) => {
     e.preventDefault();
-    // socket.send("hii");
     const message = document.getElementById('groupchat-message').value;
 
     if (message !== '') {
@@ -74,25 +67,29 @@ export default function GroupChannel({ groupId }) {
   };
 
   const getChatHistory = () => {
-    getRequest(`api/v1/chat/group/${groupId}?limit=10`).then((res) => {
-      setMessageList(res)
+    getRequest(`api/v1/chat/group/${groupId}?limit=15`).then((res) => {
+      setMessageList(res.results)
     });
   };
 
+  useEffect(() => {
+    getChatHistory()
+  }, [groupId])
+
   return (
-    <div className="group-chat">
+    <div className="group-chat col-11">
       <div className="groupchat-messages" id="groupchat-messages">
         {messageList?.map((message) => (
           <div key={Math.random() * 1000000} className="chat-message">
             <Image
               className="pfp"
-              src={`${message.user.image
-                ? `http://demo.flowback.org${message.user.image}`
+              src={`${message.image
+                ? `${REACT_APP_PROXY}${message.image}`
                 : '/img/no-photo.jpg'
                 }`}
             />
             <div className="chat-message-name-and-message">
-              <div>{message.user.username}</div>
+              <div>{message.username}</div>
               <div>{window.t(message.message)}</div>
             </div>
           </div>

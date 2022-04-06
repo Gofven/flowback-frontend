@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { formatDate } from "../../utils/common";
 import "./index.css";
 
-export function HTMEditor(id) {
+export function HTMEditor({ groupId, pollId }) {
   const [textEditorLoaded, setTextEditorLoaded] = useState(false);
-  const [draftTime, setdraftTime] = useState(0);
 
   const loadTextEditor = () => {
     if (!textEditorLoaded) {
@@ -14,15 +12,15 @@ export function HTMEditor(id) {
       script.setAttribute("full_screen", "no");
       script.setAttribute("async", false);
       document.body.appendChild(script);
-      setTextEditorLoaded(true);  
+      setTextEditorLoaded(true);
     }
 
     //Checks if the HTMEditor has loaded and if so, fixes a problem with
     //the layering (date picker in time polls overlapp otherwise)
     var htmFixInterval = setInterval(() => {
-        const a = document.getElementsByClassName("tox")
-        a[0]?.classList.add("htm-fix")
-        if (a?.length > 0) clearInterval(htmFixInterval);
+      const a = document.getElementsByClassName("tox")
+      a[0]?.classList.add("htm-fix")
+      if (a?.length > 0) clearInterval(htmFixInterval);
     }, 500);
 
     const editor = document.getElementById("htmeditor_ifr");
@@ -49,7 +47,14 @@ export function HTMEditor(id) {
 
   useEffect(() => {
     loadTextEditor();
+    window.onbeforeunload = null;
 
+    if (groupId && pollId)
+      clearHistory(groupId, pollId)
+
+    return (() => {
+      window.onbeforeunload = null;
+    })
     // document.getElementsByClassName("tox")[0]?.classList.add("htm-fix")
   }, []);
 
@@ -75,6 +80,11 @@ export function clearHTML() {
   return (document.getElementById(
     "htmeditor_ifr"
   ).contentDocument.children[0].children[1].innerHTML = "");
+}
+
+export function clearHistory(groupId, pollId) {
+  window.localStorage.removeItem(`/groupdetails/${groupId}/polldetails/${pollId}-htmeditor-draft`)
+  window.localStorage.removeItem(`/groupdetails/${groupId}/polldetails/${pollId}-htmeditor-time`)
 }
 
 export function getTextBetweenHTMLTags(html) {
