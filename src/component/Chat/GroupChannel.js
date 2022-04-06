@@ -11,7 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
 
-    socket = new WebSocket(`ws://${REACT_APP_PROXY.split(':')[1]}/ws/group_chat/${groupId}/?token=${token}`);
+    socket = new WebSocket(`wss://${REACT_APP_PROXY.split(':')[1]}/ws/group_chat/${groupId}/?token=${token}`);
 
     socket.onopen = function (event) {
       console.log('[open] Connection established');
@@ -72,15 +72,19 @@ export default function GroupChannel({ groupId }) {
     });
   };
 
+  useEffect(() => {
+    getChatHistory()
+  }, [groupId])
+
   return (
-    <div className="group-chat">
+    <div className="group-chat col-11">
       <div className="groupchat-messages" id="groupchat-messages">
         {messageList?.map((message) => (
           <div key={Math.random() * 1000000} className="chat-message">
             <Image
               className="pfp"
               src={`${message.image
-                ? `http://demo.flowback.org${message.image}`
+                ? `${REACT_APP_PROXY}${message.image}`
                 : '/img/no-photo.jpg'
                 }`}
             />

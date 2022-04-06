@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getLocalStorage } from "../../utils/localStorage";
 const { REACT_APP_PROXY } = process.env;
 
 export default function ChatScreen({ messageList, setMessageList, messaging }) {
@@ -57,8 +58,11 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
         messageBox.value = '';
 
 
-        if (message !== '') socket.send(JSON.stringify({ message, target: messaging.id }))
-
+        if (message !== '') {
+            const user = getLocalStorage("user")
+            setMessageList([...messageList, { message, username: user.username, image: user.image, created_at: new Date() }]);
+            socket.send(JSON.stringify({ message, target: messaging.id }))
+        }
     };
 
     return <form

@@ -2,8 +2,8 @@ import GroupChannel from './GroupChannel';
 import { useState, useEffect } from 'react';
 import './index.css';
 import { postRequest } from '../../utils/API';
-import { Image } from 'react-bootstrap';
 import Loader from '../common/Loader/Loader';
+const { REACT_APP_PROXY } = process.env
 
 export default function GroupChannels() {
   const [groupId, setgroupId] = useState(null);
@@ -32,18 +32,18 @@ export default function GroupChannels() {
 
   return (
     <Loader loading={loading}>
-      <div className="group-chats">
-        <div className="group-chat-buttons">
-          {groupList.map((group) => (
+      <div className="group-chats row">
+        <div className="group-chat-buttons col-2">
+          {groupList.map((group) =>
             <>
               {group.user_type !== "" && <img
                 className="group-chat-image"
                 key={group.id}
-                src={group.image}
+                src={group.image ? group.image : "/img/no-photo.jpg"}
                 onClick={() => changeChat(group.id)}
               />}
             </>
-          ))}
+          )}
         </div>
         {groupId && <GroupChannel groupId={groupId} />}
       </div>
