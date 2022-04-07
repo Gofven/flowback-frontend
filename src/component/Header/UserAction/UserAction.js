@@ -24,6 +24,7 @@ import Profile from "../../User/Profile/Profile";
 import Requests from "../../User/Requests/Requests";
 import ActionRow from "./ActionRow";
 import Support from "../../Support/Support"
+import Tools from './Tools'
 
 const loggedInData = [
   {
@@ -40,6 +41,11 @@ const loggedInData = [
     title: "Support",
     url: "#",
     component: (<Support><span>User Profile</span></Support>)
+  },
+  {
+    title: "Tools",
+    url: "#",
+    component: (<Tools><span>{window.t("Tools")}</span></Tools>)
   },
   {
     title: "Log Out",
