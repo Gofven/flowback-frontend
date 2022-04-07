@@ -71,15 +71,14 @@ export default function DirectMessage() {
       <div className="group-chat-buttons col-2">
         <button className='btn btn-secondary' onClick={() => setShow(true)}>Search for users</button>
         {recentPeopleList.map((person) => (
-          <>
+          <div key={person.id} className="d-flex">
             {person.user_type !== "" && <img
               className="group-chat-image"
-              key={person.id}
               src={person.image ? `${REACT_APP_PROXY}${person.image}` : "/img/no-photo.jpg"}
               onClick={() => handleSelectPersonToChatWith(person)}
             />}
-            {person.username}
-          </>
+            <div className='p-2'>{person.username}</div>
+          </div>
         ))}
       </div>
       <div className="group-chat col-9">

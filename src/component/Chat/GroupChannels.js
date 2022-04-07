@@ -33,7 +33,7 @@ export default function GroupChannels() {
   return (
     <Loader loading={loading}>
       <div className="group-chats row">
-        <div className="group-chat-buttons col-2">
+        <div className="group-chat-buttons col-2 d-flex flex-column">
           {groupList.map((group) =>
             <>
               {group.user_type !== "" && <img

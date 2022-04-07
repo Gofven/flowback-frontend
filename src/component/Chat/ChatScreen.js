@@ -5,6 +5,7 @@ const { REACT_APP_PROXY } = process.env;
 export default function ChatScreen({ messageList, setMessageList, messaging }) {
     const token = JSON.parse(localStorage.getItem('jwtToken'));
     // const [chatList, setChatList] = useState([{ person: "", messageList: [] }]);
+
     let socket;
 
     useEffect(() => {
@@ -18,8 +19,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
 
         socket.onmessage = function (event) {
             console.log(
-                `[message] Data received from server: ${JSON.parse(event.data).message
-                }`
+                `[message] Data received from server: ${JSON.parse(event.data).message}`
             );
             const data = JSON.parse(event.data);
             setMessageList([...messageList, data]);
@@ -28,8 +28,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
         socket.onclose = function (event) {
             if (event.wasClean) {
                 console.log(
-                    `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-                );
+                    `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
             } else {
                 // e.g. server process killed or network down
                 // event.code is usually 1006 in this case

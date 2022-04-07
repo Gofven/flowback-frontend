@@ -2,6 +2,8 @@ import { decryptSafely, getEncryptionPublicKey } from '@metamask/eth-sig-util';
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
+import * as nacl from 'tweetnacl';
+import * as naclUtil from 'tweetnacl-util'
 
 export default function Validator() {
   const [validator, setValidator] = useState({
@@ -22,24 +24,28 @@ export default function Validator() {
     //     signature: validator.signedData,
     //     version:"V4"
     //   });f
-
+    const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
+    const nonce = naclUtil.encodeBase64(unencodedNonce);
+    console.log(nonce)
     const publicKey = getEncryptionPublicKey(validator.privateKey)
     const decryptedMessege = decryptSafely({
-        encryptedData: {ciphertext: validator.data, 
-          version:"x25519-xsalsa20-poly1305", 
-          ephemPublicKey:publicKey, 
-          nonce:validator.publicKey},
-          privateKey: validator.privateKey
-      })
-      
+      encryptedData: {
+        ciphertext: validator.data,
+        version: "x25519-xsalsa20-poly1305",
+        ephemPublicKey: publicKey,
+        nonce: nonce
+      },
+      privateKey: validator.privateKey
+    })
+
     // const decryptedMessege = decryptSafely({ 
     //   encryptedData: validator.data, 
     //   privateKey: validator.privateKey, 
     //   version:"x25519-xsalsa20-poly1305"
     // }); 
-    
+
     // expect(decryptedMessege).toBe(validator.data); 
-     
+
     console.log('The decrypted message is:', decryptedMessege)
 
 
