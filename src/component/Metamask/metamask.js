@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Loader from "../common/Loader/Loader";
 import { postRequest, getRequest } from "../../utils/API";
-import { encryptSafely, recoverTypedSignature } from '@metamask/eth-sig-util';
+import { encryptSafely, recoverTypedSignature, getEncryptionPublicKey } from '@metamask/eth-sig-util';
 import ethUtil from 'ethereumjs-util'
 import Web3 from 'web3';
 import './metamask.css'
@@ -201,7 +201,8 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
 
 export function encrypt(data) {
     return new Promise((resolve, reject) => {
-        getPublicKeyFromDatabase().then(publicKey => {
+        getPublicKeyFromDatabase().then(() => {
+            const publicKey = getEncryptionPublicKey("f8cc7c2adb8060f36fdfcf1feb2a0a1bf2b8d1445a7d8beb0ffdbf0a611ffd94")
             if (publicKey) {
                 const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
                 resolve(encryptedMessage.ciphertext);
@@ -210,7 +211,8 @@ export function encrypt(data) {
     })
 }
 
-export function encryptWithPublicKey(data, publicKey) {
+export function encryptWithPublicKey(data) {
+    const publicKey = getEncryptionPublicKey("f8cc7c2adb8060f36fdfcf1feb2a0a1bf2b8d1445a7d8beb0ffdbf0a611ffd94")
     const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
     return encryptedMessage.ciphertext;
 }

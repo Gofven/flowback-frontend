@@ -26,7 +26,6 @@ export default function Validator() {
     //   });f
     const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
     const nonce = naclUtil.encodeBase64(unencodedNonce);
-    console.log(nonce)
     const publicKey = getEncryptionPublicKey(validator.privateKey)
     const decryptedMessege = decryptSafely({
       encryptedData: {
