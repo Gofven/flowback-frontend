@@ -6,9 +6,6 @@ import * as nacl from 'tweetnacl';
 import * as naclUtil from 'tweetnacl-util'
 
 export default function Validator() {
-  const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
-  const nonce = naclUtil.encodeBase64(unencodedNonce);
-  console.log(nonce)
   const [validator, setValidator] = useState({
     data: '',
     signedData: '',
@@ -27,14 +24,16 @@ export default function Validator() {
     //     signature: validator.signedData,
     //     version:"V4"
     //   });f
-
+    const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
+    const nonce = naclUtil.encodeBase64(unencodedNonce);
+    console.log(nonce)
     const publicKey = getEncryptionPublicKey(validator.privateKey)
     const decryptedMessege = decryptSafely({
       encryptedData: {
         ciphertext: validator.data,
         version: "x25519-xsalsa20-poly1305",
         ephemPublicKey: publicKey,
-        nonce: validator.publicKey
+        nonce: nonce
       },
       privateKey: validator.privateKey
     })

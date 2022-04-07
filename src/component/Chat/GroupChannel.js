@@ -77,7 +77,7 @@ export default function GroupChannel({ groupId }) {
   }, [groupId])
 
   return (
-    <div className="group-chat col-11">
+    <div className="group-chat col-9">
       <div className="groupchat-messages" id="groupchat-messages">
         {messageList?.map((message) => (
           <div key={Math.random() * 1000000} className="chat-message">
