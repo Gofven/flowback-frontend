@@ -55,10 +55,13 @@ export default function DirectMessage() {
 
   useEffect(() => {
     getRequest(`api/v1/chat/dm/preview`).then(res => {
-      let peopleList = []
+      let peopleList = [];
       res.forEach(message => {
         if (message.user_id !== getLocalStorage("user").id)
-          peopleList.push({ username: message.username, image: message.image, id: message.user_id, message: message.message })
+          peopleList.push({ username: message.username, image: message.image, id: message.user_id, message: message.message });
+        else
+          peopleList.push({ username: message.target_username, image: message.image, id: message.target_id, message: message.message });
+
       });
       setRecentPeopleList(peopleList)
     })

@@ -76,31 +76,30 @@ export default function Chat(props) {
         }
 
       </div>
-      {/* {chatOpen && */}
-      {/* <> */}
-      <div className="card-header flex-header tab-header">
-        <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
-          {tab?.map((item, index) =>
-            showTab(item) ? (
-              <li className="nav-item" key={index}>
-                <span
-                  className={`nav-link${item === activeTab ? ' active' : ''}`}
-                  data-id={index}
-                  {...handleOnClick}
-                >
-                  {window.t(item)}
-                </span>
-              </li>
-            ) : null
-          )}
-        </ul>
-      </div>
-      <div className="card-body">
-        <div className="tab-content" id="pills-tabContent">
-          {renderTab()}
+      {chatOpen && <>
+        <div className="card-header flex-header tab-header">
+          <ul className="bottom-line-tab nav nav-pills noSelect" id="pills-tab">
+            {tab?.map((item, index) =>
+              showTab(item) ? (
+                <li className="nav-item" key={index}>
+                  <span
+                    className={`nav-link${item === activeTab ? ' active' : ''}`}
+                    data-id={index}
+                    {...handleOnClick}
+                  >
+                    {window.t(item)}
+                  </span>
+                </li>
+              ) : null
+            )}
+          </ul>
         </div>
-      </div>
-      {/* </>} */}
+        <div className="card-body">
+          <div className="tab-content" id="pills-tabContent">
+            {renderTab()}
+          </div>
+        </div>
+      </>}
     </div >
 
   );
