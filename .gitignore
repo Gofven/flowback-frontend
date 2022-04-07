@@ -131,4 +131,4 @@ Validator-old/
 etherpad/
 etherpad-lite-win.zip
 
-src\component\HTMEditor\MakeHotReloadWork.js
+src\component\HTMEditor\MakeHotReloadWork.css
