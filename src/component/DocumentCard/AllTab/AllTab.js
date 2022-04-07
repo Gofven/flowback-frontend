@@ -163,13 +163,6 @@ export default function AllTab(props) {
                     </div>
                 </div>
             }
-            <div className="grupper-card row g-2">
-                < div className="text-center my-2 noSelect">
-                    <div onClick={handleCoDocumentCreation}>
-                        + {window.t("Create Co-Document")}
-                    </div>
-                </div>
-            </div>
 
             {
                 documents.map((document, key) => (

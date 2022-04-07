@@ -34,7 +34,6 @@ export default function DirectMessage() {
         setPeopleList(data?.data)
       }
     })
-
   }
 
   const handleOnChange = (e) => {
@@ -63,7 +62,6 @@ export default function DirectMessage() {
       });
       setRecentPeopleList(peopleList)
     })
-
   }, [])
 
   return (
@@ -102,6 +100,7 @@ export default function DirectMessage() {
         </div>
 
         <ChatScreen messageList={messageList} setMessageList={setMessageList} messaging={messaging} />
+
       </div>
 
       <Modal show={show} onHide={() => setShow(false)}>
