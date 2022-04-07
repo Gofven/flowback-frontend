@@ -100,7 +100,6 @@ export default function DirectMessage() {
         </div>
 
         <ChatScreen messageList={messageList} setMessageList={setMessageList} messaging={messaging} />
-
       </div>
 
       <Modal show={show} onHide={() => setShow(false)}>
