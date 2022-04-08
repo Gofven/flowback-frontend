@@ -42,6 +42,7 @@ import socketIOClient, { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import Chat from "./component/Chat/Chat";
 import { useTranslation, initReactI18next } from "react-i18next";
+import Prediction from "./page/Prediction/Prediction";
 const { REACT_APP_PROXY } = process.env;
 
 
@@ -62,7 +63,8 @@ function App() {
           <PrivateRoute exact path="/create" component={GroupForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/edit" component={GroupForm} />
           <PrivateRoute exact path="/groupdetails/:groupId" component={GroupDetails} />
-          <PrivateRoute exact path="/search" component={SearchPage} />
+          {/* <PrivateRoute exact path="/search" component={SearchPage} /> */}
+          <PrivateRoute exact path="/prediction" component={Prediction} />
           <PrivateRoute exact path="/groupdetails/:groupId/pollcreate" component={PollForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/poll/:pollId/edit" component={PollForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/polldetails/:pollId" component={PollDetails} />

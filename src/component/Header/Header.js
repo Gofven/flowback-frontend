@@ -37,6 +37,7 @@ export default function Header() {
     { title: "Groups", icon: "la-user-friends", url: "/groups" },
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
     { title: "Schedule", icon: "la-calendar-week", url: "/schedule" }, /* url: "/events" */
+    { title: "Prediction", icon: "la-globe-americas", url: "/prediction" },
   ] : [{ title: "Public", icon: "la-globe-americas", url: "/" }];
 
   const loggedOutData =
