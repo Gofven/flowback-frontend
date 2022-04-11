@@ -136,6 +136,7 @@
     "is the method where dates and times are voted on to decide meetings or events for the members of the group. Time polls are always Private and can only be seen by group members. One can only vote for a time or vote to drop the proposal, a default proposal for every time poll. This is carried out by the ranking method.": "är metoden där datum och tider rankas via rankningsmetoden för att komma fram till ett enda förslag, de är alltid privata och det finns alltid ett standardalternativ att förkasta pollen.",
     "Poll Status": "Poll status",
     "Meeting date": "Mötes datum",
+    "For questions about Metamask, contact the Metamask team.": "För frågor om Metamask, kontakta Metamask-teamet.",
     "Discussion": "Diskussion",
     "Voting": "Röstning",
     "Created at": "Skapad",
