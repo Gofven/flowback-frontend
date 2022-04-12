@@ -6,7 +6,7 @@ export default function Prediction() {
 
     useEffect(() => {
 
-        postRequest("api/v1/prediction/vote/create", { post: 1, score: 0 }).then(res => {
+        postRequest("api/v1/prediction/vote/create", { post: 1, score: 1 }).then(res => {
             console.log(res, "YOOOOOO")
         })
 
