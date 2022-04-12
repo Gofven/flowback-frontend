@@ -45,7 +45,7 @@ const loggedInData = [
   {
     title: "Tools",
     url: "#",
-    component: (<Tools><span>Toossfls</span></Tools>)
+    component: (<Tools><span>Tools</span></Tools>)
   },
   {
     title: "Log Out",
