@@ -1,0 +1,16 @@
+.prediction-score-buttons {
+    height: 5vw;
+    min-height: 2rem;
+    width: 8vw;
+    min-width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width:520px) {
+    .prediction-score-buttons {
+        width: 33%;
+    }
+
+}
