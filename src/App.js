@@ -42,7 +42,7 @@ import socketIOClient, { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import Chat from "./component/Chat/Chat";
 import { useTranslation, initReactI18next } from "react-i18next";
-import Prediction from "./page/Prediction/Prediction";
+import Prediction from "./page/Prediction/Predictions";
 const { REACT_APP_PROXY } = process.env;
 
 
