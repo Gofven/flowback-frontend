@@ -30,8 +30,9 @@ export default function Prediction({ prediction }) {
 
     const voteGet = (e) => {
         getRequest("api/v1/prediction/vote/" + prediction.id).then(res => {
-            setAverageScore(res.score || defaultVote)
+            setScore(res.score || defaultVote)
             setHasUnsavedChanges(false)
+            setAverageScore(res.average)
         })
     }
 
@@ -58,7 +59,7 @@ export default function Prediction({ prediction }) {
                     <div className="text-center" style={{ "color": hasUnsavedChanges ? "#994422" : "black" }}>{score * 20}%</div>
                 </div>
                 {hasUnsavedChanges && <div>You have unsaved changes</div>}
-                <div>Average score: {averageScore * 20}%</div>
+                <div>Average score: {averageScore}%</div>
                 <div className="d-flex mt-3">
                     <button type="submit" onClick={voteCreate} className="btn btn-primary">Vote</button>
                     <button type="submit" className="btn btn-secondary ms-2" onClick={voteDelete}>Unvote</button>
