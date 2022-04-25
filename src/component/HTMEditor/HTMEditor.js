@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./index.css";
-import "./MakeHotReloadWork.css";
 
 export function HTMEditor({ groupId, pollId }) {
   const [textEditorLoaded, setTextEditorLoaded] = useState(false);
