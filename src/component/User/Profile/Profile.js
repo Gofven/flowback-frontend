@@ -30,6 +30,7 @@ import { getLocalStorage, setLocalStorage } from '../../../utils/localStorage';
 import { Textarea, Textbox } from '../../common';
 import Image from '../../common/Image/Image';
 import Loader from '../../common/Loader/Loader';
+import { getRequest } from "../../../utils/API";
 import './styles.css';
 import { ConnectToMetamask, isSignedIn } from '../../Metamask/metamask';
 
@@ -41,6 +42,7 @@ export default function Profile(props) {
     const [editMode, setEditMode] = useState(false);
     const [userForm, setUserForm] = useState({});
     const [loading, setLoading] = useState(false);
+    const [weight, setWeight] = useState(null)
 
     const userImageFileRef = useRef(null);
     const [userImage, setUserImage] = useState();
@@ -58,6 +60,7 @@ export default function Profile(props) {
                 getOtherUserData(props.id);
             } else {
                 getMyData();
+                getUserWeight();
             }
         } else {
             setUser(null);
@@ -221,6 +224,12 @@ export default function Profile(props) {
         });
     }
 
+    const getUserWeight = () => {
+        getRequest("api/v1/prediction/user").then(res => {
+            setWeight(res.weight)
+        })
+    }
+
     /**
      * To accept or reject user friend request
      * @param {*} id 
@@ -382,7 +391,9 @@ export default function Profile(props) {
                                 <ConnectToMetamask userId={user.id} />
                             </div>}
 
-
+                            <div className="profile-content-view">
+                                Your current weight is:
+                            </div>
                         </div>
                     }
                 </Loader>

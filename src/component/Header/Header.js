@@ -37,7 +37,7 @@ export default function Header() {
     { title: "Groups", icon: "la-user-friends", url: "/groups" },
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
     { title: "Schedule", icon: "la-calendar-week", url: "/schedule" }, /* url: "/events" */
-    { title: "Prediction", icon: "la-globe-americas", url: "/prediction" },
+    { title: "Prediction", icon: "la-chart-bar", url: "/prediction" },
   ] : [{ title: "Public", icon: "la-globe-americas", url: "/" }];
 
   const loggedOutData =
@@ -49,17 +49,12 @@ export default function Header() {
     }
   }
 
-
   useEffect(() => {
     if (localStorage.getItem('user')) {
       setUser(JSON.parse(localStorage.getItem('user')));
       console.log(window.location.href.split("/")[3], "HREFFFFR");
     }
-
-
     window.scrollX = 0;
-
-
   }, []);
 
   return (
@@ -145,7 +140,4 @@ export default function Header() {
       </div>
     </nav >
   );
-
-
-
 }
