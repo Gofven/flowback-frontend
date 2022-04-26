@@ -21,7 +21,7 @@ export default function Predictions() {
 
     const voteSearch = (e) => {
         setLoading(true)
-        getRequest("api/v1/prediction/?limit=2", { title: search }).then(res => {
+        getRequest("api/v1/prediction/?limit=10", { title: search }).then(res => {
             setLoading(false)
             setPredictions(res.results)
         })
@@ -39,7 +39,9 @@ export default function Predictions() {
                 <SearchFilter filter={search} setFilter={setSearch} />
                 <div className="p-3 m-4 bg-light rounded-3 shadow-xl">Your current weight is: {weight}</div>
                 {predictions.map(prediction =>
-                    <Prediction prediction={prediction} />
+                    <div key={prediction.id}>
+                        <Prediction prediction={prediction} />
+                    </div>
                 )}
             </Loader>
         </div>

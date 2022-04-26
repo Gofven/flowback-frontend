@@ -4,7 +4,7 @@ import Loader from "../../component/common/Loader/Loader";
 import './Prediction.css'
 
 export default function Prediction({ prediction }) {
-    const defaultVote = null
+    const defaultVote = -1
     const [score, setScore] = useState(defaultVote)
     const [averageScore, setAverageScore] = useState(defaultVote)
     const [loading, setLoading] = useState(false)
@@ -61,7 +61,7 @@ export default function Prediction({ prediction }) {
                 <div className="w-100">
                     <div className="d-flex justify-content-center">
                         {[0, 20, 40, 60, 80, 100].map(probability =>
-                            <div className={`btn ms-2 mt-1 rounded-2 prediction-score-buttons ${probability === score * 20 ? "btn-outline-warning" : "btn-outline-secondary"}`}
+                            <div key={probability} className={`btn ms-2 mt-1 rounded-2 prediction-score-buttons ${probability === score * 20 ? "btn-outline-warning" : "btn-outline-secondary"}`}
                                 onClick={() => scoreChange(probability / 20)}> {probability}%</div>
                         )}
                     </div>
