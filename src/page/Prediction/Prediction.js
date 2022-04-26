@@ -4,7 +4,7 @@ import Loader from "../../component/common/Loader/Loader";
 import './Prediction.css'
 
 export default function Prediction({ prediction }) {
-    const defaultVote = 0
+    const defaultVote = null
     const [score, setScore] = useState(defaultVote)
     const [averageScore, setAverageScore] = useState(defaultVote)
     const [loading, setLoading] = useState(false)

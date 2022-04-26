@@ -118,13 +118,13 @@ export const formatDate = (date, format = 'DD/MM/YYYY') => {
 }
 
 export const FormatComments = (inputComments) => {
-  
+
   return inputComments
   //return inputComments || []
   const comments = [];
   const inputData = inputComments.slice();
   //Root comments with no replies are placed in the set
-  inputData.forEach((comment, ) => {
+  inputData.forEach((comment,) => {
     if (!comment.reply_to) {
       comments.push({ ...comment, reply: [] });
     }
@@ -151,4 +151,5 @@ export const FormatComments = (inputComments) => {
 export const logOut = () => {
   removeLocalStorage('jwtToken');
   removeLocalStorage('user');
+  document.cookie = "sessionid_flowback=; csrftoken=; path=/";
 }
