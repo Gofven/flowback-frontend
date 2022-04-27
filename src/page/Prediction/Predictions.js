@@ -4,6 +4,7 @@ import { postRequest, getRequest } from "../../utils/API";
 import { SearchFilter } from "../../component/common/Filter/Filter"
 import Prediction from "./Prediction";
 import Loader from "../../component/common/Loader/Loader";
+import './Prediction.css'
 
 export default function Predictions() {
     const [search, setSearch] = useState("")
@@ -36,13 +37,15 @@ export default function Predictions() {
     return <Layout1>
         <div className="p-5">
             <Loader loading={loading}>
-                <SearchFilter filter={search} setFilter={setSearch} />
-                <div className="p-3 m-4 bg-light rounded-3 shadow-xl">Your current weight is: {weight}</div>
-                {predictions.map(prediction =>
-                    <div key={prediction.id}>
-                        <Prediction prediction={prediction} />
-                    </div>
-                )}
+                <div className="predictions">
+                    <SearchFilter filter={search} setFilter={setSearch} />
+                    <div className="p-3 m-4 bg-light rounded-3 shadow-xl">Your current weight is: {weight}</div>
+                    {predictions.map(prediction =>
+                        <div key={prediction.id}>
+                            <Prediction prediction={prediction} />
+                        </div>
+                    )}
+                </div>
             </Loader>
         </div>
     </Layout1>

@@ -1,8 +1,10 @@
 .prediction-score-buttons {
-    height: 5vw;
-    min-height: 2rem;
-    width: 8vw;
-    min-width: 3rem;
+    /* height: 5vw;
+    min-height: 2rem; */
+    /* width: 8vw; */
+    /* min-width: 3rem; */
+    width: clamp(3rem, 8vw, 100px);
+    height: clamp(2rem, 5vw, 100px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,4 +15,9 @@
         width: 33%;
     }
 
+}
+
+.predictions {
+    max-width: 800px;
+    margin-inline: auto;
 }
