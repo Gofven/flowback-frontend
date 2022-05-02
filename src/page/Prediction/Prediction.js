@@ -66,13 +66,13 @@ export default function Prediction({ prediction }) {
                         )}
                     </div>
                 </div>
-                {hasUnsavedChanges && <div className="mt-2">You have unsaved changes</div>}
+                {hasUnsavedChanges && <div className="mt-2">{window.t("You have unsaved changes")}</div>}
                 <div className={`mt-2 ${message.color}`}>{message.message}</div>
-                <div className="mt-2">Average score: {averageScore}%</div>
+                <div className="mt-2">{window.t("Average score")}: {averageScore}%</div>
                 {prediction.active ? <div className="d-flex mt-3 gap-2">
-                    <button type="submit" onClick={voteCreate} className="btn btn-primary">Vote</button>
-                    <button type="submit" className="btn btn-secondary" onClick={voteDelete}>Unvote</button>
-                </div> : <div>This prediction is finished and can no longer be voted on</div>}
+                    <button type="submit" onClick={voteCreate} className="btn btn-primary">{window.t("Vote")}</button>
+                    <button type="submit" className="btn btn-secondary" onClick={voteDelete}>{window.t("Unvote")}</button>
+                </div> : <div>{window.t("This prediction is finished and can no longer be voted on")}</div>}
             </form>
         </Loader>
     </div >

@@ -39,7 +39,7 @@ export default function Predictions() {
             <Loader loading={loading}>
                 <div className="predictions">
                     <SearchFilter filter={search} setFilter={setSearch} />
-                    <div className="p-3 m-4 bg-light rounded-3 shadow-xl">Your current weight is: {weight}</div>
+                    <div className="p-3 m-4 bg-light rounded-3 shadow-xl">{window.t("Your current weight is")}: {weight}</div>
                     {predictions.map(prediction =>
                         <div key={prediction.id}>
                             <Prediction prediction={prediction} />
