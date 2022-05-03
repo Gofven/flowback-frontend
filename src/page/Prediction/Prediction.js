@@ -53,26 +53,27 @@ export default function Prediction({ prediction }) {
     }, [])
 
 
-    return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow-xl">
+    return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow">
         <Loader loading={loading}>
             <h1>{prediction.title}</h1>
             <div className="mt-2 mb-3">{prediction.description}</div>
             <form>
                 <div className="w-100">
-                    <div className="d-flex justify-content-center">
-                        {[0, 20, 40, 60, 80, 100].map(probability =>
-                            <div key={probability} className={`btn ms-2 mt-1 rounded-2 prediction-score-buttons ${probability === score * 20 ? "btn-outline-warning" : "btn-outline-secondary"}`}
+                    <div className="d-flex justify-content-center flex-wrap">
+                        {prediction.active && [0, 20, 40, 60, 80, 100].map(probability =>
+                            <div key={probability} className={`btn ms-2 mt-1 rounded-2 prediction-score-buttons 
+                            ${probability === score * 20 ? "btn-outline-warning" : "btn-outline-secondary"}`}
                                 onClick={() => scoreChange(probability / 20)}> {probability}%</div>
                         )}
                     </div>
                 </div>
-                {hasUnsavedChanges && <div className="mt-2">You have unsaved changes</div>}
+                {hasUnsavedChanges && <div className="mt-2">{window.t("You have unsaved changes")}</div>}
                 <div className={`mt-2 ${message.color}`}>{message.message}</div>
-                <div className="mt-2">Average score: {averageScore}%</div>
-                <div className="d-flex mt-3 gap-2">
-                    <button type="submit" onClick={voteCreate} className="btn btn-primary">Vote</button>
-                    <button type="submit" className="btn btn-secondary" onClick={voteDelete}>Unvote</button>
-                </div>
+                <div className="mt-2">{window.t("Average score")}: {averageScore}%</div>
+                {prediction.active ? <div className="d-flex mt-3 gap-2">
+                    <button type="submit" onClick={voteCreate} className="btn btn-primary" disabled={!hasUnsavedChanges}>{window.t("Vote")}</button>
+                    <button type="submit" className="btn btn-secondary" onClick={voteDelete} disabled={defaultVote===score}>{window.t("Unvote")}</button>
+                </div> : <div>{window.t("This prediction is finished and can no longer be voted on")}</div>}
             </form>
         </Loader>
     </div >
