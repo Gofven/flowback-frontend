@@ -53,7 +53,7 @@ export default function Prediction({ prediction }) {
     }, [])
 
 
-    return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow-xl">
+    return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow">
         <Loader loading={loading}>
             <h1>{prediction.title}</h1>
             <div className="mt-2 mb-3">{prediction.description}</div>
