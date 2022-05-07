@@ -75,7 +75,7 @@ export default function Predictions() {
                     elsewhere. Your weight will be viewable by others.`)}
                   </div>
                 ) : (
-                  <div className="ms-2">
+                  <div className="ps-2 pm-2">
                     {window.t("What are prediction markets?")}
                   </div>
                 )}
