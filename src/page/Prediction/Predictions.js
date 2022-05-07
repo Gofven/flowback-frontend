@@ -46,7 +46,7 @@ export default function Predictions() {
               <div className="mt-3 me-3">
                 <SearchFilter filter={search} setFilter={setSearch} />
               </div>
-              <div className="p-3 m-4 bg-light rounded-3 shadow-sm">
+              <div className="p-3 m-4 bg-light rounded-3 shadow-sm ">
                 {window.t("Your current weight is")}: <b>{weight}</b>
               </div>
               <div
@@ -75,7 +75,7 @@ export default function Predictions() {
                     elsewhere. Your weight will be viewable by others.`)}
                   </div>
                 ) : (
-                  <div className="ps-2 pm-2">
+                  <div className="ps-1 pm-1 what-are-pred">
                     {window.t("What are prediction markets?")}
                   </div>
                 )}
