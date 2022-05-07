@@ -42,7 +42,13 @@ export default function Predictions() {
       <div className="p-5">
         <Loader loading={loading}>
           <div className="predictions">
-            <div>
+            <div className="predictions-side">
+              <div className="mt-3 me-3">
+                <SearchFilter filter={search} setFilter={setSearch} />
+              </div>
+              <div className="p-3 m-4 bg-light rounded-3 shadow-sm">
+                {window.t("Your current weight is")}: <b>{weight}</b>
+              </div>
               <div
                 className="p-3 m-4 bg-light rounded-3 shadow-xl d-flex shadow-sm"
                 onClick={() => setExpandedDescription(!expandedDescription)}
@@ -75,11 +81,7 @@ export default function Predictions() {
                 )}
               </div>
             </div>
-            <div className="p-3 m-4 bg-light rounded-3 shadow-sm">
-              {window.t("Your current weight is")}: <b>{weight}</b>
-            </div>
             <div>
-              <SearchFilter filter={search} setFilter={setSearch} />
               {predictions.map((prediction) => (
                 <div key={prediction.id}>
                   <Prediction prediction={prediction} />
