@@ -82,7 +82,7 @@ export default function Predictions() {
               </div>
             </div>
             <div>
-              {predictions.map((prediction) => (
+              {predictions?.map((prediction) => (
                 <div key={prediction.id}>
                   <Prediction prediction={prediction} />
                 </div>
