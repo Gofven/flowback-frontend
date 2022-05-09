@@ -1,3 +1,13 @@
+.schedule-flex-wrap{
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.schedule-flex-wrap>*{
+    margin:2vw;
+
+}
+
 .calendar {
     background-color: white;
     padding: 20px;
@@ -112,21 +122,21 @@
     }
 }
 
-.poll {
-    background-color: #1caff6;
-    cursor: pointer;
+.has-poll {
+    background-color: #9ae0ed !important;
 }
 
 .day-poll-list {
     /* position: absolute; */
     width: 70%;
     display: flex;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     flex-direction: column;
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    background:white;
     box-shadow: 0rem 0rem 0.6rem rgb(0, 0, 0, 0.1);
     padding: 1rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
 }
 
 .day-poll-list>div {
@@ -135,6 +145,11 @@
 
 .day-poll-list>div:first-child {
     margin-top: 0px;
+}
+
+.day-poll-list>h1{
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .poll-titles {
@@ -169,18 +184,28 @@
 
 .all-calendar-days {
     display: grid;
+    /* gap:2px; */
 }
 
 
 .all-calendar-days>* {
+    background-color: rgba(216, 216, 216, 0.074);
     text-align: center;
     padding: 20px;
-    margin: 5px;
-    border: rgba(0, 0, 0, 0.05) solid;
+    /* margin: 5px; */
+    /* border: rgba(0, 0, 0, 0.05) solid; */
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    font-size: larger;
 }
 
+.is-today{
+    background: #24aeff;
+}
+
+.selected-day{
+    background:#1caff6 !important
+}
 
 .calendar-day-1 {
     margin-left: 0;
