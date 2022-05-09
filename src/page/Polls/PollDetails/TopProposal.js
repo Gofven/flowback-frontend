@@ -36,7 +36,7 @@ export const TopProposal = ({ topProposal }) => {
             </div>
             <div className="font-small mt-2 text-grey top-prosal-creator">
                 <div>Creator: <Profile
-                    id={topProposal?.user.id}> {topProposal.user?.first_name} </Profile>
+                    id={topProposal?.user?.id}> {topProposal?.user?.first_name} </Profile>
                 </div>
             </div>
         </div>

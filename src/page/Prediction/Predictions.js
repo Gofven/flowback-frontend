@@ -65,14 +65,7 @@ export default function Predictions() {
                 />
                 {expandedDescription ? (
                   <div className="ms-2">
-                    {window.t(`This prediction market is a point-based system dedicated to
-                    generating accurate predictions about future events by using
-                    the collective intelligence and wisdom. The number of steps
-                    better you guess than the average vote will change your
-                    weight positively in the voting and vice versa with negative
-                    (10 points plus or minus per step better or worse), that is
-                    only for the voting in the prediction market and not
-                    elsewhere. Your weight will be viewable by others.`)}
+                    {window.t(`This prediction market is a point-based system dedicated to generating accurate predictions about future events by using the collective intelligence and wisdom. The number of steps better you guess than the average vote will change your weight positively in the voting and vice versa with negative (10 points plus or minus per step better or worse), that is only for the voting in the prediction market and not elsewhere. Your weight will be viewable by others.`)}
                   </div>
                 ) : (
                   <div className="ps-1 pm-1 what-are-pred">

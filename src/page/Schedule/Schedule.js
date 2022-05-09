@@ -26,7 +26,7 @@ export default function Schedule() {
   const endYear = currentDate.getFullYear() + 5;
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
-  const [day, setDay] = useState(currentDate.getDate());
+  const [selectedDay, setDay] = useState(currentDate.getDate());
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pollList, setPollList] = useState([]);
@@ -59,12 +59,23 @@ export default function Schedule() {
       monthDays[i] = i - dayofweek + 1
     }
 
+    
     return (
       <div className={`all-calendar-days`}>
         {monthDays.map((day, i) => {
           const dayPolls = monthPolls.filter(poll => new Date(poll.top_proposal.date).getDate() === day)
-          return <div key={i} className={`calendar-day-${i % 7 + 1} ${(dayPolls.length !== 0) && "poll"}`} onClick={() => handleClickingDate(dayPolls, day)}>
-            <div className="day-number">{day}</div>
+          const isToday = currentDate.getDate()===day && currentDate.getMonth()===month && currentDate.getFullYear()===year
+          return <div key={i} 
+
+                  className={`calendar-day-${i % 7 + 1} 
+                  ${(dayPolls.length !== 0) && "has-poll"} 
+                  ${day===selectedDay && "selected-day"} 
+                  ${isToday && "is-today"}
+                  clickable
+                  `} 
+
+                  onClick={() => handleClickingDate(dayPolls, day)}>
+            <div className={`day-number`}>{day}</div>
           </div>
         })}
       </div>
@@ -106,6 +117,7 @@ export default function Schedule() {
   return (
     <Layout1>
       <Loader loading={loading}>
+        <div className="schedule-flex-wrap">
         <div className="calendar noSelect" id="calendar">
           <div className="calendar-btn month-btn" onClick={() => handleSelect("months")}>
             <div id="curMonth">{months[month]}</div>
@@ -159,27 +171,28 @@ export default function Schedule() {
               <CalendarDays />
             </div>
 
-            <div className="day-poll-list">
-              <h1>Polls for {day}/{month}/{year}</h1>
-              {pollList.length > 0 && pollList.map(poll => {
-                const pollDate = new Date(Date.parse(poll.top_proposal.date))
-                const minutes =
-                  pollDate.getMinutes() < 10
-                    ? `0${pollDate.getMinutes()}`
-                    : pollDate.getMinutes();
-
-                return <div>
-                  <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
-                    {poll.title}</a></div>
-                  <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}`}>
-                    {poll.group.title === "" ? "No group name" : poll.group.title}</a></div>
-                  <div>{`${pollDate.getHours()}:${minutes}`}</div>
-                  <div></div>
-                </div>
-              })}
-            </div>
           </div>
         </div>
+      <div className="day-poll-list">
+        <h1>Polls for {selectedDay}-{month}-{year}</h1>
+        {pollList.length > 0 && pollList.map(poll => {
+          const pollDate = new Date(Date.parse(poll.top_proposal.date))
+          const minutes =
+            pollDate.getMinutes() < 10
+              ? `0${pollDate.getMinutes()}`
+              : pollDate.getMinutes();
+
+          return <div>
+            <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}/polldetails/${poll.id}`}>
+              {poll.title}</a></div>
+            <div><a href={`${window.location.origin}/groupdetails/${poll.group.id}`}>
+              {poll.group.title === "" ? "No group name" : poll.group.title}</a></div>
+            <div>{`${pollDate.getHours()}:${minutes}`}</div>
+            <div></div>
+          </div>
+        })}
+      </div>
+      </div>
       </Loader>
     </Layout1 >
   );

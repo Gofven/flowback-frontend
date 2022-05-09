@@ -8,9 +8,10 @@
 }
 
 .clickable {
-    color: blue;
+    /* color: blue; */
     cursor: pointer;
 }
+
 
 .flex {
     display: flex;
