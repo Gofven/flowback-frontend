@@ -175,6 +175,7 @@
     "Results": "Resultat",
     "What are prediction markets?": "Vad är prediktions marknaden?",
     "Did happen": "Skedde",
-    "Did not happen": "Skedde ej"
-
+    "Did not happen": "Skedde ej",
+    "Click this button to create a co-document, share the link for others to edit it. Remember to save the link.":"Klicka på den här knappen för att skapa ett samdokument, dela länken så att andra kan redigera den. Kom ihåg att spara länken.",
+    "Tools":"Verktyg"
 }

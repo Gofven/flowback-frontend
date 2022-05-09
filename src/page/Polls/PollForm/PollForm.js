@@ -138,7 +138,7 @@ export default function PollForm() {
                 if (status === "success") {
                     history.push(`/groupdetails/${groupId}/pollDetails/${data.poll}`);
                 } else {
-                    setMessege({ messege: data?.title[0], color: "red" })
+                    setMessege({ messege: data?.end_time[0], color: "red" })
                 }
             }
         );
