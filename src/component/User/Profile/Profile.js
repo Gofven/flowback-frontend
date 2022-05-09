@@ -392,7 +392,7 @@ export default function Profile(props) {
                             </div>}
 
                             <div className="profile-content-view">
-                                Your current weight is:
+                                {window.t("Your current weight is")}: {weight}
                             </div>
                         </div>
                     }
