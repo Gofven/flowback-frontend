@@ -5,7 +5,12 @@
 
 .schedule-flex-wrap>*{
     margin:2vw;
+}
 
+@media (max-width: 750px) {
+    .schedule-flex-wrap{
+        display:block;
+    }
 }
 
 .calendar {
