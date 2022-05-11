@@ -177,14 +177,14 @@ export default function Friends() {
 
             {/*/Missions Featured Cards Col*/}
             <div className="col-md-6">
-              {<div style={{ "visibility": "none" }}>parseInt(REACT_APP_GROUP_CREATION)</div> &&
+              {parseInt(REACT_APP_GROUP_CREATION) ?
                 <Link to='/create'>
                   <div className="grupper-card">
                     <div className=" text-center my-2">
                       + {window.t("Create a Group")}
                     </div>
                   </div>
-                </Link>}
+                </Link> : <></>}
               <SearchFilter setFilter={setFilter} filter={filter} />
               <DropDownFilterGroup setFilter={setFilter} filter={filter} />
 
