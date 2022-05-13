@@ -7,8 +7,8 @@ const { REACT_APP_PROXY } = process.env;
 
 export default function PollResultsTraffic({ allProposals, pollDetails }) {
     const [showAbstain, setShowAbstain] = useState(true);
-    const totalVotes = pollDetails.total_participants;
-    const proposals = allProposals ? allProposals.sort((a, b) => (b.final_score_positive - b.final_score_negative) - (a.final_score_positive - a.final_score_negative)) : [];
+    const totalVotes = Number(pollDetails.total_participants);
+    const proposals = allProposals ? allProposals.sort((a, b) => (Number(b.final_score_positive) - Number(b.final_score_negative)) - (Number(a.final_score_positive) - Number(a.final_score_negative))) : [];
 
     const toggleAbstainedVotes = () => setShowAbstain(!showAbstain);
 
@@ -40,8 +40,8 @@ function TrafficProposal({ proposal, ranking = 0, totalVotes = 0, showAbstain = 
     const proposalName = proposalNameSplit[0];
     const proposalDescription = proposalNameSplit[1];
 
-    const votesAbstained = totalVotes - proposal.final_score_negative - proposal.final_score_positive;
-    const displayedTotalVotes = showAbstain ? Math.round(totalVotes) : Math.round(proposal.final_score_negative) + Math.round(proposal.final_score_positive);
+    const votesAbstained = totalVotes - Number(proposal.final_score_negative) - Number(proposal.final_score_positive);
+    const displayedTotalVotes = showAbstain ? Math.round(totalVotes) : Math.round(Number(proposal.final_score_negative)) + Math.round(Number(proposal.final_score_positive));
 
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
@@ -66,12 +66,12 @@ function TrafficProposal({ proposal, ranking = 0, totalVotes = 0, showAbstain = 
                     <div className="fw-bold">{displayedTotalVotes}</div>
                     <div className="font-small">{"votes"}</div>
                 </div>
-                <VoteTypePercent totalVotes={displayedTotalVotes} votes={proposal.final_score_negative}
+                <VoteTypePercent totalVotes={displayedTotalVotes} votes={Number(proposal.final_score_negative)}
                     text={"against"} cssClass={"bg-against"} />
                 {showAbstain && <VoteTypePercent totalVotes={displayedTotalVotes}
                     votes={votesAbstained}
                     text={"abstain"} cssClass={"bg-abstain"} />}
-                <VoteTypePercent totalVotes={displayedTotalVotes} votes={proposal.final_score_positive} text={"for"}
+                <VoteTypePercent totalVotes={displayedTotalVotes} votes={Number(proposal.final_score_positive)} text={"for"}
                     cssClass={"bg-for"} />
             </div>
         </div>
