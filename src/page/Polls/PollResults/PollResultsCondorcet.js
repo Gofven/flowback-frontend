@@ -5,6 +5,7 @@ import './PollResults.css';
 import ProposalDetails from "./ProposalDetails";
 import { PieChart } from 'react-minimal-pie-chart';
 import ReactTooltip from "react-tooltip";
+import bigDecimal from "js-big-decimal";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -12,10 +13,10 @@ export default function PollResultsCondorcet({ allProposals }) {
     if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>No winning proposal</div></div > }
 
     // sorted proposals
-    const proposals = allProposals ? allProposals.sort((a, b) => b.final_score_positive - a.final_score_positive) : [];
+    const proposals = allProposals ? allProposals.sort((a, b) => Number(new bigDecimal(b.final_score_positive).subtract(new bigDecimal(a.final_score_positive)).getValue())) : [];
 
-    const totalVotesReducer = (currentTotal, currProposal) => currentTotal + currProposal.final_score_positive;
-    const totalVotes = proposals.reduce(totalVotesReducer, 0);
+    const totalVotesReducer = (currentTotal, currProposal) => currentTotal.add(new bigDecimal(currProposal.final_score_positive));
+    const totalVotes = proposals.reduce(totalVotesReducer, new bigDecimal(0));
 
     return <div className="card-rounded p-4 my-4">
         <h4>Results</h4>
@@ -37,17 +38,17 @@ function ResultsPieChart({ allProposals, totalVotes }) {
     const colors = ['#277DA1', '#577590', '#4D908E', '#43AA8B', '#90BE6D', '#F94144', '#F3722C', '#F8961E', '#F9844A'];
 
     let data = topProposals.map((proposal, index) => {
-        const percentage = (proposal.final_score_positive / totalVotes);
+        const percentage = new bigDecimal(proposal.final_score_positive).divide(totalVotes);
         const title = getProposalTitleAndDescription(proposal)[0];
 
         return {
-            title: (index + 1) + ". " + title, value: percentage, color: colors[index]
+            title: (index + 1) + ". " + title, value: Number(percentage.getValue()), color: colors[index]
         }
     });
 
     const otherData = {
         title: (colors.length + 1) + ". other proposals",
-        value: otherProposals.reduce((acc, proposal) => acc + (proposal.final_score_positive / totalVotes), 0),
+        value: Number(otherProposals.reduce((acc, proposal) => acc.add(new bigDecimal(proposal.final_score_positive).divide(totalVotes)), new bigDecimal(0)).getValue()),
         color: '#f1c45b',
     };
 
@@ -81,13 +82,14 @@ function makeTooltipContent(entry) {
     return `${entry.title}`;
 }
 
-function RankedProposal({ proposal, ranking = 0, totalVotes = 0 }) {
+function RankedProposal({ proposal, ranking = 0, totalVotes = new bigDecimal(0) }) {
     const proposalNameSplit = getProposalTitleAndDescription(proposal);
     const proposalName = proposalNameSplit[0];
     const proposalDescription = proposalNameSplit[1];
 
-    const votes = proposal.final_score_positive;
-    const percentOfVotes = (parseFloat(votes) / (parseFloat(totalVotes) || 1)).toLocaleString(undefined, { style: 'percent' });
+    const votes = new bigDecimal(proposal.final_score_positive);
+    const percentOfVotesNumber = (Number(votes.getValue()) < 0) || (Number(totalVotes.getValue()) < 0 ) ? 0:(Number(votes.divide(totalVotes).getValue()));
+    const percentOfVotes =  percentOfVotesNumber.toLocaleString(undefined, { style: 'percent' });
     const createdAt = new Date(proposal.created_at).toLocaleString();
     const createdBy = proposal.user ? proposal.user.first_name : ""; // In case of a proposal created with a "null" user
     const fileLink = proposal.file ? REACT_APP_PROXY + proposal.file.substring(1) : proposal.file;
