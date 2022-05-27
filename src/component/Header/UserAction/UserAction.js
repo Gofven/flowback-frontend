@@ -30,17 +30,17 @@ const loggedInData = [
   {
     title: "User Profile",
     url: "#",
-    component: (<Profile><span>{window.t("User Profile")}</span></Profile>)
+    component: (<Profile><span>{window.t ? window.t("User Profile") : "User Profile"}</span></Profile>)
   },
   {
     title: "Support",
     url: "#",
-    component: (<Support><span>{window.t("Support")}</span></Support>)
+    component: (<Support><span>{window.t ? window.t("Support") :"Support"}</span></Support>)
   },
   {
     title: "Tools",
     url: "#",
-    component: (<Tools><span>{window.t("Tools")}</span></Tools>)
+    component: (<Tools><span>{window.t ? window.t("Tools") : "Tools"}</span></Tools>)
   },
   {
     title: "Log Out",

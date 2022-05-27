@@ -77,7 +77,7 @@ export default function GroupStatsCard({ groupId, userType }) {
                     <div className="card-body d-flex flex-row justify-content-center">
                         <StatsNumberCard label="Members" number={memberCount} />
                         {/*<StatsNumberCard label="Polls" number={pollCount}/>*/}
-                        <StatsNumberCard label="Documents" number={documentCount} />
+                        <StatsNumberCard label={window.t("Documents")} number={documentCount} />
                     </div>
                 </Loader>
             </div> : <div className="document-card card-rounded mb-4">

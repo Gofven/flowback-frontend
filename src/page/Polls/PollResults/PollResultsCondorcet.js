@@ -10,7 +10,7 @@ import bigDecimal from "js-big-decimal";
 const { REACT_APP_PROXY } = process.env;
 
 export default function PollResultsCondorcet({ allProposals }) {
-    if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>No winning proposal</div></div > }
+    if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>{window.t("No winning proposal")}</div></div > }
 
     // sorted proposals
     const proposals = allProposals ? allProposals.sort((a, b) => Number(new bigDecimal(b.final_score_positive).subtract(new bigDecimal(a.final_score_positive)).getValue())) : [];
