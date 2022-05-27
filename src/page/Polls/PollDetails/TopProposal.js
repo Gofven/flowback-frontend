@@ -10,7 +10,7 @@ export const TopProposal = ({ topProposal }) => {
                 <div className="media post-meida">
                     <div className="media-body">
                         <h5 className="user-name">
-                            Planned Time
+                            {window.t("Planned Time")}
                         </h5>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ export const TopProposal = ({ topProposal }) => {
                     basedOn='letters' />
             </div>
             <div className="font-small mt-2 text-grey top-prosal-creator">
-                <div>Creator: <Profile
+                <div>{window.t("Creator")}: <Profile
                     id={topProposal?.user?.id}> {topProposal?.user?.first_name} </Profile>
                 </div>
             </div>

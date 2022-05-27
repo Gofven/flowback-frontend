@@ -449,12 +449,12 @@ export default function PollDetails() {
                                         <div className="col-6">{formatDate(poll.created_at, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">{("Accepted at")}</div>
+                                        <div className="col-5">{window.t("Accepted at")}</div>
                                         <div
                                             className="col-6">{poll.accepted_at && formatDate(poll.accepted_at, 'DD/MM/YYYY kk:mm') || "Remain to Approve"}</div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">{("End Time")}</div>
+                                        <div className="col-5">{window.t("End Time")}</div>
                                         <div className="col-6">{formatDate(poll.end_time, 'DD/MM/YYYY kk:mm')}</div>
                                     </div>
 
@@ -467,7 +467,7 @@ export default function PollDetails() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5">{("Documents")}</div>
+                                        <div className="col-5">{window.t("Documents")}</div>
                                         <div className="col-6">
                                             {
                                                 poll && poll.files && poll.files.length ?
@@ -696,12 +696,12 @@ export default function PollDetails() {
                                     <div>
                                         <FontAwesomeIcon icon={faCheck} color='#737373' />
                                         <p className="text-turncate small mb-0 d-inline poll-field ml-1">{window.t("Discussion")}</p>
-                                        <p className="text-turncate ml-4">{poll.discussion}</p>
+                                        <p className="text-turncate ml-4">{window.t(poll.discussion)}</p>
                                     </div>
                                     <div>
                                         <FontAwesomeIcon icon={faCheck} color='#737373' />
                                         <p className="text-turncate small mb-0 d-inline poll-field ml-1">{window.t("Voting")}</p>
-                                        <p className="text-turncate ml-4">{poll.discussion}</p>
+                                        <p className="text-turncate ml-4">{window.t(poll.discussion)}</p>
                                     </div>
                                 </div>
                             </div>
