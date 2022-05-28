@@ -300,7 +300,7 @@ export default function PollForm() {
                                                             type="radio"
                                                             id="Ranking"
                                                             name="request"
-                                                            label="Ranking"
+                                                            label={window.t("Ranking")}
                                                             value="condorcet"
                                                             checked={pollDetail.voting_type === "condorcet"}
                                                             onClick={changeVotingType}
@@ -311,7 +311,7 @@ export default function PollForm() {
                                                             type="radio"
                                                             id="For/Against"
                                                             name="request"
-                                                            label="For/Against"
+                                                            label={window.t("For/Against")}
                                                             value="traffic"
                                                             checked={pollDetail.voting_type === "traffic"}
                                                             onClick={changeVotingType}
@@ -322,7 +322,7 @@ export default function PollForm() {
                                                             type="radio"
                                                             id="Cardinal"
                                                             name="request"
-                                                            label="Cardinal"
+                                                            label={window.t("Cardinal")}
                                                             value="cardinal"
                                                             checked={pollDetail.voting_type === "cardinal"}
                                                             onClick={changeVotingType}
@@ -333,7 +333,7 @@ export default function PollForm() {
                                                             type="radio"
                                                             id="Time"
                                                             name="request"
-                                                            label="Time"
+                                                            label={window.t("Time")}
                                                             value="time"
                                                             checked={pollDetail.voting_type === "time"}
                                                             onClick={changeVotingType}

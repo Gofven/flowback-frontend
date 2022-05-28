@@ -24,7 +24,7 @@ export default function ActionRow({ title, url, component, ...props }) {
   return (
     <li>
       <a className="dropdown-item" href={url} {...props}>
-        {component ? window.t(component.props.children.props.children) : window.t(title)}
+      {component ? component : window.t(title)}
       </a>
     </li>
   );

@@ -10,19 +10,21 @@ import bigDecimal from "js-big-decimal";
 const { REACT_APP_PROXY } = process.env;
 
 export default function PollResultsCondorcet({ allProposals }) {
-    if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>No winning proposal</div></div > }
+    if (allProposals === undefined || allProposals === null || allProposals.detail === "Not found.") { return <div className="card-rounded p-4 my-4"><div>{window.t("No winning proposal")}</div></div > }
 
     // sorted proposals
     const proposals = allProposals ? allProposals.sort((a, b) => Number(new bigDecimal(b.final_score_positive).subtract(new bigDecimal(a.final_score_positive)).getValue())) : [];
 
     const totalVotesReducer = (currentTotal, currProposal) => currentTotal.add(new bigDecimal(currProposal.final_score_positive));
-    const totalVotes = proposals.reduce(totalVotesReducer, new bigDecimal(0));
+    const totalVotes = proposals.reduce(totalVotesReducer, new bigDecimal(1));
 
     return <div className="card-rounded p-4 my-4">
         <h4>Results</h4>
         {allProposals &&
-            <div className="m-xl-5 m-lg-4 m-md-3 m-sm-5 m-3"><ResultsPieChart allProposals={allProposals}
-                totalVotes={totalVotes} /></div>}
+            <div className="m-xl-5 m-lg-4 m-md-3 m-sm-5 m-3">
+                <ResultsPieChart allProposals={allProposals}
+                totalVotes={totalVotes} />
+                </div>}
         {proposals ? proposals.map((proposal, index) => <RankedProposal key={proposal.id} proposal={proposal}
             ranking={index + 1}
             totalVotes={totalVotes} />) : <></>}</div>
@@ -82,7 +84,7 @@ function makeTooltipContent(entry) {
     return `${entry.title}`;
 }
 
-function RankedProposal({ proposal, ranking = 0, totalVotes = new bigDecimal(0) }) {
+function RankedProposal({ proposal, ranking = 0, totalVotes = new bigDecimal(1) }) {
     const proposalNameSplit = getProposalTitleAndDescription(proposal);
     const proposalName = proposalNameSplit[0];
     const proposalDescription = proposalNameSplit[1];

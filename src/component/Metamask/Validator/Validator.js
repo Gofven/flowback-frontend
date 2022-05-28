@@ -1,4 +1,4 @@
-import { decryptSafely, getEncryptionPublicKey } from '@metamask/eth-sig-util';
+import { decryptSafely, getEncryptionPublicKey, recoverPersonalSignature } from '@metamask/eth-sig-util';
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
@@ -27,15 +27,15 @@ export default function Validator() {
     const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
     const nonce = naclUtil.encodeBase64(unencodedNonce);
     const publicKey = getEncryptionPublicKey(validator.privateKey)
-    const decryptedMessege = decryptSafely({
-      encryptedData: {
-        ciphertext: validator.data,
-        version: "x25519-xsalsa20-poly1305",
-        ephemPublicKey: publicKey,
-        nonce: nonce
-      },
-      privateKey: validator.privateKey
-    })
+    // const decryptedMessege = decryptSafely({
+    //   encryptedData: {
+    //     ciphertext: validator.data,
+    //     version: "x25519-xsalsa20-poly1305",
+    //     ephemPublicKey: publicKey,
+    //     nonce: nonce
+    //   },
+    //   privateKey: validator.privateKey
+    // })
 
     // const decryptedMessege = decryptSafely({ 
     //   encryptedData: validator.data, 
@@ -45,7 +45,13 @@ export default function Validator() {
 
     // expect(decryptedMessege).toBe(validator.data); 
 
-    console.log('The decrypted message is:', decryptedMessege)
+    publicKey = recoverPersonalSignature({
+      data: validator.data,
+      signature: validator.signedData
+    })
+
+    console.log(publicKey)
+    // console.log('The decrypted message is:', decryptedMessege)
 
 
 
@@ -64,11 +70,11 @@ export default function Validator() {
             value={validator.data}
             onChange={onChange}
           ></input>
-          <div>MetaMask Private Key</div>
+          <div>Signed Data</div>
           <input
             type="text"
-            name="privateKey"
-            value={validator.privateKey}
+            name="signedData"
+            value={validator.signedData}
             onChange={onChange}
           ></input>
           <div>MetaMask Public Key</div>

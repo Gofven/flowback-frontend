@@ -30,22 +30,17 @@ const loggedInData = [
   {
     title: "User Profile",
     url: "#",
-    component: (<Profile><span>User Profile</span></Profile>)
+    component: (<Profile><span>{window.t ? window.t("User Profile") : "User Profile"}</span></Profile>)
   },
-  // {
-  //   title: "Requests",
-  //   url: "#",
-  //   component: (<Requests><span>Requests</span></Requests>)
-  // },
   {
     title: "Support",
     url: "#",
-    component: (<Support><span>User Profile</span></Support>)
+    component: (<Support><span>{window.t ? window.t("Support") :"Support"}</span></Support>)
   },
   {
     title: "Tools",
     url: "#",
-    component: (<Tools><span>Tools</span></Tools>)
+    component: (<Tools><span>{window.t ? window.t("Tools") : "Tools"}</span></Tools>)
   },
   {
     title: "Log Out",
@@ -55,6 +50,11 @@ const loggedInData = [
       window.location.href = "/";
     }
   },
+  // {
+  //   title: "Requests",
+  //   url: "#",
+  //   component: (<Requests><span>Requests</span></Requests>)
+  // },
 ];
 
 const loggedOutData = [
