@@ -275,33 +275,34 @@ function SortCounterProposal(props) {
 
             //TODO: More elegant code
             if (publicKey) {
-                let positive_proposal_indexes_2 = []
+                let positive_proposal_indexes_encrypted = []
                 positive_proposal_indexes.forEach((proposal, index) => {
                     const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
-                    positive_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
+                    positive_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal }) //TODO: Rename hash to encrypted
                 });
 
-                let negative_proposal_indexes_2 = []
+                let negative_proposal_indexes_encrypted = []
                 negative_proposal_indexes.forEach((proposal, index) => {
                     const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
-                    negative_proposal_indexes_2.push({ proposal, hash: encryptedProposal })
+                    negative_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal })
                 });
 
 
 
+                sendData({positive: positive_proposal_indexes_encrypted, negative:negative_proposal_indexes_encrypted, hash:"none"});
 
                 signData({
-                    positive: positive_proposal_indexes_2,
-                    negative: negative_proposal_indexes_2
+                    positive: positive_proposal_indexes_encrypted,
+                    negative: negative_proposal_indexes_encrypted
                 }, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
-                    const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                    // const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
                     const data = {
-                        positive: positive_proposal_indexes_2,
-                        negative: negative_proposal_indexes_2,
-                        hash: encryptedSignedData
+                        positive: positive_proposal_indexes_encrypted,
+                        negative: negative_proposal_indexes_encrypted,
+                        hash: signedData
                     }
-
-                    sendData(data);
+                    
+                    // sendData(data);
 
                     // const recovered = recoverTypedSignature({
                     //     data:{

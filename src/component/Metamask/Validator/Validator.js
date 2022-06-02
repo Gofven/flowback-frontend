@@ -1,4 +1,4 @@
-import { decryptSafely, getEncryptionPublicKey, recoverPersonalSignature } from '@metamask/eth-sig-util';
+import { decryptSafely, encrypt, encryptSafely, getEncryptionPublicKey, recoverPersonalSignature } from '@metamask/eth-sig-util';
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
@@ -15,47 +15,35 @@ export default function Validator() {
 
   const onChange = (e) => {
     setValidator({ ...validator, ...inputKeyValue(e) });
+
+    const publicKey = getEncryptionPublicKey("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
+
+
+   const encryptedMessage = encryptSafely({
+      version:"x25519-xsalsa20-poly1305",
+      data:"foo",
+      publicKey
+    })
+
+    console.log(encryptedMessage)
+    
+    const decryptedMessage = decryptSafely({
+      encryptedData:encryptedMessage,
+      privateKey:"5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b",
+    })
+
+    console.log(decryptedMessage)
   };
 
   const validated = (e) => {
     e.preventDefault();
-    // const recovered = recoverTypedSignature({
-    //     data: JSON.stringify({test: validator.data}),
-    //     signature: validator.signedData,
-    //     version:"V4"
-    //   });f
-    const unencodedNonce = nacl.randomBytes(nacl.box.nonceLength);
-    const nonce = naclUtil.encodeBase64(unencodedNonce);
-    const publicKey = getEncryptionPublicKey(validator.privateKey)
-    // const decryptedMessege = decryptSafely({
-    //   encryptedData: {
-    //     ciphertext: validator.data,
-    //     version: "x25519-xsalsa20-poly1305",
-    //     ephemPublicKey: publicKey,
-    //     nonce: nonce
-    //   },
-    //   privateKey: validator.privateKey
-    // })
 
-    // const decryptedMessege = decryptSafely({ 
-    //   encryptedData: validator.data, 
-    //   privateKey: validator.privateKey, 
-    //   version:"x25519-xsalsa20-poly1305"
-    // }); 
-
-    // expect(decryptedMessege).toBe(validator.data); 
-
-    publicKey = recoverPersonalSignature({
-      data: validator.data,
-      signature: validator.signedData
+    const decryptedMessage = decryptSafely({
+      encryptedData:validator.data,
+      privateKey:validator.privateKey,
     })
 
-    console.log(publicKey)
-    // console.log('The decrypted message is:', decryptedMessege)
-
-
-
-
+    console.log(decryptedMessage)
   };
 
   return (
@@ -63,29 +51,22 @@ export default function Validator() {
       <div>
         <div>Flowback Validator</div>
         <form action="#">
-          <div>Hash</div>
+          <div>Data</div>
           <input
             type="text"
             name="data"
             value={validator.data}
             onChange={onChange}
           ></input>
-          <div>Signed Data</div>
+          <div>MetaMask private Key</div>
           <input
             type="text"
-            name="signedData"
-            value={validator.signedData}
-            onChange={onChange}
-          ></input>
-          <div>MetaMask Public Key</div>
-          <input
-            type="text"
-            name="publicKey"
-            value={validator.publicKey}
+            name="privateKey"
+            value={validator.privateKey}
             onChange={onChange}
           ></input>
           <button type="submit" onClick={validated}>
-            Check if true
+            Decrypt vote
           </button>
         </form>
       </div>
