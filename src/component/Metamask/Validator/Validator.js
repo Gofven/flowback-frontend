@@ -22,15 +22,19 @@ export default function Validator() {
     
     const encryptedMessage = encryptSafely({
       version:"x25519-xsalsa20-poly1305",
-      data:"foo",
-      publicKey
+      data:"hewwo",
+      publicKey:"NrvltMCU/gzvhiCxKj7SlYcY7pumJWhvOVHOdjNO1SY="
     })
+
+    const parsed = JSON.parse(validator.data)
+    
+    // console.log(encryptedMessage)
+    console.log(parsed)
 
     const decryptedMessage = decryptSafely({
-      encryptedData:encryptedMessage,
+      encryptedData:parsed,
       privateKey:validator.privateKey,
     })
-
     console.log(decryptedMessage)
   };
 

@@ -33,7 +33,7 @@ import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
 import { getTextBetweenHTMLTags } from '../../../../component/HTMEditor/HTMEditor'
-import { recoverTypedSignature } from '@metamask/eth-sig-util';
+import { recoverTypedSignature, encryptSafely } from '@metamask/eth-sig-util';
 
 const div = styled.div`
   margin: 12px 0;
@@ -277,44 +277,58 @@ function SortCounterProposal(props) {
             if (publicKey) {
                 let positive_proposal_indexes_encrypted = []
                 positive_proposal_indexes.forEach((proposal, index) => {
-                    const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
-                    positive_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal }) //TODO: Rename hash to encrypted
-                });
 
+                    const encryptedProposal = JSON.stringify(encryptSafely({
+                        version:"x25519-xsalsa20-poly1305",
+                        data:{proposal_id: proposal, proposalIndex: index, userId},
+                        publicKey
+                      }))
+                      
+                    // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+                    positive_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal }) //TODO: Rename hash to encrypted
+                    });
+                    
                 let negative_proposal_indexes_encrypted = []
                 negative_proposal_indexes.forEach((proposal, index) => {
-                    const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+
+                    const encryptedProposal = JSON.stringify(encryptSafely({
+                        version:"x25519-xsalsa20-poly1305",
+                        data:{proposal_id: proposal, proposalIndex: index, userId},
+                        publicKey:publicKey
+                        }))
+
+                       
+                    // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
                     negative_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal })
                 });
 
-
-
+                //Sends encrypted votes to backend
                 sendData({positive: positive_proposal_indexes_encrypted, negative:negative_proposal_indexes_encrypted, hash:"none"});
 
-                signData({
-                    positive: positive_proposal_indexes_encrypted,
-                    negative: negative_proposal_indexes_encrypted
-                }, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
-                    // const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
-                    const data = {
-                        positive: positive_proposal_indexes_encrypted,
-                        negative: negative_proposal_indexes_encrypted,
-                        hash: signedData
-                    }
+                // signData({
+                //     positive: positive_proposal_indexes_encrypted,
+                //     negative: negative_proposal_indexes_encrypted
+                // }, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
+                //     // const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
+                //     const data = {
+                //         positive: positive_proposal_indexes_encrypted,
+                //         negative: negative_proposal_indexes_encrypted,
+                //         hash: signedData
+                //     }
                     
-                    // sendData(data);
+                //     // sendData(data);
 
-                    // const recovered = recoverTypedSignature({
-                    //     data:{
-                    //         positive: positive_proposal_indexes_2,
-                    //         negative: negative_proposal_indexes_2
-                    //     },
-                    //     signature:signedData,
-                    //     version:"V4"
-                    // })
+                //     // const recovered = recoverTypedSignature({
+                //     //     data:{
+                //     //         positive: positive_proposal_indexes_2,
+                //     //         negative: negative_proposal_indexes_2
+                //     //     },
+                //     //     signature:signedData,
+                //     //     version:"V4"
+                //     // })
 
 
-                });
+                // });
 
 
             }

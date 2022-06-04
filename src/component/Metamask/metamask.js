@@ -181,16 +181,6 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                             Message: [{ name: 'Data', type: 'Polls' },
                             ],
                         };
-
-                        // const primaryType = 'Data';
-
-                        // const recovered = recoverTypedSignature({
-                        //     data: {types, primaryType, domain:{}, message:data},
-                        //     signature: results.result,
-                        //     version:"V4"
-                        //     });
-
-                        // console.log(recovered);
                         resolve(results.result);
                     }
                 })
@@ -218,11 +208,16 @@ export function encryptWithPublicKey(data) {
 
 export function getPublicKeyFromDatabase(userId) {
     return new Promise((resolve, reject) => {
-        getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
-            resolve(res.public_key);
-        }).catch(() => {
-            reject(null);
-        })
+        
+        window.ethereum.request({
+            method: 'eth_getEncryptionPublicKey',
+            params: ["0x3b89aC05D2d53f3775697B5Dbc75d8852E740403"],
+        }).then(a => resolve(a))
+        // getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
+        //     resolve(res.public_key);
+        // }).catch(() => {
+        //     reject(null);
+        // })
     })
 }
 
