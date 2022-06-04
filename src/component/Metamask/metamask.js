@@ -41,7 +41,6 @@ export function ConnectToMetamask() {
                     console.warn(e)
                     reject();
                 }) : console.warn("Not using metamask"))
-
     }
 
     const getPublicKey = (address) => {

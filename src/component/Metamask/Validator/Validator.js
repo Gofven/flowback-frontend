@@ -2,8 +2,6 @@ import { decryptSafely, encrypt, encryptSafely, getEncryptionPublicKey, recoverP
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
-import * as nacl from 'tweetnacl';
-import * as naclUtil from 'tweetnacl-util'
 
 export default function Validator() {
   const [validator, setValidator] = useState({
@@ -15,31 +13,21 @@ export default function Validator() {
 
   const onChange = (e) => {
     setValidator({ ...validator, ...inputKeyValue(e) });
-
+  };
+  
+  const validated = (e) => {
+    e.preventDefault();
+    
     const publicKey = getEncryptionPublicKey("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
-
-
-   const encryptedMessage = encryptSafely({
+    
+    const encryptedMessage = encryptSafely({
       version:"x25519-xsalsa20-poly1305",
       data:"foo",
       publicKey
     })
 
-    console.log(encryptedMessage)
-    
     const decryptedMessage = decryptSafely({
       encryptedData:encryptedMessage,
-      privateKey:"5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b",
-    })
-
-    console.log(decryptedMessage)
-  };
-
-  const validated = (e) => {
-    e.preventDefault();
-
-    const decryptedMessage = decryptSafely({
-      encryptedData:validator.data,
       privateKey:validator.privateKey,
     })
 
