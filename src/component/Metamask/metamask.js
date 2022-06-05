@@ -95,15 +95,17 @@ export function ConnectToMetamask() {
         <Loader loading={loading}>
             {account ?
                 <div className="metamask-connection"><span>{window.t("You are connected to MetaMask")}</span>
-                    <button className="btn btn-outline-warning" onClick={disconnectMetamask}>
+                    <button className="btn btn-outline-primary" onClick={disconnectMetamask}>
                         {window.t("Disconnect from Metamask")}
                     </button></div>
                 :
                 <div className="metamask-connection"><span>{window.t("You are not connected to MetaMask")}</span>
-                    <button className="btn btn-outline-primary" onClick={connectToMetamask}>
+                    <button className="btn btn-primary" onClick={connectToMetamask}>
                         {window.t("Connect to MetaMask")}
                     </button>
                 </div>}
+
+                <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>Go to Validator</button >
         </Loader>
     </div>
 }
