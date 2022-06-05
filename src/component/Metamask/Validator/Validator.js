@@ -2,6 +2,7 @@ import { decryptSafely, encrypt, encryptSafely, getEncryptionPublicKey, recoverP
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
+import Layout1 from '../../../layout/Layout1';
 
 export default function Validator() {
   const [validator, setValidator] = useState({
@@ -46,10 +47,10 @@ export default function Validator() {
   };
 
   return (
-    <div className="validator">
-      <div>
-        <div>Flowback Validator</div>
+    <Layout1>
+      <div className="validator">
         <form action="#">
+        <h1>Flowback Validator</h1>
           <div>Data</div>
           <input
             type="text"
@@ -64,12 +65,12 @@ export default function Validator() {
             value={validator.privateKey}
             onChange={onChange}
           ></input>
-          <button type="submit" onClick={validated}>
+          <button type="submit" onClick={validated} className="btn btn-primary mt-2">
             Decrypt vote
           </button>
         </form>
        <h1>{message}</h1>
       </div>
-    </div>
+    </Layout1>
   );
 }
