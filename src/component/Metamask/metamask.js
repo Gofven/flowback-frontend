@@ -41,7 +41,6 @@ export function ConnectToMetamask() {
                     console.warn(e)
                     reject();
                 }) : console.warn("Not using metamask"))
-
     }
 
     const getPublicKey = (address) => {
@@ -96,15 +95,17 @@ export function ConnectToMetamask() {
         <Loader loading={loading}>
             {account ?
                 <div className="metamask-connection"><span>{window.t("You are connected to MetaMask")}</span>
-                    <button className="btn btn-outline-warning" onClick={disconnectMetamask}>
+                    <button className="btn btn-outline-primary" onClick={disconnectMetamask}>
                         {window.t("Disconnect from Metamask")}
                     </button></div>
                 :
                 <div className="metamask-connection"><span>{window.t("You are not connected to MetaMask")}</span>
-                    <button className="btn btn-outline-primary" onClick={connectToMetamask}>
+                    <button className="btn btn-primary" onClick={connectToMetamask}>
                         {window.t("Connect to MetaMask")}
                     </button>
                 </div>}
+
+                <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>Go to Validator</button >
         </Loader>
     </div>
 }
@@ -182,16 +183,6 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
                             Message: [{ name: 'Data', type: 'Polls' },
                             ],
                         };
-
-                        // const primaryType = 'Data';
-
-                        // const recovered = recoverTypedSignature({
-                        //     data: {types, primaryType, domain:{}, message:data},
-                        //     signature: results.result,
-                        //     version:"V4"
-                        //     });
-
-                        // console.log(recovered);
                         resolve(results.result);
                     }
                 })
@@ -219,11 +210,16 @@ export function encryptWithPublicKey(data) {
 
 export function getPublicKeyFromDatabase(userId) {
     return new Promise((resolve, reject) => {
-        getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
-            resolve(res.public_key);
-        }).catch(() => {
-            reject(null);
-        })
+        
+        window.ethereum.request({
+            method: 'eth_getEncryptionPublicKey',
+            params: ["0x3b89aC05D2d53f3775697B5Dbc75d8852E740403"],
+        }).then(a => resolve(a))
+        // getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
+        //     resolve(res.public_key);
+        // }).catch(() => {
+        //     reject(null);
+        // })
     })
 }
 

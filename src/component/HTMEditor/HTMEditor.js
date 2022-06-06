@@ -1,3 +1,4 @@
+//I hate the HTMEditor
 import { useState, useEffect } from "react";
 import "./index.css";
 
