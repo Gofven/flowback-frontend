@@ -28,10 +28,12 @@ export default function Validator() {
     //   publicKey:"NrvltMCU/gzvhiCxKj7SlYcY7pumJWhvOVHOdjNO1SY="
     // })
 
-    const parsed = JSON.parse(validator.data)
+    // console.log(validator.data.replaceAll(/\\\"/gm,"\""))
+
+    const parsed = JSON.parse(validator.data.replaceAll(/\\\"/gm,"\""))
+    console.log(parsed)
     
     // console.log(encryptedMessage)
-    console.log(parsed)
 
 
 
@@ -68,8 +70,8 @@ export default function Validator() {
           <button type="submit" onClick={validated} className="btn btn-primary mt-2">
             Decrypt vote
           </button>
+          <div>{message}</div>
         </form>
-       <h1>{message}</h1>
       </div>
     </Layout1>
   );
