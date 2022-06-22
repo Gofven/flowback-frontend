@@ -46,7 +46,7 @@ export default function Validator() {
       return (decryptedMessage)
 
     } catch (error) {
-      setMessage("Something wen't wrong with decryption")
+      setMessage(window.t("Something wen't wrong with decryption"))
       console.error(error)
     }
   }
@@ -64,8 +64,9 @@ export default function Validator() {
       })
     });
 
+
     if (decryptedProposals.length > 0)
-      setMessage(`Succesfully decrypted following votes: ${decryptedProposals.toString()}`)
+      setMessage(`${window.t("Succesfully validated")} ${decryptedProposals.length} ${window.t("votes")}`)
 
   };
 
@@ -73,7 +74,7 @@ export default function Validator() {
     <Layout1>
       <div className="validator">
         <form action="#">
-          <h1>Flowback Validator</h1>
+          <h1>{window.t("Flowback Validator")}</h1>
           <div>Data</div>
           <textarea
             type="text"
@@ -81,7 +82,7 @@ export default function Validator() {
             value={validator.data}
             onChange={onChange}
           ></textarea>
-          <div>MetaMask private Key</div>
+          <div>MetaMask {window.t("private key")}</div>
           <input
             type="text"
             name="privateKey"
@@ -89,7 +90,7 @@ export default function Validator() {
             onChange={onChange}
           ></input>
           <button type="submit" onClick={validated} className="btn btn-primary mt-2">
-            Decrypt vote
+            {window.t("Decrypt vote")}
           </button>
           <div>{message}</div>
         </form>

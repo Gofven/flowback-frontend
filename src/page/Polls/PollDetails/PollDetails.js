@@ -671,6 +671,9 @@ export default function PollDetails() {
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-6">
+                                            <Link to={`/validator?json=${poll.result_file}`} className="btn btn-primary mb-3">
+                                                {window.t("Validate Votes")}
+                                            </Link>
                                             <Link>
                                                 <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>{window.t("Reveal Results JSON object")}</div>
                                             </Link>
@@ -679,9 +682,6 @@ export default function PollDetails() {
                                                     <div onClick={() => setShow(true)}>{window.t("Reveal Result Hash")}</div>
                                                 </Link>
                                             </div>
-                                            <Link to={`/validator?json=${poll.result_file}`}>
-                                                GO TO VALIDATOR
-                                            </Link>
                                         </div>
                                     </div>
                                 </div>
