@@ -651,7 +651,7 @@ export default function PollDetails() {
                             }
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
-
+                            {/* {poll.finished && */}
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <Modal show={show} onHide={handleClose} animation={false}>
@@ -679,13 +679,15 @@ export default function PollDetails() {
                                                     <div onClick={() => setShow(true)}>{window.t("Reveal Result Hash")}</div>
                                                 </Link>
                                             </div>
+                                            <Link to={`/validator?json=${poll.result_file}`}>
+                                                GO TO VALIDATOR
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {/* } */}
                         </div>
-
-
                         <div className="col-md-3">
                             <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">
@@ -709,6 +711,6 @@ export default function PollDetails() {
                     </div>
                 </div>
             </section>
-        </Layout1>
+        </Layout1 >
     );
 }

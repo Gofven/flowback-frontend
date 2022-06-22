@@ -105,7 +105,7 @@ export function ConnectToMetamask() {
                     </button>
                 </div>}
 
-                <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>Go to Validator</button >
+            <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>Go to Validator</button >
         </Loader>
     </div>
 }
@@ -203,17 +203,17 @@ export function encrypt(data) {
 }
 
 export function encryptWithPublicKey(data) {
-    const publicKey = getEncryptionPublicKey("f8cc7c2adb8060f36fdfcf1feb2a0a1bf2b8d1445a7d8beb0ffdbf0a611ffd94")
+    const publicKey = getEncryptionPublicKey("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
     const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
     return encryptedMessage.ciphertext;
 }
 
 export function getPublicKeyFromDatabase(userId) {
     return new Promise((resolve, reject) => {
-        
+
         window.ethereum.request({
             method: 'eth_getEncryptionPublicKey',
-            params: ["0x3b89aC05D2d53f3775697B5Dbc75d8852E740403"],
+            params: ["0xd6b9b07CCc0e6c2c6eD4259ee802396e6aBF825D"],
         }).then(a => resolve(a))
         // getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
         //     resolve(res.public_key);

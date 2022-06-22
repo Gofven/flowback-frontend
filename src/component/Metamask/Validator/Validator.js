@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
 import Layout1 from '../../../layout/Layout1';
+import { getRequest } from '../../../utils/API';
+import { useEffect } from 'react';
 
 export default function Validator() {
   const [validator, setValidator] = useState({
@@ -13,53 +15,72 @@ export default function Validator() {
   });
   const [message, setMessage] = useState("")
 
+  useEffect(() => {
+    const params = new URLSearchParams(document.location.search);
+    const jsonStoredURL = new URL(params.get("json"))
+    getRequest(jsonStoredURL.pathname).then(data => {
+      setValidator({ ...validator, data: JSON.stringify(data) })
+    })
+  }, [])
+
   const onChange = (e) => {
     setValidator({ ...validator, ...inputKeyValue(e) });
   };
-  
+
+  const decryptVote = vote => {
+
+    let parsedVote = vote;
+
+    try {
+      parsedVote = JSON.parse(vote.hash.replaceAll(/\\\"/gm, "\""))
+    } catch (error) {
+      setMessage("Something went wrong with the data")
+      console.error(error)
+    }
+
+    try {
+      const decryptedMessage = decryptSafely({
+        encryptedData: parsedVote,
+        privateKey: validator.privateKey,
+      })
+      return (decryptedMessage)
+
+    } catch (error) {
+      setMessage("Something wen't wrong with decryption")
+      console.error(error)
+    }
+  }
+
   const validated = (e) => {
     e.preventDefault();
-    
-    // const publicKey = getEncryptionPublicKey("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
-    
-    // const encryptedMessage = encryptSafely({
-    //   version:"x25519-xsalsa20-poly1305",
-    //   data:"hewwo",
-    //   publicKey:"NrvltMCU/gzvhiCxKj7SlYcY7pumJWhvOVHOdjNO1SY="
-    // })
 
-    // console.log(validator.data.replaceAll(/\\\"/gm,"\""))
+    const data = JSON.parse(validator.data)
+    const decryptedProposals = []
 
-    const parsed = JSON.parse(validator.data.replaceAll(/\\\"/gm,"\""))
-    console.log(parsed)
-    
-    // console.log(encryptedMessage)
+    data.proposals.forEach(proposal => {
+      proposal.votes.forEach(vote => {
+        const decryptedVote = decryptVote(vote)
+        decryptedVote && decryptedProposals.push(decryptedVote)
+      })
+    });
 
+    if (decryptedProposals.length > 0)
+      setMessage(`Succesfully decrypted following votes: ${decryptedProposals.toString()}`)
 
-
-
-
-    const decryptedMessage = decryptSafely({
-      encryptedData:parsed,
-      privateKey:validator.privateKey,
-    })
-    console.log(decryptedMessage)
-
-    setMessage(`Successfully validated vote at position ${decryptedMessage.proposalIndex+1}`)
   };
 
   return (
     <Layout1>
       <div className="validator">
         <form action="#">
-        <h1>Flowback Validator</h1>
+          <h1>Flowback Validator</h1>
           <div>Data</div>
-          <input
+          <textarea
             type="text"
             name="data"
             value={validator.data}
             onChange={onChange}
-          ></input>
+          ></textarea>
           <div>MetaMask private Key</div>
           <input
             type="text"
