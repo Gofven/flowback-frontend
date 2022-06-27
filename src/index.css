@@ -45,3 +45,8 @@ code {
 .noSelect:focus {
   outline: none !important;
 }
+
+.link{
+  color:rgb(50,160,255);
+  cursor:pointer;
+}

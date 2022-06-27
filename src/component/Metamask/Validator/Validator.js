@@ -17,10 +17,12 @@ export default function Validator() {
 
   useEffect(() => {
     const params = new URLSearchParams(document.location.search);
-    const jsonStoredURL = new URL(params.get("json"))
-    getRequest(jsonStoredURL.pathname).then(data => {
-      setValidator({ ...validator, data: JSON.stringify(data) })
-    })
+    if (params.length > 0){
+      const jsonStoredURL = new URL(params.get("json"))
+      getRequest(jsonStoredURL.pathname).then(data => {
+        setValidator({ ...validator, data: JSON.stringify(data) })
+      })
+    }
   }, [])
 
   const onChange = (e) => {

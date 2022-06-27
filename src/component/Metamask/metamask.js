@@ -105,7 +105,7 @@ export function ConnectToMetamask() {
                     </button>
                 </div>}
 
-            <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>Go to Validator</button >
+            <button className="btn btn-info mt-2" onClick={() => window.location = "/validator"}>{window.t("Go to Validator")}</button >
         </Loader>
     </div>
 }
