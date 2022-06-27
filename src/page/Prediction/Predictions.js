@@ -33,7 +33,7 @@ export default function Predictions() {
 
   const getUserWeight = () => {
     getRequest("api/v1/prediction/user").then((res) => {
-      setWeight(res.weight);
+      setWeight(res.weight || 50);
     });
   };
 

@@ -52,7 +52,7 @@ export default function AboutCard(props) {
                                 <div className="col-6">{group.city && group.city.city_name}, {group.country && group.country.country_name}</div>
                             </div> */}
                             <div className="row">
-                                <div className="col-5">{window.t("Created by")}HIII</div>
+                                <div className="col-5">{window.t("Created by")}</div>
                                 <div className="col-6">{group.created_by && group.created_by.first_name} {group.created_by && group.created_by.last_name}</div>
                             </div>
                         </div>
