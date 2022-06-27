@@ -651,7 +651,7 @@ export default function PollDetails() {
                             }
                             {poll.discussion === "Finished" && poll.type == "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
-
+                            {/* {poll.finished && */}
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">
                                 <div className="card-header flex-header">
                                     <Modal show={show} onHide={handleClose} animation={false}>
@@ -671,6 +671,9 @@ export default function PollDetails() {
                                 <div className="card-body overflow-hidden">
                                     <div className="row">
                                         <div className="col-6">
+                                            <Link to={`/validator?json=${poll.result_file}`} className="btn btn-primary mb-3">
+                                                {window.t("Validate Votes")}
+                                            </Link>
                                             <Link>
                                                 <div onClick={() => window.open(`${poll.result_file}`, '_blank')}>{window.t("Reveal Results JSON object")}</div>
                                             </Link>
@@ -683,9 +686,8 @@ export default function PollDetails() {
                                     </div>
                                 </div>
                             </div>
+                            {/* } */}
                         </div>
-
-
                         <div className="col-md-3">
                             <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
                                 <div className="card-header flex-header">
@@ -709,6 +711,6 @@ export default function PollDetails() {
                     </div>
                 </div>
             </section>
-        </Layout1>
+        </Layout1 >
     );
 }
