@@ -52,11 +52,6 @@ export default function Prediction({ prediction }) {
         voteGet()
     }, [])
 
-    useEffect(() => {
-        console.log(score)
-    })
-
-
     return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow">
         <Loader loading={loading}>
             <h1>{prediction.title}</h1>
