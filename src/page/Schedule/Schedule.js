@@ -174,7 +174,7 @@ export default function Schedule() {
           </div>
         </div>
       <div className="day-poll-list">
-        <h1>Polls for {selectedDay}-{month}-{year}</h1>
+        <h1>{window.t("Polls for")} {selectedDay}-{month}-{year}</h1>
         {pollList.length > 0 && pollList.map(poll => {
           const pollDate = new Date(Date.parse(poll.top_proposal.date))
           const minutes =

@@ -36,7 +36,7 @@ export default function Prediction({ prediction }) {
 
     const voteGet = (e) => {
         getRequest("api/v1/prediction/vote/" + prediction.id).then(res => {
-            setScore(res.score || defaultVote)
+            setScore(res.score)
             setHasUnsavedChanges(false)
             setAverageScore(res.average)
         })
@@ -51,6 +51,10 @@ export default function Prediction({ prediction }) {
     useEffect(() => {
         voteGet()
     }, [])
+
+    useEffect(() => {
+        console.log(score)
+    })
 
 
     return <div key={prediction.id} className="p-3 m-4 bg-light rounded-3 shadow">

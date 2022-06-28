@@ -43,7 +43,7 @@ const loggedInData = [
     title: "Tools",
     url: "#",
     // component: (<Tools><span>{window.t ? window.t("Tools") : "Tools"}</span></Tools>)
-    component: (<Profile><span>{REACT_APP_SCUFFED_TRANSLATION ? "Verktyg" : "Tool"}</span></Profile>)
+    component: (<Tools><span>{REACT_APP_SCUFFED_TRANSLATION ? "Verktyg" : "Tools"}</span></Tools>)
   },
   {
     title: "Log Out",
