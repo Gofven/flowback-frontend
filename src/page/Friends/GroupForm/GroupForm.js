@@ -68,6 +68,10 @@ export default function GroupForm(props) {
         countryList();
     }, [])
 
+    // useState(() => {
+    //     console.log(state.coverImage)
+    // })
+
     // Fetching data of group for displaying exist data to edit
     const getGroupDetails = () => {
         postRequest("api/v1/user_group/get_group_details", { id: groupId }).then(
@@ -231,6 +235,10 @@ export default function GroupForm(props) {
             setLoading(false);
         });
     }
+
+    useEffect(() => {
+        console.log(profileImage, "PROFILE IMAGE")
+    })
 
     // Update Group
     const updateGroup = () => {

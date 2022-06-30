@@ -226,7 +226,7 @@ export default function Profile(props) {
 
     const getUserWeight = () => {
         getRequest("api/v1/prediction/user").then(res => {
-            setWeight(res.weight)
+            setWeight(res.weight || 50)
         })
     }
 
