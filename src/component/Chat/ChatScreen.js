@@ -4,8 +4,7 @@ const { REACT_APP_PROXY } = process.env;
 
 export default function ChatScreen({ messageList, setMessageList, messaging }) {
     const token = JSON.parse(localStorage.getItem('jwtToken'));
-    // const [chatList, setChatList] = useState([{ person: "", messageList: [] }]);
-
+    // const [canSend, setCanSend] = useState(false)
     let socket;
 
     useEffect(() => {
@@ -15,6 +14,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
 
         socket.onopen = function (event) {
             console.log('[open] Connection established');
+            // setCanSend(true)
         };
 
         socket.onmessage = function (event) {
@@ -26,6 +26,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
         };
 
         socket.onclose = function (event) {
+            // setCanSend(false)
             if (event.wasClean) {
                 console.log(
                     `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
@@ -37,30 +38,31 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
         };
 
         socket.onerror = function (error) {
+            // setCanSend(false)
             console.error(`[error] ${error.message}`);
         };
-
-        // getRequest("api/v1/chat/dm/preview").then(res => {
-        //   console.log(res)
-        // })
 
         return () => {
             socket.close();
         };
-    })
+    },[])
 
     const submitMessage = (e) => {
         e.preventDefault();
-        // socket.send("hii");
         const messageBox = document.getElementById('groupchat-message');
         const message = document.getElementById('groupchat-message').value;
         messageBox.value = '';
 
 
         if (message !== '') {
-            const user = getLocalStorage("user")
-            setMessageList([...messageList, { message, username: user.username, image: user.image, created_at: new Date() }]);
-            socket.send(JSON.stringify({ message, target: messaging.id }))
+            try{
+                const user = getLocalStorage("user")
+                socket.send(JSON.stringify({ message, target: messaging.id }))
+                setMessageList([...messageList, { message, username: user.username, image: user.image, created_at: new Date() }]);
+            }
+            catch(error){
+                console.error(error)
+            }
         }
     };
 
@@ -74,7 +76,8 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
             id="groupchat-message"
             className="chat-message-input-box"
         />
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="btn btn-secondary" >
+            {/* disabled={!canSend} */}
             {window.t("Send")}
         </button>
     </form>

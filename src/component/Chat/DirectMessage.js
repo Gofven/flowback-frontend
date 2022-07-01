@@ -117,7 +117,6 @@ export default function DirectMessage() {
               </div>
               <div className="name-list-search">{person.first_name}
               </div>
-
             </div>
           )}
         </Modal.Body>
