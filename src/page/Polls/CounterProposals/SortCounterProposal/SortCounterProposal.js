@@ -169,7 +169,7 @@ function SortCounterProposal(props) {
     const [state, setState] = useState(initialData);
     const [cardinalState, setCardinalState] = useState([])
     const [messege, setMessege] = useState({ content: "", color: "black" })
-    const [privateKey, setPrivateKey] = useState("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
+    const [privateKey, setPrivateKey] = useState("")
 
     /**
      * To intialize counter proposal sorting state
