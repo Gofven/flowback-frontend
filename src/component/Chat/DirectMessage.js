@@ -53,18 +53,31 @@ export default function DirectMessage() {
     })
   }
 
-  useEffect(() => {
+  const getRecentMessages = () => {
     getRequest(`api/v1/chat/dm/preview`).then(res => {
       let peopleList = [];
-      res.forEach(message => {
-        if (message.user_id !== getLocalStorage("user").id)
-          peopleList.push({ username: message.username, image: message.image, id: message.user_id, message: message.message });
-        else
-          peopleList.push({ username: message.target_username, image: message.image, id: message.target_id, message: message.message });
+      const userId = getLocalStorage("user").id;
 
+      res.forEach(message => {
+
+        const recentUser = (message.user_id !== userId) ? 
+            { username: message.username, image: message.image, id: message.user_id, message: message.message }
+          : { username: message.target_username, image: message.image, id: message.target_id, message: message.message }
+        
+
+        if (!peopleList.find(e => e.id===recentUser.id))
+            peopleList.push(recentUser);
       });
+
       setRecentPeopleList(peopleList)
     })
+
+  }
+
+  useEffect(() => {
+
+    getRecentMessages();
+
   }, [])
 
   return (
@@ -96,7 +109,7 @@ export default function DirectMessage() {
               />
               <div className="chat-message-name-and-message">
                 <div>{message.username}</div>
-                <div>{window.t(message.message)}</div>
+                <div>{message.message}</div>
               </div>
             </div>
           ))}

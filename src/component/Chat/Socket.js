@@ -12,9 +12,9 @@ export default function Socket() {
 
   socket.onmessage = function (event) {
     console.log(`[message] Data received from server: ${event.data}`);
-    document
-      .getElementById('groupchat-messages')
-      .append(<li>{JSON.parse(event.data).message}</li>);
+    // document
+    //   .getElementById('groupchat-messages')
+    //   .append(<li>{JSON.parse(event.data).message}</li>);
   };
 
   socket.onclose = function (event) {

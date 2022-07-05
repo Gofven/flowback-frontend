@@ -45,7 +45,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
         return () => {
             socket.close();
         };
-    },[])
+    })
 
     const submitMessage = (e) => {
         e.preventDefault();
