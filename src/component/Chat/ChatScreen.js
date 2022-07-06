@@ -22,7 +22,8 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
                 `[message] Data received from server: ${JSON.parse(event.data).message}`
             );
             const data = JSON.parse(event.data);
-            setMessageList([...messageList, data]);
+            setMessageList([...messageList, { message: data.message, username: data.user.username, image: data.user.image, created_at: new Date() }]);
+            // setMessageList([...messageList, data]);
         };
 
         socket.onclose = function (event) {
@@ -58,7 +59,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
             try{
                 const user = getLocalStorage("user")
                 socket.send(JSON.stringify({ message, target: messaging.id }))
-                setMessageList([...messageList, { message, username: user.username, image: user.image, created_at: new Date() }]);
+                setMessageList([...messageList, { message, username: user.first_name, image: user.image, created_at: new Date() }]);
             }
             catch(error){
                 console.error(error)
