@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { getRequest, postRequest } from '../../utils/API';
+import { getRequest } from '../../utils/API';
 const { REACT_APP_PROXY } = process.env;
 
 export default function GroupChannel({ groupId }) {
@@ -23,7 +23,7 @@ export default function GroupChannel({ groupId }) {
         }`
       );
       const data = JSON.parse(event.data);
-      setMessageList([...messageList, data]);
+      setMessageList([...messageList, { message: data.message, username: data.user.username, image: data.user.image, created_at: new Date() }]);
     };
 
     socket.onclose = function (event) {
@@ -90,7 +90,7 @@ export default function GroupChannel({ groupId }) {
             />
             <div className="chat-message-name-and-message">
               <div>{message.username}</div>
-              <div>{window.t(message.message)}</div>
+              <div>{message.message}</div>
             </div>
           </div>
         ))}
