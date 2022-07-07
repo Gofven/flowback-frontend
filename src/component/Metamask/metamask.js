@@ -190,6 +190,7 @@ export function signData(data, userId, counterProposals, proposalIndexes, propos
     })
 }
 
+//Currently unused
 export function encrypt(data) {
     return new Promise((resolve, reject) => {
         getPublicKeyFromDatabase().then(() => {
@@ -202,8 +203,8 @@ export function encrypt(data) {
     })
 }
 
-export function encryptWithPublicKey(data) {
-    const publicKey = getEncryptionPublicKey("5d46203f6060b6be023d95714c23f329d49a4f2315ec9cd4907edae66b125f1b")
+export function encryptWithPublicKey(data, privateKey) {
+    const publicKey = getEncryptionPublicKey(privateKey)
     const encryptedMessage = encryptSafely({ publicKey: publicKey, data: data, version: "x25519-xsalsa20-poly1305" });
     return encryptedMessage.ciphertext;
 }
@@ -211,10 +212,13 @@ export function encryptWithPublicKey(data) {
 export function getPublicKeyFromDatabase(userId) {
     return new Promise((resolve, reject) => {
 
-        window.ethereum.request({
-            method: 'eth_getEncryptionPublicKey',
-            params: ["0xd6b9b07CCc0e6c2c6eD4259ee802396e6aBF825D"],
-        }).then(a => resolve(a))
+        window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+            window.ethereum.request({
+                method: 'eth_getEncryptionPublicKey',
+                params: accounts,
+            }).then(a => resolve(a))
+        })
+
         // getRequest("api/v1/me/get_public_key", { user: userId }).then(res => {
         //     resolve(res.public_key);
         // }).catch(() => {

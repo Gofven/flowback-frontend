@@ -101,6 +101,5 @@ export default function Chat(props) {
         </div>
       </>}
     </div >
-
   );
 }

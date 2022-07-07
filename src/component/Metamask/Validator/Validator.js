@@ -1,4 +1,4 @@
-import { decryptSafely, encrypt, encryptSafely, getEncryptionPublicKey, recoverPersonalSignature } from '@metamask/eth-sig-util';
+import { decryptSafely } from '@metamask/eth-sig-util';
 import { useState } from 'react';
 import { inputKeyValue } from '../../../utils/common';
 import './validator.css';
@@ -17,13 +17,15 @@ export default function Validator() {
 
   useEffect(() => {
     const params = new URLSearchParams(document.location.search);
-    if (params.length > 0){
+    try{
       const jsonStoredURL = new URL(params.get("json"))
       getRequest(jsonStoredURL.pathname).then(data => {
         setValidator({ ...validator, data: JSON.stringify(data) })
       })
     }
-  }, [])
+    catch(e){}
+    
+    },[])
 
   const onChange = (e) => {
     setValidator({ ...validator, ...inputKeyValue(e) });
@@ -48,7 +50,7 @@ export default function Validator() {
       return (decryptedMessage)
 
     } catch (error) {
-      setMessage(window.t("Something wen't wrong with decryption"))
+      setMessage(window.t("Something went wrong with decryption"))
       console.error(error)
     }
   }

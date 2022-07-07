@@ -33,7 +33,7 @@ import { Condorcet, TrafficLight } from './VoteButtons';
 import ProposalDetails from '../../PollResults/ProposalDetails';
 import { encryptWithPublicKey, getPublicKeyFromDatabase, signData } from '../../../../component/Metamask/metamask.js'
 import { getTextBetweenHTMLTags } from '../../../../component/HTMEditor/HTMEditor'
-import { recoverTypedSignature, encryptSafely } from '@metamask/eth-sig-util';
+import { getEncryptionPublicKey, encryptSafely } from '@metamask/eth-sig-util';
 
 const div = styled.div`
   margin: 12px 0;
@@ -169,7 +169,7 @@ function SortCounterProposal(props) {
     const [state, setState] = useState(initialData);
     const [cardinalState, setCardinalState] = useState([])
     const [messege, setMessege] = useState({ content: "", color: "black" })
-
+    const [privateKey, setPrivateKey] = useState("")
 
     /**
      * To intialize counter proposal sorting state
@@ -270,78 +270,56 @@ function SortCounterProposal(props) {
             return npi[a] - npi[b];
         }).map(Number)
 
+        console.log("HIIi")
         const userId = JSON.parse(window.localStorage.user).id;
-        getPublicKeyFromDatabase(userId).then(publicKey => {
+        // getPublicKeyFromDatabase(userId).then(publicKey => {
+
+            const publicKey = getEncryptionPublicKey(privateKey)
 
             //TODO: More elegant code
-            if (publicKey) {
-                let positive_proposal_indexes_encrypted = []
-                positive_proposal_indexes.forEach((proposal, index) => {
+            if (typeof window.ethereum !== 'undefined') {
+                
 
-                    const encryptedProposal = JSON.stringify(encryptSafely({
-                        version:"x25519-xsalsa20-poly1305",
-                        data:{proposal_id: proposal, proposalIndex: index, userId},
-                        publicKey
-                      }))
-                      
-                    // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
-                    positive_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal }) //TODO: Rename hash to encrypted
+                    let positive_proposal_indexes_encrypted = []
+                    positive_proposal_indexes.forEach((proposal, index) => {
+                        
+                        const encryptedProposal = JSON.stringify(encryptSafely({
+                            version:"x25519-xsalsa20-poly1305",
+                            data:{proposal_id: proposal, proposalIndex: index, userId},
+                            publicKey
+                        }))
+                        
+                        // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+                        positive_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal }) //TODO: Rename hash to encrypted
                     });
                     
-                let negative_proposal_indexes_encrypted = []
-                negative_proposal_indexes.forEach((proposal, index) => {
-
-                    const encryptedProposal = JSON.stringify(encryptSafely({
-                        version:"x25519-xsalsa20-poly1305",
-                        data:{proposal_id: proposal, proposalIndex: index, userId},
-                        publicKey:publicKey
+                    let negative_proposal_indexes_encrypted = []
+                    negative_proposal_indexes.forEach((proposal, index) => {
+                        
+                        const encryptedProposal = JSON.stringify(encryptSafely({
+                            version:"x25519-xsalsa20-poly1305",
+                            data:{proposal_id: proposal, proposalIndex: index, userId},
+                            publicKey:publicKey
                         }))
 
-                       
-                    // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
-                    negative_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal })
-                });
-
-                //Sends encrypted votes to backend
-                sendData({positive: positive_proposal_indexes_encrypted, negative:negative_proposal_indexes_encrypted, hash:"none"});
-
-                // signData({
-                //     positive: positive_proposal_indexes_encrypted,
-                //     negative: negative_proposal_indexes_encrypted
-                // }, userId, props.counterProposals, props.proposalIndexes).then(signedData => {
-                //     // const encryptedSignedData = encryptWithPublicKey(signedData, publicKey);
-                //     const data = {
-                //         positive: positive_proposal_indexes_encrypted,
-                //         negative: negative_proposal_indexes_encrypted,
-                //         hash: signedData
-                //     }
+                        
+                        // const encryptedProposal = encryptWithPublicKey({ proposal_id: proposal, proposalIndex: index, userId }, publicKey)
+                        negative_proposal_indexes_encrypted.push({ proposal, hash: encryptedProposal })
+                    });
                     
-                //     // sendData(data);
-
-                //     // const recovered = recoverTypedSignature({
-                //     //     data:{
-                //     //         positive: positive_proposal_indexes_2,
-                //     //         negative: negative_proposal_indexes_2
-                //     //     },
-                //     //     signature:signedData,
-                //     //     version:"V4"
-                //     // })
-
-
-                // });
-
-
+                    //Sends encrypted votes to backend
+                    sendData({positive: positive_proposal_indexes_encrypted, negative:negative_proposal_indexes_encrypted, hash:"none"});
             }
-            else {
-                let positive_proposal_indexes_2 = []
-                positive_proposal_indexes.forEach((proposal, index) => {
-
-                    positive_proposal_indexes_2.push({ proposal })
-                });
-
-                let negative_proposal_indexes_2 = []
-                negative_proposal_indexes.forEach((proposal, index) => {
-
+                else {
+                    let positive_proposal_indexes_2 = []
+                    positive_proposal_indexes.forEach((proposal, index) => {
+                        
+                        positive_proposal_indexes_2.push({ proposal })
+                    });
+                    
+                    let negative_proposal_indexes_2 = []
+                    negative_proposal_indexes.forEach((proposal, index) => {
+                        
                     negative_proposal_indexes_2.push({ proposal })
                 });
 
@@ -352,7 +330,7 @@ function SortCounterProposal(props) {
 
                 sendData(data)
             }
-        })
+        // })
     }
 
     const saveCardinal = () => {
@@ -362,10 +340,10 @@ function SortCounterProposal(props) {
             let index = 0;
 
             const userId = JSON.parse(window.localStorage.user).id;
-            getPublicKeyFromDatabase(userId).then(publicKey => {
+            // getPublicKeyFromDatabase(userId).then(publicKey => {
                 cardinalState.forEach((score, scoreIndex) => {
                     if (typeof score === 'number') {
-                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex, userId }, publicKey)
+                        const encryptedProposal = encryptWithPublicKey({ score, scoreIndex, userId }, privateKey)
                         toSend[index] = { "proposal": scoreIndex, "score": parseInt(score), "hash": encryptedProposal || "" }
                         index++;
                     }
@@ -376,7 +354,7 @@ function SortCounterProposal(props) {
                 }
 
                 sendData(data);
-            });
+            // });
         }
         else {
             setMessege({ content: "Above maximum allowed votes (one million)", color: "red" });
@@ -467,6 +445,7 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">{window.t("Total number of votes")}: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>{window.t("Sort Proposals")}</h4>
+                Private Key: <input type="text" value={privateKey} onChange={e => setPrivateKey(e.target.value)}></input>
                 <button className="btn btn-outline-primary" onClick={saveIndexies}>{window.t("Save Votings")}</button>
                 <h4 style={{ "color": messege.color }}>{window.t(messege.content)}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
