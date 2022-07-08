@@ -49,6 +49,8 @@
 
 .main-logo {
     max-width: 4rem;
+    transform: scale(2.5);
+    margin-left:50px;
 }
 
 .main-logo-text{

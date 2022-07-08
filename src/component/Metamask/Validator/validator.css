@@ -1,0 +1,11 @@
+.validator{
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.validator > form{
+    display: flex;
+    flex-direction: column;
+}

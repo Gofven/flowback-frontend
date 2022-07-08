@@ -40,6 +40,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+node_modulesssss/
 jspm_packages/
 
 # Design folder
@@ -120,6 +121,16 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+package-lock.json
 
 # webstorm
 .idea
+
+validator-react-app/
+Validator-old/
+etherpad/
+etherpad-lite-win.zip
+
+.src/component/HTMEditor/MakeHotReloadWork.css
+src/component/HTMEditor/MakeHotReloadWork.css
+**/src/component/HTMEditor/MakeHotReloadWork.css/**

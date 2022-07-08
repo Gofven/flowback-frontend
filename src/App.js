@@ -22,26 +22,33 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./component/PrivateRoute";
 import PublicRoute from "./component/PublicRoute";
-import Home from "./page/HomePage";
-import Events from "./page/Events";
-import Login from "./page/Login";
-import Missions from "./page/Missions";
-import Votings from "./page/Votings";
-import Mentions from "./page/Mentions";
-import Friends from "./page/Friends";
-import SearchPage from "./page/SearchPage";
-import GroupForm from "./page/Friends/GroupForm";
-import GroupDetails from "./page/Friends/GroupDetails";
-import PollForm from "./page/Polls/PollForm";
-import PollDetails from "./page/Polls/PollDetails";
+import Home from "./page/HomePage/HomePage";
+import Events from "./page/Events/Events";
+import Login from "./page/Login/Login";
+import Missions from "./page/Missions/Missions";
+import Votings from "./page/Votings/Votings";
+import Mentions from "./page/Mentions/Mentions";
+import Friends from "./page/Friends/Friends";
+import SearchPage from "./page/SearchPage/SearchPage";
+import GroupForm from "./page/Friends/GroupForm/GroupForm";
+import GroupDetails from "./page/Friends/GroupDetails/GroupDetails";
+import PollForm from "./page/Polls/PollForm/PollForm";
+import PollDetails from "./page/Polls/PollDetails/PollDetails";
+import Validator from './component/Metamask/Validator/Validator'
+import Schedule from "./page/Schedule/Schedule"
 import "react-datepicker/dist/react-datepicker.css";
 // import { io } from "socket.io-client";
 import socketIOClient, { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import Chat from "./component/Chat";
+import Chat from "./component/Chat/Chat";
+import { useTranslation, initReactI18next } from "react-i18next";
+import Prediction from "./page/Prediction/Predictions";
 const { REACT_APP_PROXY } = process.env;
 
+
 function App() {
+  const { t } = useTranslation()
+  window.t = t
   return (
     <>
       <BrowserRouter>
@@ -50,22 +57,25 @@ function App() {
           <PrivateRoute exact path="/events" component={Events} />
           <PrivateRoute exact path="/missions" component={Missions} />
           <PrivateRoute exact path="/votings" component={Votings} />
+          <PrivateRoute exact path="/schedule" component={Schedule} />
           <PrivateRoute exact path="/mentions" component={Mentions} />
           <PrivateRoute exact path="/groups" component={Friends} />
           <PrivateRoute exact path="/create" component={GroupForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/edit" component={GroupForm} />
           <PrivateRoute exact path="/groupdetails/:groupId" component={GroupDetails} />
-          <PrivateRoute exact path="/search" component={SearchPage} />
+          {/* <PrivateRoute exact path="/search" component={SearchPage} /> */}
+          <PrivateRoute exact path="/prediction" component={Prediction} />
           <PrivateRoute exact path="/groupdetails/:groupId/pollcreate" component={PollForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/poll/:pollId/edit" component={PollForm} />
           <PrivateRoute exact path="/groupdetails/:groupId/polldetails/:pollId" component={PollDetails} />
 
           <PublicRoute path="/login" component={Login} />
+          <PublicRoute path="/validator" component={Validator} />
         </Switch>
       </BrowserRouter>
-      {  localStorage.getItem('user') &&
+      {/* {  localStorage.getItem('user') &&
         <Chat />
-      }
+      } */}
     </>
   );
 }

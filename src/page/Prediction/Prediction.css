@@ -1,0 +1,42 @@
+.prediction-score-buttons {
+    /* height: 5vw;
+    min-height: 2rem; */
+    /* width: 8vw; */
+    /* min-width: 3rem; */
+    width: clamp(2.4rem, 6vw, 80px);
+    height: clamp(2rem, 5vw, 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.predictions {
+    max-width: 1000px;
+    margin-inline: auto;
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.predictions-side{
+    width:35%;
+    min-width:13rem;
+}
+
+@media (max-width:1050px) {
+    .prediction-score-buttons {
+        width: 33%;
+    }
+
+    .predictions-side{
+        width:100%;
+    }
+
+    .predictions{
+        display:inherit;
+    }
+
+}
+
+.what-are-pred{
+    margin: auto;
+}
