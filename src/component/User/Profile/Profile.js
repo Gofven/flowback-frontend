@@ -333,7 +333,7 @@ export default function Profile(props) {
                                 editMode ?
                                     <div className="profile-content-view">
                                         <form className="form">
-                                            <div className='d-flex mb-2'>
+                                            {/* <div className='d-flex mb-2'>
                                                 <div className="form-group col-12 mr-2">
                                                     <Textbox
                                                         type="text"
@@ -345,7 +345,7 @@ export default function Profile(props) {
                                                         onChange={handleOnChange}
                                                     />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="form-group">
                                                 <Textarea
                                                     type="text"
