@@ -16,7 +16,11 @@ export default function PollResultsCondorcet({ allProposals }) {
     const proposals = allProposals ? allProposals.sort((a, b) => Number(new bigDecimal(b.final_score_positive).subtract(new bigDecimal(a.final_score_positive)).getValue())) : [];
 
     const totalVotesReducer = (currentTotal, currProposal) => currentTotal.add(new bigDecimal(currProposal.final_score_positive));
-    const totalVotes = proposals.reduce(totalVotesReducer, new bigDecimal(0));
+    let totalVotes = proposals.reduce(totalVotesReducer, new bigDecimal(0));
+    // Prevent divide by zero
+    if(Number(totalVotes.getValue()) < 1){
+        totalVotes = new bigDecimal(1);
+    }
 
     return <div className="card-rounded p-4 my-4">
         <h4>Results</h4>
@@ -57,7 +61,7 @@ function ResultsPieChart({ allProposals, totalVotes }) {
     if (otherProposals.length !== 0) {
         data.push(otherData);
     }
-    console.log("data:", data);
+
     return <div data-tip="" data-for="chart"><PieChart
         data={data}
         label={({ dataEntry }) => {
