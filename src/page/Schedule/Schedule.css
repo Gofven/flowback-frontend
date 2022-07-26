@@ -209,7 +209,9 @@
 }
 
 .selected-day{
-    background:#1caff6 !important
+    /* background:#1caff6 !important */
+    box-shadow: inset 0px 0px 0px 4px #24aeff;
+    
 }
 
 .calendar-day-1 {
