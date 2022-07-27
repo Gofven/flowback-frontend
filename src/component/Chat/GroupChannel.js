@@ -11,7 +11,7 @@ export default function GroupChannel({ groupId }) {
   let socket;
   useEffect(() => {
 
-    socket = new WebSocket(`wss://${REACT_APP_PROXY.split(':')[1]}/ws/group_chat/${groupId}/?token=${token}`);
+    socket = new WebSocket(`wss://${REACT_APP_PROXY.split(':')[1]}ws/group_chat/${groupId}/?token=${token}`);
 
     socket.onopen = function (event) {
       console.log('[open] Connection established');
@@ -84,7 +84,7 @@ export default function GroupChannel({ groupId }) {
             <Image
               className="pfp"
               src={`${message.image
-                ? `${REACT_APP_PROXY}${message.image}`
+                ? `${REACT_APP_PROXY}${message.image.substring(1)}`
                 : '/img/no-photo.jpg'
                 }`}
             />

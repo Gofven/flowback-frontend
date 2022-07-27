@@ -190,5 +190,10 @@
     "Something wen't wrong with decryption": "Någonting gick fel med dekrypteringen",
     "Go to Validator":"Gå till valideraren",
     "Polls for": "Poller på",
-    "Proposal needs title": "Förslag behöver tittel"
+    "Proposal needs title": "Förslag behöver tittel",
+    "Search for users": "Sök efter användare",
+    "Character \"~\" is not allowed":"Karaktär \"~\" är inte tillåten",
+    "Proposal with same title already exists": "Förslag med samma tittel finns redan",
+    "Proposal with same date already exists": "Förslag med samma datum finns redan",
+    "Start Chat": "Börja Chatta"
 }

@@ -9,7 +9,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
 
     useEffect(() => {
         socket = new WebSocket(
-            `wss://${REACT_APP_PROXY.split(':')[1]}/ws/direct_chat/?token=${token}`
+            `wss://${REACT_APP_PROXY.split(':')[1]}ws/direct_chat/?token=${token}`
         );
 
         socket.onopen = function (event) {
@@ -76,6 +76,7 @@ export default function ChatScreen({ messageList, setMessageList, messaging }) {
             type="text"
             id="groupchat-message"
             className="chat-message-input-box"
+            autoComplete="off"
         />
         <button type="submit" className="btn btn-secondary" >
             {/* disabled={!canSend} */}
