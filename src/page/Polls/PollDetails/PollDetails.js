@@ -333,8 +333,8 @@ export default function PollDetails() {
         // counterProposal.description = window.localStorage.getItem("/groupdetails/1/polldetails/34-htmeditor-draft");
         counterProposal.description = getHTML();
 
-        if (counterProposal.proposal_title === "") {
-            setDisplayedMessege({ messege: "Proposal needs title", color: "red" });
+        if (poll.type !== "event" && counterProposal.proposal_title === "") {
+            setDisplayedMessege({ messege: window.t("Proposal needs title"), color: "red" });
             return;
         }
 

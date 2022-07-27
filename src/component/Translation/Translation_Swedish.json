@@ -189,5 +189,6 @@
     "votes": "röster",
     "Something wen't wrong with decryption": "Någonting gick fel med dekrypteringen",
     "Go to Validator":"Gå till valideraren",
-    "Polls for": "Poller på"
+    "Polls for": "Poller på",
+    "Proposal needs title": "Förslag behöver tittel"
 }
