@@ -88,7 +88,7 @@ export default function DirectMessage() {
           <div key={person.id} className="d-flex">
             {person.user_type !== "" && <img
               className="group-chat-image"
-              src={person.image ? `${REACT_APP_PROXY}${person.image}` : "/img/no-photo.jpg"}
+              src={person.image ? `${REACT_APP_PROXY}${person.image.substring(1)}` : "/img/no-photo.jpg"}
               onClick={() => handleSelectPersonToChatWith(person)}
             />}
             <div className='p-2'>{person.username}</div>
@@ -103,7 +103,7 @@ export default function DirectMessage() {
               <Image
                 className="pfp"
                 src={`${message.image
-                  ? `${REACT_APP_PROXY}${message.image.substring(1)}` 
+                  ? (message.image.includes("http") ? message.image : `${REACT_APP_PROXY}${message.image.substring(1)}`)
                   : '/img/no-photo.jpg'
                   }`}
               />
@@ -123,7 +123,7 @@ export default function DirectMessage() {
         <Modal.Body>
           <input type="text" className='chat-message-input-box' onChange={handleOnChange}></input>
 
-          {peopleList.map(person => !recentPeopleList.some(recentPerson => recentPerson.id === person.id) &&
+          {peopleList.map(person => !recentPeopleList.some(recentPerson => recentPerson.id === person.id) && JSON.parse(localStorage.getItem("user")).id !== person.id &&
             <div key={person.id} className="flex">
               <div className="profile-content-view">
                 <button className="btn btn-secondary" onClick={() => handleSelectPersonToChatWith(person)}> {window.t("Start Chat")} </button>
@@ -136,7 +136,7 @@ export default function DirectMessage() {
         </Modal.Body>
 
         <Modal.Footer>
-          <button className='btn btn-danger' onClick={() => setShow(false)}> Close</button>
+          <button className='btn btn-danger' onClick={() => setShow(false)}> {window.t("Close")}</button>
         </Modal.Footer>
       </Modal>
     </div>
