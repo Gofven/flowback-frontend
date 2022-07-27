@@ -334,7 +334,7 @@ export default function PollDetails() {
         counterProposal.description = getHTML();
 
         if (poll.type !== "event" && counterProposal.proposal_title === "") {
-            setDisplayedMessege({ messege: window.t("Proposal needs title"), color: "red" });
+            setDisplayedMessege({ messege: "Proposal needs title", color: "red" });
             return;
         }
 
@@ -349,7 +349,7 @@ export default function PollDetails() {
             return;
         }
 
-        if (existProposalWithSameTitle()) {
+        if (poll.type !== "event" && existProposalWithSameTitle()) {
             setDisplayedMessege({ messege: "Proposal with same title already exists", color: "red" });
             return;
         }
@@ -552,7 +552,7 @@ export default function PollDetails() {
                                         </div>
                                         <div className="card-body overflow-hidden">
                                             <form className="form create_poll_form" id="createPollForm">
-                                                <h5 style={{ "color": displayedMessege.color }}>{displayedMessege.messege}</h5>
+                                                <h5 style={{ "color": displayedMessege.color }}>{window.t(displayedMessege.messege)}</h5>
                                                 {poll.type === "event" ? <div className="form-group field">
                                                     <div>
                                                         {("Meeting Time")}
