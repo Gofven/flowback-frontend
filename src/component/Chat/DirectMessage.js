@@ -119,16 +119,17 @@ export default function DirectMessage() {
       </div>
 
       <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header>Search for users</Modal.Header>
+        <Modal.Header>{window.t("Search for users")}</Modal.Header>
         <Modal.Body>
           <input type="text" className='chat-message-input-box' onChange={handleOnChange}></input>
 
-          {peopleList.map(person =>
+          {peopleList.map(person => !recentPeopleList.some(recentPerson => recentPerson.id === person.id) &&
             <div key={person.id} className="flex">
               <div className="profile-content-view">
-                <button className="btn btn-secondary" onClick={() => handleSelectPersonToChatWith(person)}> Start Chat </button>
+                <button className="btn btn-secondary" onClick={() => handleSelectPersonToChatWith(person)}> {window.t("Start Chat")} </button>
               </div>
-              <div className="name-list-search">{person.first_name}
+              <div className="name-list-search">
+                {person.first_name}
               </div>
             </div>
           )}
