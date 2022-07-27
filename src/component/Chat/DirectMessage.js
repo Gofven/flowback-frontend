@@ -103,7 +103,7 @@ export default function DirectMessage() {
               <Image
                 className="pfp"
                 src={`${message.image
-                  ? `${REACT_APP_PROXY}${message.image}`
+                  ? `${REACT_APP_PROXY}${message.image.substring(1)}` 
                   : '/img/no-photo.jpg'
                   }`}
               />

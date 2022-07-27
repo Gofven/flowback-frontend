@@ -274,10 +274,11 @@ function SortCounterProposal(props) {
         const userId = JSON.parse(window.localStorage.user).id;
         // getPublicKeyFromDatabase(userId).then(publicKey => {
 
-            const publicKey = getEncryptionPublicKey(privateKey)
+            let publicKey = ""
+            if (privateKey) publicKey = getEncryptionPublicKey(privateKey) 
 
             //TODO: More elegant code
-            if (typeof window.ethereum !== 'undefined') {
+            if (typeof window.ethereum !== 'undefined' && privateKey) {
                 
 
                     let positive_proposal_indexes_encrypted = []
@@ -445,7 +446,11 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">{window.t("Total number of votes")}: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>{window.t("Sort Proposals")}</h4>
-                Private Key: <input type="text" value={privateKey} onChange={e => setPrivateKey(e.target.value)}></input>
+                {typeof window.ethereum !== 'undefined' && <div className='mt-2 mb-2'>(Optional) Private Key: <input type="text" value={privateKey} onChange={e => setPrivateKey(e.target.value)}></input>
+                <div className='mt-2 mb-2 text-secondary'>
+                    With your MetaMask private key, your vote can be saved and validated later in our Validator. Your private key will not be saved.
+                </div>
+                </div>}
                 <button className="btn btn-outline-primary" onClick={saveIndexies}>{window.t("Save Votings")}</button>
                 <h4 style={{ "color": messege.color }}>{window.t(messege.content)}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}
