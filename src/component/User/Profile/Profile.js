@@ -97,6 +97,11 @@ export default function Profile(props) {
      */
     const getOtherUserData = (id) => {
         setLoading(true);
+
+        getRequest(`api/v1/prediction/user/${id}`).then(res => {
+            setWeight(res.weight)
+        })
+
         postRequest("api/v1/me/get-other-user", { id }).then(
             (response) => {
                 console.log('response', response);
