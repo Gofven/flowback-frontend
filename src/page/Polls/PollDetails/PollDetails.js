@@ -649,7 +649,7 @@ export default function PollDetails() {
                                     </div>
                                 </div>
                             }
-                            {poll.discussion === "Finished" && poll.type == "event" ?
+                            {poll.discussion === "Finished" && poll.type === "event" ?
                                 <TopProposal topProposal={poll.top_proposal} /> : null}
                             {/* {poll.finished && */}
                             <div className="card poll-details-card chat-card card-rounded overflow-hidden my-4">

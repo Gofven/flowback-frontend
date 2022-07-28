@@ -95,6 +95,9 @@ export default function Schedule() {
     setLoading(true);
     getPolls().then((polls) => {
       setLoading(false);
+
+      polls = polls.filter(poll => poll.accepted_at.split(".")[0] !== poll.top_proposal.date.split(".")[0])
+
       setPolls(polls);
     })
   }, []);
@@ -176,6 +179,7 @@ export default function Schedule() {
       <div className="day-poll-list">
         <h1>{window.t("Polls for")} {selectedDay}-{month}-{year}</h1>
         {pollList.length > 0 && pollList.map(poll => {
+
           const pollDate = new Date(Date.parse(poll.top_proposal.date))
           const minutes =
             pollDate.getMinutes() < 10

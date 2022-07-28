@@ -97,6 +97,11 @@ export default function Profile(props) {
      */
     const getOtherUserData = (id) => {
         setLoading(true);
+
+        getRequest(`api/v1/prediction/user/${id}`).then(res => {
+            setWeight(res.weight)
+        })
+
         postRequest("api/v1/me/get-other-user", { id }).then(
             (response) => {
                 console.log('response', response);
@@ -256,7 +261,9 @@ export default function Profile(props) {
     return (
         <>
             <div className={props.className} onClick={handleShow}>
-                {props.children}
+                <div className="clickable">
+                    {props.children}
+                </div>
             </div>
 
             <Modal show={show} onHide={handleClose} className={`profile-modal ${editMode ? 'edit-mode' : ''}`} centered >

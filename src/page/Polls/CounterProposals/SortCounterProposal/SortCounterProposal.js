@@ -119,7 +119,7 @@ function ProposalBox(props) {
                 : null}
             <div className="post-header d-flex justify-content-between card-header mb-0">
                 <div className="counter-proposal-title">
-                    <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
+                    <h4>{counterProposal.date && counterProposal?.title !== "Drop this poll" ?
                         <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
                         {counterProposal?.title}
                     </h4>
@@ -139,7 +139,7 @@ function ProposalBox(props) {
                             <a className="user-name user-name-proposal">
                                 <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
                             </a>
-                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                            <div className="post-time">{window.t("Created")}: {counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
                 }
