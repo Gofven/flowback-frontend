@@ -260,8 +260,10 @@ export default function Profile(props) {
 
     return (
         <>
-            <div className={props.className} onClick={handleShow} className="clickable">
-                {props.children}
+            <div className={props.className} onClick={handleShow}>
+                <div className="clickable">
+                    {props.children}
+                </div>
             </div>
 
             <Modal show={show} onHide={handleClose} className={`profile-modal ${editMode ? 'edit-mode' : ''}`} centered >
