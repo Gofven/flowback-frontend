@@ -119,7 +119,7 @@ function ProposalBox(props) {
                 : null}
             <div className="post-header d-flex justify-content-between card-header mb-0">
                 <div className="counter-proposal-title">
-                    <h4>{counterProposal.date && counterProposal?.title !== "Drop this mission" ?
+                    <h4>{counterProposal.date && counterProposal?.title !== "Drop this poll" ?
                         <h4>{formatDate(counterProposal.date, 'DD/MM/YYYY kk:mm')}</h4> : null}
                         {counterProposal?.title}
                     </h4>
@@ -139,7 +139,7 @@ function ProposalBox(props) {
                             <a className="user-name user-name-proposal">
                                 <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
                             </a>
-                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                            <div className="post-time">{window.t("Created")}: {counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
                 }
@@ -274,10 +274,11 @@ function SortCounterProposal(props) {
         const userId = JSON.parse(window.localStorage.user).id;
         // getPublicKeyFromDatabase(userId).then(publicKey => {
 
-            const publicKey = getEncryptionPublicKey(privateKey)
+            let publicKey = ""
+            if (privateKey) publicKey = getEncryptionPublicKey(privateKey) 
 
             //TODO: More elegant code
-            if (typeof window.ethereum !== 'undefined') {
+            if (typeof window.ethereum !== 'undefined' && privateKey) {
                 
 
                     let positive_proposal_indexes_encrypted = []
@@ -445,7 +446,11 @@ function SortCounterProposal(props) {
                         <div className="total-cardinal">{window.t("Total number of votes")}: {totalCardinalVotes()}</div>
                     </div>}
                 <h4>{window.t("Sort Proposals")}</h4>
-                Private Key: <input type="text" value={privateKey} onChange={e => setPrivateKey(e.target.value)}></input>
+                {typeof window.ethereum !== 'undefined' && <div className='mt-2 mb-2'>(Optional) Private Key: <input type="text" value={privateKey} onChange={e => setPrivateKey(e.target.value)}></input>
+                <div className='mt-2 mb-2 text-secondary'>
+                    With your MetaMask private key, your vote can be saved and validated later in our Validator. Your private key will not be saved.
+                </div>
+                </div>}
                 <button className="btn btn-outline-primary" onClick={saveIndexies}>{window.t("Save Votings")}</button>
                 <h4 style={{ "color": messege.color }}>{window.t(messege.content)}</h4>
                 {/* <Button onClick={() => votingType==="condorcet" ? setVotingType("traffic") : setVotingType("condorcet") }>Switch between voting systems</Button> */}

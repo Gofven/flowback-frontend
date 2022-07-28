@@ -278,9 +278,9 @@ export default function GroupMembers(props) {
                     (member.user_type === filter.typeOfMember || filter.typeOfMember === null) &&
                     < div className="titles media member-block" key={index} >
                         <div className="user-block">
-                            <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
                             <Profile id={member.id}>
-                                <p className="text-turncate mb-0 clickable">{member.first_name} {member.last_name}</p>
+                            <Image src={member.image} className="media-img" errImg='/img/no-photo.jpg' />
+                                <p className="text-turncate mb-0">{member.first_name} {member.last_name}</p>
                             </Profile>
 
                             {isKickable(member.user_type) && <button className="btn btn-outline-danger" onClick={() => kickMember(member?.id)}>Kick</button>}
