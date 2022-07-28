@@ -139,7 +139,7 @@ function ProposalBox(props) {
                             <a className="user-name user-name-proposal">
                                 <Profile className='inline-block' id={counterProposal.user.id}>{counterProposal.user.first_name} {counterProposal.user.last_name} </Profile>
                             </a>
-                            <div className="post-time">{counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
+                            <div className="post-time">{window.t("Created")}: {counterProposal && formatDate(counterProposal.created_at, 'DD/MM/YYYY kk:mm')}</div>
                         </div>
                     </div>
                 }
