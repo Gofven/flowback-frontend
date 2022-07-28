@@ -255,7 +255,7 @@ export default function Profile(props) {
 
     return (
         <>
-            <div className={props.className} onClick={handleShow}>
+            <div className={props.className} onClick={handleShow} className="clickable">
                 {props.children}
             </div>
 
