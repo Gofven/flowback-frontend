@@ -25,6 +25,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width:100%;
+  position:absolute;
+  top:0;
 }
 
 code {
