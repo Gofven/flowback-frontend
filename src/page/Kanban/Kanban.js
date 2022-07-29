@@ -149,7 +149,7 @@ close_btns.forEach((btn) => {
 return <Layout1> 
     <div class="modal" id="todo_form">
       <div class="header">
-        <div class="title">Add Todo</div>
+        <div class="title">{window.t("Add Todo")}</div>
         <button class="btn close-modal">&times;</button>
       </div>
       <div class="body">
@@ -159,20 +159,20 @@ return <Layout1>
     </div>
     <div class="todo-container">
       <div class="status" id="no_status">
-        <h1>Backlog</h1>
-        <button id="add_btn" data-target-modal="#todo_form">+ Add Todo</button>
+        <h1>{window.t("Backlog")}</h1>
+        <button id="add_btn" data-target-modal="#todo_form">+ {window.t("Add Todo")}</button>
       </div>
       <div class="status">
-        <h1>Selected</h1>
+        <h1>{window.t("Selected")}</h1>
       </div>
       <div class="status">
-        <h1>Ongoing</h1>
+        <h1>{window.t("Ongoing")}</h1>
       </div>
       <div class="status">
-        <h1>Review</h1>
+        <h1>{window.t("Review")}</h1>
       </div>
       <div class="status">
-        <h1>Finished</h1>
+        <h1>{window.t("Finished")}</h1>
       </div>
     </div>
 

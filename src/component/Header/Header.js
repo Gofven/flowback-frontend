@@ -38,7 +38,7 @@ export default function Header() {
     // { title: "Votings", icon: "la-chart-bar", url: "/votings" },
     { title: "Schedule", icon: "la-calendar-week", url: "/schedule" }, /* url: "/events" */
     { title: "Prediction", icon: "la-chart-bar", url: "/prediction" },
-    { title: "Kanban", icon: "la-chart-bar", url: "/kanban" },
+    { title: "Kanban", icon: "la-list", url: "/kanban" },
   ] : [{ title: "Public", icon: "la-globe-americas", url: "/" }];
 
   const loggedOutData =

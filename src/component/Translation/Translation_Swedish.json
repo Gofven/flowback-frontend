@@ -195,5 +195,10 @@
     "Character \"~\" is not allowed":"Karaktär \"~\" är inte tillåten",
     "Proposal with same title already exists": "Förslag med samma tittel finns redan",
     "Proposal with same date already exists": "Förslag med samma datum finns redan",
-    "Start Chat": "Börja Chatta"
+    "Start Chat": "Börja Chatta",
+    "Backlog": "Logg",
+    "Selected": "Valda",
+    "Ongoing":"Pågående",
+    "Review":"Granska",
+    "Add Todo": "Lägg till Todo"
 }
