@@ -36,6 +36,7 @@ import PollForm from "./page/Polls/PollForm/PollForm";
 import PollDetails from "./page/Polls/PollDetails/PollDetails";
 import Validator from './component/Metamask/Validator/Validator'
 import Schedule from "./page/Schedule/Schedule"
+import Kanban from "./page/Kanban/Kanban"
 import "react-datepicker/dist/react-datepicker.css";
 // import { io } from "socket.io-client";
 import socketIOClient, { io } from "socket.io-client";
@@ -71,6 +72,7 @@ function App() {
 
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/validator" component={Validator} />
+          <PublicRoute path="/kanban" component={Kanban} />
         </Switch>
       </BrowserRouter>
       {/* {  localStorage.getItem('user') &&
