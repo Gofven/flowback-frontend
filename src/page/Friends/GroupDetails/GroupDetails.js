@@ -167,14 +167,14 @@ export default function GroupDetails() {
                                     <h3 className="group-details-title text-truncate mr-2">
                                         {group.title}
                                     </h3>
-                                    {
+                                    {/*
                                         ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
                                         <div class="iconedit">
                                             <Link to={`/groupdetails/${groupId}/edit`}>
                                                 <FontAwesomeIcon icon={faEdit} size="lg" color="black" />
                                             </Link>
                                         </div>
-                                    }
+                                    */}
                                 </div>
                                 <div className="">
                                     {groupLoaded && <div className="card-rounded group-buttons-in-group" ><GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} reload={true} /></div>}
