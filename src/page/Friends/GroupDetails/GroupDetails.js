@@ -233,9 +233,11 @@ export default function GroupDetails() {
                                 </div>
                             }
                         </div>
+
                     </div>
                 </div>
             </section>
+
         </Layout1 >
     );
 }
