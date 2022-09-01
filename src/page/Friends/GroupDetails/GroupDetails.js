@@ -76,54 +76,39 @@ export default function GroupDetails() {
             case tab[0]:
                 return (
                     group.user_type
-                    // || group.public
-                    ?
-                    < FeedCard groupId = { groupId }
-                    /> : <NoAccessBlock message="Please join group to view feeds of this group." / >
+                        // || group.public
+                        ? <FeedCard groupId={groupId} /> : <NoAccessBlock message="Please join group to view feeds of this group." />
                 );
             case tab[1]:
                 return (
-                    group.user_type || group.public ? < AboutCard groupDetail = { group }
-                    /> : <NoAccessBlock message="Please join group to view group details." / >
+                    group.user_type || group.public ? <AboutCard groupDetail={group} /> : <NoAccessBlock message="Please join group to view group details." />
                 );
             case tab[2]:
                 return (
                     group.user_type ?
-                    <
-                    DocumentCard groupId = { groupId }
-                    userType = { group.user_type }
-                    /> :
-                    < NoAccessBlock message = "Please join group to view documents of this group." / >
+                        <DocumentCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to view documents of this group." />
                 );
             case tab[3]:
                 return (
                     group.user_type ?
-                    <
-                    MemberCard groupId = { groupId }
-                    userType = { group.user_type }
-                    /> :
-                    < NoAccessBlock message = "Please join group to view members of this group." / >
+                        <MemberCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to view members of this group." />
                 );
             case tab[4]:
                 return (
                     group.user_type ?
-                    <
-                    EmailCard groupId = { groupId }
-                    userType = { group.user_type }
-                    /> :
-                    < NoAccessBlock message = "Please join group to email." / >
+                        <EmailCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to email." />
                 );
             case tab[5]:
                 return (
                     group.user_type ?
-                    <
-                    GroupStatsCard groupId = { groupId }
-                    userType = { group.user_type }
-                    /> :
-                    < NoAccessBlock message = "Please join group to view group statistics." / >
+                        <GroupStatsCard groupId={groupId} userType={group.user_type} />
+                        : <NoAccessBlock message="Please join group to view group statistics." />
                 );
             default:
-                return <FeedCard / > ;
+                return <FeedCard />;
         }
     };
 
@@ -161,136 +146,96 @@ export default function GroupDetails() {
 
     // For displaying message for no access
     const NoAccessBlock = ({ message }) => {
-        return ( <
-            div className = "card-rounded mb-4 p-3 text-center" > { message } <
-            /div>
+        return (
+            <div className="card-rounded mb-4 p-3 text-center">
+                {message}
+            </div>
         )
     }
 
-    return ( <
-        Layout1 >
-        <
-        section className = "group-details-dashboard mt-4" >
-        <
-        div className = "container-xl" >
-        <
-        div className = "group-details-card" >
+    return (
+        <Layout1>
+            <section className="group-details-dashboard mt-4">
+                <div className="container-xl">
+                    <div className="group-details-card">
 
-        <
-        div className = "group-details-img-view d-flex" >
-        <
-        div className = "col-6 media group-details-img-content " >
-        <
-        Image src = { group.image }
-        className = "group-details-dp" / >
-        <
-        div className = "media-body d-flex align-items-center" >
+                        <div className="group-details-img-view d-flex">
+                            <div className="col-6 media group-details-img-content ">
+                                <Image src={group.image} className="group-details-dp" />
+                                <div className="media-body d-flex align-items-center">
 
-        <
-        h3 className = "group-details-title text-truncate mr-2" > { group.title } <
-        /h3> {
-            /* {
-                                                    ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
-                                                    <div class="iconedit">
-                                                        <Link to={`/groupdetails/${groupId}/edit`}>
-                                                            <FontAwesomeIcon icon={faEdit} size="lg" color="black" />
-                                                        </Link>
-                                                    </div>
-                                                } */
-        } <
-        /div> <
-        div className = "" > { groupLoaded && < div className = "card-rounded group-buttons-in-group" > < GroupButtons user_type = { group.user_type }
-            groupId = { group.id }
-            groupJoinStatus = { group.group_join_status }
-            total_members = { group.total_members }
-            reload = { true } /></div > } <
-        /div> <
-        /div> <
-        Image src = { group.cover_image }
-        className = "group-details-cover"
-        errImg = { '/img/no-banner.jpg' }
-        /> <
-        /div> <
-        /div> <
-        /div> <
-        /section> <
-        section className = "home-dashboard" >
-        <
-        div className = "container-xl" >
-        <
-        div className = "row justify-content-end" > { /* <div className="col-md-3"><Chat/></div> */ } <
-        div className = "col-md-6" > { renderTab() } <
-        /div>
+                                    <h3 className="group-details-title text-truncate mr-2">
+                                        {group.title}
+                                    </h3>
+                                    {/* {
+                                        ["Owner", "Admin", "Moderator"].includes(group.user_type) &&
+                                        <div class="iconedit">
+                                            <Link to={`/groupdetails/${groupId}/edit`}>
+                                                <FontAwesomeIcon icon={faEdit} size="lg" color="black" />
+                                            </Link>
+                                        </div>
+                                    } */}
+                                </div>
+                                <div className="">
+                                    {groupLoaded && <div className="card-rounded group-buttons-in-group" ><GroupButtons user_type={group.user_type} groupId={group.id} groupJoinStatus={group.group_join_status} total_members={group.total_members} reload={true} /></div>}
+                                </div>
+                            </div>
+                            <Image src={group.cover_image} className="group-details-cover" errImg={'/img/no-banner.jpg'} />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="home-dashboard">
+                <div className="container-xl">
+                    <div className="row justify-content-end">
+                        {/* <div className="col-md-3"><Chat/></div> */}
+                        <div className="col-md-6">
+                            {renderTab()}
+                        </div>
 
-        <
-        div className = "col-md-3" >
-        <
-        div className = "card group-chat-card chat-list-card chat-card card-rounded overflow-hidden" >
-        <
-        div className = "card-body overflow-hidden" > {
-            tab ? .map((item, index) => (
+                        <div className="col-md-3">
+                            <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden">
+                                <div className="card-body overflow-hidden">
+                                    {tab?.map((item, index) => (
 
-                // (group.user_type || ["About"].includes(item)) ?
-                <
-                div className = "mb-1 cursor-pointer"
-                id = { index }
-                key = { index } >
-                <
-                FontAwesomeIcon icon = { indexIcon[index] }
-                color = '#737373' / >
-                <
-                span className = { `ml-2 ${item === activeTab ? "activeIndex" : ""}` }
-                data - id = { index } {...handleOnClick } > { window.t(item) } < /span> <
-                /div>
-                // : null
-            ))
-        } <
-        /div> <
-        /div> {
-            group.user_type &&
-                <
-                div className = "card group-chat-card chat-list-card chat-card card-rounded overflow-hidden my-2" >
-                <
-                div className = "card-body overflow-hidden" >
+                                        // (group.user_type || ["About"].includes(item)) ?
+                                        <div className="mb-1 cursor-pointer" id={index} key={index}>
+                                            <FontAwesomeIcon icon={indexIcon[index]} color='#737373' />
+                                            <span className={`ml-2 ${item === activeTab ? "activeIndex" : ""}`}
+                                                data-id={index}
+                                                {...handleOnClick}> {window.t(item)}</span>
+                                        </div>
+                                        // : null
+                                    ))}
+                                </div>
+                            </div>
+                            {group.user_type &&
+                                <div className="card group-chat-card chat-list-card chat-card card-rounded overflow-hidden my-2">
+                                    <div className="card-body overflow-hidden">
 
-                <
-                div className = "mb-1" >
-                <
-                Link to = { `/groupdetails/${groupId}/pollcreate` } >
-                <
-                FontAwesomeIcon icon = { faPoll }
-            color = '#737373' / >
-                <
-                span className = "ml-2" >
-                { window.t("Create Poll") } < /span> <
-                /Link> <
-                /div> {
-                    REACT_APP_JITSI &&
-                        <
-                        div className = "mb-1" >
-                        <
-                        a target = "_blank"
-                    href = { `${REACT_APP_JITSI}/${group.room_name}` } >
-                        <
-                        FontAwesomeIcon icon = { faUsers }
-                    color = '#737373' / >
-                        <
-                        span className = "ml-2" >
-                        { window.t("Video Conference") } < /span> <
-                        /a> <
-                        /div>
-                } <
-                /div> <
-                /div>
-        } <
-        /div>
-
-        <
-        /div> <
-        /div> <
-        /section>
-
-        <
-        /Layout1 >
+                                        <div className="mb-1">
+                                            <Link to={`/groupdetails/${groupId}/pollcreate`}>
+                                                <FontAwesomeIcon icon={faPoll} color='#737373' />
+                                                <span className="ml-2"
+                                                >{window.t("Create Poll")}</span>
+                                            </Link>
+                                        </div>
+                                        {REACT_APP_JITSI &&
+                                            <div className="mb-1">
+                                                <a target="_blank" href={`${REACT_APP_JITSI}/${group.room_name}`}>
+                                                    <FontAwesomeIcon icon={faUsers} color='#737373' />
+                                                    <span className="ml-2"
+                                                    >{window.t("Video Conference")}</span>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </Layout1 >
     );
 }
